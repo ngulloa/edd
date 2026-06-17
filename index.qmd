@@ -1,0 +1,81 @@
+---
+title: "Estudio I2: Estructuras de Datos y Algoritmos"
+---
+
+::: {.bloque .advertencia}
+Este sitio se construirá gradualmente. Por ahora contiene la estructura base, las secciones principales y plantillas para desarrollar el material página por página.
+:::
+
+## Propósito del sitio
+
+Este repositorio organiza el estudio de la evaluación I2 de Estructuras de Datos y Algoritmos. La meta es reunir explicaciones breves, pseudocódigo, complejidades, errores típicos y problemas representativos en un sitio navegable y fácil de mantener.
+
+## Mapa de contenidos
+
+:::: {.tarjetas}
+::: {.tarjeta}
+### [Hash](contenidos/hash.qmd)
+
+Tablas hash, funciones de dispersión, colisiones y análisis de operaciones.
+:::
+
+::: {.tarjeta}
+### [Estructuras combinadas](contenidos/estructuras-combinadas.qmd)
+
+Uso coordinado de estructuras para resolver restricciones de eficiencia.
+:::
+
+::: {.tarjeta}
+### [Backtracking](contenidos/backtracking.qmd)
+
+Búsqueda exhaustiva con poda, estados parciales y construcción de soluciones.
+:::
+
+::: {.tarjeta}
+### [Greedy](contenidos/greedy.qmd)
+
+Elecciones locales, criterios de optimalidad y contraejemplos.
+:::
+
+::: {.tarjeta}
+### [Programación dinámica](contenidos/programacion-dinamica.qmd)
+
+Subproblemas, recurrencias, memoización y tabulación.
+:::
+
+::: {.tarjeta}
+### [Grafos](contenidos/grafos.qmd)
+
+Modelamiento, representaciones y recorridos base.
+:::
+
+::: {.tarjeta}
+### [DFS y BFS](contenidos/dfs-bfs.qmd)
+
+Recorridos, aplicaciones clásicas y análisis de complejidad.
+:::
+
+::: {.tarjeta}
+### [Kruskal y Union-Find](contenidos/kruskal-union-find.qmd)
+
+Árbol de expansión mínimo, conjuntos disjuntos y compresión de caminos.
+:::
+
+::: {.tarjeta}
+### [Comparación de técnicas](contenidos/comparacion-tecnicas.qmd)
+
+Criterios para distinguir hash, greedy, backtracking, DP y grafos.
+:::
+::::
+
+## Forma sugerida de estudiar
+
+1. Revisar la idea central de cada tema.
+2. Identificar cuándo conviene usar la técnica o estructura.
+3. Memorizar las operaciones o algoritmos principales con su complejidad.
+4. Resolver un ejemplo guiado antes de intentar problemas de interrogación.
+5. Registrar errores típicos y volver a probar con ejercicios similares.
+
+::: {.bloque .pregunta-prueba}
+Cada página quedará preparada para incluir una pregunta representativa de interrogación con enunciado y solución desplegables.
+:::

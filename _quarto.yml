@@ -1,0 +1,74 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - contenidos/*.qmd
+
+lang: es
+
+website:
+  title: "Estudio I2 EDD"
+  site-url: "https://ngulloa.github.io/edd/"
+  navbar:
+    background: light
+    left:
+      - href: index.qmd
+        text: Inicio
+      - text: Contenidos
+        menu:
+          - href: contenidos/hash.qmd
+            text: Hash
+          - href: contenidos/estructuras-combinadas.qmd
+            text: Estructuras combinadas
+          - href: contenidos/backtracking.qmd
+            text: Backtracking
+          - href: contenidos/greedy.qmd
+            text: Greedy
+          - href: contenidos/programacion-dinamica.qmd
+            text: Programación dinámica
+          - href: contenidos/grafos.qmd
+            text: Grafos
+          - href: contenidos/dfs-bfs.qmd
+            text: DFS y BFS
+          - href: contenidos/kruskal-union-find.qmd
+            text: Kruskal y Union-Find
+          - href: contenidos/comparacion-tecnicas.qmd
+            text: Comparación de técnicas
+  sidebar:
+    style: docked
+    search: true
+    contents:
+      - href: index.qmd
+        text: Inicio
+      - section: "Contenidos"
+        contents:
+          - href: contenidos/hash.qmd
+            text: Hash
+          - href: contenidos/estructuras-combinadas.qmd
+            text: Estructuras combinadas
+          - href: contenidos/backtracking.qmd
+            text: Backtracking
+          - href: contenidos/greedy.qmd
+            text: Greedy
+          - href: contenidos/programacion-dinamica.qmd
+            text: Programación dinámica
+          - href: contenidos/grafos.qmd
+            text: Grafos
+          - href: contenidos/dfs-bfs.qmd
+            text: DFS y BFS
+          - href: contenidos/kruskal-union-find.qmd
+            text: Kruskal y Union-Find
+          - href: contenidos/comparacion-tecnicas.qmd
+            text: Comparación de técnicas
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    smooth-scroll: true
+    code-copy: true
+    code-overflow: scroll

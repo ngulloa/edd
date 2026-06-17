@@ -1,0 +1,167 @@
+:root {
+  --edd-text: #1f2933;
+  --edd-muted: #52606d;
+  --edd-border: #d9e2ec;
+  --edd-surface: #f8fafc;
+  --edd-card: #ffffff;
+  --edd-accent: #1769aa;
+  --edd-accent-soft: #e7f2fb;
+  --edd-warning: #8a5a00;
+  --edd-warning-bg: #fff7e0;
+  --edd-error: #9b1c1c;
+  --edd-error-bg: #fdecec;
+  --edd-success: #1f7a4d;
+  --edd-success-bg: #e8f6ef;
+}
+
+body {
+  color: var(--edd-text);
+  line-height: 1.65;
+}
+
+a {
+  color: var(--edd-accent);
+}
+
+.page-columns .content,
+main.content {
+  max-width: 920px;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}
+
+h2 {
+  margin-top: 2.25rem;
+  border-bottom: 1px solid var(--edd-border);
+  padding-bottom: 0.35rem;
+}
+
+p,
+li {
+  color: var(--edd-text);
+}
+
+.lead,
+.subtitle,
+.description {
+  color: var(--edd-muted);
+}
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+  margin: 1.25rem 0 2rem;
+}
+
+.tarjeta {
+  background: var(--edd-card);
+  border: 1px solid var(--edd-border);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 8px 22px rgba(31, 41, 51, 0.06);
+}
+
+.tarjeta h3 {
+  font-size: 1.05rem;
+  margin-top: 0;
+}
+
+.tarjeta p {
+  margin-bottom: 0;
+  color: var(--edd-muted);
+}
+
+.bloque,
+.advertencia,
+.intuicion,
+.error-tipico,
+.pregunta-prueba {
+  border-left: 4px solid var(--edd-accent);
+  border-radius: 6px;
+  margin: 1.25rem 0;
+  padding: 0.9rem 1rem;
+  background: var(--edd-accent-soft);
+}
+
+.advertencia {
+  border-left-color: var(--edd-warning);
+  background: var(--edd-warning-bg);
+}
+
+.intuicion {
+  border-left-color: var(--edd-success);
+  background: var(--edd-success-bg);
+}
+
+.error-tipico {
+  border-left-color: var(--edd-error);
+  background: var(--edd-error-bg);
+}
+
+.pregunta-prueba {
+  border-left-color: var(--edd-accent);
+  background: var(--edd-accent-soft);
+}
+
+pre,
+code {
+  font-size: 0.95em;
+}
+
+pre {
+  overflow-x: auto;
+  border-radius: 6px;
+  border: 1px solid var(--edd-border);
+}
+
+details {
+  border: 1px solid var(--edd-border);
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  margin: 1rem 0;
+  background: var(--edd-surface);
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 650;
+}
+
+table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .page-columns .content,
+  main.content {
+    max-width: 100%;
+  }
+
+  .tarjetas {
+    grid-template-columns: 1fr;
+  }
+
+  .tarjeta,
+  .bloque,
+  .advertencia,
+  .intuicion,
+  .error-tipico,
+  .pregunta-prueba {
+    padding: 0.85rem;
+  }
+
+  h1 {
+    font-size: 1.85rem;
+  }
+
+  h2 {
+    font-size: 1.35rem;
+  }
+}

@@ -1,55 +1,647 @@
 ---
-title: "Grafos"
+title: "Grafos: conceptos y representación"
 ---
+
+## Objetivo de aprendizaje
+
+Al terminar esta página deberías poder:
+
+- reconocer cuándo un enunciado debe modelarse como grafo;
+- identificar qué elementos son vértices y qué relaciones son aristas;
+- distinguir grafos dirigidos, no dirigidos, ponderados y no ponderados;
+- explicar caminos, ciclos, componentes conectadas, componentes fuertemente conectadas y DAG;
+- elegir entre lista de adyacencia y matriz de adyacencia;
+- construir un grafo a partir de dependencias;
+- expresar complejidades usando $V$ y $E$;
+- evitar confundir grafos con hash, heap, árboles de cobertura mínima o caminos mínimos.
+
+Esta página prepara el vocabulario y las representaciones. Algoritmos como DFS, BFS, detección de ciclos, orden topológico, componentes fuertemente conectadas, Kosaraju, Kruskal y caminos mínimos se estudian después como aplicaciones sobre grafos ya modelados.
 
 ## Idea central del tema
 
-Pendiente de desarrollo.
+Un **grafo** modela relaciones entre objetos. Los objetos son **vértices** y las relaciones son **aristas**.
 
-## Cuándo usar esta técnica o estructura
+Formalmente, un grafo se escribe como:
 
-Pendiente de desarrollo.
+$$
+G = (V, E)
+$$
 
-## Conceptos mínimos
+Donde:
 
-Pendiente de desarrollo.
+- $G$ es el grafo completo.
+- $V$ es el conjunto de vértices.
+- $E$ es el conjunto de aristas.
 
-## Operaciones o algoritmo principal
+La parte difícil en una evaluación no suele ser recordar la fórmula, sino traducir el enunciado correctamente:
 
-Pendiente de desarrollo.
+```{mermaid}
+flowchart LR
+    A["Enunciado"] --> B["Definir vértices"]
+    B --> C["Definir aristas"]
+    C --> D["Elegir tipo de grafo"]
+    D --> E["Elegir representación"]
+    E --> F["Elegir algoritmo"]
+```
+
+::: {.callout-important}
+## Idea central
+
+Antes de pensar en DFS, BFS, Kruskal o caminos mínimos, escribe qué son los vértices y qué son las aristas. Si el modelo está mal, el algoritmo posterior también queda mal.
+:::
+
+Un grafo no es una estructura para buscar por llave como una tabla de hash. Un grafo sirve para representar relaciones: dependencias, conectividad, caminos, ciclos, componentes y rutas.
+
+## Antes de partir: vocabulario mínimo
+
+| Concepto | Explicación práctica |
+|---|---|
+| Vértice o nodo | Objeto del problema: tarea, curso, ciudad, persona, celda o estado. |
+| Arista | Relación entre dos vértices. |
+| Grafo dirigido | Las aristas tienen dirección. Una arista $(u, v)$ permite ir desde $u$ hacia $v$. |
+| Grafo no dirigido | Las aristas no tienen dirección. Una arista $\{u, v\}$ conecta ambos sentidos. |
+| Grafo ponderado | Cada arista tiene un peso, costo, distancia, tiempo o capacidad. |
+| Grafo no ponderado | Las aristas solo indican relación; no tienen costo asociado. |
+| Camino | Secuencia de vértices donde cada par consecutivo está conectado por una arista. |
+| Ciclo | Camino no vacío que vuelve al vértice inicial. |
+| Vecino | Vértice conectado directamente con otro por una arista. |
+| Grado | Cantidad de aristas incidentes a un vértice en un grafo no dirigido. |
+| Grado de entrada | En un grafo dirigido, cantidad de aristas que llegan a un vértice. |
+| Grado de salida | En un grafo dirigido, cantidad de aristas que salen desde un vértice. |
+| Componente conectada | Grupo de vértices conectados entre sí en un grafo no dirigido. |
+| Componente fuertemente conectada | En un grafo dirigido, grupo donde todos los vértices pueden llegar a todos los demás del grupo. |
+| DAG | Grafo dirigido acíclico. Se usa en dependencias y orden topológico. |
+| Lista de adyacencia | Para cada vértice, guarda la lista de sus vecinos. |
+| Matriz de adyacencia | Una celda $A[i][j]$ indica si existe la arista desde $i$ hacia $j$. |
+
+::: {.callout-note}
+## Intuición
+
+La palabra "adyacente" significa "vecino directo". Si `v` aparece en la lista de adyacencia de `u`, entonces existe una arista que sale de `u` hacia `v`.
+:::
+
+## Cuándo usar grafos
+
+Un enunciado puede pedir grafos aunque no use la palabra "grafo". La señal principal es que hay objetos y relaciones entre ellos.
+
+| Señal del enunciado | Modelo natural |
+|---|---|
+| "A depende de B" | Grafo dirigido con arista $B \to A$. |
+| "Hay una ruta entre ciudades" | Grafo dirigido o no dirigido según el sentido de la ruta. |
+| "Conectar todos con costo mínimo" | Grafo no dirigido ponderado; después podría aparecer MST. |
+| "Detectar circularidad" | Grafo dirigido y detección de ciclos. |
+| "Agrupar elementos conectados" | Componentes conectadas. |
+| "Ordenar tareas con requisitos" | Grafo dirigido acíclico y orden topológico. |
+| "Todos pueden llegar a todos dentro del grupo" | Componentes fuertemente conectadas. |
+| "Encontrar si dos elementos están conectados" | Grafo o Union-Find, según si se necesita recorrer caminos o solo unir y consultar componentes. |
+| "Buscar datos por identificador" | Usualmente hash, no grafo. |
+| "Obtener el mínimo o máximo repetidamente" | Usualmente heap, no grafo. |
+
+::: {.callout-tip}
+## Consejo de estudio
+
+Lee el enunciado preguntando dos cosas: "¿qué objetos existen?" y "¿qué relación conecta a esos objetos?". Esas respuestas suelen ser $V$ y $E$.
+:::
+
+## Tipos de grafos
+
+### Grafo dirigido
+
+Se usa cuando la relación tiene sentido u orientación.
+
+Ejemplos:
+
+- una tarea debe ocurrir antes que otra;
+- una calle es de un solo sentido;
+- un enlace web apunta desde una página hacia otra;
+- un módulo depende de otro módulo.
+
+Si una tarea `B` requiere haber hecho `A`, la arista correcta es:
+
+$$
+A \to B
+$$
+
+La arista va desde el requisito hacia la tarea que queda habilitada.
+
+### Grafo no dirigido
+
+Se usa cuando la relación es simétrica.
+
+Ejemplos:
+
+- una amistad mutua;
+- un cable físico entre dos computadores;
+- una calle de doble sentido;
+- dos elementos pertenecen a la misma red.
+
+La arista no dirigida entre $u$ y $v$ se escribe como:
+
+$$
+\{u, v\}
+$$
+
+No hay origen ni destino. Si $u$ está conectado con $v$, entonces $v$ también está conectado con $u$.
+
+### Grafo ponderado
+
+Se usa cuando cada arista tiene un valor asociado: costo, distancia, tiempo, capacidad, riesgo o prioridad.
+
+Una arista ponderada puede representarse como:
+
+$$
+(u, v, 7)
+$$
+
+Esto puede significar que ir desde $u$ hacia $v$ cuesta 7 unidades.
+
+### Grafo no ponderado
+
+Se usa cuando solo importa si la relación existe. No hay costo distinto por arista.
+
+Por ejemplo, en una red social simple puede bastar con saber si dos personas son amigas, sin asignar peso a esa relación.
+
+### DAG
+
+Un **DAG** es un grafo dirigido acíclico. "Dirigido" significa que sus aristas tienen orientación; "acíclico" significa que no existe un camino dirigido que vuelva al punto de partida.
+
+Los DAG aparecen naturalmente en:
+
+- dependencias entre tareas;
+- prerrequisitos de cursos;
+- compilación de módulos;
+- orden topológico.
+
+::: {.callout-warning}
+## Error típico
+
+No todo grafo con pesos pide caminos mínimos. Si el objetivo es conectar todos los vértices con costo total mínimo, se piensa en árbol de cobertura mínima. Si el objetivo es llegar desde un origen con menor costo, se piensa en caminos mínimos.
+:::
+
+## Representaciones de grafos
+
+Después de decidir los vértices y aristas, hay que escoger cómo guardar el grafo en memoria.
+
+Las dos representaciones básicas son:
+
+- **lista de adyacencia:** para cada vértice, guardar sus vecinos;
+- **matriz de adyacencia:** usar una tabla $V \times V$ para indicar si una arista existe.
+
+### Lista de adyacencia
+
+Una lista de adyacencia guarda, para cada vértice, la lista de vértices alcanzables directamente desde él.
+
+Ejemplo de grafo dirigido:
+
+```text
+0: [1, 2]
+1: [2, 3]
+2: [4]
+3: []
+4: []
+```
+
+Esto representa las aristas:
+
+$$
+(0,1),\ (0,2),\ (1,2),\ (1,3),\ (2,4)
+$$
+
+La ventaja principal es que recorrer los vecinos reales de un vértice es eficiente.
+
+### Matriz de adyacencia
+
+Una matriz de adyacencia usa una tabla con una fila y una columna por vértice.
+
+Si existe la arista desde $i$ hacia $j$, entonces:
+
+$$
+A[i][j] = 1
+$$
+
+Si no existe, entonces:
+
+$$
+A[i][j] = 0
+$$
+
+Para el mismo grafo anterior:
+
+| Desde / hacia | 0 | 1 | 2 | 3 | 4 |
+|---|---:|---:|---:|---:|---:|
+| 0 | 0 | 1 | 1 | 0 | 0 |
+| 1 | 0 | 0 | 1 | 1 | 0 |
+| 2 | 0 | 0 | 0 | 0 | 1 |
+| 3 | 0 | 0 | 0 | 0 | 0 |
+| 4 | 0 | 0 | 0 | 0 | 0 |
+
+La ventaja principal es que consultar si existe una arista específica cuesta $O(1)$.
+
+## Lista vs matriz de adyacencia
+
+La elección depende de cuántas aristas hay y qué operaciones se harán con frecuencia.
+
+| Operación o criterio | Lista de adyacencia | Matriz de adyacencia |
+|---|---:|---:|
+| Memoria | $O(V + E)$ | $O(V^2)$ |
+| Crear estructura vacía | $O(V)$ | $O(V^2)$ |
+| Recorrer vecinos de $u$ | $O(\deg(u))$ | $O(V)$ |
+| Recorrer todos los vecinos de todos los vértices | $O(V + E)$ | $O(V^2)$ |
+| Consultar si existe $(u, v)$ | $O(\deg(u))$ si la lista no usa set | $O(1)$ |
+| Insertar una arista | $O(1)$ si se agrega al final | $O(1)$ |
+| Mejor uso típico | Grafos dispersos, recorridos, dependencias | Grafos densos o muchas consultas de existencia |
+
+Donde $\deg(u)$ es la cantidad de vecinos de $u$.
+
+::: {.callout-note}
+## Intuición
+
+Si la mayoría de las posibles aristas no existe, la matriz guarda muchos ceros. En ese caso la lista de adyacencia suele ser mejor. Si el grafo es muy denso o se pregunta muchas veces "¿existe esta arista?", la matriz puede ser conveniente.
+:::
+
+## Construcción de grafos desde dependencias
+
+En problemas de dependencias hay una regla clave:
+
+::: {.callout-important}
+## Dependencias
+
+Si la tarea `T` requiere la tarea `R`, la arista va desde el requisito hacia la tarea: $R \to T$.
+:::
+
+La dirección importa porque representa qué queda habilitado después de completar un requisito.
+
+Ejemplo:
+
+| Tarea | Requisitos |
+|---|---|
+| A | ninguno |
+| B | A |
+| C | A |
+| D | B, C |
+| E | D |
+
+Las aristas son:
+
+$$
+A \to B,\quad A \to C,\quad B \to D,\quad C \to D,\quad D \to E
+$$
+
+Lista de adyacencia resultante:
+
+```text
+A: [B, C]
+B: [D]
+C: [D]
+D: [E]
+E: []
+```
+
+Este grafo es dirigido. Además, si no tiene ciclos, es un DAG y podría estudiarse después con orden topológico.
 
 ## Pseudocódigo claro
 
-Pendiente de desarrollo.
+El pseudocódigo siguiente no busca implementar todos los algoritmos de grafos. Solo fija operaciones básicas de construcción, consulta y transformación de la representación.
+
+### Construir grafo desde dependencias
+
+**Input:** conjunto de tareas y, para cada tarea, lista de requisitos.
+
+**Output:** grafo dirigido $G = (V, E)$ donde cada arista va desde requisito hacia tarea.
+
+```text
+BuildGraph(tareas, requisitos):
+    V <- conjunto de todas las tareas
+    E <- empty
+
+    for tarea T in tareas:
+        for requisito R in requisitos[T]:
+            agregar arista (R, T) a E
+
+    return G = (V, E)
+```
+
+### Agregar arista en lista de adyacencia
+
+**Input:** lista de adyacencia `Adj`, vértices `u`, `v` y booleano `dirigido`.
+
+**Output:** `Adj` actualizada con la arista.
+
+```text
+AddEdgeList(Adj, u, v, dirigido):
+    agregar v a Adj[u]
+
+    if not dirigido:
+        agregar u a Adj[v]
+```
+
+### Agregar arista en matriz de adyacencia
+
+**Input:** matriz de adyacencia `A`, vértices `u`, `v` y booleano `dirigido`.
+
+**Output:** matriz `A` actualizada con la arista.
+
+```text
+AddEdgeMatrix(A, u, v, dirigido):
+    A[u][v] <- 1
+
+    if not dirigido:
+        A[v][u] <- 1
+```
+
+### Consultar existencia de arista en matriz
+
+**Input:** matriz de adyacencia `A` y vértices `u`, `v`.
+
+**Output:** `true` si existe la arista desde `u` hacia `v`; `false` en caso contrario.
+
+```text
+HasEdgeMatrix(A, u, v):
+    return A[u][v] = 1
+```
+
+### Consultar existencia de arista en lista
+
+**Input:** lista de adyacencia `Adj` y vértices `u`, `v`.
+
+**Output:** `true` si `v` aparece en la lista de vecinos de `u`; `false` en caso contrario.
+
+```text
+HasEdgeList(Adj, u, v):
+    for x in Adj[u]:
+        if x = v:
+            return true
+
+    return false
+```
+
+### Construir grafo transpuesto
+
+El **grafo transpuesto** $G^T$ se define solo para grafos dirigidos. Tiene los mismos vértices, pero invierte todas las aristas. Por ahora solo importa como concepto de representación; se usará más adelante al estudiar componentes fuertemente conectadas.
+
+**Input:** grafo dirigido $G = (V, E)$.
+
+**Output:** grafo transpuesto $G^T$.
+
+```text
+Transpose(G):
+    V_T <- V(G)
+    E_T <- empty
+
+    for (u, v) in E(G):
+        agregar arista (v, u) a E_T
+
+    return G_T = (V_T, E_T)
+```
 
 ## Complejidad
 
-Pendiente de desarrollo.
+En grafos, la complejidad suele expresarse con dos variables:
 
-## Errores típicos
+- $V$: cantidad de vértices;
+- $E$: cantidad de aristas.
 
-Pendiente de desarrollo.
+No conviene escribir solo $O(n)$ si no se aclara qué representa $n$.
+
+| Procedimiento | Con lista de adyacencia | Con matriz de adyacencia |
+|---|---:|---:|
+| Crear estructura vacía | $O(V)$ | $O(V^2)$ |
+| Agregar una arista | $O(1)$ | $O(1)$ |
+| Agregar todas las aristas | $O(E)$ | $O(E)$ |
+| Consultar si existe $(u, v)$ | $O(\deg(u))$ | $O(1)$ |
+| Recorrer vecinos de $u$ | $O(\deg(u))$ | $O(V)$ |
+| Recorrer todo el grafo | $O(V + E)$ | $O(V^2)$ |
+| Transponer el grafo | $O(V + E)$ | $O(V^2)$ si se copia explícitamente |
+
+::: {.callout-warning}
+## Error típico
+
+Decir "es lineal" no basta. En grafos, un recorrido con lista de adyacencia suele ser lineal en $V + E$, no necesariamente en la cantidad de vértices solamente.
+:::
 
 ## Ejemplo guiado
 
-Pendiente de desarrollo.
+### Enunciado
+
+Un sistema debe ejecutar cinco tareas:
+
+- `Diseño` no tiene requisitos.
+- `BaseDatos` requiere `Diseño`.
+- `Backend` requiere `Diseño` y `BaseDatos`.
+- `Frontend` requiere `Diseño`.
+- `Deploy` requiere `Backend` y `Frontend`.
+
+Se quiere representar el problema para después decidir si las tareas pueden ordenarse sin circularidad.
+
+### Paso 1: identificar vértices
+
+Cada tarea es un vértice:
+
+$$
+V = \{\text{Diseño},\ \text{BaseDatos},\ \text{Backend},\ \text{Frontend},\ \text{Deploy}\}
+$$
+
+### Paso 2: identificar aristas
+
+Si `X` es requisito de `Y`, agregamos:
+
+$$
+X \to Y
+$$
+
+Entonces las aristas son:
+
+```text
+Diseño -> BaseDatos
+Diseño -> Backend
+BaseDatos -> Backend
+Diseño -> Frontend
+Backend -> Deploy
+Frontend -> Deploy
+```
+
+### Paso 3: representar con lista de adyacencia
+
+```text
+Diseño: [BaseDatos, Backend, Frontend]
+BaseDatos: [Backend]
+Backend: [Deploy]
+Frontend: [Deploy]
+Deploy: []
+```
+
+### Paso 4: visualizar el grafo
+
+```{mermaid}
+flowchart LR
+    A["Diseño"] --> B["BaseDatos"]
+    A --> C["Backend"]
+    A --> D["Frontend"]
+    B --> C
+    C --> E["Deploy"]
+    D --> E
+```
+
+### Paso 5: interpretar
+
+Este grafo es dirigido porque las dependencias tienen sentido. La arista `Diseño -> Backend` no significa que `Backend` sea requisito de `Diseño`; significa que `Diseño` debe estar listo antes de `Backend`.
+
+Si apareciera una arista `Deploy -> Diseño`, se formaría una dependencia circular:
+
+```text
+Diseño -> Backend -> Deploy -> Diseño
+```
+
+Ese ciclo impediría encontrar un orden válido de ejecución. La detección formal de ciclos y el orden topológico se estudian después; aquí lo importante es que el modelo permita hacer esa pregunta.
+
+## Errores típicos
+
+| Error | Por qué está mal | Corrección |
+|---|---|---|
+| Invertir las aristas de dependencia | Cambia el significado del orden. | Si `B` requiere `A`, usar $A \to B$. |
+| Usar grafo no dirigido para requisitos | La relación "requiere" no es simétrica. | Usar grafo dirigido. |
+| Usar matriz para un grafo enorme y disperso sin justificar | Puede desperdiciar memoria $O(V^2)$. | Usar lista si hay pocas aristas por vértice. |
+| Confundir componente conectada con componente fuertemente conectada | En dirigidos importa poder ir y volver. | Usar CFC cuando la alcanzabilidad es mutua. |
+| Confundir MST con caminos mínimos | Ambos usan grafos ponderados, pero responden preguntas distintas. | MST conecta todos; caminos mínimos optimizan rutas desde un origen. |
+| Elegir DFS o BFS antes de modelar | El algoritmo depende de qué representan vértices y aristas. | Primero definir $V$, $E$, tipo de grafo y representación. |
+| Usar hash como si fuera grafo | Un hash busca por llave, pero no representa caminos ni vecinos por sí solo. | Usar hash solo como apoyo para mapear etiquetas a vértices si hace falta. |
+
+::: {.callout-tip}
+## Consejo de estudio
+
+Cuando una respuesta diga "uso grafo", agrega siempre cuatro cosas: qué son los vértices, qué son las aristas, si el grafo es dirigido y qué representación conviene.
+:::
 
 ## Problema representativo de interrogación
 
 <details>
 <summary>Ver enunciado</summary>
 
-Pendiente de desarrollo.
+Una empresa debe instalar módulos de software. Cada módulo puede depender de otros módulos:
+
+| Módulo | Depende de |
+|---|---|
+| A | ninguno |
+| B | A |
+| C | A |
+| D | B, C |
+| E | D |
+| F | C |
+
+Responde:
+
+1. Modela el problema como un grafo.
+2. Indica si debe ser dirigido o no dirigido.
+3. Escribe la lista de adyacencia.
+4. Indica qué representación conviene si hay 100.000 módulos y cada módulo depende de a lo más 4 módulos.
+5. Explica qué significaría encontrar un ciclo.
+6. Explica por qué no corresponde resolver esto con solo una tabla de hash.
 
 </details>
 
 <details>
 <summary>Ver solución</summary>
 
-Pendiente de desarrollo.
+Cada módulo es un vértice:
+
+$$
+V = \{A, B, C, D, E, F\}
+$$
+
+El grafo debe ser dirigido, porque "depender de" tiene sentido. Si `B` depende de `A`, entonces `A` debe instalarse antes que `B`, por lo tanto se agrega:
+
+$$
+A \to B
+$$
+
+Las aristas son:
+
+$$
+A \to B,\quad A \to C,\quad B \to D,\quad C \to D,\quad D \to E,\quad C \to F
+$$
+
+La lista de adyacencia queda:
+
+```text
+A: [B, C]
+B: [D]
+C: [D, F]
+D: [E]
+E: []
+F: []
+```
+
+Con 100.000 módulos y a lo más 4 dependencias por módulo, conviene una lista de adyacencia. Es un grafo disperso: hay muchos vértices, pero pocas aristas por vértice. La matriz usaría $O(V^2)$ memoria, mientras que la lista usa $O(V + E)$.
+
+Un ciclo significa una dependencia circular. Por ejemplo, si además `A` dependiera de `E`, aparecería:
+
+```text
+A -> B -> D -> E -> A
+```
+
+Eso haría imposible instalar los módulos en un orden válido, porque cada uno espera a otro dentro del ciclo.
+
+Una tabla de hash podría ayudar a traducir nombres de módulos a índices internos, pero no basta por sí sola. El problema necesita guardar vecinos, seguir dependencias y razonar sobre ciclos; eso es comportamiento de grafo.
 
 </details>
 
+## Preguntas de repaso
+
+1. ¿Qué debe ser vértice y qué debe ser arista en un problema de requisitos?
+2. Si una arista representa una calle de un solo sentido, ¿el grafo es dirigido o no dirigido?
+3. ¿Por qué una matriz de adyacencia puede ser mala opción en grafos dispersos?
+4. ¿Qué operación es más rápida en una matriz: consultar si existe una arista o recorrer solo los vecinos reales?
+5. ¿Qué significa que un grafo dirigido sea acíclico?
+6. ¿Cuál es la diferencia entre componente conectada y componente fuertemente conectada?
+7. ¿Por qué en dependencias la arista va desde requisito hacia tarea?
+8. ¿Qué representa $V$ y qué representa $E$ en una complejidad como $O(V + E)$?
+9. ¿Por qué un grafo ponderado no implica automáticamente Dijkstra?
+10. ¿Cuándo un hash puede ayudar a implementar un grafo sin reemplazarlo?
+
+## Ejercicios breves
+
+### Ejercicio 1
+
+Modela como grafo una malla curricular donde algunos cursos son prerrequisitos de otros. Indica qué son los vértices, qué son las aristas y si el grafo es dirigido.
+
+### Ejercicio 2
+
+Para el grafo dirigido con aristas $(0,1)$, $(0,2)$, $(2,3)$ y $(3,1)$, escribe la lista de adyacencia.
+
+### Ejercicio 3
+
+Para el mismo grafo del ejercicio anterior, escribe la matriz de adyacencia usando vértices $0$, $1$, $2$ y $3$.
+
+### Ejercicio 4
+
+Decide si usarías lista o matriz en cada caso y justifica en una línea:
+
+| Caso | Representación esperada |
+|---|---|
+| 100.000 vértices y grado máximo 4 | Lista de adyacencia |
+| 1.000 vértices y casi todos conectados con todos | Matriz de adyacencia |
+| Muchas consultas del tipo "¿existe la arista $(u,v)$?" | Matriz de adyacencia, si la memoria alcanza |
+| Recorridos frecuentes por vecinos reales | Lista de adyacencia |
+
+### Ejercicio 5
+
+Una tarea `T` requiere haber completado `R`. Escribe la arista correcta y explica su dirección.
+
 ## Checklist de estudio
 
-Pendiente de desarrollo.
+- [ ] Puedo definir un grafo como $G = (V, E)$.
+- [ ] Puedo identificar vértices y aristas desde un enunciado.
+- [ ] Distingo grafo dirigido y no dirigido.
+- [ ] Distingo grafo ponderado y no ponderado.
+- [ ] Puedo explicar qué es un camino y qué es un ciclo.
+- [ ] Puedo explicar componente conectada y componente fuertemente conectada.
+- [ ] Sé qué significa que un grafo sea un DAG.
+- [ ] Sé cuándo usar lista de adyacencia.
+- [ ] Sé cuándo usar matriz de adyacencia.
+- [ ] Puedo construir un grafo desde dependencias.
+- [ ] Sé que en dependencias la arista va desde requisito hacia tarea.
+- [ ] Puedo explicar qué significa un ciclo en un grafo de dependencias.
+- [ ] Expreso complejidades usando $V$ y $E$.
+- [ ] No confundo grafos con tablas de hash.
+- [ ] No confundo heap con grafo ponderado.
+- [ ] No confundo MST con caminos mínimos.

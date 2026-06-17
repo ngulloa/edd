@@ -446,9 +446,21 @@
   {
     "objectID": "contenidos/grafos.html",
     "href": "contenidos/grafos.html",
-    "title": "Grafos",
+    "title": "Grafos: conceptos y representación",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Al terminar esta página deberías poder:\n\nreconocer cuándo un enunciado debe modelarse como grafo;\nidentificar qué elementos son vértices y qué relaciones son aristas;\ndistinguir grafos dirigidos, no dirigidos, ponderados y no ponderados;\nexplicar caminos, ciclos, componentes conectadas, componentes fuertemente conectadas y DAG;\nelegir entre lista de adyacencia y matriz de adyacencia;\nconstruir un grafo a partir de dependencias;\nexpresar complejidades usando \\(V\\) y \\(E\\);\nevitar confundir grafos con hash, heap, árboles de cobertura mínima o caminos mínimos.\n\nEsta página prepara el vocabulario y las representaciones. Algoritmos como DFS, BFS, detección de ciclos, orden topológico, componentes fuertemente conectadas, Kosaraju, Kruskal y caminos mínimos se estudian después como aplicaciones sobre grafos ya modelados.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Grafos"
+    ]
+  },
+  {
+    "objectID": "contenidos/grafos.html#objetivo-de-aprendizaje",
+    "href": "contenidos/grafos.html#objetivo-de-aprendizaje",
+    "title": "Grafos: conceptos y representación",
+    "section": "",
+    "text": "Al terminar esta página deberías poder:\n\nreconocer cuándo un enunciado debe modelarse como grafo;\nidentificar qué elementos son vértices y qué relaciones son aristas;\ndistinguir grafos dirigidos, no dirigidos, ponderados y no ponderados;\nexplicar caminos, ciclos, componentes conectadas, componentes fuertemente conectadas y DAG;\nelegir entre lista de adyacencia y matriz de adyacencia;\nconstruir un grafo a partir de dependencias;\nexpresar complejidades usando \\(V\\) y \\(E\\);\nevitar confundir grafos con hash, heap, árboles de cobertura mínima o caminos mínimos.\n\nEsta página prepara el vocabulario y las representaciones. Algoritmos como DFS, BFS, detección de ciclos, orden topológico, componentes fuertemente conectadas, Kosaraju, Kruskal y caminos mínimos se estudian después como aplicaciones sobre grafos ya modelados.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -458,9 +470,9 @@
   {
     "objectID": "contenidos/grafos.html#idea-central-del-tema",
     "href": "contenidos/grafos.html#idea-central-del-tema",
-    "title": "Grafos",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "title": "Grafos: conceptos y representación",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nUn grafo modela relaciones entre objetos. Los objetos son vértices y las relaciones son aristas.\nFormalmente, un grafo se escribe como:\n\\[\nG = (V, E)\n\\]\nDonde:\n\n\\(G\\) es el grafo completo.\n\\(V\\) es el conjunto de vértices.\n\\(E\\) es el conjunto de aristas.\n\nLa parte difícil en una evaluación no suele ser recordar la fórmula, sino traducir el enunciado correctamente:\n\n\n\n\n\nflowchart LR\n    A[\"Enunciado\"] --&gt; B[\"Definir vértices\"]\n    B --&gt; C[\"Definir aristas\"]\n    C --&gt; D[\"Elegir tipo de grafo\"]\n    D --&gt; E[\"Elegir representación\"]\n    E --&gt; F[\"Elegir algoritmo\"]\n\n\n\n\n\n\n\n\n\n\n\n\nImportanteIdea central\n\n\n\nAntes de pensar en DFS, BFS, Kruskal o caminos mínimos, escribe qué son los vértices y qué son las aristas. Si el modelo está mal, el algoritmo posterior también queda mal.\n\n\nUn grafo no es una estructura para buscar por llave como una tabla de hash. Un grafo sirve para representar relaciones: dependencias, conectividad, caminos, ciclos, componentes y rutas.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -468,11 +480,11 @@
     ]
   },
   {
-    "objectID": "contenidos/grafos.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/grafos.html#cuándo-usar-esta-técnica-o-estructura",
-    "title": "Grafos",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "objectID": "contenidos/grafos.html#antes-de-partir-vocabulario-mínimo",
+    "href": "contenidos/grafos.html#antes-de-partir-vocabulario-mínimo",
+    "title": "Grafos: conceptos y representación",
+    "section": "3 Antes de partir: vocabulario mínimo",
+    "text": "3 Antes de partir: vocabulario mínimo\n\n\n\n\n\n\n\nConcepto\nExplicación práctica\n\n\n\n\nVértice o nodo\nObjeto del problema: tarea, curso, ciudad, persona, celda o estado.\n\n\nArista\nRelación entre dos vértices.\n\n\nGrafo dirigido\nLas aristas tienen dirección. Una arista \\((u, v)\\) permite ir desde \\(u\\) hacia \\(v\\).\n\n\nGrafo no dirigido\nLas aristas no tienen dirección. Una arista \\(\\{u, v\\}\\) conecta ambos sentidos.\n\n\nGrafo ponderado\nCada arista tiene un peso, costo, distancia, tiempo o capacidad.\n\n\nGrafo no ponderado\nLas aristas solo indican relación; no tienen costo asociado.\n\n\nCamino\nSecuencia de vértices donde cada par consecutivo está conectado por una arista.\n\n\nCiclo\nCamino no vacío que vuelve al vértice inicial.\n\n\nVecino\nVértice conectado directamente con otro por una arista.\n\n\nGrado\nCantidad de aristas incidentes a un vértice en un grafo no dirigido.\n\n\nGrado de entrada\nEn un grafo dirigido, cantidad de aristas que llegan a un vértice.\n\n\nGrado de salida\nEn un grafo dirigido, cantidad de aristas que salen desde un vértice.\n\n\nComponente conectada\nGrupo de vértices conectados entre sí en un grafo no dirigido.\n\n\nComponente fuertemente conectada\nEn un grafo dirigido, grupo donde todos los vértices pueden llegar a todos los demás del grupo.\n\n\nDAG\nGrafo dirigido acíclico. Se usa en dependencias y orden topológico.\n\n\nLista de adyacencia\nPara cada vértice, guarda la lista de sus vecinos.\n\n\nMatriz de adyacencia\nUna celda \\(A[i][j]\\) indica si existe la arista desde \\(i\\) hacia \\(j\\).\n\n\n\n\n\n\n\n\n\nNotaIntuición\n\n\n\nLa palabra “adyacente” significa “vecino directo”. Si v aparece en la lista de adyacencia de u, entonces existe una arista que sale de u hacia v.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -480,11 +492,11 @@
     ]
   },
   {
-    "objectID": "contenidos/grafos.html#conceptos-mínimos",
-    "href": "contenidos/grafos.html#conceptos-mínimos",
-    "title": "Grafos",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "objectID": "contenidos/grafos.html#cuándo-usar-grafos",
+    "href": "contenidos/grafos.html#cuándo-usar-grafos",
+    "title": "Grafos: conceptos y representación",
+    "section": "4 Cuándo usar grafos",
+    "text": "4 Cuándo usar grafos\nUn enunciado puede pedir grafos aunque no use la palabra “grafo”. La señal principal es que hay objetos y relaciones entre ellos.\n\n\n\n\n\n\n\nSeñal del enunciado\nModelo natural\n\n\n\n\n“A depende de B”\nGrafo dirigido con arista \\(B \\to A\\).\n\n\n“Hay una ruta entre ciudades”\nGrafo dirigido o no dirigido según el sentido de la ruta.\n\n\n“Conectar todos con costo mínimo”\nGrafo no dirigido ponderado; después podría aparecer MST.\n\n\n“Detectar circularidad”\nGrafo dirigido y detección de ciclos.\n\n\n“Agrupar elementos conectados”\nComponentes conectadas.\n\n\n“Ordenar tareas con requisitos”\nGrafo dirigido acíclico y orden topológico.\n\n\n“Todos pueden llegar a todos dentro del grupo”\nComponentes fuertemente conectadas.\n\n\n“Encontrar si dos elementos están conectados”\nGrafo o Union-Find, según si se necesita recorrer caminos o solo unir y consultar componentes.\n\n\n“Buscar datos por identificador”\nUsualmente hash, no grafo.\n\n\n“Obtener el mínimo o máximo repetidamente”\nUsualmente heap, no grafo.\n\n\n\n\n\n\n\n\n\nTipConsejo de estudio\n\n\n\nLee el enunciado preguntando dos cosas: “¿qué objetos existen?” y “¿qué relación conecta a esos objetos?”. Esas respuestas suelen ser \\(V\\) y \\(E\\).",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -492,11 +504,47 @@
     ]
   },
   {
-    "objectID": "contenidos/grafos.html#operaciones-o-algoritmo-principal",
-    "href": "contenidos/grafos.html#operaciones-o-algoritmo-principal",
-    "title": "Grafos",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "objectID": "contenidos/grafos.html#tipos-de-grafos",
+    "href": "contenidos/grafos.html#tipos-de-grafos",
+    "title": "Grafos: conceptos y representación",
+    "section": "5 Tipos de grafos",
+    "text": "5 Tipos de grafos\n\n5.1 Grafo dirigido\nSe usa cuando la relación tiene sentido u orientación.\nEjemplos:\n\nuna tarea debe ocurrir antes que otra;\nuna calle es de un solo sentido;\nun enlace web apunta desde una página hacia otra;\nun módulo depende de otro módulo.\n\nSi una tarea B requiere haber hecho A, la arista correcta es:\n\\[\nA \\to B\n\\]\nLa arista va desde el requisito hacia la tarea que queda habilitada.\n\n\n5.2 Grafo no dirigido\nSe usa cuando la relación es simétrica.\nEjemplos:\n\nuna amistad mutua;\nun cable físico entre dos computadores;\nuna calle de doble sentido;\ndos elementos pertenecen a la misma red.\n\nLa arista no dirigida entre \\(u\\) y \\(v\\) se escribe como:\n\\[\n\\{u, v\\}\n\\]\nNo hay origen ni destino. Si \\(u\\) está conectado con \\(v\\), entonces \\(v\\) también está conectado con \\(u\\).\n\n\n5.3 Grafo ponderado\nSe usa cuando cada arista tiene un valor asociado: costo, distancia, tiempo, capacidad, riesgo o prioridad.\nUna arista ponderada puede representarse como:\n\\[\n(u, v, 7)\n\\]\nEsto puede significar que ir desde \\(u\\) hacia \\(v\\) cuesta 7 unidades.\n\n\n5.4 Grafo no ponderado\nSe usa cuando solo importa si la relación existe. No hay costo distinto por arista.\nPor ejemplo, en una red social simple puede bastar con saber si dos personas son amigas, sin asignar peso a esa relación.\n\n\n5.5 DAG\nUn DAG es un grafo dirigido acíclico. “Dirigido” significa que sus aristas tienen orientación; “acíclico” significa que no existe un camino dirigido que vuelva al punto de partida.\nLos DAG aparecen naturalmente en:\n\ndependencias entre tareas;\nprerrequisitos de cursos;\ncompilación de módulos;\norden topológico.\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nNo todo grafo con pesos pide caminos mínimos. Si el objetivo es conectar todos los vértices con costo total mínimo, se piensa en árbol de cobertura mínima. Si el objetivo es llegar desde un origen con menor costo, se piensa en caminos mínimos.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Grafos"
+    ]
+  },
+  {
+    "objectID": "contenidos/grafos.html#representaciones-de-grafos",
+    "href": "contenidos/grafos.html#representaciones-de-grafos",
+    "title": "Grafos: conceptos y representación",
+    "section": "6 Representaciones de grafos",
+    "text": "6 Representaciones de grafos\nDespués de decidir los vértices y aristas, hay que escoger cómo guardar el grafo en memoria.\nLas dos representaciones básicas son:\n\nlista de adyacencia: para cada vértice, guardar sus vecinos;\nmatriz de adyacencia: usar una tabla \\(V \\times V\\) para indicar si una arista existe.\n\n\n6.1 Lista de adyacencia\nUna lista de adyacencia guarda, para cada vértice, la lista de vértices alcanzables directamente desde él.\nEjemplo de grafo dirigido:\n0: [1, 2]\n1: [2, 3]\n2: [4]\n3: []\n4: []\nEsto representa las aristas:\n\\[\n(0,1),\\ (0,2),\\ (1,2),\\ (1,3),\\ (2,4)\n\\]\nLa ventaja principal es que recorrer los vecinos reales de un vértice es eficiente.\n\n\n6.2 Matriz de adyacencia\nUna matriz de adyacencia usa una tabla con una fila y una columna por vértice.\nSi existe la arista desde \\(i\\) hacia \\(j\\), entonces:\n\\[\nA[i][j] = 1\n\\]\nSi no existe, entonces:\n\\[\nA[i][j] = 0\n\\]\nPara el mismo grafo anterior:\n\n\n\nDesde / hacia\n0\n1\n2\n3\n4\n\n\n\n\n0\n0\n1\n1\n0\n0\n\n\n1\n0\n0\n1\n1\n0\n\n\n2\n0\n0\n0\n0\n1\n\n\n3\n0\n0\n0\n0\n0\n\n\n4\n0\n0\n0\n0\n0\n\n\n\nLa ventaja principal es que consultar si existe una arista específica cuesta \\(O(1)\\).",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Grafos"
+    ]
+  },
+  {
+    "objectID": "contenidos/grafos.html#lista-vs-matriz-de-adyacencia",
+    "href": "contenidos/grafos.html#lista-vs-matriz-de-adyacencia",
+    "title": "Grafos: conceptos y representación",
+    "section": "7 Lista vs matriz de adyacencia",
+    "text": "7 Lista vs matriz de adyacencia\nLa elección depende de cuántas aristas hay y qué operaciones se harán con frecuencia.\n\n\n\n\n\n\n\n\nOperación o criterio\nLista de adyacencia\nMatriz de adyacencia\n\n\n\n\nMemoria\n\\(O(V + E)\\)\n\\(O(V^2)\\)\n\n\nCrear estructura vacía\n\\(O(V)\\)\n\\(O(V^2)\\)\n\n\nRecorrer vecinos de \\(u\\)\n\\(O(\\deg(u))\\)\n\\(O(V)\\)\n\n\nRecorrer todos los vecinos de todos los vértices\n\\(O(V + E)\\)\n\\(O(V^2)\\)\n\n\nConsultar si existe \\((u, v)\\)\n\\(O(\\deg(u))\\) si la lista no usa set\n\\(O(1)\\)\n\n\nInsertar una arista\n\\(O(1)\\) si se agrega al final\n\\(O(1)\\)\n\n\nMejor uso típico\nGrafos dispersos, recorridos, dependencias\nGrafos densos o muchas consultas de existencia\n\n\n\nDonde \\(\\deg(u)\\) es la cantidad de vecinos de \\(u\\).\n\n\n\n\n\n\nNotaIntuición\n\n\n\nSi la mayoría de las posibles aristas no existe, la matriz guarda muchos ceros. En ese caso la lista de adyacencia suele ser mejor. Si el grafo es muy denso o se pregunta muchas veces “¿existe esta arista?”, la matriz puede ser conveniente.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Grafos"
+    ]
+  },
+  {
+    "objectID": "contenidos/grafos.html#construcción-de-grafos-desde-dependencias",
+    "href": "contenidos/grafos.html#construcción-de-grafos-desde-dependencias",
+    "title": "Grafos: conceptos y representación",
+    "section": "8 Construcción de grafos desde dependencias",
+    "text": "8 Construcción de grafos desde dependencias\nEn problemas de dependencias hay una regla clave:\n\n\n\n\n\n\nImportanteDependencias\n\n\n\nSi la tarea T requiere la tarea R, la arista va desde el requisito hacia la tarea: \\(R \\to T\\).\n\n\nLa dirección importa porque representa qué queda habilitado después de completar un requisito.\nEjemplo:\n\n\n\nTarea\nRequisitos\n\n\n\n\nA\nninguno\n\n\nB\nA\n\n\nC\nA\n\n\nD\nB, C\n\n\nE\nD\n\n\n\nLas aristas son:\n\\[\nA \\to B,\\quad A \\to C,\\quad B \\to D,\\quad C \\to D,\\quad D \\to E\n\\]\nLista de adyacencia resultante:\nA: [B, C]\nB: [D]\nC: [D]\nD: [E]\nE: []\nEste grafo es dirigido. Además, si no tiene ciclos, es un DAG y podría estudiarse después con orden topológico.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -506,9 +554,9 @@
   {
     "objectID": "contenidos/grafos.html#pseudocódigo-claro",
     "href": "contenidos/grafos.html#pseudocódigo-claro",
-    "title": "Grafos",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "title": "Grafos: conceptos y representación",
+    "section": "9 Pseudocódigo claro",
+    "text": "9 Pseudocódigo claro\nEl pseudocódigo siguiente no busca implementar todos los algoritmos de grafos. Solo fija operaciones básicas de construcción, consulta y transformación de la representación.\n\n9.1 Construir grafo desde dependencias\nInput: conjunto de tareas y, para cada tarea, lista de requisitos.\nOutput: grafo dirigido \\(G = (V, E)\\) donde cada arista va desde requisito hacia tarea.\nBuildGraph(tareas, requisitos):\n    V &lt;- conjunto de todas las tareas\n    E &lt;- empty\n\n    for tarea T in tareas:\n        for requisito R in requisitos[T]:\n            agregar arista (R, T) a E\n\n    return G = (V, E)\n\n\n9.2 Agregar arista en lista de adyacencia\nInput: lista de adyacencia Adj, vértices u, v y booleano dirigido.\nOutput: Adj actualizada con la arista.\nAddEdgeList(Adj, u, v, dirigido):\n    agregar v a Adj[u]\n\n    if not dirigido:\n        agregar u a Adj[v]\n\n\n9.3 Agregar arista en matriz de adyacencia\nInput: matriz de adyacencia A, vértices u, v y booleano dirigido.\nOutput: matriz A actualizada con la arista.\nAddEdgeMatrix(A, u, v, dirigido):\n    A[u][v] &lt;- 1\n\n    if not dirigido:\n        A[v][u] &lt;- 1\n\n\n9.4 Consultar existencia de arista en matriz\nInput: matriz de adyacencia A y vértices u, v.\nOutput: true si existe la arista desde u hacia v; false en caso contrario.\nHasEdgeMatrix(A, u, v):\n    return A[u][v] = 1\n\n\n9.5 Consultar existencia de arista en lista\nInput: lista de adyacencia Adj y vértices u, v.\nOutput: true si v aparece en la lista de vecinos de u; false en caso contrario.\nHasEdgeList(Adj, u, v):\n    for x in Adj[u]:\n        if x = v:\n            return true\n\n    return false\n\n\n9.6 Construir grafo transpuesto\nEl grafo transpuesto \\(G^T\\) se define solo para grafos dirigidos. Tiene los mismos vértices, pero invierte todas las aristas. Por ahora solo importa como concepto de representación; se usará más adelante al estudiar componentes fuertemente conectadas.\nInput: grafo dirigido \\(G = (V, E)\\).\nOutput: grafo transpuesto \\(G^T\\).\nTranspose(G):\n    V_T &lt;- V(G)\n    E_T &lt;- empty\n\n    for (u, v) in E(G):\n        agregar arista (v, u) a E_T\n\n    return G_T = (V_T, E_T)",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -518,21 +566,9 @@
   {
     "objectID": "contenidos/grafos.html#complejidad",
     "href": "contenidos/grafos.html#complejidad",
-    "title": "Grafos",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
-    "crumbs": [
-      "Inicio",
-      "Contenidos",
-      "Grafos"
-    ]
-  },
-  {
-    "objectID": "contenidos/grafos.html#errores-típicos",
-    "href": "contenidos/grafos.html#errores-típicos",
-    "title": "Grafos",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
+    "title": "Grafos: conceptos y representación",
+    "section": "10 Complejidad",
+    "text": "10 Complejidad\nEn grafos, la complejidad suele expresarse con dos variables:\n\n\\(V\\): cantidad de vértices;\n\\(E\\): cantidad de aristas.\n\nNo conviene escribir solo \\(O(n)\\) si no se aclara qué representa \\(n\\).\n\n\n\n\n\n\n\n\nProcedimiento\nCon lista de adyacencia\nCon matriz de adyacencia\n\n\n\n\nCrear estructura vacía\n\\(O(V)\\)\n\\(O(V^2)\\)\n\n\nAgregar una arista\n\\(O(1)\\)\n\\(O(1)\\)\n\n\nAgregar todas las aristas\n\\(O(E)\\)\n\\(O(E)\\)\n\n\nConsultar si existe \\((u, v)\\)\n\\(O(\\deg(u))\\)\n\\(O(1)\\)\n\n\nRecorrer vecinos de \\(u\\)\n\\(O(\\deg(u))\\)\n\\(O(V)\\)\n\n\nRecorrer todo el grafo\n\\(O(V + E)\\)\n\\(O(V^2)\\)\n\n\nTransponer el grafo\n\\(O(V + E)\\)\n\\(O(V^2)\\) si se copia explícitamente\n\n\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nDecir “es lineal” no basta. En grafos, un recorrido con lista de adyacencia suele ser lineal en \\(V + E\\), no necesariamente en la cantidad de vértices solamente.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -542,9 +578,21 @@
   {
     "objectID": "contenidos/grafos.html#ejemplo-guiado",
     "href": "contenidos/grafos.html#ejemplo-guiado",
-    "title": "Grafos",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "title": "Grafos: conceptos y representación",
+    "section": "11 Ejemplo guiado",
+    "text": "11 Ejemplo guiado\n\n11.1 Enunciado\nUn sistema debe ejecutar cinco tareas:\n\nDiseño no tiene requisitos.\nBaseDatos requiere Diseño.\nBackend requiere Diseño y BaseDatos.\nFrontend requiere Diseño.\nDeploy requiere Backend y Frontend.\n\nSe quiere representar el problema para después decidir si las tareas pueden ordenarse sin circularidad.\n\n\n11.2 Paso 1: identificar vértices\nCada tarea es un vértice:\n\\[\nV = \\{\\text{Diseño},\\ \\text{BaseDatos},\\ \\text{Backend},\\ \\text{Frontend},\\ \\text{Deploy}\\}\n\\]\n\n\n11.3 Paso 2: identificar aristas\nSi X es requisito de Y, agregamos:\n\\[\nX \\to Y\n\\]\nEntonces las aristas son:\nDiseño -&gt; BaseDatos\nDiseño -&gt; Backend\nBaseDatos -&gt; Backend\nDiseño -&gt; Frontend\nBackend -&gt; Deploy\nFrontend -&gt; Deploy\n\n\n11.4 Paso 3: representar con lista de adyacencia\nDiseño: [BaseDatos, Backend, Frontend]\nBaseDatos: [Backend]\nBackend: [Deploy]\nFrontend: [Deploy]\nDeploy: []\n\n\n11.5 Paso 4: visualizar el grafo\n\n\n\n\n\nflowchart LR\n    A[\"Diseño\"] --&gt; B[\"BaseDatos\"]\n    A --&gt; C[\"Backend\"]\n    A --&gt; D[\"Frontend\"]\n    B --&gt; C\n    C --&gt; E[\"Deploy\"]\n    D --&gt; E\n\n\n\n\n\n\n\n\n11.6 Paso 5: interpretar\nEste grafo es dirigido porque las dependencias tienen sentido. La arista Diseño -&gt; Backend no significa que Backend sea requisito de Diseño; significa que Diseño debe estar listo antes de Backend.\nSi apareciera una arista Deploy -&gt; Diseño, se formaría una dependencia circular:\nDiseño -&gt; Backend -&gt; Deploy -&gt; Diseño\nEse ciclo impediría encontrar un orden válido de ejecución. La detección formal de ciclos y el orden topológico se estudian después; aquí lo importante es que el modelo permita hacer esa pregunta.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Grafos"
+    ]
+  },
+  {
+    "objectID": "contenidos/grafos.html#errores-típicos",
+    "href": "contenidos/grafos.html#errores-típicos",
+    "title": "Grafos: conceptos y representación",
+    "section": "12 Errores típicos",
+    "text": "12 Errores típicos\n\n\n\n\n\n\n\n\nError\nPor qué está mal\nCorrección\n\n\n\n\nInvertir las aristas de dependencia\nCambia el significado del orden.\nSi B requiere A, usar \\(A \\to B\\).\n\n\nUsar grafo no dirigido para requisitos\nLa relación “requiere” no es simétrica.\nUsar grafo dirigido.\n\n\nUsar matriz para un grafo enorme y disperso sin justificar\nPuede desperdiciar memoria \\(O(V^2)\\).\nUsar lista si hay pocas aristas por vértice.\n\n\nConfundir componente conectada con componente fuertemente conectada\nEn dirigidos importa poder ir y volver.\nUsar CFC cuando la alcanzabilidad es mutua.\n\n\nConfundir MST con caminos mínimos\nAmbos usan grafos ponderados, pero responden preguntas distintas.\nMST conecta todos; caminos mínimos optimizan rutas desde un origen.\n\n\nElegir DFS o BFS antes de modelar\nEl algoritmo depende de qué representan vértices y aristas.\nPrimero definir \\(V\\), \\(E\\), tipo de grafo y representación.\n\n\nUsar hash como si fuera grafo\nUn hash busca por llave, pero no representa caminos ni vecinos por sí solo.\nUsar hash solo como apoyo para mapear etiquetas a vértices si hace falta.\n\n\n\n\n\n\n\n\n\nTipConsejo de estudio\n\n\n\nCuando una respuesta diga “uso grafo”, agrega siempre cuatro cosas: qué son los vértices, qué son las aristas, si el grafo es dirigido y qué representación conviene.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -554,9 +602,33 @@
   {
     "objectID": "contenidos/grafos.html#problema-representativo-de-interrogación",
     "href": "contenidos/grafos.html#problema-representativo-de-interrogación",
-    "title": "Grafos",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "title": "Grafos: conceptos y representación",
+    "section": "13 Problema representativo de interrogación",
+    "text": "13 Problema representativo de interrogación\n\n\nVer enunciado\n\nUna empresa debe instalar módulos de software. Cada módulo puede depender de otros módulos:\n\n\n\nMódulo\nDepende de\n\n\n\n\nA\nninguno\n\n\nB\nA\n\n\nC\nA\n\n\nD\nB, C\n\n\nE\nD\n\n\nF\nC\n\n\n\nResponde:\n\nModela el problema como un grafo.\nIndica si debe ser dirigido o no dirigido.\nEscribe la lista de adyacencia.\nIndica qué representación conviene si hay 100.000 módulos y cada módulo depende de a lo más 4 módulos.\nExplica qué significaría encontrar un ciclo.\nExplica por qué no corresponde resolver esto con solo una tabla de hash.\n\n\n\n\nVer solución\n\nCada módulo es un vértice:\n\\[\nV = \\{A, B, C, D, E, F\\}\n\\]\nEl grafo debe ser dirigido, porque “depender de” tiene sentido. Si B depende de A, entonces A debe instalarse antes que B, por lo tanto se agrega:\n\\[\nA \\to B\n\\]\nLas aristas son:\n\\[\nA \\to B,\\quad A \\to C,\\quad B \\to D,\\quad C \\to D,\\quad D \\to E,\\quad C \\to F\n\\]\nLa lista de adyacencia queda:\nA: [B, C]\nB: [D]\nC: [D, F]\nD: [E]\nE: []\nF: []\nCon 100.000 módulos y a lo más 4 dependencias por módulo, conviene una lista de adyacencia. Es un grafo disperso: hay muchos vértices, pero pocas aristas por vértice. La matriz usaría \\(O(V^2)\\) memoria, mientras que la lista usa \\(O(V + E)\\).\nUn ciclo significa una dependencia circular. Por ejemplo, si además A dependiera de E, aparecería:\nA -&gt; B -&gt; D -&gt; E -&gt; A\nEso haría imposible instalar los módulos en un orden válido, porque cada uno espera a otro dentro del ciclo.\nUna tabla de hash podría ayudar a traducir nombres de módulos a índices internos, pero no basta por sí sola. El problema necesita guardar vecinos, seguir dependencias y razonar sobre ciclos; eso es comportamiento de grafo.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Grafos"
+    ]
+  },
+  {
+    "objectID": "contenidos/grafos.html#preguntas-de-repaso",
+    "href": "contenidos/grafos.html#preguntas-de-repaso",
+    "title": "Grafos: conceptos y representación",
+    "section": "14 Preguntas de repaso",
+    "text": "14 Preguntas de repaso\n\n¿Qué debe ser vértice y qué debe ser arista en un problema de requisitos?\nSi una arista representa una calle de un solo sentido, ¿el grafo es dirigido o no dirigido?\n¿Por qué una matriz de adyacencia puede ser mala opción en grafos dispersos?\n¿Qué operación es más rápida en una matriz: consultar si existe una arista o recorrer solo los vecinos reales?\n¿Qué significa que un grafo dirigido sea acíclico?\n¿Cuál es la diferencia entre componente conectada y componente fuertemente conectada?\n¿Por qué en dependencias la arista va desde requisito hacia tarea?\n¿Qué representa \\(V\\) y qué representa \\(E\\) en una complejidad como \\(O(V + E)\\)?\n¿Por qué un grafo ponderado no implica automáticamente Dijkstra?\n¿Cuándo un hash puede ayudar a implementar un grafo sin reemplazarlo?",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Grafos"
+    ]
+  },
+  {
+    "objectID": "contenidos/grafos.html#ejercicios-breves",
+    "href": "contenidos/grafos.html#ejercicios-breves",
+    "title": "Grafos: conceptos y representación",
+    "section": "15 Ejercicios breves",
+    "text": "15 Ejercicios breves\n\n15.1 Ejercicio 1\nModela como grafo una malla curricular donde algunos cursos son prerrequisitos de otros. Indica qué son los vértices, qué son las aristas y si el grafo es dirigido.\n\n\n15.2 Ejercicio 2\nPara el grafo dirigido con aristas \\((0,1)\\), \\((0,2)\\), \\((2,3)\\) y \\((3,1)\\), escribe la lista de adyacencia.\n\n\n15.3 Ejercicio 3\nPara el mismo grafo del ejercicio anterior, escribe la matriz de adyacencia usando vértices \\(0\\), \\(1\\), \\(2\\) y \\(3\\).\n\n\n15.4 Ejercicio 4\nDecide si usarías lista o matriz en cada caso y justifica en una línea:\n\n\n\n\n\n\n\nCaso\nRepresentación esperada\n\n\n\n\n100.000 vértices y grado máximo 4\nLista de adyacencia\n\n\n1.000 vértices y casi todos conectados con todos\nMatriz de adyacencia\n\n\nMuchas consultas del tipo “¿existe la arista \\((u,v)\\)?”\nMatriz de adyacencia, si la memoria alcanza\n\n\nRecorridos frecuentes por vecinos reales\nLista de adyacencia\n\n\n\n\n\n15.5 Ejercicio 5\nUna tarea T requiere haber completado R. Escribe la arista correcta y explica su dirección.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -566,9 +638,9 @@
   {
     "objectID": "contenidos/grafos.html#checklist-de-estudio",
     "href": "contenidos/grafos.html#checklist-de-estudio",
-    "title": "Grafos",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "title": "Grafos: conceptos y representación",
+    "section": "16 Checklist de estudio",
+    "text": "16 Checklist de estudio\n\nPuedo definir un grafo como \\(G = (V, E)\\).\nPuedo identificar vértices y aristas desde un enunciado.\nDistingo grafo dirigido y no dirigido.\nDistingo grafo ponderado y no ponderado.\nPuedo explicar qué es un camino y qué es un ciclo.\nPuedo explicar componente conectada y componente fuertemente conectada.\nSé qué significa que un grafo sea un DAG.\nSé cuándo usar lista de adyacencia.\nSé cuándo usar matriz de adyacencia.\nPuedo construir un grafo desde dependencias.\nSé que en dependencias la arista va desde requisito hacia tarea.\nPuedo explicar qué significa un ciclo en un grafo de dependencias.\nExpreso complejidades usando \\(V\\) y \\(E\\).\nNo confundo grafos con tablas de hash.\nNo confundo heap con grafo ponderado.\nNo confundo MST con caminos mínimos.",
     "crumbs": [
       "Inicio",
       "Contenidos",

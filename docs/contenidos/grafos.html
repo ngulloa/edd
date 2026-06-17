@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Grafos – Estudio I2 EDD</title>
+<title>Grafos: conceptos y representación – Estudio I2 EDD</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,7 +71,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -252,16 +284,56 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#cuándo-usar-grafos" id="toc-cuándo-usar-grafos" class="nav-link" data-scroll-target="#cuándo-usar-grafos"><span class="header-section-number">4</span> Cuándo usar grafos</a></li>
+  <li><a href="#tipos-de-grafos" id="toc-tipos-de-grafos" class="nav-link" data-scroll-target="#tipos-de-grafos"><span class="header-section-number">5</span> Tipos de grafos</a>
+  <ul class="collapse">
+  <li><a href="#grafo-dirigido" id="toc-grafo-dirigido" class="nav-link" data-scroll-target="#grafo-dirigido"><span class="header-section-number">5.1</span> Grafo dirigido</a></li>
+  <li><a href="#grafo-no-dirigido" id="toc-grafo-no-dirigido" class="nav-link" data-scroll-target="#grafo-no-dirigido"><span class="header-section-number">5.2</span> Grafo no dirigido</a></li>
+  <li><a href="#grafo-ponderado" id="toc-grafo-ponderado" class="nav-link" data-scroll-target="#grafo-ponderado"><span class="header-section-number">5.3</span> Grafo ponderado</a></li>
+  <li><a href="#grafo-no-ponderado" id="toc-grafo-no-ponderado" class="nav-link" data-scroll-target="#grafo-no-ponderado"><span class="header-section-number">5.4</span> Grafo no ponderado</a></li>
+  <li><a href="#dag" id="toc-dag" class="nav-link" data-scroll-target="#dag"><span class="header-section-number">5.5</span> DAG</a></li>
+  </ul></li>
+  <li><a href="#representaciones-de-grafos" id="toc-representaciones-de-grafos" class="nav-link" data-scroll-target="#representaciones-de-grafos"><span class="header-section-number">6</span> Representaciones de grafos</a>
+  <ul class="collapse">
+  <li><a href="#lista-de-adyacencia" id="toc-lista-de-adyacencia" class="nav-link" data-scroll-target="#lista-de-adyacencia"><span class="header-section-number">6.1</span> Lista de adyacencia</a></li>
+  <li><a href="#matriz-de-adyacencia" id="toc-matriz-de-adyacencia" class="nav-link" data-scroll-target="#matriz-de-adyacencia"><span class="header-section-number">6.2</span> Matriz de adyacencia</a></li>
+  </ul></li>
+  <li><a href="#lista-vs-matriz-de-adyacencia" id="toc-lista-vs-matriz-de-adyacencia" class="nav-link" data-scroll-target="#lista-vs-matriz-de-adyacencia"><span class="header-section-number">7</span> Lista vs matriz de adyacencia</a></li>
+  <li><a href="#construcción-de-grafos-desde-dependencias" id="toc-construcción-de-grafos-desde-dependencias" class="nav-link" data-scroll-target="#construcción-de-grafos-desde-dependencias"><span class="header-section-number">8</span> Construcción de grafos desde dependencias</a></li>
+  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">9</span> Pseudocódigo claro</a>
+  <ul class="collapse">
+  <li><a href="#construir-grafo-desde-dependencias" id="toc-construir-grafo-desde-dependencias" class="nav-link" data-scroll-target="#construir-grafo-desde-dependencias"><span class="header-section-number">9.1</span> Construir grafo desde dependencias</a></li>
+  <li><a href="#agregar-arista-en-lista-de-adyacencia" id="toc-agregar-arista-en-lista-de-adyacencia" class="nav-link" data-scroll-target="#agregar-arista-en-lista-de-adyacencia"><span class="header-section-number">9.2</span> Agregar arista en lista de adyacencia</a></li>
+  <li><a href="#agregar-arista-en-matriz-de-adyacencia" id="toc-agregar-arista-en-matriz-de-adyacencia" class="nav-link" data-scroll-target="#agregar-arista-en-matriz-de-adyacencia"><span class="header-section-number">9.3</span> Agregar arista en matriz de adyacencia</a></li>
+  <li><a href="#consultar-existencia-de-arista-en-matriz" id="toc-consultar-existencia-de-arista-en-matriz" class="nav-link" data-scroll-target="#consultar-existencia-de-arista-en-matriz"><span class="header-section-number">9.4</span> Consultar existencia de arista en matriz</a></li>
+  <li><a href="#consultar-existencia-de-arista-en-lista" id="toc-consultar-existencia-de-arista-en-lista" class="nav-link" data-scroll-target="#consultar-existencia-de-arista-en-lista"><span class="header-section-number">9.5</span> Consultar existencia de arista en lista</a></li>
+  <li><a href="#construir-grafo-transpuesto" id="toc-construir-grafo-transpuesto" class="nav-link" data-scroll-target="#construir-grafo-transpuesto"><span class="header-section-number">9.6</span> Construir grafo transpuesto</a></li>
+  </ul></li>
+  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">10</span> Complejidad</a></li>
+  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">11</span> Ejemplo guiado</a>
+  <ul class="collapse">
+  <li><a href="#enunciado" id="toc-enunciado" class="nav-link" data-scroll-target="#enunciado"><span class="header-section-number">11.1</span> Enunciado</a></li>
+  <li><a href="#paso-1-identificar-vértices" id="toc-paso-1-identificar-vértices" class="nav-link" data-scroll-target="#paso-1-identificar-vértices"><span class="header-section-number">11.2</span> Paso 1: identificar vértices</a></li>
+  <li><a href="#paso-2-identificar-aristas" id="toc-paso-2-identificar-aristas" class="nav-link" data-scroll-target="#paso-2-identificar-aristas"><span class="header-section-number">11.3</span> Paso 2: identificar aristas</a></li>
+  <li><a href="#paso-3-representar-con-lista-de-adyacencia" id="toc-paso-3-representar-con-lista-de-adyacencia" class="nav-link" data-scroll-target="#paso-3-representar-con-lista-de-adyacencia"><span class="header-section-number">11.4</span> Paso 3: representar con lista de adyacencia</a></li>
+  <li><a href="#paso-4-visualizar-el-grafo" id="toc-paso-4-visualizar-el-grafo" class="nav-link" data-scroll-target="#paso-4-visualizar-el-grafo"><span class="header-section-number">11.5</span> Paso 4: visualizar el grafo</a></li>
+  <li><a href="#paso-5-interpretar" id="toc-paso-5-interpretar" class="nav-link" data-scroll-target="#paso-5-interpretar"><span class="header-section-number">11.6</span> Paso 5: interpretar</a></li>
+  </ul></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">12</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">15.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">15.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">15.3</span> Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4"><span class="header-section-number">15.4</span> Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5" id="toc-ejercicio-5" class="nav-link" data-scroll-target="#ejercicio-5"><span class="header-section-number">15.5</span> Ejercicio 5</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +342,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenidos/hash.html">Contenidos</a></li><li class="breadcrumb-item"><a href="../contenidos/grafos.html">Grafos</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Grafos</h1>
+<h1 class="title">Grafos: conceptos y representación</h1>
 </div>
 
 
@@ -287,56 +359,981 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Al terminar esta página deberías poder:</p>
+<ul>
+<li>reconocer cuándo un enunciado debe modelarse como grafo;</li>
+<li>identificar qué elementos son vértices y qué relaciones son aristas;</li>
+<li>distinguir grafos dirigidos, no dirigidos, ponderados y no ponderados;</li>
+<li>explicar caminos, ciclos, componentes conectadas, componentes fuertemente conectadas y DAG;</li>
+<li>elegir entre lista de adyacencia y matriz de adyacencia;</li>
+<li>construir un grafo a partir de dependencias;</li>
+<li>expresar complejidades usando <span class="math inline">\(V\)</span> y <span class="math inline">\(E\)</span>;</li>
+<li>evitar confundir grafos con hash, heap, árboles de cobertura mínima o caminos mínimos.</li>
+</ul>
+<p>Esta página prepara el vocabulario y las representaciones. Algoritmos como DFS, BFS, detección de ciclos, orden topológico, componentes fuertemente conectadas, Kosaraju, Kruskal y caminos mínimos se estudian después como aplicaciones sobre grafos ya modelados.</p>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>Un <strong>grafo</strong> modela relaciones entre objetos. Los objetos son <strong>vértices</strong> y las relaciones son <strong>aristas</strong>.</p>
+<p>Formalmente, un grafo se escribe como:</p>
+<p><span class="math display">\[
+G = (V, E)
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><span class="math inline">\(G\)</span> es el grafo completo.</li>
+<li><span class="math inline">\(V\)</span> es el conjunto de vértices.</li>
+<li><span class="math inline">\(E\)</span> es el conjunto de aristas.</li>
+</ul>
+<p>La parte difícil en una evaluación no suele ser recordar la fórmula, sino traducir el enunciado correctamente:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Enunciado"] --&gt; B["Definir vértices"]
+    B --&gt; C["Definir aristas"]
+    C --&gt; D["Elegir tipo de grafo"]
+    D --&gt; E["Elegir representación"]
+    E --&gt; F["Elegir algoritmo"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Idea central
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de pensar en DFS, BFS, Kruskal o caminos mínimos, escribe qué son los vértices y qué son las aristas. Si el modelo está mal, el algoritmo posterior también queda mal.</p>
+</div>
+</div>
+<p>Un grafo no es una estructura para buscar por llave como una tabla de hash. Un grafo sirve para representar relaciones: dependencias, conectividad, caminos, ciclos, componentes y rutas.</p>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Explicación práctica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Vértice o nodo</td>
+<td>Objeto del problema: tarea, curso, ciudad, persona, celda o estado.</td>
+</tr>
+<tr class="even">
+<td>Arista</td>
+<td>Relación entre dos vértices.</td>
+</tr>
+<tr class="odd">
+<td>Grafo dirigido</td>
+<td>Las aristas tienen dirección. Una arista <span class="math inline">\((u, v)\)</span> permite ir desde <span class="math inline">\(u\)</span> hacia <span class="math inline">\(v\)</span>.</td>
+</tr>
+<tr class="even">
+<td>Grafo no dirigido</td>
+<td>Las aristas no tienen dirección. Una arista <span class="math inline">\(\{u, v\}\)</span> conecta ambos sentidos.</td>
+</tr>
+<tr class="odd">
+<td>Grafo ponderado</td>
+<td>Cada arista tiene un peso, costo, distancia, tiempo o capacidad.</td>
+</tr>
+<tr class="even">
+<td>Grafo no ponderado</td>
+<td>Las aristas solo indican relación; no tienen costo asociado.</td>
+</tr>
+<tr class="odd">
+<td>Camino</td>
+<td>Secuencia de vértices donde cada par consecutivo está conectado por una arista.</td>
+</tr>
+<tr class="even">
+<td>Ciclo</td>
+<td>Camino no vacío que vuelve al vértice inicial.</td>
+</tr>
+<tr class="odd">
+<td>Vecino</td>
+<td>Vértice conectado directamente con otro por una arista.</td>
+</tr>
+<tr class="even">
+<td>Grado</td>
+<td>Cantidad de aristas incidentes a un vértice en un grafo no dirigido.</td>
+</tr>
+<tr class="odd">
+<td>Grado de entrada</td>
+<td>En un grafo dirigido, cantidad de aristas que llegan a un vértice.</td>
+</tr>
+<tr class="even">
+<td>Grado de salida</td>
+<td>En un grafo dirigido, cantidad de aristas que salen desde un vértice.</td>
+</tr>
+<tr class="odd">
+<td>Componente conectada</td>
+<td>Grupo de vértices conectados entre sí en un grafo no dirigido.</td>
+</tr>
+<tr class="even">
+<td>Componente fuertemente conectada</td>
+<td>En un grafo dirigido, grupo donde todos los vértices pueden llegar a todos los demás del grupo.</td>
+</tr>
+<tr class="odd">
+<td>DAG</td>
+<td>Grafo dirigido acíclico. Se usa en dependencias y orden topológico.</td>
+</tr>
+<tr class="even">
+<td>Lista de adyacencia</td>
+<td>Para cada vértice, guarda la lista de sus vecinos.</td>
+</tr>
+<tr class="odd">
+<td>Matriz de adyacencia</td>
+<td>Una celda <span class="math inline">\(A[i][j]\)</span> indica si existe la arista desde <span class="math inline">\(i\)</span> hacia <span class="math inline">\(j\)</span>.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La palabra “adyacente” significa “vecino directo”. Si <code>v</code> aparece en la lista de adyacencia de <code>u</code>, entonces existe una arista que sale de <code>u</code> hacia <code>v</code>.</p>
+</div>
+</div>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cuándo-usar-grafos" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-usar-grafos"><span class="header-section-number">4</span> Cuándo usar grafos</h2>
+<p>Un enunciado puede pedir grafos aunque no use la palabra “grafo”. La señal principal es que hay objetos y relaciones entre ellos.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Señal del enunciado</th>
+<th>Modelo natural</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“A depende de B”</td>
+<td>Grafo dirigido con arista <span class="math inline">\(B \to A\)</span>.</td>
+</tr>
+<tr class="even">
+<td>“Hay una ruta entre ciudades”</td>
+<td>Grafo dirigido o no dirigido según el sentido de la ruta.</td>
+</tr>
+<tr class="odd">
+<td>“Conectar todos con costo mínimo”</td>
+<td>Grafo no dirigido ponderado; después podría aparecer MST.</td>
+</tr>
+<tr class="even">
+<td>“Detectar circularidad”</td>
+<td>Grafo dirigido y detección de ciclos.</td>
+</tr>
+<tr class="odd">
+<td>“Agrupar elementos conectados”</td>
+<td>Componentes conectadas.</td>
+</tr>
+<tr class="even">
+<td>“Ordenar tareas con requisitos”</td>
+<td>Grafo dirigido acíclico y orden topológico.</td>
+</tr>
+<tr class="odd">
+<td>“Todos pueden llegar a todos dentro del grupo”</td>
+<td>Componentes fuertemente conectadas.</td>
+</tr>
+<tr class="even">
+<td>“Encontrar si dos elementos están conectados”</td>
+<td>Grafo o Union-Find, según si se necesita recorrer caminos o solo unir y consultar componentes.</td>
+</tr>
+<tr class="odd">
+<td>“Buscar datos por identificador”</td>
+<td>Usualmente hash, no grafo.</td>
+</tr>
+<tr class="even">
+<td>“Obtener el mínimo o máximo repetidamente”</td>
+<td>Usualmente heap, no grafo.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Consejo de estudio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Lee el enunciado preguntando dos cosas: “¿qué objetos existen?” y “¿qué relación conecta a esos objetos?”. Esas respuestas suelen ser <span class="math inline">\(V\)</span> y <span class="math inline">\(E\)</span>.</p>
+</div>
+</div>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="tipos-de-grafos" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="tipos-de-grafos"><span class="header-section-number">5</span> Tipos de grafos</h2>
+<section id="grafo-dirigido" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="grafo-dirigido"><span class="header-section-number">5.1</span> Grafo dirigido</h3>
+<p>Se usa cuando la relación tiene sentido u orientación.</p>
+<p>Ejemplos:</p>
+<ul>
+<li>una tarea debe ocurrir antes que otra;</li>
+<li>una calle es de un solo sentido;</li>
+<li>un enlace web apunta desde una página hacia otra;</li>
+<li>un módulo depende de otro módulo.</li>
+</ul>
+<p>Si una tarea <code>B</code> requiere haber hecho <code>A</code>, la arista correcta es:</p>
+<p><span class="math display">\[
+A \to B
+\]</span></p>
+<p>La arista va desde el requisito hacia la tarea que queda habilitada.</p>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="grafo-no-dirigido" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="grafo-no-dirigido"><span class="header-section-number">5.2</span> Grafo no dirigido</h3>
+<p>Se usa cuando la relación es simétrica.</p>
+<p>Ejemplos:</p>
+<ul>
+<li>una amistad mutua;</li>
+<li>un cable físico entre dos computadores;</li>
+<li>una calle de doble sentido;</li>
+<li>dos elementos pertenecen a la misma red.</li>
+</ul>
+<p>La arista no dirigida entre <span class="math inline">\(u\)</span> y <span class="math inline">\(v\)</span> se escribe como:</p>
+<p><span class="math display">\[
+\{u, v\}
+\]</span></p>
+<p>No hay origen ni destino. Si <span class="math inline">\(u\)</span> está conectado con <span class="math inline">\(v\)</span>, entonces <span class="math inline">\(v\)</span> también está conectado con <span class="math inline">\(u\)</span>.</p>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="grafo-ponderado" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="grafo-ponderado"><span class="header-section-number">5.3</span> Grafo ponderado</h3>
+<p>Se usa cuando cada arista tiene un valor asociado: costo, distancia, tiempo, capacidad, riesgo o prioridad.</p>
+<p>Una arista ponderada puede representarse como:</p>
+<p><span class="math display">\[
+(u, v, 7)
+\]</span></p>
+<p>Esto puede significar que ir desde <span class="math inline">\(u\)</span> hacia <span class="math inline">\(v\)</span> cuesta 7 unidades.</p>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="grafo-no-ponderado" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="grafo-no-ponderado"><span class="header-section-number">5.4</span> Grafo no ponderado</h3>
+<p>Se usa cuando solo importa si la relación existe. No hay costo distinto por arista.</p>
+<p>Por ejemplo, en una red social simple puede bastar con saber si dos personas son amigas, sin asignar peso a esa relación.</p>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+<section id="dag" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="dag"><span class="header-section-number">5.5</span> DAG</h3>
+<p>Un <strong>DAG</strong> es un grafo dirigido acíclico. “Dirigido” significa que sus aristas tienen orientación; “acíclico” significa que no existe un camino dirigido que vuelva al punto de partida.</p>
+<p>Los DAG aparecen naturalmente en:</p>
+<ul>
+<li>dependencias entre tareas;</li>
+<li>prerrequisitos de cursos;</li>
+<li>compilación de módulos;</li>
+<li>orden topológico.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No todo grafo con pesos pide caminos mínimos. Si el objetivo es conectar todos los vértices con costo total mínimo, se piensa en árbol de cobertura mínima. Si el objetivo es llegar desde un origen con menor costo, se piensa en caminos mínimos.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="representaciones-de-grafos" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="representaciones-de-grafos"><span class="header-section-number">6</span> Representaciones de grafos</h2>
+<p>Después de decidir los vértices y aristas, hay que escoger cómo guardar el grafo en memoria.</p>
+<p>Las dos representaciones básicas son:</p>
+<ul>
+<li><strong>lista de adyacencia:</strong> para cada vértice, guardar sus vecinos;</li>
+<li><strong>matriz de adyacencia:</strong> usar una tabla <span class="math inline">\(V \times V\)</span> para indicar si una arista existe.</li>
+</ul>
+<section id="lista-de-adyacencia" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="lista-de-adyacencia"><span class="header-section-number">6.1</span> Lista de adyacencia</h3>
+<p>Una lista de adyacencia guarda, para cada vértice, la lista de vértices alcanzables directamente desde él.</p>
+<p>Ejemplo de grafo dirigido:</p>
+<pre class="text"><code>0: [1, 2]
+1: [2, 3]
+2: [4]
+3: []
+4: []</code></pre>
+<p>Esto representa las aristas:</p>
+<p><span class="math display">\[
+(0,1),\ (0,2),\ (1,2),\ (1,3),\ (2,4)
+\]</span></p>
+<p>La ventaja principal es que recorrer los vecinos reales de un vértice es eficiente.</p>
+</section>
+<section id="matriz-de-adyacencia" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="matriz-de-adyacencia"><span class="header-section-number">6.2</span> Matriz de adyacencia</h3>
+<p>Una matriz de adyacencia usa una tabla con una fila y una columna por vértice.</p>
+<p>Si existe la arista desde <span class="math inline">\(i\)</span> hacia <span class="math inline">\(j\)</span>, entonces:</p>
+<p><span class="math display">\[
+A[i][j] = 1
+\]</span></p>
+<p>Si no existe, entonces:</p>
+<p><span class="math display">\[
+A[i][j] = 0
+\]</span></p>
+<p>Para el mismo grafo anterior:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Desde / hacia</th>
+<th style="text-align: right;">0</th>
+<th style="text-align: right;">1</th>
+<th style="text-align: right;">2</th>
+<th style="text-align: right;">3</th>
+<th style="text-align: right;">4</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td>3</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+<p>La ventaja principal es que consultar si existe una arista específica cuesta <span class="math inline">\(O(1)\)</span>.</p>
+</section>
+</section>
+<section id="lista-vs-matriz-de-adyacencia" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="lista-vs-matriz-de-adyacencia"><span class="header-section-number">7</span> Lista vs matriz de adyacencia</h2>
+<p>La elección depende de cuántas aristas hay y qué operaciones se harán con frecuencia.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operación o criterio</th>
+<th style="text-align: right;">Lista de adyacencia</th>
+<th style="text-align: right;">Matriz de adyacencia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Memoria</td>
+<td style="text-align: right;"><span class="math inline">\(O(V + E)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V^2)\)</span></td>
+</tr>
+<tr class="even">
+<td>Crear estructura vacía</td>
+<td style="text-align: right;"><span class="math inline">\(O(V)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V^2)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Recorrer vecinos de <span class="math inline">\(u\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(\deg(u))\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V)\)</span></td>
+</tr>
+<tr class="even">
+<td>Recorrer todos los vecinos de todos los vértices</td>
+<td style="text-align: right;"><span class="math inline">\(O(V + E)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V^2)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Consultar si existe <span class="math inline">\((u, v)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(\deg(u))\)</span> si la lista no usa set</td>
+<td style="text-align: right;"><span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr class="even">
+<td>Insertar una arista</td>
+<td style="text-align: right;"><span class="math inline">\(O(1)\)</span> si se agrega al final</td>
+<td style="text-align: right;"><span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Mejor uso típico</td>
+<td style="text-align: right;">Grafos dispersos, recorridos, dependencias</td>
+<td style="text-align: right;">Grafos densos o muchas consultas de existencia</td>
+</tr>
+</tbody>
+</table>
+<p>Donde <span class="math inline">\(\deg(u)\)</span> es la cantidad de vecinos de <span class="math inline">\(u\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la mayoría de las posibles aristas no existe, la matriz guarda muchos ceros. En ese caso la lista de adyacencia suele ser mejor. Si el grafo es muy denso o se pregunta muchas veces “¿existe esta arista?”, la matriz puede ser conveniente.</p>
+</div>
+</div>
+</section>
+<section id="construcción-de-grafos-desde-dependencias" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="construcción-de-grafos-desde-dependencias"><span class="header-section-number">8</span> Construcción de grafos desde dependencias</h2>
+<p>En problemas de dependencias hay una regla clave:</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Dependencias
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si la tarea <code>T</code> requiere la tarea <code>R</code>, la arista va desde el requisito hacia la tarea: <span class="math inline">\(R \to T\)</span>.</p>
+</div>
+</div>
+<p>La dirección importa porque representa qué queda habilitado después de completar un requisito.</p>
+<p>Ejemplo:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tarea</th>
+<th>Requisitos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>ninguno</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>B, C</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>D</td>
+</tr>
+</tbody>
+</table>
+<p>Las aristas son:</p>
+<p><span class="math display">\[
+A \to B,\quad A \to C,\quad B \to D,\quad C \to D,\quad D \to E
+\]</span></p>
+<p>Lista de adyacencia resultante:</p>
+<pre class="text"><code>A: [B, C]
+B: [D]
+C: [D]
+D: [E]
+E: []</code></pre>
+<p>Este grafo es dirigido. Además, si no tiene ciclos, es un DAG y podría estudiarse después con orden topológico.</p>
+</section>
+<section id="pseudocódigo-claro" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">9</span> Pseudocódigo claro</h2>
+<p>El pseudocódigo siguiente no busca implementar todos los algoritmos de grafos. Solo fija operaciones básicas de construcción, consulta y transformación de la representación.</p>
+<section id="construir-grafo-desde-dependencias" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="construir-grafo-desde-dependencias"><span class="header-section-number">9.1</span> Construir grafo desde dependencias</h3>
+<p><strong>Input:</strong> conjunto de tareas y, para cada tarea, lista de requisitos.</p>
+<p><strong>Output:</strong> grafo dirigido <span class="math inline">\(G = (V, E)\)</span> donde cada arista va desde requisito hacia tarea.</p>
+<pre class="text"><code>BuildGraph(tareas, requisitos):
+    V &lt;- conjunto de todas las tareas
+    E &lt;- empty
+
+    for tarea T in tareas:
+        for requisito R in requisitos[T]:
+            agregar arista (R, T) a E
+
+    return G = (V, E)</code></pre>
+</section>
+<section id="agregar-arista-en-lista-de-adyacencia" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="agregar-arista-en-lista-de-adyacencia"><span class="header-section-number">9.2</span> Agregar arista en lista de adyacencia</h3>
+<p><strong>Input:</strong> lista de adyacencia <code>Adj</code>, vértices <code>u</code>, <code>v</code> y booleano <code>dirigido</code>.</p>
+<p><strong>Output:</strong> <code>Adj</code> actualizada con la arista.</p>
+<pre class="text"><code>AddEdgeList(Adj, u, v, dirigido):
+    agregar v a Adj[u]
+
+    if not dirigido:
+        agregar u a Adj[v]</code></pre>
+</section>
+<section id="agregar-arista-en-matriz-de-adyacencia" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="agregar-arista-en-matriz-de-adyacencia"><span class="header-section-number">9.3</span> Agregar arista en matriz de adyacencia</h3>
+<p><strong>Input:</strong> matriz de adyacencia <code>A</code>, vértices <code>u</code>, <code>v</code> y booleano <code>dirigido</code>.</p>
+<p><strong>Output:</strong> matriz <code>A</code> actualizada con la arista.</p>
+<pre class="text"><code>AddEdgeMatrix(A, u, v, dirigido):
+    A[u][v] &lt;- 1
+
+    if not dirigido:
+        A[v][u] &lt;- 1</code></pre>
+</section>
+<section id="consultar-existencia-de-arista-en-matriz" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="consultar-existencia-de-arista-en-matriz"><span class="header-section-number">9.4</span> Consultar existencia de arista en matriz</h3>
+<p><strong>Input:</strong> matriz de adyacencia <code>A</code> y vértices <code>u</code>, <code>v</code>.</p>
+<p><strong>Output:</strong> <code>true</code> si existe la arista desde <code>u</code> hacia <code>v</code>; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>HasEdgeMatrix(A, u, v):
+    return A[u][v] = 1</code></pre>
+</section>
+<section id="consultar-existencia-de-arista-en-lista" class="level3" data-number="9.5">
+<h3 data-number="9.5" class="anchored" data-anchor-id="consultar-existencia-de-arista-en-lista"><span class="header-section-number">9.5</span> Consultar existencia de arista en lista</h3>
+<p><strong>Input:</strong> lista de adyacencia <code>Adj</code> y vértices <code>u</code>, <code>v</code>.</p>
+<p><strong>Output:</strong> <code>true</code> si <code>v</code> aparece en la lista de vecinos de <code>u</code>; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>HasEdgeList(Adj, u, v):
+    for x in Adj[u]:
+        if x = v:
+            return true
+
+    return false</code></pre>
+</section>
+<section id="construir-grafo-transpuesto" class="level3" data-number="9.6">
+<h3 data-number="9.6" class="anchored" data-anchor-id="construir-grafo-transpuesto"><span class="header-section-number">9.6</span> Construir grafo transpuesto</h3>
+<p>El <strong>grafo transpuesto</strong> <span class="math inline">\(G^T\)</span> se define solo para grafos dirigidos. Tiene los mismos vértices, pero invierte todas las aristas. Por ahora solo importa como concepto de representación; se usará más adelante al estudiar componentes fuertemente conectadas.</p>
+<p><strong>Input:</strong> grafo dirigido <span class="math inline">\(G = (V, E)\)</span>.</p>
+<p><strong>Output:</strong> grafo transpuesto <span class="math inline">\(G^T\)</span>.</p>
+<pre class="text"><code>Transpose(G):
+    V_T &lt;- V(G)
+    E_T &lt;- empty
+
+    for (u, v) in E(G):
+        agregar arista (v, u) a E_T
+
+    return G_T = (V_T, E_T)</code></pre>
+</section>
+</section>
+<section id="complejidad" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">10</span> Complejidad</h2>
+<p>En grafos, la complejidad suele expresarse con dos variables:</p>
+<ul>
+<li><span class="math inline">\(V\)</span>: cantidad de vértices;</li>
+<li><span class="math inline">\(E\)</span>: cantidad de aristas.</li>
+</ul>
+<p>No conviene escribir solo <span class="math inline">\(O(n)\)</span> si no se aclara qué representa <span class="math inline">\(n\)</span>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Procedimiento</th>
+<th style="text-align: right;">Con lista de adyacencia</th>
+<th style="text-align: right;">Con matriz de adyacencia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Crear estructura vacía</td>
+<td style="text-align: right;"><span class="math inline">\(O(V)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V^2)\)</span></td>
+</tr>
+<tr class="even">
+<td>Agregar una arista</td>
+<td style="text-align: right;"><span class="math inline">\(O(1)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Agregar todas las aristas</td>
+<td style="text-align: right;"><span class="math inline">\(O(E)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(E)\)</span></td>
+</tr>
+<tr class="even">
+<td>Consultar si existe <span class="math inline">\((u, v)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(\deg(u))\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(1)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Recorrer vecinos de <span class="math inline">\(u\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(\deg(u))\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V)\)</span></td>
+</tr>
+<tr class="even">
+<td>Recorrer todo el grafo</td>
+<td style="text-align: right;"><span class="math inline">\(O(V + E)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V^2)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Transponer el grafo</td>
+<td style="text-align: right;"><span class="math inline">\(O(V + E)\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(O(V^2)\)</span> si se copia explícitamente</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Decir “es lineal” no basta. En grafos, un recorrido con lista de adyacencia suele ser lineal en <span class="math inline">\(V + E\)</span>, no necesariamente en la cantidad de vértices solamente.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-guiado" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">11</span> Ejemplo guiado</h2>
+<section id="enunciado" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="enunciado"><span class="header-section-number">11.1</span> Enunciado</h3>
+<p>Un sistema debe ejecutar cinco tareas:</p>
+<ul>
+<li><code>Diseño</code> no tiene requisitos.</li>
+<li><code>BaseDatos</code> requiere <code>Diseño</code>.</li>
+<li><code>Backend</code> requiere <code>Diseño</code> y <code>BaseDatos</code>.</li>
+<li><code>Frontend</code> requiere <code>Diseño</code>.</li>
+<li><code>Deploy</code> requiere <code>Backend</code> y <code>Frontend</code>.</li>
+</ul>
+<p>Se quiere representar el problema para después decidir si las tareas pueden ordenarse sin circularidad.</p>
+</section>
+<section id="paso-1-identificar-vértices" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="paso-1-identificar-vértices"><span class="header-section-number">11.2</span> Paso 1: identificar vértices</h3>
+<p>Cada tarea es un vértice:</p>
+<p><span class="math display">\[
+V = \{\text{Diseño},\ \text{BaseDatos},\ \text{Backend},\ \text{Frontend},\ \text{Deploy}\}
+\]</span></p>
+</section>
+<section id="paso-2-identificar-aristas" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="paso-2-identificar-aristas"><span class="header-section-number">11.3</span> Paso 2: identificar aristas</h3>
+<p>Si <code>X</code> es requisito de <code>Y</code>, agregamos:</p>
+<p><span class="math display">\[
+X \to Y
+\]</span></p>
+<p>Entonces las aristas son:</p>
+<pre class="text"><code>Diseño -&gt; BaseDatos
+Diseño -&gt; Backend
+BaseDatos -&gt; Backend
+Diseño -&gt; Frontend
+Backend -&gt; Deploy
+Frontend -&gt; Deploy</code></pre>
+</section>
+<section id="paso-3-representar-con-lista-de-adyacencia" class="level3" data-number="11.4">
+<h3 data-number="11.4" class="anchored" data-anchor-id="paso-3-representar-con-lista-de-adyacencia"><span class="header-section-number">11.4</span> Paso 3: representar con lista de adyacencia</h3>
+<pre class="text"><code>Diseño: [BaseDatos, Backend, Frontend]
+BaseDatos: [Backend]
+Backend: [Deploy]
+Frontend: [Deploy]
+Deploy: []</code></pre>
+</section>
+<section id="paso-4-visualizar-el-grafo" class="level3" data-number="11.5">
+<h3 data-number="11.5" class="anchored" data-anchor-id="paso-4-visualizar-el-grafo"><span class="header-section-number">11.5</span> Paso 4: visualizar el grafo</h3>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Diseño"] --&gt; B["BaseDatos"]
+    A --&gt; C["Backend"]
+    A --&gt; D["Frontend"]
+    B --&gt; C
+    C --&gt; E["Deploy"]
+    D --&gt; E
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="paso-5-interpretar" class="level3" data-number="11.6">
+<h3 data-number="11.6" class="anchored" data-anchor-id="paso-5-interpretar"><span class="header-section-number">11.6</span> Paso 5: interpretar</h3>
+<p>Este grafo es dirigido porque las dependencias tienen sentido. La arista <code>Diseño -&gt; Backend</code> no significa que <code>Backend</code> sea requisito de <code>Diseño</code>; significa que <code>Diseño</code> debe estar listo antes de <code>Backend</code>.</p>
+<p>Si apareciera una arista <code>Deploy -&gt; Diseño</code>, se formaría una dependencia circular:</p>
+<pre class="text"><code>Diseño -&gt; Backend -&gt; Deploy -&gt; Diseño</code></pre>
+<p>Ese ciclo impediría encontrar un orden válido de ejecución. La detección formal de ciclos y el orden topológico se estudian después; aquí lo importante es que el modelo permita hacer esa pregunta.</p>
+</section>
+</section>
+<section id="errores-típicos" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">12</span> Errores típicos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Por qué está mal</th>
+<th>Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Invertir las aristas de dependencia</td>
+<td>Cambia el significado del orden.</td>
+<td>Si <code>B</code> requiere <code>A</code>, usar <span class="math inline">\(A \to B\)</span>.</td>
+</tr>
+<tr class="even">
+<td>Usar grafo no dirigido para requisitos</td>
+<td>La relación “requiere” no es simétrica.</td>
+<td>Usar grafo dirigido.</td>
+</tr>
+<tr class="odd">
+<td>Usar matriz para un grafo enorme y disperso sin justificar</td>
+<td>Puede desperdiciar memoria <span class="math inline">\(O(V^2)\)</span>.</td>
+<td>Usar lista si hay pocas aristas por vértice.</td>
+</tr>
+<tr class="even">
+<td>Confundir componente conectada con componente fuertemente conectada</td>
+<td>En dirigidos importa poder ir y volver.</td>
+<td>Usar CFC cuando la alcanzabilidad es mutua.</td>
+</tr>
+<tr class="odd">
+<td>Confundir MST con caminos mínimos</td>
+<td>Ambos usan grafos ponderados, pero responden preguntas distintas.</td>
+<td>MST conecta todos; caminos mínimos optimizan rutas desde un origen.</td>
+</tr>
+<tr class="even">
+<td>Elegir DFS o BFS antes de modelar</td>
+<td>El algoritmo depende de qué representan vértices y aristas.</td>
+<td>Primero definir <span class="math inline">\(V\)</span>, <span class="math inline">\(E\)</span>, tipo de grafo y representación.</td>
+</tr>
+<tr class="odd">
+<td>Usar hash como si fuera grafo</td>
+<td>Un hash busca por llave, pero no representa caminos ni vecinos por sí solo.</td>
+<td>Usar hash solo como apoyo para mapear etiquetas a vértices si hace falta.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Consejo de estudio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cuando una respuesta diga “uso grafo”, agrega siempre cuatro cosas: qué son los vértices, qué son las aristas, si el grafo es dirigido y qué representación conviene.</p>
+</div>
+</div>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Una empresa debe instalar módulos de software. Cada módulo puede depender de otros módulos:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Módulo</th>
+<th>Depende de</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td>ninguno</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td>A</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td>A</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td>B, C</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td>D</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td>C</td>
+</tr>
+</tbody>
+</table>
+<p>Responde:</p>
+<ol type="1">
+<li>Modela el problema como un grafo.</li>
+<li>Indica si debe ser dirigido o no dirigido.</li>
+<li>Escribe la lista de adyacencia.</li>
+<li>Indica qué representación conviene si hay 100.000 módulos y cada módulo depende de a lo más 4 módulos.</li>
+<li>Explica qué significaría encontrar un ciclo.</li>
+<li>Explica por qué no corresponde resolver esto con solo una tabla de hash.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Cada módulo es un vértice:</p>
+<p><span class="math display">\[
+V = \{A, B, C, D, E, F\}
+\]</span></p>
+<p>El grafo debe ser dirigido, porque “depender de” tiene sentido. Si <code>B</code> depende de <code>A</code>, entonces <code>A</code> debe instalarse antes que <code>B</code>, por lo tanto se agrega:</p>
+<p><span class="math display">\[
+A \to B
+\]</span></p>
+<p>Las aristas son:</p>
+<p><span class="math display">\[
+A \to B,\quad A \to C,\quad B \to D,\quad C \to D,\quad D \to E,\quad C \to F
+\]</span></p>
+<p>La lista de adyacencia queda:</p>
+<pre class="text"><code>A: [B, C]
+B: [D]
+C: [D, F]
+D: [E]
+E: []
+F: []</code></pre>
+<p>Con 100.000 módulos y a lo más 4 dependencias por módulo, conviene una lista de adyacencia. Es un grafo disperso: hay muchos vértices, pero pocas aristas por vértice. La matriz usaría <span class="math inline">\(O(V^2)\)</span> memoria, mientras que la lista usa <span class="math inline">\(O(V + E)\)</span>.</p>
+<p>Un ciclo significa una dependencia circular. Por ejemplo, si además <code>A</code> dependiera de <code>E</code>, aparecería:</p>
+<pre class="text"><code>A -&gt; B -&gt; D -&gt; E -&gt; A</code></pre>
+<p>Eso haría imposible instalar los módulos en un orden válido, porque cada uno espera a otro dentro del ciclo.</p>
+<p>Una tabla de hash podría ayudar a traducir nombres de módulos a índices internos, pero no basta por sí sola. El problema necesita guardar vecinos, seguir dependencias y razonar sobre ciclos; eso es comportamiento de grafo.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>¿Qué debe ser vértice y qué debe ser arista en un problema de requisitos?</li>
+<li>Si una arista representa una calle de un solo sentido, ¿el grafo es dirigido o no dirigido?</li>
+<li>¿Por qué una matriz de adyacencia puede ser mala opción en grafos dispersos?</li>
+<li>¿Qué operación es más rápida en una matriz: consultar si existe una arista o recorrer solo los vecinos reales?</li>
+<li>¿Qué significa que un grafo dirigido sea acíclico?</li>
+<li>¿Cuál es la diferencia entre componente conectada y componente fuertemente conectada?</li>
+<li>¿Por qué en dependencias la arista va desde requisito hacia tarea?</li>
+<li>¿Qué representa <span class="math inline">\(V\)</span> y qué representa <span class="math inline">\(E\)</span> en una complejidad como <span class="math inline">\(O(V + E)\)</span>?</li>
+<li>¿Por qué un grafo ponderado no implica automáticamente Dijkstra?</li>
+<li>¿Cuándo un hash puede ayudar a implementar un grafo sin reemplazarlo?</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">15.1</span> Ejercicio 1</h3>
+<p>Modela como grafo una malla curricular donde algunos cursos son prerrequisitos de otros. Indica qué son los vértices, qué son las aristas y si el grafo es dirigido.</p>
+</section>
+<section id="ejercicio-2" class="level3" data-number="15.2">
+<h3 data-number="15.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">15.2</span> Ejercicio 2</h3>
+<p>Para el grafo dirigido con aristas <span class="math inline">\((0,1)\)</span>, <span class="math inline">\((0,2)\)</span>, <span class="math inline">\((2,3)\)</span> y <span class="math inline">\((3,1)\)</span>, escribe la lista de adyacencia.</p>
+</section>
+<section id="ejercicio-3" class="level3" data-number="15.3">
+<h3 data-number="15.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">15.3</span> Ejercicio 3</h3>
+<p>Para el mismo grafo del ejercicio anterior, escribe la matriz de adyacencia usando vértices <span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>, <span class="math inline">\(2\)</span> y <span class="math inline">\(3\)</span>.</p>
+</section>
+<section id="ejercicio-4" class="level3" data-number="15.4">
+<h3 data-number="15.4" class="anchored" data-anchor-id="ejercicio-4"><span class="header-section-number">15.4</span> Ejercicio 4</h3>
+<p>Decide si usarías lista o matriz en cada caso y justifica en una línea:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Caso</th>
+<th>Representación esperada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>100.000 vértices y grado máximo 4</td>
+<td>Lista de adyacencia</td>
+</tr>
+<tr class="even">
+<td>1.000 vértices y casi todos conectados con todos</td>
+<td>Matriz de adyacencia</td>
+</tr>
+<tr class="odd">
+<td>Muchas consultas del tipo “¿existe la arista <span class="math inline">\((u,v)\)</span>?”</td>
+<td>Matriz de adyacencia, si la memoria alcanza</td>
+</tr>
+<tr class="even">
+<td>Recorridos frecuentes por vecinos reales</td>
+<td>Lista de adyacencia</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ejercicio-5" class="level3" data-number="15.5">
+<h3 data-number="15.5" class="anchored" data-anchor-id="ejercicio-5"><span class="header-section-number">15.5</span> Ejercicio 5</h3>
+<p>Una tarea <code>T</code> requiere haber completado <code>R</code>. Escribe la arista correcta y explica su dirección.</p>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Puedo definir un grafo como <span class="math inline">\(G = (V, E)\)</span>.</label></li>
+<li><label><input type="checkbox">Puedo identificar vértices y aristas desde un enunciado.</label></li>
+<li><label><input type="checkbox">Distingo grafo dirigido y no dirigido.</label></li>
+<li><label><input type="checkbox">Distingo grafo ponderado y no ponderado.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué es un camino y qué es un ciclo.</label></li>
+<li><label><input type="checkbox">Puedo explicar componente conectada y componente fuertemente conectada.</label></li>
+<li><label><input type="checkbox">Sé qué significa que un grafo sea un DAG.</label></li>
+<li><label><input type="checkbox">Sé cuándo usar lista de adyacencia.</label></li>
+<li><label><input type="checkbox">Sé cuándo usar matriz de adyacencia.</label></li>
+<li><label><input type="checkbox">Puedo construir un grafo desde dependencias.</label></li>
+<li><label><input type="checkbox">Sé que en dependencias la arista va desde requisito hacia tarea.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué significa un ciclo en un grafo de dependencias.</label></li>
+<li><label><input type="checkbox">Expreso complejidades usando <span class="math inline">\(V\)</span> y <span class="math inline">\(E\)</span>.</label></li>
+<li><label><input type="checkbox">No confundo grafos con tablas de hash.</label></li>
+<li><label><input type="checkbox">No confundo heap con grafo ponderado.</label></li>
+<li><label><input type="checkbox">No confundo MST con caminos mínimos.</label></li>
+</ul>
 
 
 </section>

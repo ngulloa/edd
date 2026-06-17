@@ -1170,9 +1170,21 @@
   {
     "objectID": "contenidos/greedy.html",
     "href": "contenidos/greedy.html",
-    "title": "Greedy",
+    "title": "Algoritmos codiciosos",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Comprender los algoritmos codiciosos como una técnica para resolver ciertos problemas de optimización. Al estudiar esta página deberías poder:\n\nexplicar qué significa tomar una decisión local;\ndistinguir factibilidad, objetivo y solución óptima;\nreconocer cuando una estrategia greedy puede ser razonable;\ndiferenciar greedy de backtracking y programación dinámica;\nescribir pseudocódigo con Select, Feasible y Union;\njustificar una estrategia mediante un argumento claro;\nrefutar una estrategia con un contraejemplo pequeño;\nresolver selección de charlas sin ganancia;\nreconocer que charlas con ganancia cambian el tipo de problema;\nconectar la idea greedy con Kruskal sin confundir MST con caminos mínimos.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#objetivo-de-aprendizaje",
+    "href": "contenidos/greedy.html#objetivo-de-aprendizaje",
+    "title": "Algoritmos codiciosos",
+    "section": "",
+    "text": "Comprender los algoritmos codiciosos como una técnica para resolver ciertos problemas de optimización. Al estudiar esta página deberías poder:\n\nexplicar qué significa tomar una decisión local;\ndistinguir factibilidad, objetivo y solución óptima;\nreconocer cuando una estrategia greedy puede ser razonable;\ndiferenciar greedy de backtracking y programación dinámica;\nescribir pseudocódigo con Select, Feasible y Union;\njustificar una estrategia mediante un argumento claro;\nrefutar una estrategia con un contraejemplo pequeño;\nresolver selección de charlas sin ganancia;\nreconocer que charlas con ganancia cambian el tipo de problema;\nconectar la idea greedy con Kruskal sin confundir MST con caminos mínimos.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1182,9 +1194,9 @@
   {
     "objectID": "contenidos/greedy.html#idea-central-del-tema",
     "href": "contenidos/greedy.html#idea-central-del-tema",
-    "title": "Greedy",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "title": "Algoritmos codiciosos",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nUn algoritmo codicioso construye una solución paso a paso. En cada paso elige la opción que parece mejor según un criterio local, verifica si esa opción mantiene la solución válida y, si sirve, la agrega. La decisión queda fija: el algoritmo no vuelve atrás para reconsiderarla.\n\n\n\n\n\n\nImportanteIdea central\n\n\n\nUn algoritmo codicioso elige una opción localmente conveniente y no vuelve atrás. Por eso no basta con que la regla parezca razonable: hay que justificar que esa decisión local puede llevar a una solución global óptima.\n\n\nLa palabra clave es definitiva. Greedy no prueba todas las alternativas como backtracking y no compara subproblemas repetidos como programación dinámica. Si una decisión local equivocada bloquea una solución mejor, el algoritmo no se corrige solo.\nUna forma compacta de mirar la tecnica es:\n\nHay candidatos disponibles.\nExiste una regla para elegir el siguiente candidato.\nExiste una prueba de factibilidad.\nSe agrega el candidato si no rompe las restricciones.\nSe termina cuando no quedan candidatos utiles o cuando la solucion esta completa.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1192,11 +1204,23 @@
     ]
   },
   {
-    "objectID": "contenidos/greedy.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/greedy.html#cuándo-usar-esta-técnica-o-estructura",
-    "title": "Greedy",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "objectID": "contenidos/greedy.html#antes-de-partir-vocabulario-mínimo",
+    "href": "contenidos/greedy.html#antes-de-partir-vocabulario-mínimo",
+    "title": "Algoritmos codiciosos",
+    "section": "3 Antes de partir: vocabulario mínimo",
+    "text": "3 Antes de partir: vocabulario mínimo\nAntes de usar pseudocódigo conviene separar algunos términos. En evaluaciones suelen mezclarse, pero cada uno responde una pregunta distinta.\n\n\n\n\n\n\n\n\nConcepto\nQué significa\nPregunta guía\n\n\n\n\nCandidato\nElemento que se podría agregar a la solución\nQué puedo elegir ahora\n\n\nDecisión local\nElección tomada mirando solo el estado actual\nCuál parece mejor en este paso\n\n\nSolución parcial\nConjunto de decisiones ya tomadas\nQué llevo construido\n\n\nFactibilidad\nCumplimiento de las restricciones del problema\nSigue siendo válida la solución\n\n\nRestricción\nRegla que no se puede violar\nQué está prohibido\n\n\nFunción objetivo\nCantidad que se quiere maximizar o minimizar\nQué significa mejor\n\n\nÓptimo\nMejor solución factible según la función objetivo\nCuál es la mejor solución global\n\n\nElección segura\nDecisión local que puede pertenecer a alguna solución óptima\nEsta elección no bloquea el óptimo\n\n\nContraejemplo\nInstancia pequeña donde la estrategia falla\nCómo demuestro que no siempre funciona\n\n\n\nLa función objetivo es el criterio de comparación entre soluciones factibles. Por ejemplo, si S es el conjunto elegido, un problema puede pedir maximizar ganancia:\n\\[\n\\max \\sum_{i \\in S} p_i\n\\]\nAquí p_i representa la ganancia del elemento i. Otro problema puede pedir minimizar costo:\n\\[\n\\min \\sum_{i \\in S} c_i\n\\]\nAquí c_i representa el costo del elemento i.\n\n\n\n\n\n\nNotaVocabulario clave\n\n\n\nUna solución factible no necesariamente es óptima. Factible significa que cumple las reglas; óptima significa que, además, es la mejor entre todas las factibles.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#cuándo-usar-esta-técnica",
+    "href": "contenidos/greedy.html#cuándo-usar-esta-técnica",
+    "title": "Algoritmos codiciosos",
+    "section": "4 Cuándo usar esta técnica",
+    "text": "4 Cuándo usar esta técnica\nGreedy aparece en problemas donde una decisión local puede ser permanente. La dificultad está en demostrar que esa decisión no perjudica el resultado global.\n\n\n\n\n\n\n\nSeñal en el enunciado\nLectura posible\n\n\n\n\n“Elegir repetidamente el mejor candidato disponible”\nPuede ser greedy, pero requiere justificación\n\n\n“Maximizar la cantidad de actividades compatibles”\nSuele servir ordenar por término temprano\n\n\n“Minimizar costo de conectar todos los vértices”\nPuede ser árbol de expansión mínimo\n\n\n“Objetos fraccionables con peso y ganancia”\nPuede ser mochila fraccionable por razón ganancia/peso\n\n\n“Selección definitiva sin volver atrás”\nSeñal de greedy\n\n\n“Subproblemas repetidos con decisiones tomar/no tomar”\nSeñal de programación dinámica\n\n\n“Probar combinaciones hasta encontrar una válida”\nSeñal de backtracking\n\n\n\nNo uses greedy solo porque el enunciado tiene palabras como “máximo”, “mínimo” o “ordenar”. Muchas estrategias codiciosas naturales fallan.\n\n\n\n\n\n\n\nSi el problema pide\nGreedy simple suele fallar cuando\n\n\n\n\nMaximizar ganancia en charlas\nCada charla tiene una ganancia distinta\n\n\nMochila 0/1\nLos objetos se toman completos o no se toman\n\n\nSubconjunto óptimo con dependencias\nUna decisión afecta varias decisiones futuras\n\n\nEnumerar todas las soluciones\nGreedy solo construye una\n\n\nEncontrar caminos mínimos generales\nKruskal no resuelve rutas desde un origen\n\n\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nDecir “ordeno y elijo el mejor” no prueba que el algoritmo sea correcto. La pregunta importante es por qué esa elección local produce, o al menos no impide, un óptimo global.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1206,9 +1230,9 @@
   {
     "objectID": "contenidos/greedy.html#conceptos-mínimos",
     "href": "contenidos/greedy.html#conceptos-mínimos",
-    "title": "Greedy",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "title": "Algoritmos codiciosos",
+    "section": "5 Conceptos mínimos",
+    "text": "5 Conceptos mínimos\n\n5.1 Greedy, backtracking y programación dinámica\nLas tres técnicas pueden aparecer en problemas de optimización, pero razonan de formas distintas.\n\n\n\n\n\n\n\n\n\nTécnica\nQué hace\nCómo decide\nVuelve atrás\n\n\n\n\nGreedy\nConstruye una solución con decisiones locales definitivas\nElige el mejor candidato según una regla local\nNo\n\n\nBacktracking\nExplora un árbol de decisiones\nPrueba opciones, valida restricciones y deshace\nSí\n\n\nProgramación dinámica\nResuelve subproblemas y guarda resultados\nCompara alternativas mediante recurrencias\nNo como búsqueda, pero sí compara casos\n\n\n\nGreedy no es “backtracking rápido”. En backtracking, si una opción falla se deshace y se prueba otra. En greedy, una vez que se agrega un candidato, se asume que esa decisión fue segura.\nGreedy tampoco es programación dinámica. En programación dinámica se comparan alternativas como tomar o no tomar un elemento y se guardan respuestas de subproblemas. En greedy se evita esa comparación exhaustiva porque se afirma que una opción local basta.\n\n\n5.2 Propiedad de elección codiciosa\nUna estrategia greedy necesita que exista una elección local segura. Dicho de forma práctica: debe ser posible tomar la decisión greedy y todavía completar una solución óptima.\nNo siempre se prueba con formalismo completo en una interrogación, pero la explicación debe apuntar a esa idea.\n\n\n5.3 Subestructura óptima\nDespués de tomar una elección segura, queda un problema restante. Para que greedy funcione, resolver bien ese resto debe permitir completar una solución óptima total.\nPor ejemplo, en selección de charlas sin ganancia, si se elige la charla que termina antes, el resto del problema consiste en elegir charlas que comiencen después de ese término. La decisión deja el mayor espacio posible para el futuro.\n\n\n5.4 Contraejemplo\nUn contraejemplo es una instancia pequeña donde la estrategia propuesta produce una solución peor que otra factible. Un solo contraejemplo basta para refutar una estrategia que pretende ser correcta para todos los casos.\n\n\n\n\n\n\nImportanteCómo evaluar una estrategia\n\n\n\nSi puedes justificar una elección segura, la estrategia puede ser correcta. Si encuentras un contraejemplo, la estrategia queda refutada aunque funcione en muchos casos pequeños.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1216,11 +1240,11 @@
     ]
   },
   {
-    "objectID": "contenidos/greedy.html#operaciones-o-algoritmo-principal",
-    "href": "contenidos/greedy.html#operaciones-o-algoritmo-principal",
-    "title": "Greedy",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "objectID": "contenidos/greedy.html#anatomía-de-una-solución-greedy",
+    "href": "contenidos/greedy.html#anatomía-de-una-solución-greedy",
+    "title": "Algoritmos codiciosos",
+    "section": "6 Anatomía de una solución greedy",
+    "text": "6 Anatomía de una solución greedy\nUna respuesta completa no se limita a nombrar la técnica. Debe declarar las partes de la solución.\n\n\n\n\n\n\n\n\nParte\nPregunta guía\nEjemplo en charlas\n\n\n\n\nCandidatos\nQué elementos se pueden elegir\nCharlas disponibles\n\n\nSelect\nCuál candidato se considera ahora\nLa charla que termina antes\n\n\nFeasible\nCuándo se puede agregar\nSi no se traslapa con la última elegida\n\n\nUnion\nCómo se incorpora\nAgregar la charla a S\n\n\nObjetivo\nQué se optimiza\nMaximizar cantidad de charlas\n\n\nCriterio de término\nCuándo se detiene\nAl recorrer todas las charlas\n\n\nJustificación\nPor qué es correcto\nTerminar antes deja más espacio futuro\n\n\n\nEl flujo general de una decisión greedy se puede representar así:\n\n\n\n\n\nflowchart LR\n    A[\"Candidatos\"] --&gt; B[\"Select\"]\n    B --&gt; C[\"Feasible?\"]\n    C --&gt;|\"Sí\"| D[\"Union\"]\n    C --&gt;|\"No\"| E[\"Descartar\"]\n    D --&gt; F[\"Solución parcial\"]\n    E --&gt; F\n\n\n\n\n\n\nObserva que no aparece un paso de “deshacer”. Esa ausencia es parte de la definición de greedy.\n\n\n\n\n\n\nTipPlantilla mental\n\n\n\nPara estudiar un greedy, escribe primero una línea para cada parte: candidatos, Select, Feasible, Union, objetivo y argumento de correctitud o contraejemplo.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1230,9 +1254,9 @@
   {
     "objectID": "contenidos/greedy.html#pseudocódigo-claro",
     "href": "contenidos/greedy.html#pseudocódigo-claro",
-    "title": "Greedy",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "title": "Algoritmos codiciosos",
+    "section": "7 Pseudocódigo claro",
+    "text": "7 Pseudocódigo claro\n\n7.1 Esquema greedy abstracto\nEste esquema no resuelve por sí solo un problema. Sirve para ordenar la respuesta y obligar a definir las partes importantes.\nInput: conjunto de candidatos A.\nOutput: solución S construida mediante decisiones codiciosas.\nGreedy(A):\n    S &lt;- empty\n\n    while quedan candidatos en A:\n        x &lt;- Select(A)\n\n        if Feasible(S, x):\n            S &lt;- Union(S, x)\n\n        quitar x de A\n\n    return S\nEn una solución concreta, Select, Feasible y Union no pueden quedar como nombres abstractos. Hay que explicar qué hacen.\n\n\n7.2 Selección de charlas sin ganancia\nEl problema pide elegir la mayor cantidad de charlas compatibles. Cada charla tiene inicio inicio y término fin. Dos charlas son compatibles si no se traslapan.\nLa estrategia correcta es ordenar por hora de término creciente y elegir cada charla compatible con la última seleccionada.\nInput: arreglo de charlas A, donde cada charla tiene inicio y fin.\nOutput: subconjunto máximo de charlas mutuamente compatibles.\nSeleccionCharlas(A):\n    ordenar A por fin creciente\n    S &lt;- empty\n    ultimo_fin &lt;- -infinito\n\n    for charla in A:\n        if charla.inicio &gt;= ultimo_fin:\n            agregar charla a S\n            ultimo_fin &lt;- charla.fin\n\n    return S\nAquí Select queda implementado por el ordenamiento: al recorrer de izquierda a derecha, siempre se considera primero la charla que termina antes entre las restantes.\n\n\n\n\n\n\nAdvertenciaVariante con ganancia\n\n\n\nSi cada charla tiene una ganancia y el objetivo es maximizar ganancia total, elegir por término temprano ya no basta. Esa variante se conoce como selección ponderada de intervalos y suele resolverse con programación dinámica.\n\n\n\n\n7.3 Mochila fraccionable\nEn mochila fraccionable hay objetos con peso w_i y ganancia p_i. La mochila tiene capacidad M y se puede tomar una fraccion de un objeto.\nLa regla greedy ordena por razón ganancia/peso:\n\\[\n\\text{razon}(i) = \\frac{p_i}{w_i}\n\\]\nAquí p_i es la ganancia del objeto i y w_i es su peso. La razón mide cuánta ganancia se obtiene por unidad de peso.\nInput: lista de objetos con peso y ganancia, y capacidad M.\nOutput: ganancia total y fracciones tomadas de los objetos.\nMochilaFraccionable(objetos, M):\n    ordenar objetos por ganancia / peso de mayor a menor\n    capacidad &lt;- M\n    ganancia_total &lt;- 0\n    fracciones &lt;- arreglo de ceros\n\n    for objeto in objetos:\n        if capacidad = 0:\n            break\n\n        if objeto.peso &lt;= capacidad:\n            fracciones[objeto] &lt;- 1\n            capacidad &lt;- capacidad - objeto.peso\n            ganancia_total &lt;- ganancia_total + objeto.ganancia\n        else:\n            fraccion &lt;- capacidad / objeto.peso\n            fracciones[objeto] &lt;- fraccion\n            ganancia_total &lt;- ganancia_total + fraccion * objeto.ganancia\n            capacidad &lt;- 0\n\n    return (ganancia_total, fracciones)\n\n\n\n\n\n\nAdvertenciaMochila 0/1 no es lo mismo\n\n\n\nLa estrategia por razón ganancia/peso es correcta para mochila fraccionable porque se puede tomar parte de un objeto. En mochila 0/1 cada objeto se toma completo o se descarta; la misma regla greedy simple puede fallar y normalmente se estudia con programación dinámica.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1242,9 +1266,57 @@
   {
     "objectID": "contenidos/greedy.html#complejidad",
     "href": "contenidos/greedy.html#complejidad",
-    "title": "Greedy",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
+    "title": "Algoritmos codiciosos",
+    "section": "8 Complejidad",
+    "text": "8 Complejidad\nLa complejidad depende de cómo se implemente Select. En muchos algoritmos codiciosos se ordena una vez y luego se recorre linealmente.\n\n\n\n\n\n\n\n\nImplementación de Select\nComplejidad típica\nComentario\n\n\n\n\nBuscar el mejor recorriendo todos los candidatos en cada paso\nO(n^2)\nSimple, pero suele ser innecesario\n\n\nOrdenar una vez y recorrer\nO(n log n)\nPatrón común en charlas, intervalos y mochila fraccionable\n\n\nUsar heap\nO(n log n)\nÚtil cuando se extrae repetidamente mínimo o máximo\n\n\nOrdenar aristas y usar Union-Find\nO(E log E)\nPatrón de Kruskal para MST\n\n\n\nPara selección de charlas, ordenar cuesta O(n log n) y recorrer las charlas cuesta O(n). Por lo tanto:\n\\[\nO(n \\log n) + O(n) = O(n \\log n)\n\\]\nPara mochila fraccionable ocurre lo mismo si se ordenan los objetos por razón ganancia/peso: el ordenamiento domina el recorrido.\n\n\n\n\n\n\nNotaJustificar la cota\n\n\n\nNo basta escribir la complejidad final. Indica que parte del algoritmo la produce: ordenamiento, barrido, heap, Union-Find u otra estructura auxiliar.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#ejemplo-guiado-1-selección-de-charlas",
+    "href": "contenidos/greedy.html#ejemplo-guiado-1-selección-de-charlas",
+    "title": "Algoritmos codiciosos",
+    "section": "9 Ejemplo guiado 1: selección de charlas",
+    "text": "9 Ejemplo guiado 1: selección de charlas\nSe tienen las siguientes charlas, sin ganancia asociada. El objetivo es escoger la mayor cantidad posible sin traslapes.\n\n\n\nCharla\nInicio\nFin\n\n\n\n\nA\n1\n4\n\n\nB\n3\n5\n\n\nC\n0\n6\n\n\nD\n5\n7\n\n\nE\n8\n9\n\n\nF\n5\n9\n\n\n\n\n9.1 Paso 1: elegir el criterio\nLa regla correcta para esta versión es:\n\nElegir primero la charla que termina antes y luego repetir con las charlas compatibles restantes.\n\nNo se elige la charla que empieza antes ni la más corta. Se elige la que deja más espacio disponible hacia adelante.\n\n\n9.2 Paso 2: ordenar por término creciente\n\n\n\nOrden\nCharla\nInicio\nFin\n\n\n\n\n1\nA\n1\n4\n\n\n2\nB\n3\n5\n\n\n3\nC\n0\n6\n\n\n4\nD\n5\n7\n\n\n5\nE\n8\n9\n\n\n6\nF\n5\n9\n\n\n\n\n\n9.3 Paso 3: recorrer y mantener factibilidad\n\n\n\nCharla\nCondición\nDecisión\nÚltimo fin después\n\n\n\n\nA\n1 &gt;= -infinito\nSe agrega\n4\n\n\nB\n3 &lt; 4\nSe descarta\n4\n\n\nC\n0 &lt; 4\nSe descarta\n4\n\n\nD\n5 &gt;= 4\nSe agrega\n7\n\n\nE\n8 &gt;= 7\nSe agrega\n9\n\n\nF\n5 &lt; 9\nSe descarta\n9\n\n\n\nLa solución obtenida es:\nS = {A, D, E}\nTiene tres charlas compatibles. La intuición de correctitud es que, al terminar lo antes posible, la primera decisión deja una ventana futura al menos tan amplia como cualquier otra primera charla compatible.\n\n\n9.4 Por qué esta versión no usa programación dinámica\nTodas las charlas aportan lo mismo: una unidad a la cantidad total. Por eso basta maximizar cuántas caben. Si cada charla tuviera una ganancia distinta, una charla larga pero muy valiosa podría convenir más que varias cortas. En ese caso se comparan alternativas y aparece programación dinámica.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#ejemplo-guiado-2-una-estrategia-greedy-falsa",
+    "href": "contenidos/greedy.html#ejemplo-guiado-2-una-estrategia-greedy-falsa",
+    "title": "Algoritmos codiciosos",
+    "section": "10 Ejemplo guiado 2: una estrategia greedy falsa",
+    "text": "10 Ejemplo guiado 2: una estrategia greedy falsa\nUna estrategia plausible para selección de charlas sería:\n\nElegir siempre la charla de menor duracion disponible.\n\nParece razonable porque una charla corta ocupa poco tiempo. Sin embargo, falla.\nConsidera estas charlas:\n\n\n\nCharla\nInicio\nFin\nDuracion\n\n\n\n\nA\n0\n4\n4\n\n\nB\n4\n8\n4\n\n\nC\n8\n12\n4\n\n\nD\n3\n5\n2\n\n\n\nLa estrategia “menor duración primero” elige D, porque dura 2. Después no puede elegir A ni B, ya que ambas se traslapan con D. Solo puede agregar C.\nResultado greedy falso:\n{D, C}\nCantidad obtenida: 2.\nPero existe una solucion factible mejor:\n{A, B, C}\nCantidad óptima: 3.\nPor lo tanto, “elegir la charla mas corta” no es una estrategia correcta para maximizar la cantidad de charlas compatibles.\n\n\n\n\n\n\nImportanteLección del contraejemplo\n\n\n\nUna regla local puede sonar convincente y aun así fallar. Para refutarla basta una instancia pequeña donde produzca menos valor, menos cantidad o más costo que otra solución factible.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#cómo-justificar-o-refutar-una-estrategia-codiciosa",
+    "href": "contenidos/greedy.html#cómo-justificar-o-refutar-una-estrategia-codiciosa",
+    "title": "Algoritmos codiciosos",
+    "section": "11 Cómo justificar o refutar una estrategia codiciosa",
+    "text": "11 Cómo justificar o refutar una estrategia codiciosa\nHay dos tareas distintas: demostrar que una estrategia funciona o mostrar que falla.\n\n11.1 Justificar\nUna justificación debe conectar la decisión local con el óptimo global. Tres formas frecuentes son:\n\n\n\n\n\n\n\n\nMétodo\nIdea\nCómo se escribe en una respuesta\n\n\n\n\nElección segura\nLa decisión greedy puede estar en alguna solución óptima\n“Existe un óptimo que contiene esta primera elección”\n\n\nIntercambio\nSe transforma un óptimo para incluir la elección greedy sin empeorar\n“Si el óptimo elige otra opción, la reemplazo por la greedy”\n\n\nContradicción\nSe supone que la elección greedy no puede estar en un óptimo y se contradice la optimalidad\n“Entonces habría una solución no peor que si la incluyera”\n\n\n\nPara selección de charlas, el argumento de intercambio se puede resumir así:\n\nSea g la charla que termina antes.\nToma una solución óptima cualquiera.\nSi esa solucion ya contiene g, no hay nada que cambiar.\nSi su primera charla es otra a, entonces g termina no más tarde que a.\nReemplazar a por g no reduce la cantidad de charlas y deja al menos el mismo espacio posterior.\nPor lo tanto existe una solución óptima que empieza con la elección greedy.\n\nEse argumento no enumera todas las soluciones. Muestra que la primera decisión codiciosa es segura.\n\n\n11.2 Refutar\nPara refutar una estrategia, entrega:\n\nLa regla greedy propuesta.\nUna instancia pequena.\nLa solución que produce la regla.\nUna solución factible mejor.\nLa conclusión de que la estrategia no es correcta en general.\n\n\n\n\n\n\n\nAdvertenciaError de evaluación\n\n\n\nProbar la estrategia en dos o tres ejemplos donde funciona no demuestra correctitud. En cambio, un solo contraejemplo bien explicado sí demuestra que la estrategia falla.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#conexión-con-kruskal",
+    "href": "contenidos/greedy.html#conexión-con-kruskal",
+    "title": "Algoritmos codiciosos",
+    "section": "12 Conexión con Kruskal",
+    "text": "12 Conexión con Kruskal\nKruskal es un algoritmo codicioso para construir un árbol de expansión mínimo o MST. La decisión local es considerar aristas en orden de costo creciente y agregar una arista solo si no forma ciclo.\nLa parte greedy es:\ntomar la arista más barata disponible que conecte dos componentes distintas\nUnion-Find se usa para implementar la prueba de factibilidad:\n\n\n\nParte greedy\nEn Kruskal\n\n\n\n\nCandidatos\nAristas del grafo\n\n\nSelect\nSiguiente arista de menor peso\n\n\nFeasible\nFind(u) != Find(v), es decir, no forma ciclo\n\n\nUnion\nUnir las componentes de u y v\n\n\nObjetivo\nMinimizar el peso total del árbol de expansión\n\n\n\n\n\n\n\n\n\nAdvertenciaMST no es caminos mínimos\n\n\n\nKruskal construye un árbol que conecta todos los vértices con costo total mínimo. No calcula la ruta más corta desde un origen a los demás vértices. Para caminos mínimos se estudian algoritmos como BFS en grafos no ponderados o Dijkstra en grafos con pesos no negativos.\n\n\n\n\n\n\n\n\n\n\nPregunta\nMST\nCaminos minimos\n\n\n\n\nQué optimiza\nCosto total de conectar todos los vértices\nDistancia desde un origen a destinos\n\n\nEstructura resultado\nÁrbol de expansión\nÁrbol o distancias de caminos desde una fuente\n\n\nAlgoritmo típico\nKruskal o Prim\nBFS o Dijkstra, según pesos\n\n\nUsa Union-Find\nKruskal sí\nNormalmente no\n\n\n\nLa página completa de Kruskal y Union-Find corresponde a contenidos/kruskal-union-find.qmd. Aquí solo importa reconocer por qué Kruskal es greedy y por qué Union-Find ayuda a evitar ciclos.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1254,21 +1326,9 @@
   {
     "objectID": "contenidos/greedy.html#errores-típicos",
     "href": "contenidos/greedy.html#errores-típicos",
-    "title": "Greedy",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
-    "crumbs": [
-      "Inicio",
-      "Contenidos",
-      "Greedy"
-    ]
-  },
-  {
-    "objectID": "contenidos/greedy.html#ejemplo-guiado",
-    "href": "contenidos/greedy.html#ejemplo-guiado",
-    "title": "Greedy",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "title": "Algoritmos codiciosos",
+    "section": "13 Errores típicos",
+    "text": "13 Errores típicos\n\n\n\n\n\n\n\n\nError\nPor qué está mal\nCómo corregirlo\n\n\n\n\nDecir “es greedy porque ordena”\nOrdenar también aparece en otros algoritmos\nIdentificar Select, Feasible, Union y objetivo\n\n\nElegir el candidato de mayor ganancia inmediata\nPuede bloquear una combinación global mejor\nProbar correctitud o buscar contraejemplo\n\n\nConfundir factibilidad con optimalidad\nCumplir restricciones no implica ser el mejor\nSeparar prueba de restricciones y función objetivo\n\n\nOlvidar que greedy no vuelve atrás\nLa decisión tomada queda fija\nVerificar que la elección sea segura\n\n\nUsar selección de charlas con ganancias como si no tuviera ganancias\nEl objetivo cambia de cantidad a valor total\nModelar como selección ponderada, usualmente DP\n\n\nAplicar mochila fraccionable a mochila 0/1\nEn 0/1 no se pueden tomar fracciones\nUsar DP o justificar otra estrategia especial\n\n\nUsar Kruskal para rutas más cortas\nMST no minimiza distancias desde un origen\nUsar BFS o Dijkstra según el grafo\n\n\nConfundir heurística con prueba\nUna regla práctica puede fallar\nEntregar argumento de correctitud o contraejemplo\n\n\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nUna respuesta greedy incompleta suele decir solo “ordeno por X”. Una respuesta completa dice qué se optimiza, qué restricción se conserva y por qué elegir por X no bloquea una solución óptima.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1278,9 +1338,33 @@
   {
     "objectID": "contenidos/greedy.html#problema-representativo-de-interrogación",
     "href": "contenidos/greedy.html#problema-representativo-de-interrogación",
-    "title": "Greedy",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "title": "Algoritmos codiciosos",
+    "section": "14 Problema representativo de interrogación",
+    "text": "14 Problema representativo de interrogación\n\n\nVer enunciado\n\nSe tienen n charlas. Cada charla i tiene una hora de inicio s_i y una hora de término f_i, con s_i &lt; f_i. Una persona puede asistir a dos charlas i y j si no se traslapan, es decir, si una termina antes o justo cuando empieza la otra.\nSe pide seleccionar la mayor cantidad posible de charlas compatibles.\n\nPropón un algoritmo codicioso.\nIdentifica candidatos, Select, Feasible, Union y función objetivo.\nEscribe pseudocódigo.\nJustifica por qué la estrategia es correcta.\nCalcula la complejidad.\nExplica qué cambiaría si cada charla tuviera una ganancia g_i y se quisiera maximizar ganancia total.\n\n\n\n\nVer solución\n\nLa estrategia correcta para charlas sin ganancia es ordenar por hora de término creciente y seleccionar cada charla compatible con la última elegida.\n\n\n\nParte\nRespuesta\n\n\n\n\nCandidatos\nTodas las charlas\n\n\nSelect\nConsiderar primero la charla que termina antes\n\n\nFeasible\nAgregarla solo si s_i &gt;= ultimo_fin\n\n\nUnion\nInsertar la charla en S y actualizar ultimo_fin\n\n\nFunción objetivo\nMaximizar la cantidad de charlas seleccionadas\n\n\n\nInput: arreglo de charlas A, cada una con inicio s_i y término f_i.\nOutput: subconjunto máximo S de charlas compatibles.\nSeleccionCharlas(A):\n    ordenar A por término creciente\n    S &lt;- empty\n    ultimo_fin &lt;- -infinito\n\n    for charla in A:\n        if charla.inicio &gt;= ultimo_fin:\n            agregar charla a S\n            ultimo_fin &lt;- charla.fin\n\n    return S\nJustificación por intercambio: sea g la charla que termina antes entre todas las charlas disponibles. Considera una solución óptima cualquiera. Si esa solución ya incluye g como primera charla, la decisión greedy es compatible con un óptimo. Si no la incluye, su primera charla es alguna a que termina igual o después que g. Reemplazar a por g no reduce la cantidad de charlas y no deja menos espacio para las charlas posteriores, porque g termina antes o al mismo tiempo. Por lo tanto existe una solución óptima que comienza con la elección greedy. Repitiendo el mismo razonamiento sobre las charlas restantes, el algoritmo obtiene una solución óptima.\nLa complejidad es O(n log n) por ordenar y O(n) por recorrer. Domina el ordenamiento, entonces la complejidad total es:\n\\[\nO(n \\log n)\n\\]\nSi cada charla tuviera una ganancia g_i, el objetivo dejaría de ser maximizar cantidad y pasaría a maximizar ganancia total. En esa variante, una charla que termina temprano pero tiene poca ganancia podría ser peor que una charla más larga con alta ganancia. La selección por término temprano ya no garantiza optimalidad. El problema se transforma en selección ponderada de intervalos y suele resolverse con programación dinámica, comparando para cada charla entre tomarla y no tomarla.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#preguntas-de-repaso",
+    "href": "contenidos/greedy.html#preguntas-de-repaso",
+    "title": "Algoritmos codiciosos",
+    "section": "15 Preguntas de repaso",
+    "text": "15 Preguntas de repaso\n\nQué significa que una decisión greedy sea definitiva.\nCuál es la diferencia entre una solución factible y una solución óptima.\nQué rol cumple la función objetivo.\nQué debe definir Select en una respuesta greedy.\nQué debe revisar Feasible.\nPor qué Union no es lo mismo que Union-Find en todos los problemas.\nPor qué greedy no vuelve atrás como backtracking.\nPor qué programación dinámica compara subproblemas y greedy no.\nPor qué elegir la charla que termina antes funciona sin ganancias.\nPor qué charlas con ganancia suelen requerir programación dinámica.\nPor qué mochila fraccionable permite una regla greedy por razón.\nPor qué mochila 0/1 no se resuelve con la misma regla simple.\nCómo se usa un contraejemplo para refutar una estrategia.\nPor qué Kruskal es greedy.\nPor qué MST no es lo mismo que caminos mínimos.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Greedy"
+    ]
+  },
+  {
+    "objectID": "contenidos/greedy.html#ejercicios-breves",
+    "href": "contenidos/greedy.html#ejercicios-breves",
+    "title": "Algoritmos codiciosos",
+    "section": "16 Ejercicios breves",
+    "text": "16 Ejercicios breves\n\n16.1 Ejercicio 1\nPara las charlas:\n\n\n\nCharla\nInicio\nFin\n\n\n\n\nA\n0\n3\n\n\nB\n1\n2\n\n\nC\n2\n5\n\n\nD\n4\n7\n\n\nE\n5\n6\n\n\n\n\nOrdénalas por término creciente.\nAplica selección de charlas.\nIndica que charlas quedan en la solucion.\n\n\n\n16.2 Ejercicio 2\nDa un contraejemplo pequeño para refutar esta estrategia:\nElegir siempre la charla que empieza antes.\nEl contraejemplo debe mostrar la solución greedy y una solución factible con más charlas.\n\n\n16.3 Ejercicio 3\nTienes objetos fraccionables:\n\n\n\nObjeto\nPeso\nGanancia\n\n\n\n\nA\n10\n60\n\n\nB\n20\n100\n\n\nC\n30\n120\n\n\n\nLa capacidad es M = 50.\n\nCalcula la razón ganancia/peso de cada objeto.\nOrdena por razón decreciente.\nIndica qué objetos o fracciones tomaría el algoritmo greedy.\nCalcula la ganancia total.\n\n\n\n16.4 Ejercicio 4\nIndica si cada frase sugiere greedy, backtracking o programación dinámica:\n\n\n\nFrase\nTecnica probable\n\n\n\n\n“Probar todas las configuraciones válidas y deshacer decisiones”\n\n\n\n“Comparar tomar o no tomar y guardar resultados de subproblemas”\n\n\n\n“Elegir el mejor candidato local y no volver atras”\n\n\n\n“Cada decision tiene restricciones que permiten podar ramas”\n\n\n\n\n\n\n16.5 Ejercicio 5\nExplica en tres líneas por qué Kruskal no responde esta pregunta:\nCuál es la distancia mínima desde Santiago a cada ciudad del grafo\nTu respuesta debe mencionar MST, caminos mínimos y origen.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1290,9 +1374,9 @@
   {
     "objectID": "contenidos/greedy.html#checklist-de-estudio",
     "href": "contenidos/greedy.html#checklist-de-estudio",
-    "title": "Greedy",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "title": "Algoritmos codiciosos",
+    "section": "17 Checklist de estudio",
+    "text": "17 Checklist de estudio\n\nPuedo definir qué es un algoritmo codicioso.\nPuedo explicar decisión local, factibilidad, óptimo y función objetivo.\nPuedo identificar candidatos, Select, Feasible y Union.\nSé que greedy toma decisiones definitivas y no vuelve atrás.\nPuedo contrastar greedy con backtracking.\nPuedo contrastar greedy con programacion dinamica.\nPuedo escribir el pseudocódigo abstracto de greedy.\nPuedo resolver selección de charlas sin ganancia.\nPuedo justificar selección de charlas con un argumento de intercambio.\nSé que charlas con ganancia cambian a una variante de programación dinámica.\nPuedo dar un contraejemplo pequeño para una estrategia falsa.\nPuedo resolver mochila fraccionable usando razón ganancia/peso.\nSé que mochila 0/1 no usa la misma regla greedy simple.\nPuedo explicar por qué Kruskal es greedy.\nSé que Kruskal usa Union-Find para evitar ciclos.\nNo confundo MST con caminos mínimos.\nPuedo justificar complejidad indicando qué paso domina.",
     "crumbs": [
       "Inicio",
       "Contenidos",

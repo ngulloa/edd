@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Greedy – Estudio I2 EDD</title>
+<title>Algoritmos codiciosos – Estudio I2 EDD</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,7 +71,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -252,16 +284,51 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#cuándo-usar-esta-técnica" id="toc-cuándo-usar-esta-técnica" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica"><span class="header-section-number">4</span> Cuándo usar esta técnica</a></li>
+  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</a>
+  <ul class="collapse">
+  <li><a href="#greedy-backtracking-y-programación-dinámica" id="toc-greedy-backtracking-y-programación-dinámica" class="nav-link" data-scroll-target="#greedy-backtracking-y-programación-dinámica"><span class="header-section-number">5.1</span> Greedy, backtracking y programación dinámica</a></li>
+  <li><a href="#propiedad-de-elección-codiciosa" id="toc-propiedad-de-elección-codiciosa" class="nav-link" data-scroll-target="#propiedad-de-elección-codiciosa"><span class="header-section-number">5.2</span> Propiedad de elección codiciosa</a></li>
+  <li><a href="#subestructura-óptima" id="toc-subestructura-óptima" class="nav-link" data-scroll-target="#subestructura-óptima"><span class="header-section-number">5.3</span> Subestructura óptima</a></li>
+  <li><a href="#contraejemplo" id="toc-contraejemplo" class="nav-link" data-scroll-target="#contraejemplo"><span class="header-section-number">5.4</span> Contraejemplo</a></li>
+  </ul></li>
+  <li><a href="#anatomía-de-una-solución-greedy" id="toc-anatomía-de-una-solución-greedy" class="nav-link" data-scroll-target="#anatomía-de-una-solución-greedy"><span class="header-section-number">6</span> Anatomía de una solución greedy</a></li>
+  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">7</span> Pseudocódigo claro</a>
+  <ul class="collapse">
+  <li><a href="#esquema-greedy-abstracto" id="toc-esquema-greedy-abstracto" class="nav-link" data-scroll-target="#esquema-greedy-abstracto"><span class="header-section-number">7.1</span> Esquema greedy abstracto</a></li>
+  <li><a href="#selección-de-charlas-sin-ganancia" id="toc-selección-de-charlas-sin-ganancia" class="nav-link" data-scroll-target="#selección-de-charlas-sin-ganancia"><span class="header-section-number">7.2</span> Selección de charlas sin ganancia</a></li>
+  <li><a href="#mochila-fraccionable" id="toc-mochila-fraccionable" class="nav-link" data-scroll-target="#mochila-fraccionable"><span class="header-section-number">7.3</span> Mochila fraccionable</a></li>
+  </ul></li>
+  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">8</span> Complejidad</a></li>
+  <li><a href="#ejemplo-guiado-1-selección-de-charlas" id="toc-ejemplo-guiado-1-selección-de-charlas" class="nav-link" data-scroll-target="#ejemplo-guiado-1-selección-de-charlas"><span class="header-section-number">9</span> Ejemplo guiado 1: selección de charlas</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-elegir-el-criterio" id="toc-paso-1-elegir-el-criterio" class="nav-link" data-scroll-target="#paso-1-elegir-el-criterio"><span class="header-section-number">9.1</span> Paso 1: elegir el criterio</a></li>
+  <li><a href="#paso-2-ordenar-por-término-creciente" id="toc-paso-2-ordenar-por-término-creciente" class="nav-link" data-scroll-target="#paso-2-ordenar-por-término-creciente"><span class="header-section-number">9.2</span> Paso 2: ordenar por término creciente</a></li>
+  <li><a href="#paso-3-recorrer-y-mantener-factibilidad" id="toc-paso-3-recorrer-y-mantener-factibilidad" class="nav-link" data-scroll-target="#paso-3-recorrer-y-mantener-factibilidad"><span class="header-section-number">9.3</span> Paso 3: recorrer y mantener factibilidad</a></li>
+  <li><a href="#por-qué-esta-versión-no-usa-programación-dinámica" id="toc-por-qué-esta-versión-no-usa-programación-dinámica" class="nav-link" data-scroll-target="#por-qué-esta-versión-no-usa-programación-dinámica"><span class="header-section-number">9.4</span> Por qué esta versión no usa programación dinámica</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-guiado-2-una-estrategia-greedy-falsa" id="toc-ejemplo-guiado-2-una-estrategia-greedy-falsa" class="nav-link" data-scroll-target="#ejemplo-guiado-2-una-estrategia-greedy-falsa"><span class="header-section-number">10</span> Ejemplo guiado 2: una estrategia greedy falsa</a></li>
+  <li><a href="#cómo-justificar-o-refutar-una-estrategia-codiciosa" id="toc-cómo-justificar-o-refutar-una-estrategia-codiciosa" class="nav-link" data-scroll-target="#cómo-justificar-o-refutar-una-estrategia-codiciosa"><span class="header-section-number">11</span> Cómo justificar o refutar una estrategia codiciosa</a>
+  <ul class="collapse">
+  <li><a href="#justificar" id="toc-justificar" class="nav-link" data-scroll-target="#justificar"><span class="header-section-number">11.1</span> Justificar</a></li>
+  <li><a href="#refutar" id="toc-refutar" class="nav-link" data-scroll-target="#refutar"><span class="header-section-number">11.2</span> Refutar</a></li>
+  </ul></li>
+  <li><a href="#conexión-con-kruskal" id="toc-conexión-con-kruskal" class="nav-link" data-scroll-target="#conexión-con-kruskal"><span class="header-section-number">12</span> Conexión con Kruskal</a></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">13</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">14</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">15</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">16</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">16.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">16.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">16.3</span> Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4"><span class="header-section-number">16.4</span> Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5" id="toc-ejercicio-5" class="nav-link" data-scroll-target="#ejercicio-5"><span class="header-section-number">16.5</span> Ejercicio 5</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">17</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +337,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenidos/hash.html">Contenidos</a></li><li class="breadcrumb-item"><a href="../contenidos/greedy.html">Greedy</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Greedy</h1>
+<h1 class="title">Algoritmos codiciosos</h1>
 </div>
 
 
@@ -287,56 +354,1247 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Comprender los algoritmos codiciosos como una técnica para resolver ciertos problemas de optimización. Al estudiar esta página deberías poder:</p>
+<ul>
+<li>explicar qué significa tomar una decisión local;</li>
+<li>distinguir factibilidad, objetivo y solución óptima;</li>
+<li>reconocer cuando una estrategia greedy puede ser razonable;</li>
+<li>diferenciar greedy de backtracking y programación dinámica;</li>
+<li>escribir pseudocódigo con <code>Select</code>, <code>Feasible</code> y <code>Union</code>;</li>
+<li>justificar una estrategia mediante un argumento claro;</li>
+<li>refutar una estrategia con un contraejemplo pequeño;</li>
+<li>resolver selección de charlas sin ganancia;</li>
+<li>reconocer que charlas con ganancia cambian el tipo de problema;</li>
+<li>conectar la idea greedy con Kruskal sin confundir MST con caminos mínimos.</li>
+</ul>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>Un algoritmo codicioso construye una solución paso a paso. En cada paso elige la opción que parece mejor según un criterio local, verifica si esa opción mantiene la solución válida y, si sirve, la agrega. La decisión queda fija: el algoritmo no vuelve atrás para reconsiderarla.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Idea central
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un algoritmo codicioso elige una opción localmente conveniente y no vuelve atrás. Por eso no basta con que la regla parezca razonable: hay que justificar que esa decisión local puede llevar a una solución global óptima.</p>
+</div>
+</div>
+<p>La palabra clave es <strong>definitiva</strong>. Greedy no prueba todas las alternativas como backtracking y no compara subproblemas repetidos como programación dinámica. Si una decisión local equivocada bloquea una solución mejor, el algoritmo no se corrige solo.</p>
+<p>Una forma compacta de mirar la tecnica es:</p>
+<ol type="1">
+<li>Hay candidatos disponibles.</li>
+<li>Existe una regla para elegir el siguiente candidato.</li>
+<li>Existe una prueba de factibilidad.</li>
+<li>Se agrega el candidato si no rompe las restricciones.</li>
+<li>Se termina cuando no quedan candidatos utiles o cuando la solucion esta completa.</li>
+</ol>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<p>Antes de usar pseudocódigo conviene separar algunos términos. En evaluaciones suelen mezclarse, pero cada uno responde una pregunta distinta.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Qué significa</th>
+<th>Pregunta guía</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidato</td>
+<td>Elemento que se podría agregar a la solución</td>
+<td>Qué puedo elegir ahora</td>
+</tr>
+<tr class="even">
+<td>Decisión local</td>
+<td>Elección tomada mirando solo el estado actual</td>
+<td>Cuál parece mejor en este paso</td>
+</tr>
+<tr class="odd">
+<td>Solución parcial</td>
+<td>Conjunto de decisiones ya tomadas</td>
+<td>Qué llevo construido</td>
+</tr>
+<tr class="even">
+<td>Factibilidad</td>
+<td>Cumplimiento de las restricciones del problema</td>
+<td>Sigue siendo válida la solución</td>
+</tr>
+<tr class="odd">
+<td>Restricción</td>
+<td>Regla que no se puede violar</td>
+<td>Qué está prohibido</td>
+</tr>
+<tr class="even">
+<td>Función objetivo</td>
+<td>Cantidad que se quiere maximizar o minimizar</td>
+<td>Qué significa mejor</td>
+</tr>
+<tr class="odd">
+<td>Óptimo</td>
+<td>Mejor solución factible según la función objetivo</td>
+<td>Cuál es la mejor solución global</td>
+</tr>
+<tr class="even">
+<td>Elección segura</td>
+<td>Decisión local que puede pertenecer a alguna solución óptima</td>
+<td>Esta elección no bloquea el óptimo</td>
+</tr>
+<tr class="odd">
+<td>Contraejemplo</td>
+<td>Instancia pequeña donde la estrategia falla</td>
+<td>Cómo demuestro que no siempre funciona</td>
+</tr>
+</tbody>
+</table>
+<p>La <strong>función objetivo</strong> es el criterio de comparación entre soluciones factibles. Por ejemplo, si <code>S</code> es el conjunto elegido, un problema puede pedir maximizar ganancia:</p>
+<p><span class="math display">\[
+\max \sum_{i \in S} p_i
+\]</span></p>
+<p>Aquí <code>p_i</code> representa la ganancia del elemento <code>i</code>. Otro problema puede pedir minimizar costo:</p>
+<p><span class="math display">\[
+\min \sum_{i \in S} c_i
+\]</span></p>
+<p>Aquí <code>c_i</code> representa el costo del elemento <code>i</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Vocabulario clave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una solución factible no necesariamente es óptima. Factible significa que cumple las reglas; óptima significa que, además, es la mejor entre todas las factibles.</p>
+</div>
+</div>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cuándo-usar-esta-técnica" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-usar-esta-técnica"><span class="header-section-number">4</span> Cuándo usar esta técnica</h2>
+<p>Greedy aparece en problemas donde una decisión local puede ser permanente. La dificultad está en demostrar que esa decisión no perjudica el resultado global.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Señal en el enunciado</th>
+<th>Lectura posible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Elegir repetidamente el mejor candidato disponible”</td>
+<td>Puede ser greedy, pero requiere justificación</td>
+</tr>
+<tr class="even">
+<td>“Maximizar la cantidad de actividades compatibles”</td>
+<td>Suele servir ordenar por término temprano</td>
+</tr>
+<tr class="odd">
+<td>“Minimizar costo de conectar todos los vértices”</td>
+<td>Puede ser árbol de expansión mínimo</td>
+</tr>
+<tr class="even">
+<td>“Objetos fraccionables con peso y ganancia”</td>
+<td>Puede ser mochila fraccionable por razón ganancia/peso</td>
+</tr>
+<tr class="odd">
+<td>“Selección definitiva sin volver atrás”</td>
+<td>Señal de greedy</td>
+</tr>
+<tr class="even">
+<td>“Subproblemas repetidos con decisiones tomar/no tomar”</td>
+<td>Señal de programación dinámica</td>
+</tr>
+<tr class="odd">
+<td>“Probar combinaciones hasta encontrar una válida”</td>
+<td>Señal de backtracking</td>
+</tr>
+</tbody>
+</table>
+<p>No uses greedy solo porque el enunciado tiene palabras como “máximo”, “mínimo” o “ordenar”. Muchas estrategias codiciosas naturales fallan.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Si el problema pide</th>
+<th>Greedy simple suele fallar cuando</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Maximizar ganancia en charlas</td>
+<td>Cada charla tiene una ganancia distinta</td>
+</tr>
+<tr class="even">
+<td>Mochila 0/1</td>
+<td>Los objetos se toman completos o no se toman</td>
+</tr>
+<tr class="odd">
+<td>Subconjunto óptimo con dependencias</td>
+<td>Una decisión afecta varias decisiones futuras</td>
+</tr>
+<tr class="even">
+<td>Enumerar todas las soluciones</td>
+<td>Greedy solo construye una</td>
+</tr>
+<tr class="odd">
+<td>Encontrar caminos mínimos generales</td>
+<td>Kruskal no resuelve rutas desde un origen</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Decir “ordeno y elijo el mejor” no prueba que el algoritmo sea correcto. La pregunta importante es por qué esa elección local produce, o al menos no impide, un óptimo global.</p>
+</div>
+</div>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="conceptos-mínimos" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</h2>
+<section id="greedy-backtracking-y-programación-dinámica" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="greedy-backtracking-y-programación-dinámica"><span class="header-section-number">5.1</span> Greedy, backtracking y programación dinámica</h3>
+<p>Las tres técnicas pueden aparecer en problemas de optimización, pero razonan de formas distintas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Técnica</th>
+<th>Qué hace</th>
+<th>Cómo decide</th>
+<th>Vuelve atrás</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Greedy</td>
+<td>Construye una solución con decisiones locales definitivas</td>
+<td>Elige el mejor candidato según una regla local</td>
+<td>No</td>
+</tr>
+<tr class="even">
+<td>Backtracking</td>
+<td>Explora un árbol de decisiones</td>
+<td>Prueba opciones, valida restricciones y deshace</td>
+<td>Sí</td>
+</tr>
+<tr class="odd">
+<td>Programación dinámica</td>
+<td>Resuelve subproblemas y guarda resultados</td>
+<td>Compara alternativas mediante recurrencias</td>
+<td>No como búsqueda, pero sí compara casos</td>
+</tr>
+</tbody>
+</table>
+<p>Greedy no es “backtracking rápido”. En backtracking, si una opción falla se deshace y se prueba otra. En greedy, una vez que se agrega un candidato, se asume que esa decisión fue segura.</p>
+<p>Greedy tampoco es programación dinámica. En programación dinámica se comparan alternativas como tomar o no tomar un elemento y se guardan respuestas de subproblemas. En greedy se evita esa comparación exhaustiva porque se afirma que una opción local basta.</p>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="propiedad-de-elección-codiciosa" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="propiedad-de-elección-codiciosa"><span class="header-section-number">5.2</span> Propiedad de elección codiciosa</h3>
+<p>Una estrategia greedy necesita que exista una elección local segura. Dicho de forma práctica: debe ser posible tomar la decisión greedy y todavía completar una solución óptima.</p>
+<p>No siempre se prueba con formalismo completo en una interrogación, pero la explicación debe apuntar a esa idea.</p>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="subestructura-óptima" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="subestructura-óptima"><span class="header-section-number">5.3</span> Subestructura óptima</h3>
+<p>Después de tomar una elección segura, queda un problema restante. Para que greedy funcione, resolver bien ese resto debe permitir completar una solución óptima total.</p>
+<p>Por ejemplo, en selección de charlas sin ganancia, si se elige la charla que termina antes, el resto del problema consiste en elegir charlas que comiencen después de ese término. La decisión deja el mayor espacio posible para el futuro.</p>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="contraejemplo" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="contraejemplo"><span class="header-section-number">5.4</span> Contraejemplo</h3>
+<p>Un contraejemplo es una instancia pequeña donde la estrategia propuesta produce una solución peor que otra factible. Un solo contraejemplo basta para refutar una estrategia que pretende ser correcta para todos los casos.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Cómo evaluar una estrategia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si puedes justificar una elección segura, la estrategia puede ser correcta. Si encuentras un contraejemplo, la estrategia queda refutada aunque funcione en muchos casos pequeños.</p>
+</div>
+</div>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+</section>
+<section id="anatomía-de-una-solución-greedy" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="anatomía-de-una-solución-greedy"><span class="header-section-number">6</span> Anatomía de una solución greedy</h2>
+<p>Una respuesta completa no se limita a nombrar la técnica. Debe declarar las partes de la solución.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th>Pregunta guía</th>
+<th>Ejemplo en charlas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidatos</td>
+<td>Qué elementos se pueden elegir</td>
+<td>Charlas disponibles</td>
+</tr>
+<tr class="even">
+<td><code>Select</code></td>
+<td>Cuál candidato se considera ahora</td>
+<td>La charla que termina antes</td>
+</tr>
+<tr class="odd">
+<td><code>Feasible</code></td>
+<td>Cuándo se puede agregar</td>
+<td>Si no se traslapa con la última elegida</td>
+</tr>
+<tr class="even">
+<td><code>Union</code></td>
+<td>Cómo se incorpora</td>
+<td>Agregar la charla a <code>S</code></td>
+</tr>
+<tr class="odd">
+<td>Objetivo</td>
+<td>Qué se optimiza</td>
+<td>Maximizar cantidad de charlas</td>
+</tr>
+<tr class="even">
+<td>Criterio de término</td>
+<td>Cuándo se detiene</td>
+<td>Al recorrer todas las charlas</td>
+</tr>
+<tr class="odd">
+<td>Justificación</td>
+<td>Por qué es correcto</td>
+<td>Terminar antes deja más espacio futuro</td>
+</tr>
+</tbody>
+</table>
+<p>El flujo general de una decisión greedy se puede representar así:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Candidatos"] --&gt; B["Select"]
+    B --&gt; C["Feasible?"]
+    C --&gt;|"Sí"| D["Union"]
+    C --&gt;|"No"| E["Descartar"]
+    D --&gt; F["Solución parcial"]
+    E --&gt; F
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Observa que no aparece un paso de “deshacer”. Esa ausencia es parte de la definición de greedy.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Plantilla mental
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para estudiar un greedy, escribe primero una línea para cada parte: candidatos, <code>Select</code>, <code>Feasible</code>, <code>Union</code>, objetivo y argumento de correctitud o contraejemplo.</p>
+</div>
+</div>
+</section>
+<section id="pseudocódigo-claro" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">7</span> Pseudocódigo claro</h2>
+<section id="esquema-greedy-abstracto" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="esquema-greedy-abstracto"><span class="header-section-number">7.1</span> Esquema greedy abstracto</h3>
+<p>Este esquema no resuelve por sí solo un problema. Sirve para ordenar la respuesta y obligar a definir las partes importantes.</p>
+<p><strong>Input:</strong> conjunto de candidatos <code>A</code>.</p>
+<p><strong>Output:</strong> solución <code>S</code> construida mediante decisiones codiciosas.</p>
+<pre class="text"><code>Greedy(A):
+    S &lt;- empty
+
+    while quedan candidatos en A:
+        x &lt;- Select(A)
+
+        if Feasible(S, x):
+            S &lt;- Union(S, x)
+
+        quitar x de A
+
+    return S</code></pre>
+<p>En una solución concreta, <code>Select</code>, <code>Feasible</code> y <code>Union</code> no pueden quedar como nombres abstractos. Hay que explicar qué hacen.</p>
+</section>
+<section id="selección-de-charlas-sin-ganancia" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="selección-de-charlas-sin-ganancia"><span class="header-section-number">7.2</span> Selección de charlas sin ganancia</h3>
+<p>El problema pide elegir la mayor cantidad de charlas compatibles. Cada charla tiene inicio <code>inicio</code> y término <code>fin</code>. Dos charlas son compatibles si no se traslapan.</p>
+<p>La estrategia correcta es ordenar por hora de término creciente y elegir cada charla compatible con la última seleccionada.</p>
+<p><strong>Input:</strong> arreglo de charlas <code>A</code>, donde cada charla tiene <code>inicio</code> y <code>fin</code>.</p>
+<p><strong>Output:</strong> subconjunto máximo de charlas mutuamente compatibles.</p>
+<pre class="text"><code>SeleccionCharlas(A):
+    ordenar A por fin creciente
+    S &lt;- empty
+    ultimo_fin &lt;- -infinito
+
+    for charla in A:
+        if charla.inicio &gt;= ultimo_fin:
+            agregar charla a S
+            ultimo_fin &lt;- charla.fin
+
+    return S</code></pre>
+<p>Aquí <code>Select</code> queda implementado por el ordenamiento: al recorrer de izquierda a derecha, siempre se considera primero la charla que termina antes entre las restantes.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Variante con ganancia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si cada charla tiene una ganancia y el objetivo es maximizar ganancia total, elegir por término temprano ya no basta. Esa variante se conoce como selección ponderada de intervalos y suele resolverse con programación dinámica.</p>
+</div>
+</div>
+</section>
+<section id="mochila-fraccionable" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="mochila-fraccionable"><span class="header-section-number">7.3</span> Mochila fraccionable</h3>
+<p>En mochila fraccionable hay objetos con peso <code>w_i</code> y ganancia <code>p_i</code>. La mochila tiene capacidad <code>M</code> y se puede tomar una fraccion de un objeto.</p>
+<p>La regla greedy ordena por razón ganancia/peso:</p>
+<p><span class="math display">\[
+\text{razon}(i) = \frac{p_i}{w_i}
+\]</span></p>
+<p>Aquí <code>p_i</code> es la ganancia del objeto <code>i</code> y <code>w_i</code> es su peso. La razón mide cuánta ganancia se obtiene por unidad de peso.</p>
+<p><strong>Input:</strong> lista de objetos con <code>peso</code> y <code>ganancia</code>, y capacidad <code>M</code>.</p>
+<p><strong>Output:</strong> ganancia total y fracciones tomadas de los objetos.</p>
+<pre class="text"><code>MochilaFraccionable(objetos, M):
+    ordenar objetos por ganancia / peso de mayor a menor
+    capacidad &lt;- M
+    ganancia_total &lt;- 0
+    fracciones &lt;- arreglo de ceros
+
+    for objeto in objetos:
+        if capacidad = 0:
+            break
+
+        if objeto.peso &lt;= capacidad:
+            fracciones[objeto] &lt;- 1
+            capacidad &lt;- capacidad - objeto.peso
+            ganancia_total &lt;- ganancia_total + objeto.ganancia
+        else:
+            fraccion &lt;- capacidad / objeto.peso
+            fracciones[objeto] &lt;- fraccion
+            ganancia_total &lt;- ganancia_total + fraccion * objeto.ganancia
+            capacidad &lt;- 0
+
+    return (ganancia_total, fracciones)</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Mochila 0/1 no es lo mismo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La estrategia por razón ganancia/peso es correcta para mochila fraccionable porque se puede tomar parte de un objeto. En mochila 0/1 cada objeto se toma completo o se descarta; la misma regla greedy simple puede fallar y normalmente se estudia con programación dinámica.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="complejidad" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">8</span> Complejidad</h2>
+<p>La complejidad depende de cómo se implemente <code>Select</code>. En muchos algoritmos codiciosos se ordena una vez y luego se recorre linealmente.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Implementación de <code>Select</code></th>
+<th style="text-align: right;">Complejidad típica</th>
+<th>Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Buscar el mejor recorriendo todos los candidatos en cada paso</td>
+<td style="text-align: right;"><code>O(n^2)</code></td>
+<td>Simple, pero suele ser innecesario</td>
+</tr>
+<tr class="even">
+<td>Ordenar una vez y recorrer</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+<td>Patrón común en charlas, intervalos y mochila fraccionable</td>
+</tr>
+<tr class="odd">
+<td>Usar heap</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+<td>Útil cuando se extrae repetidamente mínimo o máximo</td>
+</tr>
+<tr class="even">
+<td>Ordenar aristas y usar Union-Find</td>
+<td style="text-align: right;"><code>O(E log E)</code></td>
+<td>Patrón de Kruskal para MST</td>
+</tr>
+</tbody>
+</table>
+<p>Para selección de charlas, ordenar cuesta <code>O(n log n)</code> y recorrer las charlas cuesta <code>O(n)</code>. Por lo tanto:</p>
+<p><span class="math display">\[
+O(n \log n) + O(n) = O(n \log n)
+\]</span></p>
+<p>Para mochila fraccionable ocurre lo mismo si se ordenan los objetos por razón ganancia/peso: el ordenamiento domina el recorrido.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Justificar la cota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No basta escribir la complejidad final. Indica que parte del algoritmo la produce: ordenamiento, barrido, heap, Union-Find u otra estructura auxiliar.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-guiado-1-selección-de-charlas" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="ejemplo-guiado-1-selección-de-charlas"><span class="header-section-number">9</span> Ejemplo guiado 1: selección de charlas</h2>
+<p>Se tienen las siguientes charlas, sin ganancia asociada. El objetivo es escoger la mayor cantidad posible sin traslapes.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Charla</th>
+<th style="text-align: right;">Inicio</th>
+<th style="text-align: right;">Fin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+</tr>
+</tbody>
+</table>
+<section id="paso-1-elegir-el-criterio" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="paso-1-elegir-el-criterio"><span class="header-section-number">9.1</span> Paso 1: elegir el criterio</h3>
+<p>La regla correcta para esta versión es:</p>
+<blockquote class="blockquote">
+<p>Elegir primero la charla que termina antes y luego repetir con las charlas compatibles restantes.</p>
+</blockquote>
+<p>No se elige la charla que empieza antes ni la más corta. Se elige la que deja más espacio disponible hacia adelante.</p>
+</section>
+<section id="paso-2-ordenar-por-término-creciente" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="paso-2-ordenar-por-término-creciente"><span class="header-section-number">9.2</span> Paso 2: ordenar por término creciente</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Orden</th>
+<th>Charla</th>
+<th style="text-align: right;">Inicio</th>
+<th style="text-align: right;">Fin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td>A</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td>B</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td>C</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td>D</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td>E</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td>F</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-3-recorrer-y-mantener-factibilidad" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="paso-3-recorrer-y-mantener-factibilidad"><span class="header-section-number">9.3</span> Paso 3: recorrer y mantener factibilidad</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Charla</th>
+<th>Condición</th>
+<th>Decisión</th>
+<th style="text-align: right;">Último fin después</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td><code>1 &gt;= -infinito</code></td>
+<td>Se agrega</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td><code>3 &lt; 4</code></td>
+<td>Se descarta</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td><code>0 &lt; 4</code></td>
+<td>Se descarta</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td><code>5 &gt;= 4</code></td>
+<td>Se agrega</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td><code>8 &gt;= 7</code></td>
+<td>Se agrega</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td>F</td>
+<td><code>5 &lt; 9</code></td>
+<td>Se descarta</td>
+<td style="text-align: right;">9</td>
+</tr>
+</tbody>
+</table>
+<p>La solución obtenida es:</p>
+<pre class="text"><code>S = {A, D, E}</code></pre>
+<p>Tiene tres charlas compatibles. La intuición de correctitud es que, al terminar lo antes posible, la primera decisión deja una ventana futura al menos tan amplia como cualquier otra primera charla compatible.</p>
+</section>
+<section id="por-qué-esta-versión-no-usa-programación-dinámica" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="por-qué-esta-versión-no-usa-programación-dinámica"><span class="header-section-number">9.4</span> Por qué esta versión no usa programación dinámica</h3>
+<p>Todas las charlas aportan lo mismo: una unidad a la cantidad total. Por eso basta maximizar cuántas caben. Si cada charla tuviera una ganancia distinta, una charla larga pero muy valiosa podría convenir más que varias cortas. En ese caso se comparan alternativas y aparece programación dinámica.</p>
+</section>
+</section>
+<section id="ejemplo-guiado-2-una-estrategia-greedy-falsa" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ejemplo-guiado-2-una-estrategia-greedy-falsa"><span class="header-section-number">10</span> Ejemplo guiado 2: una estrategia greedy falsa</h2>
+<p>Una estrategia plausible para selección de charlas sería:</p>
+<blockquote class="blockquote">
+<p>Elegir siempre la charla de menor duracion disponible.</p>
+</blockquote>
+<p>Parece razonable porque una charla corta ocupa poco tiempo. Sin embargo, falla.</p>
+<p>Considera estas charlas:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Charla</th>
+<th style="text-align: right;">Inicio</th>
+<th style="text-align: right;">Fin</th>
+<th style="text-align: right;">Duracion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<p>La estrategia “menor duración primero” elige <code>D</code>, porque dura 2. Después no puede elegir <code>A</code> ni <code>B</code>, ya que ambas se traslapan con <code>D</code>. Solo puede agregar <code>C</code>.</p>
+<p>Resultado greedy falso:</p>
+<pre class="text"><code>{D, C}</code></pre>
+<p>Cantidad obtenida: 2.</p>
+<p>Pero existe una solucion factible mejor:</p>
+<pre class="text"><code>{A, B, C}</code></pre>
+<p>Cantidad óptima: 3.</p>
+<p>Por lo tanto, “elegir la charla mas corta” no es una estrategia correcta para maximizar la cantidad de charlas compatibles.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Lección del contraejemplo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una regla local puede sonar convincente y aun así fallar. Para refutarla basta una instancia pequeña donde produzca menos valor, menos cantidad o más costo que otra solución factible.</p>
+</div>
+</div>
+</section>
+<section id="cómo-justificar-o-refutar-una-estrategia-codiciosa" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="cómo-justificar-o-refutar-una-estrategia-codiciosa"><span class="header-section-number">11</span> Cómo justificar o refutar una estrategia codiciosa</h2>
+<p>Hay dos tareas distintas: demostrar que una estrategia funciona o mostrar que falla.</p>
+<section id="justificar" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="justificar"><span class="header-section-number">11.1</span> Justificar</h3>
+<p>Una justificación debe conectar la decisión local con el óptimo global. Tres formas frecuentes son:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Método</th>
+<th>Idea</th>
+<th>Cómo se escribe en una respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Elección segura</td>
+<td>La decisión greedy puede estar en alguna solución óptima</td>
+<td>“Existe un óptimo que contiene esta primera elección”</td>
+</tr>
+<tr class="even">
+<td>Intercambio</td>
+<td>Se transforma un óptimo para incluir la elección greedy sin empeorar</td>
+<td>“Si el óptimo elige otra opción, la reemplazo por la greedy”</td>
+</tr>
+<tr class="odd">
+<td>Contradicción</td>
+<td>Se supone que la elección greedy no puede estar en un óptimo y se contradice la optimalidad</td>
+<td>“Entonces habría una solución no peor que si la incluyera”</td>
+</tr>
+</tbody>
+</table>
+<p>Para selección de charlas, el argumento de intercambio se puede resumir así:</p>
+<ol type="1">
+<li>Sea <code>g</code> la charla que termina antes.</li>
+<li>Toma una solución óptima cualquiera.</li>
+<li>Si esa solucion ya contiene <code>g</code>, no hay nada que cambiar.</li>
+<li>Si su primera charla es otra <code>a</code>, entonces <code>g</code> termina no más tarde que <code>a</code>.</li>
+<li>Reemplazar <code>a</code> por <code>g</code> no reduce la cantidad de charlas y deja al menos el mismo espacio posterior.</li>
+<li>Por lo tanto existe una solución óptima que empieza con la elección greedy.</li>
+</ol>
+<p>Ese argumento no enumera todas las soluciones. Muestra que la primera decisión codiciosa es segura.</p>
+</section>
+<section id="refutar" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="refutar"><span class="header-section-number">11.2</span> Refutar</h3>
+<p>Para refutar una estrategia, entrega:</p>
+<ol type="1">
+<li>La regla greedy propuesta.</li>
+<li>Una instancia pequena.</li>
+<li>La solución que produce la regla.</li>
+<li>Una solución factible mejor.</li>
+<li>La conclusión de que la estrategia no es correcta en general.</li>
+</ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error de evaluación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Probar la estrategia en dos o tres ejemplos donde funciona no demuestra correctitud. En cambio, un solo contraejemplo bien explicado sí demuestra que la estrategia falla.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="conexión-con-kruskal" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="conexión-con-kruskal"><span class="header-section-number">12</span> Conexión con Kruskal</h2>
+<p>Kruskal es un algoritmo codicioso para construir un <strong>árbol de expansión mínimo</strong> o MST. La decisión local es considerar aristas en orden de costo creciente y agregar una arista solo si no forma ciclo.</p>
+<p>La parte greedy es:</p>
+<pre class="text"><code>tomar la arista más barata disponible que conecte dos componentes distintas</code></pre>
+<p>Union-Find se usa para implementar la prueba de factibilidad:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte greedy</th>
+<th>En Kruskal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidatos</td>
+<td>Aristas del grafo</td>
+</tr>
+<tr class="even">
+<td><code>Select</code></td>
+<td>Siguiente arista de menor peso</td>
+</tr>
+<tr class="odd">
+<td><code>Feasible</code></td>
+<td><code>Find(u) != Find(v)</code>, es decir, no forma ciclo</td>
+</tr>
+<tr class="even">
+<td><code>Union</code></td>
+<td>Unir las componentes de <code>u</code> y <code>v</code></td>
+</tr>
+<tr class="odd">
+<td>Objetivo</td>
+<td>Minimizar el peso total del árbol de expansión</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>MST no es caminos mínimos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Kruskal construye un árbol que conecta todos los vértices con costo total mínimo. No calcula la ruta más corta desde un origen a los demás vértices. Para caminos mínimos se estudian algoritmos como BFS en grafos no ponderados o Dijkstra en grafos con pesos no negativos.</p>
+</div>
+</div>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta</th>
+<th>MST</th>
+<th>Caminos minimos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Qué optimiza</td>
+<td>Costo total de conectar todos los vértices</td>
+<td>Distancia desde un origen a destinos</td>
+</tr>
+<tr class="even">
+<td>Estructura resultado</td>
+<td>Árbol de expansión</td>
+<td>Árbol o distancias de caminos desde una fuente</td>
+</tr>
+<tr class="odd">
+<td>Algoritmo típico</td>
+<td>Kruskal o Prim</td>
+<td>BFS o Dijkstra, según pesos</td>
+</tr>
+<tr class="even">
+<td>Usa Union-Find</td>
+<td>Kruskal sí</td>
+<td>Normalmente no</td>
+</tr>
+</tbody>
+</table>
+<p>La página completa de Kruskal y Union-Find corresponde a <code>contenidos/kruskal-union-find.qmd</code>. Aquí solo importa reconocer por qué Kruskal es greedy y por qué Union-Find ayuda a evitar ciclos.</p>
+</section>
+<section id="errores-típicos" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">13</span> Errores típicos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Por qué está mal</th>
+<th>Cómo corregirlo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Decir “es greedy porque ordena”</td>
+<td>Ordenar también aparece en otros algoritmos</td>
+<td>Identificar <code>Select</code>, <code>Feasible</code>, <code>Union</code> y objetivo</td>
+</tr>
+<tr class="even">
+<td>Elegir el candidato de mayor ganancia inmediata</td>
+<td>Puede bloquear una combinación global mejor</td>
+<td>Probar correctitud o buscar contraejemplo</td>
+</tr>
+<tr class="odd">
+<td>Confundir factibilidad con optimalidad</td>
+<td>Cumplir restricciones no implica ser el mejor</td>
+<td>Separar prueba de restricciones y función objetivo</td>
+</tr>
+<tr class="even">
+<td>Olvidar que greedy no vuelve atrás</td>
+<td>La decisión tomada queda fija</td>
+<td>Verificar que la elección sea segura</td>
+</tr>
+<tr class="odd">
+<td>Usar selección de charlas con ganancias como si no tuviera ganancias</td>
+<td>El objetivo cambia de cantidad a valor total</td>
+<td>Modelar como selección ponderada, usualmente DP</td>
+</tr>
+<tr class="even">
+<td>Aplicar mochila fraccionable a mochila 0/1</td>
+<td>En 0/1 no se pueden tomar fracciones</td>
+<td>Usar DP o justificar otra estrategia especial</td>
+</tr>
+<tr class="odd">
+<td>Usar Kruskal para rutas más cortas</td>
+<td>MST no minimiza distancias desde un origen</td>
+<td>Usar BFS o Dijkstra según el grafo</td>
+</tr>
+<tr class="even">
+<td>Confundir heurística con prueba</td>
+<td>Una regla práctica puede fallar</td>
+<td>Entregar argumento de correctitud o contraejemplo</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una respuesta greedy incompleta suele decir solo “ordeno por X”. Una respuesta completa dice qué se optimiza, qué restricción se conserva y por qué elegir por X no bloquea una solución óptima.</p>
+</div>
+</div>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">14</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Se tienen <code>n</code> charlas. Cada charla <code>i</code> tiene una hora de inicio <code>s_i</code> y una hora de término <code>f_i</code>, con <code>s_i &lt; f_i</code>. Una persona puede asistir a dos charlas <code>i</code> y <code>j</code> si no se traslapan, es decir, si una termina antes o justo cuando empieza la otra.</p>
+<p>Se pide seleccionar la mayor cantidad posible de charlas compatibles.</p>
+<ol type="1">
+<li>Propón un algoritmo codicioso.</li>
+<li>Identifica candidatos, <code>Select</code>, <code>Feasible</code>, <code>Union</code> y función objetivo.</li>
+<li>Escribe pseudocódigo.</li>
+<li>Justifica por qué la estrategia es correcta.</li>
+<li>Calcula la complejidad.</li>
+<li>Explica qué cambiaría si cada charla tuviera una ganancia <code>g_i</code> y se quisiera maximizar ganancia total.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>La estrategia correcta para charlas sin ganancia es ordenar por hora de término creciente y seleccionar cada charla compatible con la última elegida.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidatos</td>
+<td>Todas las charlas</td>
+</tr>
+<tr class="even">
+<td><code>Select</code></td>
+<td>Considerar primero la charla que termina antes</td>
+</tr>
+<tr class="odd">
+<td><code>Feasible</code></td>
+<td>Agregarla solo si <code>s_i &gt;= ultimo_fin</code></td>
+</tr>
+<tr class="even">
+<td><code>Union</code></td>
+<td>Insertar la charla en <code>S</code> y actualizar <code>ultimo_fin</code></td>
+</tr>
+<tr class="odd">
+<td>Función objetivo</td>
+<td>Maximizar la cantidad de charlas seleccionadas</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Input:</strong> arreglo de charlas <code>A</code>, cada una con inicio <code>s_i</code> y término <code>f_i</code>.</p>
+<p><strong>Output:</strong> subconjunto máximo <code>S</code> de charlas compatibles.</p>
+<pre class="text"><code>SeleccionCharlas(A):
+    ordenar A por término creciente
+    S &lt;- empty
+    ultimo_fin &lt;- -infinito
+
+    for charla in A:
+        if charla.inicio &gt;= ultimo_fin:
+            agregar charla a S
+            ultimo_fin &lt;- charla.fin
+
+    return S</code></pre>
+<p>Justificación por intercambio: sea <code>g</code> la charla que termina antes entre todas las charlas disponibles. Considera una solución óptima cualquiera. Si esa solución ya incluye <code>g</code> como primera charla, la decisión greedy es compatible con un óptimo. Si no la incluye, su primera charla es alguna <code>a</code> que termina igual o después que <code>g</code>. Reemplazar <code>a</code> por <code>g</code> no reduce la cantidad de charlas y no deja menos espacio para las charlas posteriores, porque <code>g</code> termina antes o al mismo tiempo. Por lo tanto existe una solución óptima que comienza con la elección greedy. Repitiendo el mismo razonamiento sobre las charlas restantes, el algoritmo obtiene una solución óptima.</p>
+<p>La complejidad es <code>O(n log n)</code> por ordenar y <code>O(n)</code> por recorrer. Domina el ordenamiento, entonces la complejidad total es:</p>
+<p><span class="math display">\[
+O(n \log n)
+\]</span></p>
+<p>Si cada charla tuviera una ganancia <code>g_i</code>, el objetivo dejaría de ser maximizar cantidad y pasaría a maximizar ganancia total. En esa variante, una charla que termina temprano pero tiene poca ganancia podría ser peor que una charla más larga con alta ganancia. La selección por término temprano ya no garantiza optimalidad. El problema se transforma en selección ponderada de intervalos y suele resolverse con programación dinámica, comparando para cada charla entre tomarla y no tomarla.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">15</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>Qué significa que una decisión greedy sea definitiva.</li>
+<li>Cuál es la diferencia entre una solución factible y una solución óptima.</li>
+<li>Qué rol cumple la función objetivo.</li>
+<li>Qué debe definir <code>Select</code> en una respuesta greedy.</li>
+<li>Qué debe revisar <code>Feasible</code>.</li>
+<li>Por qué <code>Union</code> no es lo mismo que Union-Find en todos los problemas.</li>
+<li>Por qué greedy no vuelve atrás como backtracking.</li>
+<li>Por qué programación dinámica compara subproblemas y greedy no.</li>
+<li>Por qué elegir la charla que termina antes funciona sin ganancias.</li>
+<li>Por qué charlas con ganancia suelen requerir programación dinámica.</li>
+<li>Por qué mochila fraccionable permite una regla greedy por razón.</li>
+<li>Por qué mochila 0/1 no se resuelve con la misma regla simple.</li>
+<li>Cómo se usa un contraejemplo para refutar una estrategia.</li>
+<li>Por qué Kruskal es greedy.</li>
+<li>Por qué MST no es lo mismo que caminos mínimos.</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">16</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="16.1">
+<h3 data-number="16.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">16.1</span> Ejercicio 1</h3>
+<p>Para las charlas:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Charla</th>
+<th style="text-align: right;">Inicio</th>
+<th style="text-align: right;">Fin</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td>D</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td>E</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li>Ordénalas por término creciente.</li>
+<li>Aplica selección de charlas.</li>
+<li>Indica que charlas quedan en la solucion.</li>
+</ol>
+</section>
+<section id="ejercicio-2" class="level3" data-number="16.2">
+<h3 data-number="16.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">16.2</span> Ejercicio 2</h3>
+<p>Da un contraejemplo pequeño para refutar esta estrategia:</p>
+<pre class="text"><code>Elegir siempre la charla que empieza antes.</code></pre>
+<p>El contraejemplo debe mostrar la solución greedy y una solución factible con más charlas.</p>
+</section>
+<section id="ejercicio-3" class="level3" data-number="16.3">
+<h3 data-number="16.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">16.3</span> Ejercicio 3</h3>
+<p>Tienes objetos fraccionables:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Objeto</th>
+<th style="text-align: right;">Peso</th>
+<th style="text-align: right;">Ganancia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>A</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="even">
+<td>B</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="odd">
+<td>C</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">120</td>
+</tr>
+</tbody>
+</table>
+<p>La capacidad es <code>M = 50</code>.</p>
+<ol type="1">
+<li>Calcula la razón ganancia/peso de cada objeto.</li>
+<li>Ordena por razón decreciente.</li>
+<li>Indica qué objetos o fracciones tomaría el algoritmo greedy.</li>
+<li>Calcula la ganancia total.</li>
+</ol>
+</section>
+<section id="ejercicio-4" class="level3" data-number="16.4">
+<h3 data-number="16.4" class="anchored" data-anchor-id="ejercicio-4"><span class="header-section-number">16.4</span> Ejercicio 4</h3>
+<p>Indica si cada frase sugiere greedy, backtracking o programación dinámica:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Frase</th>
+<th>Tecnica probable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Probar todas las configuraciones válidas y deshacer decisiones”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Comparar tomar o no tomar y guardar resultados de subproblemas”</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>“Elegir el mejor candidato local y no volver atras”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Cada decision tiene restricciones que permiten podar ramas”</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ejercicio-5" class="level3" data-number="16.5">
+<h3 data-number="16.5" class="anchored" data-anchor-id="ejercicio-5"><span class="header-section-number">16.5</span> Ejercicio 5</h3>
+<p>Explica en tres líneas por qué Kruskal no responde esta pregunta:</p>
+<pre class="text"><code>Cuál es la distancia mínima desde Santiago a cada ciudad del grafo</code></pre>
+<p>Tu respuesta debe mencionar MST, caminos mínimos y origen.</p>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">17</span> Checklist de estudio</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Puedo definir qué es un algoritmo codicioso.</label></li>
+<li><label><input type="checkbox">Puedo explicar decisión local, factibilidad, óptimo y función objetivo.</label></li>
+<li><label><input type="checkbox">Puedo identificar candidatos, <code>Select</code>, <code>Feasible</code> y <code>Union</code>.</label></li>
+<li><label><input type="checkbox">Sé que greedy toma decisiones definitivas y no vuelve atrás.</label></li>
+<li><label><input type="checkbox">Puedo contrastar greedy con backtracking.</label></li>
+<li><label><input type="checkbox">Puedo contrastar greedy con programacion dinamica.</label></li>
+<li><label><input type="checkbox">Puedo escribir el pseudocódigo abstracto de greedy.</label></li>
+<li><label><input type="checkbox">Puedo resolver selección de charlas sin ganancia.</label></li>
+<li><label><input type="checkbox">Puedo justificar selección de charlas con un argumento de intercambio.</label></li>
+<li><label><input type="checkbox">Sé que charlas con ganancia cambian a una variante de programación dinámica.</label></li>
+<li><label><input type="checkbox">Puedo dar un contraejemplo pequeño para una estrategia falsa.</label></li>
+<li><label><input type="checkbox">Puedo resolver mochila fraccionable usando razón ganancia/peso.</label></li>
+<li><label><input type="checkbox">Sé que mochila 0/1 no usa la misma regla greedy simple.</label></li>
+<li><label><input type="checkbox">Puedo explicar por qué Kruskal es greedy.</label></li>
+<li><label><input type="checkbox">Sé que Kruskal usa Union-Find para evitar ciclos.</label></li>
+<li><label><input type="checkbox">No confundo MST con caminos mínimos.</label></li>
+<li><label><input type="checkbox">Puedo justificar complejidad indicando qué paso domina.</label></li>
+</ul>
 
 
 </section>

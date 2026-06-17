@@ -71,7 +71,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -252,16 +284,46 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#cuándo-usar-esta-técnica" id="toc-cuándo-usar-esta-técnica" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica"><span class="header-section-number">4</span> Cuándo usar esta técnica</a></li>
+  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</a>
+  <ul class="collapse">
+  <li><a href="#csp" id="toc-csp" class="nav-link" data-scroll-target="#csp"><span class="header-section-number">5.1</span> CSP</a></li>
+  <li><a href="#variables-dominios-y-restricciones" id="toc-variables-dominios-y-restricciones" class="nav-link" data-scroll-target="#variables-dominios-y-restricciones"><span class="header-section-number">5.2</span> Variables, dominios y restricciones</a></li>
+  <li><a href="#fuerza-bruta-y-backtracking" id="toc-fuerza-bruta-y-backtracking" class="nav-link" data-scroll-target="#fuerza-bruta-y-backtracking"><span class="header-section-number">5.3</span> Fuerza bruta y backtracking</a></li>
+  <li><a href="#una-solución-todas-las-soluciones-u-optimización" id="toc-una-solución-todas-las-soluciones-u-optimización" class="nav-link" data-scroll-target="#una-solución-todas-las-soluciones-u-optimización"><span class="header-section-number">5.4</span> Una solución, todas las soluciones u optimización</a></li>
+  <li><a href="#podas-propagación-y-heurísticas" id="toc-podas-propagación-y-heurísticas" class="nav-link" data-scroll-target="#podas-propagación-y-heurísticas"><span class="header-section-number">5.5</span> Podas, propagación y heurísticas</a></li>
+  </ul></li>
+  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">6</span> Operaciones o algoritmo principal</a></li>
+  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">7</span> Pseudocódigo claro</a>
+  <ul class="collapse">
+  <li><a href="#existe-una-solución" id="toc-existe-una-solución" class="nav-link" data-scroll-target="#existe-una-solución"><span class="header-section-number">7.1</span> Existe una solución</a></li>
+  <li><a href="#todas-las-soluciones" id="toc-todas-las-soluciones" class="nav-link" data-scroll-target="#todas-las-soluciones"><span class="header-section-number">7.2</span> Todas las soluciones</a></li>
+  <li><a href="#optimización" id="toc-optimización" class="nav-link" data-scroll-target="#optimización"><span class="header-section-number">7.3</span> Optimización</a></li>
+  <li><a href="#backtracking-con-mejoras" id="toc-backtracking-con-mejoras" class="nav-link" data-scroll-target="#backtracking-con-mejoras"><span class="header-section-number">7.4</span> Backtracking con mejoras</a></li>
+  </ul></li>
+  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">8</span> Complejidad</a></li>
+  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">9</span> Ejemplo guiado</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-modelar-como-csp" id="toc-paso-1-modelar-como-csp" class="nav-link" data-scroll-target="#paso-1-modelar-como-csp"><span class="header-section-number">9.1</span> Paso 1: modelar como CSP</a></li>
+  <li><a href="#paso-2-interpretar-el-estado-parcial" id="toc-paso-2-interpretar-el-estado-parcial" class="nav-link" data-scroll-target="#paso-2-interpretar-el-estado-parcial"><span class="header-section-number">9.2</span> Paso 2: interpretar el estado parcial</a></li>
+  <li><a href="#paso-3-probar-y-retroceder" id="toc-paso-3-probar-y-retroceder" class="nav-link" data-scroll-target="#paso-3-probar-y-retroceder"><span class="header-section-number">9.3</span> Paso 3: probar y retroceder</a></li>
+  <li><a href="#validación-de-reina" id="toc-validación-de-reina" class="nav-link" data-scroll-target="#validación-de-reina"><span class="header-section-number">9.4</span> Validación de reina</a></li>
+  <li><a href="#backtracking-para-4-reinas" id="toc-backtracking-para-4-reinas" class="nav-link" data-scroll-target="#backtracking-para-4-reinas"><span class="header-section-number">9.5</span> Backtracking para 4 reinas</a></li>
+  </ul></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">10</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">11</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">12</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">13</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">13.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">13.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">13.3</span> Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4"><span class="header-section-number">13.4</span> Ejercicio 4</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">14</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -287,56 +349,989 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Comprender backtracking como una técnica para resolver problemas de satisfacción de restricciones. Al estudiar esta página deberías poder:</p>
+<ul>
+<li>reconocer cuándo un problema se puede modelar con variables, dominios y restricciones;</li>
+<li>explicar qué es un CSP y escribir su tripleta;</li>
+<li>distinguir estado parcial, caso base, decisión recursiva, validación y deshacer;</li>
+<li>diferenciar fuerza bruta y backtracking;</li>
+<li>adaptar el algoritmo para encontrar una solución, todas las soluciones u optimizar;</li>
+<li>explicar qué aportan las podas, la propagación y las heurísticas;</li>
+<li>estimar por qué el peor caso suele ser exponencial;</li>
+<li>resolver un problema representativo con estaciones en una grilla.</li>
+</ul>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>Backtracking explora decisiones paso a paso. En cada paso el algoritmo asigna un valor a una variable, revisa si esa decisión respeta las restricciones y, si la rama ya no puede servir, retrocede para probar otra opción.</p>
+<p>La idea central no es “escribir recursión”. Primero se modela el problema: qué se debe asignar, qué valores son posibles y qué reglas hacen que una asignación sea factible.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Idea central
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Backtracking sirve cuando una solución se construye por decisiones sucesivas y las restricciones permiten descartar caminos antes de completar toda la combinación.</p>
+</div>
+</div>
+<p>Una forma compacta de ver el flujo es:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Estado parcial"] --&gt; B["Elegir variable"]
+    B --&gt; C["Probar valor"]
+    C --&gt; D{"Factible?"}
+    D -- "No" --&gt; E["Descartar"]
+    D -- "Si" --&gt; F["Asignar"]
+    F --&gt; G{"Completo?"}
+    G -- "Si" --&gt; H["Retornar o guardar"]
+    G -- "No" --&gt; I["Recursion"]
+    I --&gt; J["Deshacer"]
+    J --&gt; C
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<p>Antes de usar el algoritmo conviene fijar el vocabulario. Cada palabra responde una pregunta distinta del enunciado.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Qué significa</th>
+<th>Pregunta guía</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variable</td>
+<td>Elemento que recibirá una decisión</td>
+<td>¿Qué cosas debo asignar?</td>
+</tr>
+<tr class="even">
+<td>Dominio</td>
+<td>Valores posibles para una variable</td>
+<td>¿Qué valores puede tomar cada variable?</td>
+</tr>
+<tr class="odd">
+<td>Restricción</td>
+<td>Regla que no se puede violar</td>
+<td>¿Qué asignaciones están prohibidas?</td>
+</tr>
+<tr class="even">
+<td>Estado parcial</td>
+<td>Asignaciones hechas hasta ahora</td>
+<td>¿Qué llevo construido?</td>
+</tr>
+<tr class="odd">
+<td>Caso base</td>
+<td>Condición de término de la recursión</td>
+<td>¿Cuándo tengo una solución completa?</td>
+</tr>
+<tr class="even">
+<td>Decisión recursiva</td>
+<td>Próxima asignación que se intenta</td>
+<td>¿Qué variable asigno ahora?</td>
+</tr>
+<tr class="odd">
+<td>Validación</td>
+<td>Revisión de factibilidad parcial</td>
+<td>¿Esta decisión rompe alguna regla?</td>
+</tr>
+<tr class="even">
+<td>Deshacer</td>
+<td>Restaurar el estado anterior</td>
+<td>¿Qué cambio debo revertir al volver atrás?</td>
+</tr>
+<tr class="odd">
+<td>Poda</td>
+<td>Regla para cortar una rama inútil</td>
+<td>¿Qué rama ya no vale la pena explorar?</td>
+</tr>
+<tr class="even">
+<td>Propagación</td>
+<td>Actualizar efectos de una decisión sobre opciones futuras</td>
+<td>¿Qué dominios o datos auxiliares cambian por esta asignación?</td>
+</tr>
+<tr class="odd">
+<td>Heurística</td>
+<td>Criterio práctico para ordenar la búsqueda</td>
+<td>¿Qué variable o valor conviene probar primero?</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El estado parcial es una solución incompleta. Backtracking no espera hasta el final para revisar: valida mientras construye.</p>
+</div>
+</div>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cuándo-usar-esta-técnica" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-usar-esta-técnica"><span class="header-section-number">4</span> Cuándo usar esta técnica</h2>
+<p>Usa backtracking cuando el problema tenga esta forma:</p>
+<ol type="1">
+<li>La solución se construye mediante decisiones sucesivas.</li>
+<li>Cada decisión tiene un conjunto finito de opciones.</li>
+<li>No toda combinación de opciones es válida.</li>
+<li>Una asignación inválida se puede detectar antes de completar todo.</li>
+<li>El enunciado pide existencia, enumeración, conteo u optimización.</li>
+</ol>
+<p>Ejemplos típicos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problema</th>
+<th>Variables</th>
+<th>Dominios</th>
+<th>Restricciones</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>N reinas</td>
+<td>Una reina por fila</td>
+<td>Columnas posibles</td>
+<td>No compartir columna ni diagonal</td>
+</tr>
+<tr class="even">
+<td>Sudoku</td>
+<td>Celdas vacías</td>
+<td>Números del 1 al 9</td>
+<td>Fila, columna y subcuadro sin repetidos</td>
+</tr>
+<tr class="odd">
+<td>Laberinto</td>
+<td>Paso o posición actual</td>
+<td>Movimientos posibles</td>
+<td>No chocar con muros ni revisitar celdas</td>
+</tr>
+<tr class="even">
+<td>Coloreo de grafos</td>
+<td>Vértices</td>
+<td>Colores disponibles</td>
+<td>Vecinos con colores distintos</td>
+</tr>
+<tr class="odd">
+<td>Clique de tamaño <code>k</code></td>
+<td>Vértices elegidos</td>
+<td>Vértices o decisiones sí/no</td>
+<td>Todos los elegidos deben estar conectados</td>
+</tr>
+<tr class="even">
+<td>Estaciones en grilla</td>
+<td>Estaciones por ubicar</td>
+<td>Celdas de la grilla</td>
+<td>No usar celdas prohibidas y cubrir prioritarias</td>
+</tr>
+</tbody>
+</table>
+<p>No basta que un problema use recursión para que sea backtracking. La señal importante es que existan restricciones que determinan factibilidad durante la construcción.</p>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="conceptos-mínimos" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</h2>
+<section id="csp" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="csp"><span class="header-section-number">5.1</span> CSP</h3>
+<p>Un problema de satisfacción de restricciones, o CSP, es un problema donde se deben asignar valores a variables respetando reglas. Se modela como la tripleta:</p>
+<p><span class="math display">\[
+(X, D, C)
+\]</span></p>
+<p>Donde:</p>
+<ul>
+<li><code>X</code> es el conjunto de variables.</li>
+<li><code>D</code> es el conjunto de dominios, uno para cada variable.</li>
+<li><code>C</code> es el conjunto de restricciones.</li>
+</ul>
+<p>Si hay <code>n</code> variables, se puede escribir:</p>
+<p><span class="math display">\[
+X = \{x_1, x_2, \dots, x_n\}
+\]</span></p>
+<p>Y sus dominios respectivos:</p>
+<p><span class="math display">\[
+D = \{D_1, D_2, \dots, D_n\}
+\]</span></p>
+<p>Una solución es una asignación en que cada variable toma un valor de su dominio y todas las restricciones se cumplen.</p>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="variables-dominios-y-restricciones" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="variables-dominios-y-restricciones"><span class="header-section-number">5.2</span> Variables, dominios y restricciones</h3>
+<p>Primero se decide qué representa cada variable. Después se define qué valores puede tomar. Finalmente se escriben las restricciones, que son las reglas que separan una asignación válida de una inválida.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parte del modelo</th>
+<th>Rol</th>
+<th>Ejemplo en 4 reinas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variable</td>
+<td>Lo que se asigna</td>
+<td><code>x_i</code>: columna de la reina en la fila <code>i</code></td>
+</tr>
+<tr class="even">
+<td>Dominio</td>
+<td>Valores posibles</td>
+<td><code>{1, 2, 3, 4}</code></td>
+</tr>
+<tr class="odd">
+<td>Restricción</td>
+<td>Regla de factibilidad</td>
+<td>No misma columna ni misma diagonal</td>
+</tr>
+<tr class="even">
+<td>Objetivo</td>
+<td>Qué se busca</td>
+<td>Una ubicación válida, todas, o la mejor según un criterio</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Modelo antes que código
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las restricciones determinan si una asignación es factible. El objetivo determina si basta encontrar una, si hay que enumerarlas todas o si se debe comparar para elegir la mejor.</p>
+</div>
+</div>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="fuerza-bruta-y-backtracking" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="fuerza-bruta-y-backtracking"><span class="header-section-number">5.3</span> Fuerza bruta y backtracking</h3>
+<p>Fuerza bruta genera combinaciones completas y luego revisa si sirven. Backtracking revisa restricciones durante la construcción y corta ramas apenas detecta que ya no pueden producir una solución válida.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estrategia</th>
+<th>Qué hace</th>
+<th>Consecuencia</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Fuerza bruta</td>
+<td>Construye asignaciones completas y después valida</td>
+<td>Puede recorrer muchas combinaciones inútiles</td>
+</tr>
+<tr class="even">
+<td>Backtracking</td>
+<td>Valida estados parciales mientras construye</td>
+<td>Puede descartar antes, aunque el peor caso siga siendo grande</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="una-solución-todas-las-soluciones-u-optimización" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="una-solución-todas-las-soluciones-u-optimización"><span class="header-section-number">5.4</span> Una solución, todas las soluciones u optimización</h3>
+<p>El mismo modelo puede cambiar según lo que pida el objetivo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Objetivo</th>
+<th>Qué se hace al encontrar una solución</th>
+<th>Error frecuente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Encontrar una solución</td>
+<td>Retornar inmediatamente</td>
+<td>Seguir buscando sin necesidad</td>
+</tr>
+<tr class="even">
+<td>Encontrar todas las soluciones</td>
+<td>Guardar la solución y continuar</td>
+<td>Retornar en la primera y perder las demás</td>
+</tr>
+<tr class="odd">
+<td>Optimizar</td>
+<td>Comparar con la mejor conocida y seguir</td>
+<td>Retornar <code>true</code> sin evaluar si es la mejor</td>
+</tr>
+</tbody>
+</table>
+<p>En decisión, el algoritmo puede retornar al encontrar la primera solución válida. En enumeración no debe retornar al encontrar la primera, porque el objetivo es visitar el resto del árbol de búsqueda. En optimización hay que guardar y comparar contra la mejor solución conocida.</p>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+<section id="podas-propagación-y-heurísticas" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="podas-propagación-y-heurísticas"><span class="header-section-number">5.5</span> Podas, propagación y heurísticas</h3>
+<p>Una poda es una regla que descarta una rama porque no puede llevar a una solución útil. Una poda correcta no elimina soluciones válidas.</p>
+<p>La propagación aplica las consecuencias de una decisión. Por ejemplo, si en Sudoku se asigna un número a una celda, ese número deja de estar disponible en ciertas celdas relacionadas. Como la propagación modifica estado o dominios, también debe deshacerse al volver atrás.</p>
+<p>Una heurística no cambia el problema: solo decide el orden en que se prueban variables o valores. Puede encontrar soluciones antes en la práctica, pero no garantiza cambiar el peor caso asintótico.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Consejo de estudio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Cuando resuelvas un ejercicio, escribe primero <code>X</code>, <code>D</code>, <code>C</code> y el objetivo. El pseudocódigo sale mucho más claro después de ese modelamiento.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="operaciones-o-algoritmo-principal" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">6</span> Operaciones o algoritmo principal</h2>
+<p>El patrón básico de backtracking tiene seis pasos:</p>
+<ol type="1">
+<li>Revisar si el estado parcial ya es una solución completa.</li>
+<li>Elegir una variable no asignada.</li>
+<li>Recorrer los valores de su dominio.</li>
+<li>Validar si asignar ese valor respeta las restricciones.</li>
+<li>Asignar, llamar recursivamente y recibir el resultado.</li>
+<li>Deshacer la asignación antes de probar el siguiente valor.</li>
+</ol>
+<p>La parte más importante es que toda asignación que modifica estado debe deshacerse al volver atrás. Si se modifican estructuras auxiliares, dominios reducidos o contadores, esos cambios también deben restaurarse.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Backtracking no es solo llamar recursivamente. Si falta modelamiento, validación o deshacer, el algoritmo puede explorar mal, aceptar estados inválidos o contaminar una rama con decisiones de otra.</p>
+</div>
+</div>
+</section>
+<section id="pseudocódigo-claro" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">7</span> Pseudocódigo claro</h2>
+<section id="existe-una-solución" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="existe-una-solución"><span class="header-section-number">7.1</span> Existe una solución</h3>
+<p>Este caso corresponde a un problema de decisión: solo interesa saber si existe al menos una asignación válida.</p>
+<p><strong>Input:</strong> conjunto de variables sin asignar <code>X</code>, dominios <code>D</code> y restricciones <code>C</code>.<br>
+<strong>Output:</strong> <code>true</code> si existe una asignación válida; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>ExisteSolucion(X, D, C):
+    if X esta vacio:
+        return true
+
+    x &lt;- elegir una variable de X
+
+    for v in D[x]:
+        if asignar x = v no rompe C:
+            asignar x &lt;- v
+
+            if ExisteSolucion(X - {x}, D, C):
+                return true
+
+            deshacer x &lt;- NIL
+
+    return false</code></pre>
+<p>El <code>return true</code> dentro del ciclo es correcto porque el objetivo es encontrar una sola solución.</p>
+</section>
+<section id="todas-las-soluciones" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="todas-las-soluciones"><span class="header-section-number">7.2</span> Todas las soluciones</h3>
+<p>Este caso corresponde a enumeración: cada solución completa se guarda, pero la búsqueda continúa.</p>
+<p><strong>Input:</strong> conjunto de variables sin asignar <code>X</code>, dominios <code>D</code>, restricciones <code>C</code> y colección <code>soluciones</code>.<br>
+<strong>Output:</strong> colección <code>soluciones</code> con todas las asignaciones válidas encontradas.</p>
+<pre class="text"><code>TodasLasSoluciones(X, D, C, soluciones):
+    if X esta vacio:
+        guardar copia de la asignacion actual en soluciones
+        return
+
+    x &lt;- elegir una variable de X
+
+    for v in D[x]:
+        if asignar x = v no rompe C:
+            asignar x &lt;- v
+            TodasLasSoluciones(X - {x}, D, C, soluciones)
+            deshacer x &lt;- NIL</code></pre>
+<p>Aquí no aparece <code>return true</code> después de guardar una solución, porque eso cortaría el resto de la enumeración.</p>
+</section>
+<section id="optimización" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="optimización"><span class="header-section-number">7.3</span> Optimización</h3>
+<p>En optimización no basta con encontrar una solución factible. Se necesita una función objetivo que permita comparar soluciones.</p>
+<p><strong>Input:</strong> variables sin asignar <code>X</code>, dominios <code>D</code>, restricciones <code>C</code>, función objetivo y mejor solución conocida <code>mejor</code>.<br>
+<strong>Output:</strong> mejor solución encontrada según la función objetivo.</p>
+<pre class="text"><code>BacktrackingOpt(X, D, C, objetivo, mejor):
+    if X esta vacio:
+        if asignacion actual cumple C and objetivo(asignacion actual) mejora mejor:
+            mejor &lt;- copia de la asignacion actual
+        return mejor
+
+    x &lt;- elegir una variable de X
+
+    for v in D[x]:
+        if asignar x = v no rompe C ni podas:
+            asignar x &lt;- v
+            mejor &lt;- BacktrackingOpt(X - {x}, D, C, objetivo, mejor)
+            deshacer x &lt;- NIL
+
+    return mejor</code></pre>
+<p>La variable <code>mejor</code> conserva la mejor solución conocida. Si el algoritmo solo retornara <code>true</code>, perdería la comparación que define la optimización.</p>
+</section>
+<section id="backtracking-con-mejoras" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="backtracking-con-mejoras"><span class="header-section-number">7.4</span> Backtracking con mejoras</h3>
+<p>Este esquema agrega podas, propagación y heurísticas. La estructura sigue siendo la misma, pero se mejora el orden de búsqueda y se descartan ramas sin futuro.</p>
+<p><strong>Input:</strong> variables sin asignar <code>X</code>, dominios <code>D</code>, restricciones <code>C</code> y estado parcial.<br>
+<strong>Output:</strong> <code>true</code> si existe una asignación válida; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>BacktrackingMejorado(X, D, C):
+    if X esta vacio:
+        return true
+
+    x &lt;- escoger variable mas restringida de X
+
+    for v in ordenar_valores(D[x]):
+        if asignar x = v no rompe C ni podas:
+            asignar x &lt;- v
+            cambios &lt;- propagar(x, v, D, C)
+
+            if BacktrackingMejorado(X - {x}, D, C):
+                return true
+
+            deshacer propagacion(cambios, D)
+            deshacer x &lt;- NIL
+
+    return false</code></pre>
+<p>Las podas y heurísticas pueden reducir mucho la búsqueda práctica, pero no necesariamente cambian el peor caso asintótico.</p>
+</section>
+</section>
+<section id="complejidad" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">8</span> Complejidad</h2>
+<p>La complejidad se mide a partir del número de variables y del tamaño de sus dominios. Si hay <code>n</code> variables y cada una tiene a lo más <code>K</code> valores, el espacio de búsqueda puede tener:</p>
+<p><span class="math display">\[
+K^n
+\]</span></p>
+<p>Por eso, en el peor caso, backtracking suele tener complejidad:</p>
+<p><span class="math display">\[
+O(K^n)
+\]</span></p>
+<p>Si los dominios tienen tamaños distintos, el número máximo de combinaciones es:</p>
+<p><span class="math display">\[
+|D_1| \cdot |D_2| \cdots |D_n|
+\]</span></p>
+<p>Donde <code>D_i</code> es el dominio de la variable <code>x_i</code>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situación</th>
+<th style="text-align: right;">Cota típica</th>
+<th>Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>n</code> variables, dominio máximo <code>K</code></td>
+<td style="text-align: right;"><code>O(K^n)</code></td>
+<td>Peor caso sin considerar costo de validar</td>
+</tr>
+<tr class="even">
+<td>Dominios de distintos tamaños</td>
+<td style="text-align: right;">Producto de los tamaños</td>
+<td>El árbol no tiene el mismo factor en cada nivel</td>
+</tr>
+<tr class="odd">
+<td>Cada validación cuesta <code>T_check</code></td>
+<td style="text-align: right;"><code>O(K^n * T_check)</code></td>
+<td>Validar también cuesta tiempo</td>
+</tr>
+<tr class="even">
+<td>Con podas</td>
+<td style="text-align: right;">Peor caso general igual</td>
+<td>Se reduce la búsqueda práctica</td>
+</tr>
+<tr class="odd">
+<td>Con heurísticas</td>
+<td style="text-align: right;">Peor caso general igual</td>
+<td>Cambia el orden de exploración</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No digas que backtracking deja de ser exponencial solo porque usa podas. Las podas y heurísticas mejoran la búsqueda práctica, pero no necesariamente cambian la cota asintótica del peor caso.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-guiado" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">9</span> Ejemplo guiado</h2>
+<p>Estudiaremos 4 reinas. El problema pide ubicar 4 reinas en un tablero <code>4 x 4</code> sin que dos reinas se ataquen.</p>
+<section id="paso-1-modelar-como-csp" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="paso-1-modelar-como-csp"><span class="header-section-number">9.1</span> Paso 1: modelar como CSP</h3>
+<p>Antes de programar, definimos variables, dominios y restricciones.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Elemento</th>
+<th>Definición</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variables</td>
+<td><code>x_i</code>: columna donde se ubica la reina de la fila <code>i</code></td>
+</tr>
+<tr class="even">
+<td>Dominios</td>
+<td>Cada <code>x_i</code> puede tomar valores <code>{1, 2, 3, 4}</code></td>
+</tr>
+<tr class="odd">
+<td>Restricción de columna</td>
+<td>Dos reinas no pueden estar en la misma columna</td>
+</tr>
+<tr class="even">
+<td>Restricción diagonal</td>
+<td>Dos reinas no pueden estar en la misma diagonal</td>
+</tr>
+<tr class="odd">
+<td>Caso base</td>
+<td>Las 4 filas tienen una columna asignada</td>
+</tr>
+<tr class="even">
+<td>Objetivo</td>
+<td>Encontrar una ubicación válida</td>
+</tr>
+</tbody>
+</table>
+<p>La restricción de columna dice que, para dos filas distintas, las columnas deben ser distintas:</p>
+<p><span class="math display">\[
+x_i \ne x_j
+\]</span></p>
+<p>La restricción diagonal dice que la diferencia entre columnas no puede ser igual a la diferencia entre filas:</p>
+<p><span class="math display">\[
+|x_i - x_j| \ne |i - j|
+\]</span></p>
+</section>
+<section id="paso-2-interpretar-el-estado-parcial" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="paso-2-interpretar-el-estado-parcial"><span class="header-section-number">9.2</span> Paso 2: interpretar el estado parcial</h3>
+<p>Si el estado parcial es:</p>
+<pre class="text"><code>T = [2, 4]</code></pre>
+<p>significa:</p>
+<ul>
+<li>fila 1: reina en columna 2;</li>
+<li>fila 2: reina en columna 4;</li>
+<li>filas 3 y 4: todavía sin asignar.</li>
+</ul>
+</section>
+<section id="paso-3-probar-y-retroceder" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="paso-3-probar-y-retroceder"><span class="header-section-number">9.3</span> Paso 3: probar y retroceder</h3>
+<p>Un recorrido posible es:</p>
+<ol type="1">
+<li>Probar fila 1 en columna 1.</li>
+<li>Probar fila 2 en columna 1: falla por columna.</li>
+<li>Probar fila 2 en columna 2: falla por diagonal.</li>
+<li>Probar fila 2 en columna 3: puede avanzar localmente.</li>
+<li>Si una fila posterior queda sin opciones, se deshace la última asignación y se prueba otra columna.</li>
+<li>Una solución válida es:</li>
+</ol>
+<p><span class="math display">\[
+(x_1, x_2, x_3, x_4) = (2, 4, 1, 3)
+\]</span></p>
+<p>Esto significa: fila 1 columna 2, fila 2 columna 4, fila 3 columna 1 y fila 4 columna 3.</p>
+</section>
+<section id="validación-de-reina" class="level3" data-number="9.4">
+<h3 data-number="9.4" class="anchored" data-anchor-id="validación-de-reina"><span class="header-section-number">9.4</span> Validación de reina</h3>
+<p>La función <code>CheckReina</code> revisa si una reina nueva ataca a alguna reina ya ubicada.</p>
+<p><strong>Input:</strong> arreglo parcial <code>T</code>, fila actual <code>i</code> y columna candidata <code>v</code>.<br>
+<strong>Output:</strong> <code>true</code> si ubicar la reina en <code>(i, v)</code> no rompe restricciones; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>CheckReina(T, i, v):
+    for j = 1 hasta i - 1:
+        if T[j] = v:
+            return false
+
+        if abs(T[j] - v) = abs(j - i):
+            return false
+
+    return true</code></pre>
+</section>
+<section id="backtracking-para-4-reinas" class="level3" data-number="9.5">
+<h3 data-number="9.5" class="anchored" data-anchor-id="backtracking-para-4-reinas"><span class="header-section-number">9.5</span> Backtracking para 4 reinas</h3>
+<p><strong>Input:</strong> fila actual <code>i</code>, tamaño <code>n</code> y arreglo parcial <code>T</code>.<br>
+<strong>Output:</strong> <code>true</code> si se puede completar una solución desde la fila <code>i</code>.</p>
+<pre class="text"><code>NReinas(i, n, T):
+    if i = n + 1:
+        return true
+
+    for v = 1 hasta n:
+        if CheckReina(T, i, v):
+            T[i] &lt;- v
+
+            if NReinas(i + 1, n, T):
+                return true
+
+            T[i] &lt;- NIL
+
+    return false</code></pre>
+<p>Observa que <code>T[i] &lt;- NIL</code> es el paso de deshacer. Sin ese paso, las columnas probadas en una rama podrían afectar ramas posteriores.</p>
+</section>
+</section>
+<section id="errores-típicos" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">10</span> Errores típicos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Por qué está mal</th>
+<th>Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Escribir recursión sin modelar el CSP</td>
+<td>No queda claro qué se asigna ni qué se valida</td>
+<td>Definir variables, dominios y restricciones antes del código</td>
+</tr>
+<tr class="even">
+<td>Confundir restricción con objetivo</td>
+<td>La restricción decide factibilidad; el objetivo compara soluciones</td>
+<td>Separar <code>esFactible</code> de <code>mejoraMejor</code></td>
+</tr>
+<tr class="odd">
+<td>No deshacer cambios</td>
+<td>Las ramas siguientes heredan decisiones incorrectas</td>
+<td>Restaurar asignaciones, dominios y auxiliares</td>
+</tr>
+<tr class="even">
+<td>Retornar al encontrar la primera cuando piden todas</td>
+<td>Se pierde el resto del árbol</td>
+<td>Guardar la solución y continuar</td>
+</tr>
+<tr class="odd">
+<td>Retornar <code>true</code> en optimización</td>
+<td>No se compara contra la mejor solución conocida</td>
+<td>Mantener y actualizar <code>mejor</code></td>
+</tr>
+<tr class="even">
+<td>Usar una heurística como garantía de óptimo</td>
+<td>La heurística solo ordena la exploración</td>
+<td>No descartar soluciones por heurística salvo que sea una poda correcta</td>
+</tr>
+<tr class="odd">
+<td>No acotar dominios</td>
+<td>El árbol de búsqueda no queda definido</td>
+<td>Definir dominios finitos desde el enunciado</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La validación parcial debe usar las restricciones del problema, no el objetivo final. Una solución puede ser factible pero no óptima; esas son preguntas distintas.</p>
+</div>
+</div>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">11</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Una ciudad se representa mediante una grilla <code>n x n</code>. Hay un conjunto <code>S</code> de celdas prohibidas donde no se pueden instalar estaciones y un conjunto <code>Z</code> de celdas prioritarias que deben quedar cubiertas. Se deben instalar exactamente <code>k</code> estaciones.</p>
+<p>Existe una función <code>cubre(e, z)</code> que indica si una estación ubicada en la celda <code>e</code> cubre la celda prioritaria <code>z</code>.</p>
+<p>Se pide:</p>
+<ol type="1">
+<li>Modelar el problema como CSP.</li>
+<li>Diseñar un algoritmo de backtracking que determine si existe una ubicación válida de las <code>k</code> estaciones.</li>
+<li>Explicar cómo modificar el algoritmo para encontrar la solución que minimiza la distancia media desde cada celda prioritaria a su estación más cercana.</li>
+<li>Proponer una poda y una heurística razonables.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Primero se modela el problema. Las variables son las estaciones que se deben ubicar. El dominio de cada estación son las celdas de la grilla. Las restricciones descartan celdas prohibidas, estaciones repetidas y soluciones completas que no cubren todas las celdas prioritarias.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Elemento</th>
+<th>Propuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variables</td>
+<td><code>E_i</code>, para <code>1 &lt;= i &lt;= k</code>, donde cada <code>E_i</code> es una estación</td>
+</tr>
+<tr class="even">
+<td>Dominio</td>
+<td>Celdas de la grilla <code>M</code></td>
+</tr>
+<tr class="odd">
+<td>Restricción 1</td>
+<td><code>E_i</code> no puede pertenecer a <code>S</code></td>
+</tr>
+<tr class="even">
+<td>Restricción 2</td>
+<td>No se repiten celdas entre estaciones</td>
+</tr>
+<tr class="odd">
+<td>Restricción 3</td>
+<td>Toda celda prioritaria <code>z</code> en <code>Z</code> debe quedar cubierta</td>
+</tr>
+<tr class="even">
+<td>Objetivo de decisión</td>
+<td>Determinar si existe una ubicación válida</td>
+</tr>
+<tr class="odd">
+<td>Objetivo de optimización</td>
+<td>Minimizar la distancia media desde cada <code>z</code> hasta su estación más cercana</td>
+</tr>
+</tbody>
+</table>
+<p>Para validar una celda candidata:</p>
+<p><strong>Input:</strong> celda candidata <code>celda</code>, conjunto de prohibidas <code>S</code> y asignación parcial <code>E</code>.<br>
+<strong>Output:</strong> <code>true</code> si la celda puede usarse; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>CeldaSegura(celda, S, E):
+    if celda pertenece a S:
+        return false
+
+    if celda ya esta usada en E:
+        return false
+
+    return true</code></pre>
+<p>Para revisar una solución completa:</p>
+<p><strong>Input:</strong> estaciones asignadas <code>E</code>, celdas prioritarias <code>Z</code> y función <code>cubre</code>.<br>
+<strong>Output:</strong> <code>true</code> si toda celda prioritaria queda cubierta; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>CubrePrioritarias(E, Z):
+    for z in Z:
+        cubierta &lt;- false
+
+        for e in E:
+            if cubre(e, z):
+                cubierta &lt;- true
+
+        if cubierta = false:
+            return false
+
+    return true</code></pre>
+<p>El backtracking de decisión es:</p>
+<p><strong>Input:</strong> índice <code>i</code>, cantidad de estaciones <code>k</code>, grilla <code>M</code>, prohibidas <code>S</code>, prioritarias <code>Z</code> y asignación parcial <code>E</code>.<br>
+<strong>Output:</strong> <code>true</code> si existe forma de ubicar las estaciones; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>UbicarEstaciones(i, k, M, S, Z, E):
+    if i = k + 1:
+        return CubrePrioritarias(E, Z)
+
+    for celda in M:
+        if CeldaSegura(celda, S, E):
+            E[i] &lt;- celda
+
+            if UbicarEstaciones(i + 1, k, M, S, Z, E):
+                return true
+
+            E[i] &lt;- NIL
+
+    return false</code></pre>
+<p>La línea <code>E[i] &lt;- NIL</code> es el deshacer. Es obligatoria porque cada celda probada modifica el estado parcial.</p>
+<p>Para optimizar, se agrega una función de costo, por ejemplo <code>DistanciaMedia(E, Z)</code>, y una variable <code>mejor</code> que guarda la mejor solución conocida:</p>
+<p><strong>Input:</strong> mismo input anterior, función de distancia y mejor solución conocida <code>mejor</code>.<br>
+<strong>Output:</strong> mejor asignación encontrada.</p>
+<pre class="text"><code>UbicarEstacionesOpt(i, k, M, S, Z, E, mejor):
+    if i = k + 1:
+        if CubrePrioritarias(E, Z):
+            costo &lt;- DistanciaMedia(E, Z)
+
+            if costo &lt; mejor.costo:
+                mejor &lt;- copiar(E, costo)
+
+        return mejor
+
+    for celda in M:
+        if CeldaSegura(celda, S, E):
+            E[i] &lt;- celda
+            mejor &lt;- UbicarEstacionesOpt(i + 1, k, M, S, Z, E, mejor)
+            E[i] &lt;- NIL
+
+    return mejor</code></pre>
+<p>Una poda posible es cortar una rama si existe una celda prioritaria que ya no puede ser cubierta con las estaciones restantes. Otra poda, para optimización, es cortar si una cota inferior del costo parcial ya es peor que <code>mejor.costo</code>.</p>
+<p>Una heurística de valor razonable es probar primero las celdas que cubren más prioritarias. Una heurística de variable, si se reformula el problema por zonas prioritarias, es empezar por las zonas con menos celdas candidatas.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">12</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>¿Por qué backtracking no es solo escribir recursión?</li>
+<li>¿Qué representa la tripleta CSP?</li>
+<li>¿Cuál es la diferencia entre variable y dominio?</li>
+<li>¿Qué determina si una asignación parcial es factible?</li>
+<li>¿Qué cambia entre encontrar una solución y encontrar todas?</li>
+<li>¿Qué debe guardarse en un problema de optimización?</li>
+<li>¿Por qué toda asignación debe deshacerse al volver atrás?</li>
+<li>¿Qué diferencia hay entre poda y heurística?</li>
+<li>¿Qué significa propagar una asignación?</li>
+<li>¿Por qué el peor caso suele ser exponencial?</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">13</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="13.1">
+<h3 data-number="13.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">13.1</span> Ejercicio 1</h3>
+<p>Modela Sudoku como CSP. Indica variables, dominios y restricciones.</p>
+<details>
+<summary>
+Ver solución sugerida
+</summary>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Elemento</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variables</td>
+<td>Celdas vacías del tablero</td>
+</tr>
+<tr class="even">
+<td>Dominio</td>
+<td>Números del 1 al 9</td>
+</tr>
+<tr class="odd">
+<td>Restricciones</td>
+<td>No repetir número en fila, columna ni subcuadro <code>3 x 3</code></td>
+</tr>
+<tr class="even">
+<td>Objetivo</td>
+<td>Completar todas las celdas respetando restricciones</td>
+</tr>
+</tbody>
+</table>
+</details>
+</section>
+<section id="ejercicio-2" class="level3" data-number="13.2">
+<h3 data-number="13.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">13.2</span> Ejercicio 2</h3>
+<p>Modifica mentalmente <code>ExisteSolucion</code> para contar soluciones. ¿Qué línea no debe aparecer?</p>
+<details>
+<summary>
+Ver solución sugerida
+</summary>
+<p>No debe aparecer un <code>return true</code> que corte la búsqueda al encontrar la primera solución. En el caso base se incrementa un contador y luego se vuelve para seguir explorando.</p>
+</details>
+</section>
+<section id="ejercicio-3" class="level3" data-number="13.3">
+<h3 data-number="13.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">13.3</span> Ejercicio 3</h3>
+<p>Para 4 reinas, evalúa si ubicar la fila 3 en columna 2 es válido cuando el estado parcial es:</p>
+<pre class="text"><code>T = [1, 3]</code></pre>
+<details>
+<summary>
+Ver solución sugerida
+</summary>
+<p>No es válido. La fila 1 tiene columna 1 y la fila 3 tendría columna 2; no comparten columna, pero la fila 2 ya tiene columna 3. La diferencia con fila 2 es:</p>
+<pre class="text"><code>abs(3 - 2) = 1
+abs(2 - 3) = 1</code></pre>
+<p>Como las diferencias son iguales, están en diagonal.</p>
+</details>
+</section>
+<section id="ejercicio-4" class="level3" data-number="13.4">
+<h3 data-number="13.4" class="anchored" data-anchor-id="ejercicio-4"><span class="header-section-number">13.4</span> Ejercicio 4</h3>
+<p>En el problema de estaciones, propón una poda distinta a revisar celdas prohibidas.</p>
+<details>
+<summary>
+Ver solución sugerida
+</summary>
+<p>Una poda razonable es calcular si alguna celda prioritaria todavía puede ser cubierta por una estación no asignada. Si no existe ninguna celda candidata restante que pueda cubrir esa prioritaria, la rama se corta.</p>
+</details>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">14</span> Checklist de estudio</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Puedo explicar backtracking como técnica para CSP.</label></li>
+<li><label><input type="checkbox">Puedo escribir y explicar la tripleta <code>(X, D, C)</code>.</label></li>
+<li><label><input type="checkbox">Puedo distinguir variables, dominios y restricciones.</label></li>
+<li><label><input type="checkbox">Puedo identificar el estado parcial y el caso base.</label></li>
+<li><label><input type="checkbox">Puedo explicar validación y deshacer.</label></li>
+<li><label><input type="checkbox">Puedo diferenciar fuerza bruta y backtracking.</label></li>
+<li><label><input type="checkbox">Puedo adaptar el pseudocódigo para una solución.</label></li>
+<li><label><input type="checkbox">Puedo adaptar el pseudocódigo para todas las soluciones.</label></li>
+<li><label><input type="checkbox">Puedo adaptar el pseudocódigo para optimización.</label></li>
+<li><label><input type="checkbox">Puedo explicar podas, propagación y heurísticas.</label></li>
+<li><label><input type="checkbox">Puedo justificar la complejidad exponencial del peor caso.</label></li>
+<li><label><input type="checkbox">Puedo resolver el ejemplo de 4 reinas.</label></li>
+<li><label><input type="checkbox">Puedo modelar el problema de estaciones en una grilla.</label></li>
+</ul>
 
 
 </section>

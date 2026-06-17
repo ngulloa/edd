@@ -616,7 +616,19 @@
     "href": "contenidos/backtracking.html",
     "title": "Backtracking",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Comprender backtracking como una técnica para resolver problemas de satisfacción de restricciones. Al estudiar esta página deberías poder:\n\nreconocer cuándo un problema se puede modelar con variables, dominios y restricciones;\nexplicar qué es un CSP y escribir su tripleta;\ndistinguir estado parcial, caso base, decisión recursiva, validación y deshacer;\ndiferenciar fuerza bruta y backtracking;\nadaptar el algoritmo para encontrar una solución, todas las soluciones u optimizar;\nexplicar qué aportan las podas, la propagación y las heurísticas;\nestimar por qué el peor caso suele ser exponencial;\nresolver un problema representativo con estaciones en una grilla.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Backtracking"
+    ]
+  },
+  {
+    "objectID": "contenidos/backtracking.html#objetivo-de-aprendizaje",
+    "href": "contenidos/backtracking.html#objetivo-de-aprendizaje",
+    "title": "Backtracking",
+    "section": "",
+    "text": "Comprender backtracking como una técnica para resolver problemas de satisfacción de restricciones. Al estudiar esta página deberías poder:\n\nreconocer cuándo un problema se puede modelar con variables, dominios y restricciones;\nexplicar qué es un CSP y escribir su tripleta;\ndistinguir estado parcial, caso base, decisión recursiva, validación y deshacer;\ndiferenciar fuerza bruta y backtracking;\nadaptar el algoritmo para encontrar una solución, todas las soluciones u optimizar;\nexplicar qué aportan las podas, la propagación y las heurísticas;\nestimar por qué el peor caso suele ser exponencial;\nresolver un problema representativo con estaciones en una grilla.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -627,8 +639,8 @@
     "objectID": "contenidos/backtracking.html#idea-central-del-tema",
     "href": "contenidos/backtracking.html#idea-central-del-tema",
     "title": "Backtracking",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nBacktracking explora decisiones paso a paso. En cada paso el algoritmo asigna un valor a una variable, revisa si esa decisión respeta las restricciones y, si la rama ya no puede servir, retrocede para probar otra opción.\nLa idea central no es “escribir recursión”. Primero se modela el problema: qué se debe asignar, qué valores son posibles y qué reglas hacen que una asignación sea factible.\n\n\n\n\n\n\nImportanteIdea central\n\n\n\nBacktracking sirve cuando una solución se construye por decisiones sucesivas y las restricciones permiten descartar caminos antes de completar toda la combinación.\n\n\nUna forma compacta de ver el flujo es:\n\n\n\n\n\nflowchart LR\n    A[\"Estado parcial\"] --&gt; B[\"Elegir variable\"]\n    B --&gt; C[\"Probar valor\"]\n    C --&gt; D{\"Factible?\"}\n    D -- \"No\" --&gt; E[\"Descartar\"]\n    D -- \"Si\" --&gt; F[\"Asignar\"]\n    F --&gt; G{\"Completo?\"}\n    G -- \"Si\" --&gt; H[\"Retornar o guardar\"]\n    G -- \"No\" --&gt; I[\"Recursion\"]\n    I --&gt; J[\"Deshacer\"]\n    J --&gt; C",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -636,11 +648,23 @@
     ]
   },
   {
-    "objectID": "contenidos/backtracking.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/backtracking.html#cuándo-usar-esta-técnica-o-estructura",
+    "objectID": "contenidos/backtracking.html#antes-de-partir-vocabulario-mínimo",
+    "href": "contenidos/backtracking.html#antes-de-partir-vocabulario-mínimo",
     "title": "Backtracking",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "section": "3 Antes de partir: vocabulario mínimo",
+    "text": "3 Antes de partir: vocabulario mínimo\nAntes de usar el algoritmo conviene fijar el vocabulario. Cada palabra responde una pregunta distinta del enunciado.\n\n\n\n\n\n\n\n\nConcepto\nQué significa\nPregunta guía\n\n\n\n\nVariable\nElemento que recibirá una decisión\n¿Qué cosas debo asignar?\n\n\nDominio\nValores posibles para una variable\n¿Qué valores puede tomar cada variable?\n\n\nRestricción\nRegla que no se puede violar\n¿Qué asignaciones están prohibidas?\n\n\nEstado parcial\nAsignaciones hechas hasta ahora\n¿Qué llevo construido?\n\n\nCaso base\nCondición de término de la recursión\n¿Cuándo tengo una solución completa?\n\n\nDecisión recursiva\nPróxima asignación que se intenta\n¿Qué variable asigno ahora?\n\n\nValidación\nRevisión de factibilidad parcial\n¿Esta decisión rompe alguna regla?\n\n\nDeshacer\nRestaurar el estado anterior\n¿Qué cambio debo revertir al volver atrás?\n\n\nPoda\nRegla para cortar una rama inútil\n¿Qué rama ya no vale la pena explorar?\n\n\nPropagación\nActualizar efectos de una decisión sobre opciones futuras\n¿Qué dominios o datos auxiliares cambian por esta asignación?\n\n\nHeurística\nCriterio práctico para ordenar la búsqueda\n¿Qué variable o valor conviene probar primero?\n\n\n\n\n\n\n\n\n\nNotaIntuición\n\n\n\nEl estado parcial es una solución incompleta. Backtracking no espera hasta el final para revisar: valida mientras construye.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Backtracking"
+    ]
+  },
+  {
+    "objectID": "contenidos/backtracking.html#cuándo-usar-esta-técnica",
+    "href": "contenidos/backtracking.html#cuándo-usar-esta-técnica",
+    "title": "Backtracking",
+    "section": "4 Cuándo usar esta técnica",
+    "text": "4 Cuándo usar esta técnica\nUsa backtracking cuando el problema tenga esta forma:\n\nLa solución se construye mediante decisiones sucesivas.\nCada decisión tiene un conjunto finito de opciones.\nNo toda combinación de opciones es válida.\nUna asignación inválida se puede detectar antes de completar todo.\nEl enunciado pide existencia, enumeración, conteo u optimización.\n\nEjemplos típicos:\n\n\n\n\n\n\n\n\n\nProblema\nVariables\nDominios\nRestricciones\n\n\n\n\nN reinas\nUna reina por fila\nColumnas posibles\nNo compartir columna ni diagonal\n\n\nSudoku\nCeldas vacías\nNúmeros del 1 al 9\nFila, columna y subcuadro sin repetidos\n\n\nLaberinto\nPaso o posición actual\nMovimientos posibles\nNo chocar con muros ni revisitar celdas\n\n\nColoreo de grafos\nVértices\nColores disponibles\nVecinos con colores distintos\n\n\nClique de tamaño k\nVértices elegidos\nVértices o decisiones sí/no\nTodos los elegidos deben estar conectados\n\n\nEstaciones en grilla\nEstaciones por ubicar\nCeldas de la grilla\nNo usar celdas prohibidas y cubrir prioritarias\n\n\n\nNo basta que un problema use recursión para que sea backtracking. La señal importante es que existan restricciones que determinan factibilidad durante la construcción.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -651,8 +675,8 @@
     "objectID": "contenidos/backtracking.html#conceptos-mínimos",
     "href": "contenidos/backtracking.html#conceptos-mínimos",
     "title": "Backtracking",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "section": "5 Conceptos mínimos",
+    "text": "5 Conceptos mínimos\n\n5.1 CSP\nUn problema de satisfacción de restricciones, o CSP, es un problema donde se deben asignar valores a variables respetando reglas. Se modela como la tripleta:\n\\[\n(X, D, C)\n\\]\nDonde:\n\nX es el conjunto de variables.\nD es el conjunto de dominios, uno para cada variable.\nC es el conjunto de restricciones.\n\nSi hay n variables, se puede escribir:\n\\[\nX = \\{x_1, x_2, \\dots, x_n\\}\n\\]\nY sus dominios respectivos:\n\\[\nD = \\{D_1, D_2, \\dots, D_n\\}\n\\]\nUna solución es una asignación en que cada variable toma un valor de su dominio y todas las restricciones se cumplen.\n\n\n5.2 Variables, dominios y restricciones\nPrimero se decide qué representa cada variable. Después se define qué valores puede tomar. Finalmente se escriben las restricciones, que son las reglas que separan una asignación válida de una inválida.\n\n\n\n\n\n\n\n\nParte del modelo\nRol\nEjemplo en 4 reinas\n\n\n\n\nVariable\nLo que se asigna\nx_i: columna de la reina en la fila i\n\n\nDominio\nValores posibles\n{1, 2, 3, 4}\n\n\nRestricción\nRegla de factibilidad\nNo misma columna ni misma diagonal\n\n\nObjetivo\nQué se busca\nUna ubicación válida, todas, o la mejor según un criterio\n\n\n\n\n\n\n\n\n\nImportanteModelo antes que código\n\n\n\nLas restricciones determinan si una asignación es factible. El objetivo determina si basta encontrar una, si hay que enumerarlas todas o si se debe comparar para elegir la mejor.\n\n\n\n\n5.3 Fuerza bruta y backtracking\nFuerza bruta genera combinaciones completas y luego revisa si sirven. Backtracking revisa restricciones durante la construcción y corta ramas apenas detecta que ya no pueden producir una solución válida.\n\n\n\n\n\n\n\n\nEstrategia\nQué hace\nConsecuencia\n\n\n\n\nFuerza bruta\nConstruye asignaciones completas y después valida\nPuede recorrer muchas combinaciones inútiles\n\n\nBacktracking\nValida estados parciales mientras construye\nPuede descartar antes, aunque el peor caso siga siendo grande\n\n\n\n\n\n5.4 Una solución, todas las soluciones u optimización\nEl mismo modelo puede cambiar según lo que pida el objetivo.\n\n\n\n\n\n\n\n\nObjetivo\nQué se hace al encontrar una solución\nError frecuente\n\n\n\n\nEncontrar una solución\nRetornar inmediatamente\nSeguir buscando sin necesidad\n\n\nEncontrar todas las soluciones\nGuardar la solución y continuar\nRetornar en la primera y perder las demás\n\n\nOptimizar\nComparar con la mejor conocida y seguir\nRetornar true sin evaluar si es la mejor\n\n\n\nEn decisión, el algoritmo puede retornar al encontrar la primera solución válida. En enumeración no debe retornar al encontrar la primera, porque el objetivo es visitar el resto del árbol de búsqueda. En optimización hay que guardar y comparar contra la mejor solución conocida.\n\n\n5.5 Podas, propagación y heurísticas\nUna poda es una regla que descarta una rama porque no puede llevar a una solución útil. Una poda correcta no elimina soluciones válidas.\nLa propagación aplica las consecuencias de una decisión. Por ejemplo, si en Sudoku se asigna un número a una celda, ese número deja de estar disponible en ciertas celdas relacionadas. Como la propagación modifica estado o dominios, también debe deshacerse al volver atrás.\nUna heurística no cambia el problema: solo decide el orden en que se prueban variables o valores. Puede encontrar soluciones antes en la práctica, pero no garantiza cambiar el peor caso asintótico.\n\n\n\n\n\n\nTipConsejo de estudio\n\n\n\nCuando resuelvas un ejercicio, escribe primero X, D, C y el objetivo. El pseudocódigo sale mucho más claro después de ese modelamiento.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -663,8 +687,8 @@
     "objectID": "contenidos/backtracking.html#operaciones-o-algoritmo-principal",
     "href": "contenidos/backtracking.html#operaciones-o-algoritmo-principal",
     "title": "Backtracking",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "section": "6 Operaciones o algoritmo principal",
+    "text": "6 Operaciones o algoritmo principal\nEl patrón básico de backtracking tiene seis pasos:\n\nRevisar si el estado parcial ya es una solución completa.\nElegir una variable no asignada.\nRecorrer los valores de su dominio.\nValidar si asignar ese valor respeta las restricciones.\nAsignar, llamar recursivamente y recibir el resultado.\nDeshacer la asignación antes de probar el siguiente valor.\n\nLa parte más importante es que toda asignación que modifica estado debe deshacerse al volver atrás. Si se modifican estructuras auxiliares, dominios reducidos o contadores, esos cambios también deben restaurarse.\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nBacktracking no es solo llamar recursivamente. Si falta modelamiento, validación o deshacer, el algoritmo puede explorar mal, aceptar estados inválidos o contaminar una rama con decisiones de otra.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -675,8 +699,8 @@
     "objectID": "contenidos/backtracking.html#pseudocódigo-claro",
     "href": "contenidos/backtracking.html#pseudocódigo-claro",
     "title": "Backtracking",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "section": "7 Pseudocódigo claro",
+    "text": "7 Pseudocódigo claro\n\n7.1 Existe una solución\nEste caso corresponde a un problema de decisión: solo interesa saber si existe al menos una asignación válida.\nInput: conjunto de variables sin asignar X, dominios D y restricciones C.\nOutput: true si existe una asignación válida; false en caso contrario.\nExisteSolucion(X, D, C):\n    if X esta vacio:\n        return true\n\n    x &lt;- elegir una variable de X\n\n    for v in D[x]:\n        if asignar x = v no rompe C:\n            asignar x &lt;- v\n\n            if ExisteSolucion(X - {x}, D, C):\n                return true\n\n            deshacer x &lt;- NIL\n\n    return false\nEl return true dentro del ciclo es correcto porque el objetivo es encontrar una sola solución.\n\n\n7.2 Todas las soluciones\nEste caso corresponde a enumeración: cada solución completa se guarda, pero la búsqueda continúa.\nInput: conjunto de variables sin asignar X, dominios D, restricciones C y colección soluciones.\nOutput: colección soluciones con todas las asignaciones válidas encontradas.\nTodasLasSoluciones(X, D, C, soluciones):\n    if X esta vacio:\n        guardar copia de la asignacion actual en soluciones\n        return\n\n    x &lt;- elegir una variable de X\n\n    for v in D[x]:\n        if asignar x = v no rompe C:\n            asignar x &lt;- v\n            TodasLasSoluciones(X - {x}, D, C, soluciones)\n            deshacer x &lt;- NIL\nAquí no aparece return true después de guardar una solución, porque eso cortaría el resto de la enumeración.\n\n\n7.3 Optimización\nEn optimización no basta con encontrar una solución factible. Se necesita una función objetivo que permita comparar soluciones.\nInput: variables sin asignar X, dominios D, restricciones C, función objetivo y mejor solución conocida mejor.\nOutput: mejor solución encontrada según la función objetivo.\nBacktrackingOpt(X, D, C, objetivo, mejor):\n    if X esta vacio:\n        if asignacion actual cumple C and objetivo(asignacion actual) mejora mejor:\n            mejor &lt;- copia de la asignacion actual\n        return mejor\n\n    x &lt;- elegir una variable de X\n\n    for v in D[x]:\n        if asignar x = v no rompe C ni podas:\n            asignar x &lt;- v\n            mejor &lt;- BacktrackingOpt(X - {x}, D, C, objetivo, mejor)\n            deshacer x &lt;- NIL\n\n    return mejor\nLa variable mejor conserva la mejor solución conocida. Si el algoritmo solo retornara true, perdería la comparación que define la optimización.\n\n\n7.4 Backtracking con mejoras\nEste esquema agrega podas, propagación y heurísticas. La estructura sigue siendo la misma, pero se mejora el orden de búsqueda y se descartan ramas sin futuro.\nInput: variables sin asignar X, dominios D, restricciones C y estado parcial.\nOutput: true si existe una asignación válida; false en caso contrario.\nBacktrackingMejorado(X, D, C):\n    if X esta vacio:\n        return true\n\n    x &lt;- escoger variable mas restringida de X\n\n    for v in ordenar_valores(D[x]):\n        if asignar x = v no rompe C ni podas:\n            asignar x &lt;- v\n            cambios &lt;- propagar(x, v, D, C)\n\n            if BacktrackingMejorado(X - {x}, D, C):\n                return true\n\n            deshacer propagacion(cambios, D)\n            deshacer x &lt;- NIL\n\n    return false\nLas podas y heurísticas pueden reducir mucho la búsqueda práctica, pero no necesariamente cambian el peor caso asintótico.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -687,20 +711,8 @@
     "objectID": "contenidos/backtracking.html#complejidad",
     "href": "contenidos/backtracking.html#complejidad",
     "title": "Backtracking",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
-    "crumbs": [
-      "Inicio",
-      "Contenidos",
-      "Backtracking"
-    ]
-  },
-  {
-    "objectID": "contenidos/backtracking.html#errores-típicos",
-    "href": "contenidos/backtracking.html#errores-típicos",
-    "title": "Backtracking",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
+    "section": "8 Complejidad",
+    "text": "8 Complejidad\nLa complejidad se mide a partir del número de variables y del tamaño de sus dominios. Si hay n variables y cada una tiene a lo más K valores, el espacio de búsqueda puede tener:\n\\[\nK^n\n\\]\nPor eso, en el peor caso, backtracking suele tener complejidad:\n\\[\nO(K^n)\n\\]\nSi los dominios tienen tamaños distintos, el número máximo de combinaciones es:\n\\[\n|D_1| \\cdot |D_2| \\cdots |D_n|\n\\]\nDonde D_i es el dominio de la variable x_i.\n\n\n\n\n\n\n\n\nSituación\nCota típica\nComentario\n\n\n\n\nn variables, dominio máximo K\nO(K^n)\nPeor caso sin considerar costo de validar\n\n\nDominios de distintos tamaños\nProducto de los tamaños\nEl árbol no tiene el mismo factor en cada nivel\n\n\nCada validación cuesta T_check\nO(K^n * T_check)\nValidar también cuesta tiempo\n\n\nCon podas\nPeor caso general igual\nSe reduce la búsqueda práctica\n\n\nCon heurísticas\nPeor caso general igual\nCambia el orden de exploración\n\n\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nNo digas que backtracking deja de ser exponencial solo porque usa podas. Las podas y heurísticas mejoran la búsqueda práctica, pero no necesariamente cambian la cota asintótica del peor caso.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -711,8 +723,20 @@
     "objectID": "contenidos/backtracking.html#ejemplo-guiado",
     "href": "contenidos/backtracking.html#ejemplo-guiado",
     "title": "Backtracking",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "section": "9 Ejemplo guiado",
+    "text": "9 Ejemplo guiado\nEstudiaremos 4 reinas. El problema pide ubicar 4 reinas en un tablero 4 x 4 sin que dos reinas se ataquen.\n\n9.1 Paso 1: modelar como CSP\nAntes de programar, definimos variables, dominios y restricciones.\n\n\n\n\n\n\n\nElemento\nDefinición\n\n\n\n\nVariables\nx_i: columna donde se ubica la reina de la fila i\n\n\nDominios\nCada x_i puede tomar valores {1, 2, 3, 4}\n\n\nRestricción de columna\nDos reinas no pueden estar en la misma columna\n\n\nRestricción diagonal\nDos reinas no pueden estar en la misma diagonal\n\n\nCaso base\nLas 4 filas tienen una columna asignada\n\n\nObjetivo\nEncontrar una ubicación válida\n\n\n\nLa restricción de columna dice que, para dos filas distintas, las columnas deben ser distintas:\n\\[\nx_i \\ne x_j\n\\]\nLa restricción diagonal dice que la diferencia entre columnas no puede ser igual a la diferencia entre filas:\n\\[\n|x_i - x_j| \\ne |i - j|\n\\]\n\n\n9.2 Paso 2: interpretar el estado parcial\nSi el estado parcial es:\nT = [2, 4]\nsignifica:\n\nfila 1: reina en columna 2;\nfila 2: reina en columna 4;\nfilas 3 y 4: todavía sin asignar.\n\n\n\n9.3 Paso 3: probar y retroceder\nUn recorrido posible es:\n\nProbar fila 1 en columna 1.\nProbar fila 2 en columna 1: falla por columna.\nProbar fila 2 en columna 2: falla por diagonal.\nProbar fila 2 en columna 3: puede avanzar localmente.\nSi una fila posterior queda sin opciones, se deshace la última asignación y se prueba otra columna.\nUna solución válida es:\n\n\\[\n(x_1, x_2, x_3, x_4) = (2, 4, 1, 3)\n\\]\nEsto significa: fila 1 columna 2, fila 2 columna 4, fila 3 columna 1 y fila 4 columna 3.\n\n\n9.4 Validación de reina\nLa función CheckReina revisa si una reina nueva ataca a alguna reina ya ubicada.\nInput: arreglo parcial T, fila actual i y columna candidata v.\nOutput: true si ubicar la reina en (i, v) no rompe restricciones; false en caso contrario.\nCheckReina(T, i, v):\n    for j = 1 hasta i - 1:\n        if T[j] = v:\n            return false\n\n        if abs(T[j] - v) = abs(j - i):\n            return false\n\n    return true\n\n\n9.5 Backtracking para 4 reinas\nInput: fila actual i, tamaño n y arreglo parcial T.\nOutput: true si se puede completar una solución desde la fila i.\nNReinas(i, n, T):\n    if i = n + 1:\n        return true\n\n    for v = 1 hasta n:\n        if CheckReina(T, i, v):\n            T[i] &lt;- v\n\n            if NReinas(i + 1, n, T):\n                return true\n\n            T[i] &lt;- NIL\n\n    return false\nObserva que T[i] &lt;- NIL es el paso de deshacer. Sin ese paso, las columnas probadas en una rama podrían afectar ramas posteriores.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Backtracking"
+    ]
+  },
+  {
+    "objectID": "contenidos/backtracking.html#errores-típicos",
+    "href": "contenidos/backtracking.html#errores-típicos",
+    "title": "Backtracking",
+    "section": "10 Errores típicos",
+    "text": "10 Errores típicos\n\n\n\n\n\n\n\n\nError\nPor qué está mal\nCorrección\n\n\n\n\nEscribir recursión sin modelar el CSP\nNo queda claro qué se asigna ni qué se valida\nDefinir variables, dominios y restricciones antes del código\n\n\nConfundir restricción con objetivo\nLa restricción decide factibilidad; el objetivo compara soluciones\nSeparar esFactible de mejoraMejor\n\n\nNo deshacer cambios\nLas ramas siguientes heredan decisiones incorrectas\nRestaurar asignaciones, dominios y auxiliares\n\n\nRetornar al encontrar la primera cuando piden todas\nSe pierde el resto del árbol\nGuardar la solución y continuar\n\n\nRetornar true en optimización\nNo se compara contra la mejor solución conocida\nMantener y actualizar mejor\n\n\nUsar una heurística como garantía de óptimo\nLa heurística solo ordena la exploración\nNo descartar soluciones por heurística salvo que sea una poda correcta\n\n\nNo acotar dominios\nEl árbol de búsqueda no queda definido\nDefinir dominios finitos desde el enunciado\n\n\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nLa validación parcial debe usar las restricciones del problema, no el objetivo final. Una solución puede ser factible pero no óptima; esas son preguntas distintas.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -723,8 +747,32 @@
     "objectID": "contenidos/backtracking.html#problema-representativo-de-interrogación",
     "href": "contenidos/backtracking.html#problema-representativo-de-interrogación",
     "title": "Backtracking",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "section": "11 Problema representativo de interrogación",
+    "text": "11 Problema representativo de interrogación\n\n\nVer enunciado\n\nUna ciudad se representa mediante una grilla n x n. Hay un conjunto S de celdas prohibidas donde no se pueden instalar estaciones y un conjunto Z de celdas prioritarias que deben quedar cubiertas. Se deben instalar exactamente k estaciones.\nExiste una función cubre(e, z) que indica si una estación ubicada en la celda e cubre la celda prioritaria z.\nSe pide:\n\nModelar el problema como CSP.\nDiseñar un algoritmo de backtracking que determine si existe una ubicación válida de las k estaciones.\nExplicar cómo modificar el algoritmo para encontrar la solución que minimiza la distancia media desde cada celda prioritaria a su estación más cercana.\nProponer una poda y una heurística razonables.\n\n\n\n\nVer solución\n\nPrimero se modela el problema. Las variables son las estaciones que se deben ubicar. El dominio de cada estación son las celdas de la grilla. Las restricciones descartan celdas prohibidas, estaciones repetidas y soluciones completas que no cubren todas las celdas prioritarias.\n\n\n\n\n\n\n\nElemento\nPropuesta\n\n\n\n\nVariables\nE_i, para 1 &lt;= i &lt;= k, donde cada E_i es una estación\n\n\nDominio\nCeldas de la grilla M\n\n\nRestricción 1\nE_i no puede pertenecer a S\n\n\nRestricción 2\nNo se repiten celdas entre estaciones\n\n\nRestricción 3\nToda celda prioritaria z en Z debe quedar cubierta\n\n\nObjetivo de decisión\nDeterminar si existe una ubicación válida\n\n\nObjetivo de optimización\nMinimizar la distancia media desde cada z hasta su estación más cercana\n\n\n\nPara validar una celda candidata:\nInput: celda candidata celda, conjunto de prohibidas S y asignación parcial E.\nOutput: true si la celda puede usarse; false en caso contrario.\nCeldaSegura(celda, S, E):\n    if celda pertenece a S:\n        return false\n\n    if celda ya esta usada en E:\n        return false\n\n    return true\nPara revisar una solución completa:\nInput: estaciones asignadas E, celdas prioritarias Z y función cubre.\nOutput: true si toda celda prioritaria queda cubierta; false en caso contrario.\nCubrePrioritarias(E, Z):\n    for z in Z:\n        cubierta &lt;- false\n\n        for e in E:\n            if cubre(e, z):\n                cubierta &lt;- true\n\n        if cubierta = false:\n            return false\n\n    return true\nEl backtracking de decisión es:\nInput: índice i, cantidad de estaciones k, grilla M, prohibidas S, prioritarias Z y asignación parcial E.\nOutput: true si existe forma de ubicar las estaciones; false en caso contrario.\nUbicarEstaciones(i, k, M, S, Z, E):\n    if i = k + 1:\n        return CubrePrioritarias(E, Z)\n\n    for celda in M:\n        if CeldaSegura(celda, S, E):\n            E[i] &lt;- celda\n\n            if UbicarEstaciones(i + 1, k, M, S, Z, E):\n                return true\n\n            E[i] &lt;- NIL\n\n    return false\nLa línea E[i] &lt;- NIL es el deshacer. Es obligatoria porque cada celda probada modifica el estado parcial.\nPara optimizar, se agrega una función de costo, por ejemplo DistanciaMedia(E, Z), y una variable mejor que guarda la mejor solución conocida:\nInput: mismo input anterior, función de distancia y mejor solución conocida mejor.\nOutput: mejor asignación encontrada.\nUbicarEstacionesOpt(i, k, M, S, Z, E, mejor):\n    if i = k + 1:\n        if CubrePrioritarias(E, Z):\n            costo &lt;- DistanciaMedia(E, Z)\n\n            if costo &lt; mejor.costo:\n                mejor &lt;- copiar(E, costo)\n\n        return mejor\n\n    for celda in M:\n        if CeldaSegura(celda, S, E):\n            E[i] &lt;- celda\n            mejor &lt;- UbicarEstacionesOpt(i + 1, k, M, S, Z, E, mejor)\n            E[i] &lt;- NIL\n\n    return mejor\nUna poda posible es cortar una rama si existe una celda prioritaria que ya no puede ser cubierta con las estaciones restantes. Otra poda, para optimización, es cortar si una cota inferior del costo parcial ya es peor que mejor.costo.\nUna heurística de valor razonable es probar primero las celdas que cubren más prioritarias. Una heurística de variable, si se reformula el problema por zonas prioritarias, es empezar por las zonas con menos celdas candidatas.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Backtracking"
+    ]
+  },
+  {
+    "objectID": "contenidos/backtracking.html#preguntas-de-repaso",
+    "href": "contenidos/backtracking.html#preguntas-de-repaso",
+    "title": "Backtracking",
+    "section": "12 Preguntas de repaso",
+    "text": "12 Preguntas de repaso\n\n¿Por qué backtracking no es solo escribir recursión?\n¿Qué representa la tripleta CSP?\n¿Cuál es la diferencia entre variable y dominio?\n¿Qué determina si una asignación parcial es factible?\n¿Qué cambia entre encontrar una solución y encontrar todas?\n¿Qué debe guardarse en un problema de optimización?\n¿Por qué toda asignación debe deshacerse al volver atrás?\n¿Qué diferencia hay entre poda y heurística?\n¿Qué significa propagar una asignación?\n¿Por qué el peor caso suele ser exponencial?",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Backtracking"
+    ]
+  },
+  {
+    "objectID": "contenidos/backtracking.html#ejercicios-breves",
+    "href": "contenidos/backtracking.html#ejercicios-breves",
+    "title": "Backtracking",
+    "section": "13 Ejercicios breves",
+    "text": "13 Ejercicios breves\n\n13.1 Ejercicio 1\nModela Sudoku como CSP. Indica variables, dominios y restricciones.\n\n\nVer solución sugerida\n\n\n\n\n\n\n\n\nElemento\nRespuesta\n\n\n\n\nVariables\nCeldas vacías del tablero\n\n\nDominio\nNúmeros del 1 al 9\n\n\nRestricciones\nNo repetir número en fila, columna ni subcuadro 3 x 3\n\n\nObjetivo\nCompletar todas las celdas respetando restricciones\n\n\n\n\n\n\n13.2 Ejercicio 2\nModifica mentalmente ExisteSolucion para contar soluciones. ¿Qué línea no debe aparecer?\n\n\nVer solución sugerida\n\nNo debe aparecer un return true que corte la búsqueda al encontrar la primera solución. En el caso base se incrementa un contador y luego se vuelve para seguir explorando.\n\n\n\n13.3 Ejercicio 3\nPara 4 reinas, evalúa si ubicar la fila 3 en columna 2 es válido cuando el estado parcial es:\nT = [1, 3]\n\n\nVer solución sugerida\n\nNo es válido. La fila 1 tiene columna 1 y la fila 3 tendría columna 2; no comparten columna, pero la fila 2 ya tiene columna 3. La diferencia con fila 2 es:\nabs(3 - 2) = 1\nabs(2 - 3) = 1\nComo las diferencias son iguales, están en diagonal.\n\n\n\n13.4 Ejercicio 4\nEn el problema de estaciones, propón una poda distinta a revisar celdas prohibidas.\n\n\nVer solución sugerida\n\nUna poda razonable es calcular si alguna celda prioritaria todavía puede ser cubierta por una estación no asignada. Si no existe ninguna celda candidata restante que pueda cubrir esa prioritaria, la rama se corta.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -735,8 +783,8 @@
     "objectID": "contenidos/backtracking.html#checklist-de-estudio",
     "href": "contenidos/backtracking.html#checklist-de-estudio",
     "title": "Backtracking",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "section": "14 Checklist de estudio",
+    "text": "14 Checklist de estudio\n\nPuedo explicar backtracking como técnica para CSP.\nPuedo escribir y explicar la tripleta (X, D, C).\nPuedo distinguir variables, dominios y restricciones.\nPuedo identificar el estado parcial y el caso base.\nPuedo explicar validación y deshacer.\nPuedo diferenciar fuerza bruta y backtracking.\nPuedo adaptar el pseudocódigo para una solución.\nPuedo adaptar el pseudocódigo para todas las soluciones.\nPuedo adaptar el pseudocódigo para optimización.\nPuedo explicar podas, propagación y heurísticas.\nPuedo justificar la complejidad exponencial del peor caso.\nPuedo resolver el ejemplo de 4 reinas.\nPuedo modelar el problema de estaciones en una grilla.",
     "crumbs": [
       "Inicio",
       "Contenidos",

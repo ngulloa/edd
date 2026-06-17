@@ -918,9 +918,21 @@
   {
     "objectID": "contenidos/estructuras-combinadas.html",
     "href": "contenidos/estructuras-combinadas.html",
-    "title": "Estructuras combinadas",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Aprender a reconocer qué estructura de datos resuelve cada parte de un problema. Al estudiar esta página deberías poder:\n\nseparar un enunciado en operaciones concretas;\ndecidir qué estructura hace eficiente cada operación;\nexplicar qué guarda cada estructura cuando se combinan varias;\njustificar por qué una estructura no sirve para cierta necesidad;\nestimar la complejidad típica de combinaciones frecuentes.\n\nEn una interrogación no basta con nombrar estructuras. Una respuesta como “uso hash y heap” queda incompleta si no explica qué guarda el hash, qué guarda el heap y qué operación mejora cada uno.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Estructuras combinadas"
+    ]
+  },
+  {
+    "objectID": "contenidos/estructuras-combinadas.html#objetivo-de-aprendizaje",
+    "href": "contenidos/estructuras-combinadas.html#objetivo-de-aprendizaje",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "",
+    "text": "Aprender a reconocer qué estructura de datos resuelve cada parte de un problema. Al estudiar esta página deberías poder:\n\nseparar un enunciado en operaciones concretas;\ndecidir qué estructura hace eficiente cada operación;\nexplicar qué guarda cada estructura cuando se combinan varias;\njustificar por qué una estructura no sirve para cierta necesidad;\nestimar la complejidad típica de combinaciones frecuentes.\n\nEn una interrogación no basta con nombrar estructuras. Una respuesta como “uso hash y heap” queda incompleta si no explica qué guarda el hash, qué guarda el heap y qué operación mejora cada uno.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -930,9 +942,9 @@
   {
     "objectID": "contenidos/estructuras-combinadas.html#idea-central-del-tema",
     "href": "contenidos/estructuras-combinadas.html#idea-central-del-tema",
-    "title": "Estructuras combinadas",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nMuchos problemas no se resuelven con una sola estructura. A veces se necesita una estructura para buscar rápido, otra para respetar orden de llegada, otra para obtener mínimo o máximo, y otra para representar relaciones.\nLa pregunta central es:\n\n¿Qué operación necesito hacer muchas veces y qué estructura la hace naturalmente eficiente?\n\nEjemplos simples:\n\n\n\nNecesidad\nEstructura que aparece naturalmente\n\n\n\n\nbuscar por llave\ntabla de hash\n\n\natender por orden de llegada\ncola FIFO\n\n\nobtener mínimo o máximo repetidamente\nheap\n\n\nmodelar relaciones\ngrafo\n\n\nsaber si dos elementos están en la misma componente\nUnion-Find\n\n\n\n\n\n\n\n\n\nImportanteIdea central\n\n\n\nNo existe una estructura que sirva para todo. Hash, heap, lista, cola, pila, grafo y Union-Find tienen roles distintos. La clave es justificar qué operación resuelve cada una.\n\n\n\n\n\n\n\nflowchart LR\n    E[\"Enunciado\"] --&gt; O[\"Identificar operaciones frecuentes\"]\n    O --&gt; H[\"Buscar por llave: Hash\"]\n    O --&gt; Q[\"Orden de llegada: Cola FIFO\"]\n    O --&gt; P[\"Prioridad: Heap\"]\n    O --&gt; G[\"Relaciones: Grafo\"]\n    O --&gt; U[\"Componentes: Union-Find\"]\n\n\n\n\n\n\n\n\n\n\n\n\nNotaIntuición\n\n\n\nCombinar estructuras no significa mezclar nombres. Significa repartir responsabilidades: una estructura encuentra rápido el grupo correcto, otra mantiene el orden, otra responde prioridad, otra guarda relaciones.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -940,11 +952,11 @@
     ]
   },
   {
-    "objectID": "contenidos/estructuras-combinadas.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/estructuras-combinadas.html#cuándo-usar-esta-técnica-o-estructura",
-    "title": "Estructuras combinadas",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "objectID": "contenidos/estructuras-combinadas.html#antes-de-partir-vocabulario-mínimo",
+    "href": "contenidos/estructuras-combinadas.html#antes-de-partir-vocabulario-mínimo",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "3 Antes de partir: vocabulario mínimo",
+    "text": "3 Antes de partir: vocabulario mínimo\nAntes de comparar estructuras, conviene fijar el vocabulario que se usa en los enunciados.\n\n\n\n\n\n\n\n\nConcepto\nQué significa\nEjemplo\n\n\n\n\nLlave\nDato usado para buscar o agrupar\nrut, curso, tipo_tramite\n\n\nValor\nInformación asociada a una llave\ndatos del estudiante, cola de tickets, contador\n\n\nPrioridad\nCriterio que decide qué elemento sale primero\nmenor costo, mayor urgencia, mayor monto\n\n\nFIFO\nFirst In, First Out: primero en entrar, primero en salir\nfila de atención\n\n\nLIFO\nLast In, First Out: último en entrar, primero en salir\npila de deshacer\n\n\nVecino\nNodo conectado directamente con otro en un grafo\nciudad alcanzable por vuelo directo\n\n\nRepresentante\nElemento que identifica un conjunto en Union-Find\nraíz del conjunto disjunto",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -952,11 +964,11 @@
     ]
   },
   {
-    "objectID": "contenidos/estructuras-combinadas.html#conceptos-mínimos",
-    "href": "contenidos/estructuras-combinadas.html#conceptos-mínimos",
-    "title": "Estructuras combinadas",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "objectID": "contenidos/estructuras-combinadas.html#tabla-de-decisión-rápida",
+    "href": "contenidos/estructuras-combinadas.html#tabla-de-decisión-rápida",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "4 Tabla de decisión rápida",
+    "text": "4 Tabla de decisión rápida\nEsta tabla no reemplaza el análisis del enunciado, pero ayuda a elegir un punto de partida.\n\n\n\n\n\n\n\n\nNecesidad del problema\nEstructura más natural\nPor qué\n\n\n\n\nBuscar por llave\nHash\nAcceso esperado O(1) a partir de una clave\n\n\nObtener mínimo o máximo repetidamente\nHeap\nLa raíz contiene el elemento de prioridad extrema\n\n\nAtender por orden de llegada\nCola FIFO\nEl primero que entra es el primero que sale\n\n\nDeshacer o explorar último estado\nPila\nEl último estado agregado se revisa primero\n\n\nInsertar/eliminar con punteros conocidos\nLista ligada\nCambiar enlaces puede costar O(1)\n\n\nModelar relaciones\nGrafo\nRepresenta nodos y aristas\n\n\nSaber si dos elementos están conectados\nUnion-Find\nMantiene componentes disjuntas\n\n\nMantener llaves ordenadas\nÁrbol balanceado o estructura ordenada\nHash no conserva orden entre llaves",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -964,11 +976,11 @@
     ]
   },
   {
-    "objectID": "contenidos/estructuras-combinadas.html#operaciones-o-algoritmo-principal",
-    "href": "contenidos/estructuras-combinadas.html#operaciones-o-algoritmo-principal",
-    "title": "Estructuras combinadas",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "objectID": "contenidos/estructuras-combinadas.html#comparación-conceptual-de-estructuras",
+    "href": "contenidos/estructuras-combinadas.html#comparación-conceptual-de-estructuras",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "5 Comparación conceptual de estructuras",
+    "text": "5 Comparación conceptual de estructuras\n\n\n\n\n\n\n\n\nEstructura\nSirve para\nNo sirve para\n\n\n\n\nHash\nAcceder rápido por llave, contar, agrupar\nMantener orden global, mínimo, máximo, sucesor o predecesor\n\n\nHeap\nObtener rápido el mínimo o máximo según prioridad\nBuscar eficientemente cualquier llave arbitraria\n\n\nLista ligada\nInsertar o eliminar con punteros conocidos\nAcceso aleatorio eficiente por índice\n\n\nCola FIFO\nAtender en orden de llegada\nAtender por prioridad\n\n\nPila\nDeshacer, backtracking, explorar último estado\nAtender por antigüedad\n\n\nGrafo\nModelar relaciones, caminos y dependencias\nAcceso directo por llave sin una estructura auxiliar\n\n\nUnion-Find\nSaber si dos elementos están en la misma componente\nReconstruir caminos específicos",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -976,11 +988,11 @@
     ]
   },
   {
-    "objectID": "contenidos/estructuras-combinadas.html#pseudocódigo-claro",
-    "href": "contenidos/estructuras-combinadas.html#pseudocódigo-claro",
-    "title": "Estructuras combinadas",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "objectID": "contenidos/estructuras-combinadas.html#patrones-frecuentes-de-combinación",
+    "href": "contenidos/estructuras-combinadas.html#patrones-frecuentes-de-combinación",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "6 Patrones frecuentes de combinación",
+    "text": "6 Patrones frecuentes de combinación\n\n6.1 Hash + cola FIFO\nAparece cuando hay categorías y dentro de cada categoría se debe respetar el orden de llegada.\nHash[tipo] -&gt; Cola FIFO de personas\n\nCuándo aparece: trámites por tipo, filas por curso, pedidos por producto.\nQué guarda cada estructura: el hash usa la categoría como llave; el valor es una cola FIFO con los elementos de esa categoría.\nQué operación mejora: encontrar rápido la fila correcta y atender al más antiguo dentro de esa fila.\nComplejidad típica: agregar y atender cuestan O(1) esperado si el hash está bien distribuido.\nError frecuente: usar solo una cola global y perder la separación por tipo.\n\n\n\n6.2 Hash + heap\nAparece cuando primero se acumula o agrupa información por llave y luego se necesita obtener los mayores o menores según una prioridad.\nHash[cliente] -&gt; monto acumulado\nHeap -&gt; clientes ordenados por monto\n\nCuándo aparece: rankings, top-k, tareas por urgencia, mejores clientes por total acumulado.\nQué guarda cada estructura: el hash guarda el acumulado por llave; el heap guarda candidatos ordenados por prioridad.\nQué operación mejora: el hash evita buscar linealmente el cliente; el heap evita ordenar todo cada vez que se consulta prioridad.\nComplejidad típica: acumular n datos cuesta O(n) esperado; mantener top-k entre m llaves cuesta O(m log k).\nError frecuente: creer que el heap permite actualizar o encontrar cualquier cliente en O(1). Un heap por sí solo no busca llaves arbitrarias eficientemente.\n\n\n\n6.3 Hash + lista ligada\nAparece dentro de una tabla de hash con encadenamiento, cuando varias llaves caen en el mismo bucket.\nA[h(k)] -&gt; lista ligada de pares (llave, valor)\n\nCuándo aparece: implementación de hash por encadenamiento.\nQué guarda cada estructura: el arreglo de hash apunta a buckets; cada bucket es una lista de pares (llave, valor).\nQué operación mejora: permite manejar colisiones sin mover todos los elementos del arreglo.\nComplejidad típica: búsqueda e inserción esperadas O(1) si las listas se mantienen cortas; peor caso O(n).\nError frecuente: guardar solo el valor. Si hay colisiones, se necesita conservar la llave para verificar que el par encontrado corresponde.\n\n\n\n6.4 Hash + grafo\nAparece cuando los nodos del grafo tienen etiquetas externas, como nombres de ciudades, personas, cursos o servidores.\nHash[nombre] -&gt; nodo interno\nnodo.vecinos -&gt; lista de adyacencia\n\nCuándo aparece: redes de contactos, vuelos entre ciudades, prerrequisitos entre cursos, dependencias entre tareas.\nQué guarda cada estructura: el hash traduce etiquetas a nodos internos; el grafo guarda vecinos mediante listas de adyacencia.\nQué operación mejora: crear o buscar un nodo por etiqueta sin recorrer todos los nodos.\nComplejidad típica: buscar o crear nodo O(1) esperado; recorrer el grafo con listas de adyacencia O(V + E).\nError frecuente: representar relaciones como un hash plano sin guardar vecinos, lo que impide recorrer caminos o dependencias.\n\n\n\n6.5 Grafo + cola o pila\nAparece cuando se debe recorrer un grafo.\n\nCuándo aparece: búsqueda por niveles, conectividad, caminos no ponderados, exploración profunda.\nQué guarda cada estructura: el grafo guarda nodos y aristas; la cola de BFS guarda la frontera por niveles; la pila o recursión de DFS guarda el camino de exploración actual.\nQué operación mejora: la cola permite visitar por distancia en número de aristas; la pila permite profundizar antes de retroceder.\nComplejidad típica: BFS y DFS cuestan O(V + E) con listas de adyacencia.\nError frecuente: usar pila cuando el enunciado necesita el camino con menor cantidad de aristas en un grafo no ponderado; para eso se usa BFS con cola.\n\n\n\n6.6 Kruskal + Union-Find\nAparece en el algoritmo de Kruskal para construir un árbol de expansión mínimo. Aquí solo interesa reconocer el patrón; Kruskal se estudia con más detalle en su propia página.\nSi Find(u) != Find(v):\n    agregar arista (u, v)\n    Union(u, v)\n\nCuándo aparece: selección de aristas de menor costo sin formar ciclos.\nQué guarda cada estructura: la lista de aristas se ordena por costo; Union-Find guarda las componentes conectadas actuales.\nQué operación mejora: verificar rápidamente si una arista une dos componentes distintas.\nComplejidad típica: domina ordenar aristas, usualmente O(E log E); las operaciones de Union-Find son casi constantes amortizadas.\nError frecuente: pedirle a Union-Find que entregue el camino entre dos nodos. Union-Find responde conectividad por componente, no reconstruye rutas.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -988,11 +1000,59 @@
     ]
   },
   {
-    "objectID": "contenidos/estructuras-combinadas.html#complejidad",
-    "href": "contenidos/estructuras-combinadas.html#complejidad",
-    "title": "Estructuras combinadas",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
+    "objectID": "contenidos/estructuras-combinadas.html#cómo-reconocer-combinaciones-en-un-enunciado",
+    "href": "contenidos/estructuras-combinadas.html#cómo-reconocer-combinaciones-en-un-enunciado",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "7 Cómo reconocer combinaciones en un enunciado",
+    "text": "7 Cómo reconocer combinaciones en un enunciado\nLee el enunciado buscando verbos: agregar, buscar, atender, extraer, conectar, recorrer, consultar. Esos verbos suelen revelar las operaciones repetidas.\n\n\n\n\n\n\n\n\nFrase del enunciado\nSeñal\nPosible estructura\n\n\n\n\n“dado un identificador, encontrar…”\nbúsqueda por llave\nHash\n\n\n“por cada tipo/categoría/curso…”\ngrupos separados\nHash como estructura externa\n\n\n“el primero que llegó…”\norden de llegada\nCola FIFO\n\n\n“el último estado…”\núltimo en entrar\nPila\n\n\n“el de mayor prioridad…”\nmáximo o mínimo repetido\nHeap\n\n\n“relaciones entre elementos…”\nnodos y aristas\nGrafo\n\n\n“dependencias entre tareas…”\naristas dirigidas\nGrafo dirigido\n\n\n“saber si ya están conectados…”\ncomponentes\nUnion-Find\n\n\n“orden ascendente”, “sucesor”, “predecesor”\norden entre llaves\nEstructura ordenada, no hash\n\n\n\n\n\n\n\n\n\nTipCómo enfrentar un enunciado\n\n\n\nPrimero escribe las operaciones que se repiten. Después, al lado de cada operación, anota qué estructura la hace naturalmente eficiente. Solo al final combina las estructuras y explica qué guarda cada una.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Estructuras combinadas"
+    ]
+  },
+  {
+    "objectID": "contenidos/estructuras-combinadas.html#pseudocódigo-base",
+    "href": "contenidos/estructuras-combinadas.html#pseudocódigo-base",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "8 Pseudocódigo base",
+    "text": "8 Pseudocódigo base\n\n8.1 Cola FIFO\nInput: cola Q, elemento x. Output: cola Q actualizada con x al final.\nEnqueue(Q, x):\n    insertar x al final de Q\nInput: cola Q. Output: elemento más antiguo de Q.\nDequeue(Q):\n    if Q esta vacia:\n        error \"cola vacia\"\n\n    x &lt;- cabeza de Q\n    eliminar cabeza de Q\n    return x\n\n\n8.2 Heap mínimo\nInput: heap mínimo H, elemento x. Output: heap H actualizado manteniendo la propiedad de heap.\nHeapInsert(H, x):\n    insertar x al final de H\n    i &lt;- posicion de x\n\n    while i tiene padre and H[i] &lt; H[parent(i)]:\n        intercambiar H[i] con H[parent(i)]\n        i &lt;- parent(i)\nInput: heap mínimo H. Output: menor elemento almacenado en H.\nExtractMin(H):\n    if H esta vacio:\n        error \"heap vacio\"\n\n    minimo &lt;- H[0]\n    H[0] &lt;- ultimo elemento de H\n    eliminar ultimo elemento\n    HeapifyDown(H, 0)\n    return minimo\nInput: heap mínimo H, índice i. Output: heap H reparado desde la posición i hacia abajo.\nHeapifyDown(H, i):\n    while i tenga algun hijo menor que H[i]:\n        j &lt;- indice del menor hijo de i\n        intercambiar H[i] con H[j]\n        i &lt;- j\n\n\n8.3 Hash + cola FIFO\nInput: tabla de hash H, tipo de solicitud tipo, persona persona. Output: persona agregada al final de la cola asociada a tipo.\nAgregarSolicitud(H, tipo, persona):\n    if H no contiene tipo:\n        H[tipo] &lt;- cola vacia\n\n    Enqueue(H[tipo], persona)\nInput: tabla de hash H, tipo de solicitud tipo. Output: siguiente persona por orden de llegada para ese tipo, o mensaje si no hay solicitudes.\nAtenderSolicitud(H, tipo):\n    if H no contiene tipo:\n        return \"no hay solicitudes\"\n\n    if H[tipo] esta vacia:\n        return \"no hay solicitudes\"\n\n    return Dequeue(H[tipo])\n\n\n8.4 Hash + heap para top-k\nInput: lista datos con pares (cliente, monto) y entero k. Output: hasta k clientes con mayor monto acumulado.\nTopKClientes(datos, k):\n    acumulado &lt;- tabla hash vacia\n\n    for (cliente, monto) in datos:\n        if acumulado no contiene cliente:\n            acumulado[cliente] &lt;- 0\n        acumulado[cliente] &lt;- acumulado[cliente] + monto\n\n    H &lt;- min-heap vacio\n\n    for cliente in claves(acumulado):\n        total &lt;- acumulado[cliente]\n        par &lt;- (total, cliente)\n\n        if size(H) &lt; k:\n            HeapInsert(H, par)\n        else if total &gt; minimo(H).total:\n            ExtractMin(H)\n            HeapInsert(H, par)\n\n    return elementos de H\nLa idea es mantener en el heap solo los k mejores clientes vistos hasta ahora. Como es un min-heap, la raíz es el peor de esos k; si llega un cliente mejor, se reemplaza la raíz.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Estructuras combinadas"
+    ]
+  },
+  {
+    "objectID": "contenidos/estructuras-combinadas.html#complejidad-resumida",
+    "href": "contenidos/estructuras-combinadas.html#complejidad-resumida",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "9 Complejidad resumida",
+    "text": "9 Complejidad resumida\n\n\n\n\n\n\n\n\nPatrón\nOperación principal\nComplejidad esperada o típica\n\n\n\n\nHash + cola\nAgregar o atender por tipo\nO(1) esperado\n\n\nHash + heap\nMantener top-k después de acumular\nO(m log k)\n\n\nHash + grafo\nBuscar o crear nodo por etiqueta\nO(1) esperado\n\n\nGrafo + cola\nBFS\nO(V + E)\n\n\nGrafo + pila/recursión\nDFS\nO(V + E)\n\n\nKruskal + Union-Find\nConstruir árbol de expansión mínimo\nO(E log E)\n\n\n\nDonde m es la cantidad de llaves distintas, V la cantidad de vértices y E la cantidad de aristas.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Estructuras combinadas"
+    ]
+  },
+  {
+    "objectID": "contenidos/estructuras-combinadas.html#ejemplo-guiado-1-sistema-de-trámites",
+    "href": "contenidos/estructuras-combinadas.html#ejemplo-guiado-1-sistema-de-trámites",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "10 Ejemplo guiado 1: sistema de trámites",
+    "text": "10 Ejemplo guiado 1: sistema de trámites\nUn sistema municipal recibe solicitudes con esta forma:\n(tipo_tramite, nombre_persona)\nLa regla dice: cuando se atiende un tipo de trámite, debe salir la persona que pidió ese tipo hace más tiempo.\n\n10.1 Paso 1: identificar operaciones\n\n\n\nOperación\nQué exige\n\n\n\n\nAgregar solicitud\nencontrar rápido la fila del tipo de trámite\n\n\nAtender solicitud\nextraer la persona más antigua de ese tipo\n\n\nMantener tipos separados\nagrupar solicitudes por llave\n\n\n\n\n\n10.2 Paso 2: elegir estructuras\nHash[tipo_tramite] -&gt; Cola FIFO de personas\n\nEl hash permite llegar rápido al tipo de trámite.\nLa cola FIFO conserva el orden de llegada dentro de ese tipo.\n\n\n\n\n\n\nflowchart LR\n    S[\"Solicitud: licencia, Ana\"] --&gt; H[\"Hash por tipo\"]\n    H --&gt; L[\"licencia\"]\n    L --&gt; Q[\"Ana → Camila → Elena\"]\n\n\n\n\n\n\n\n\n10.3 Paso 3: simular\nSolicitudes:\n(licencia, Ana)\n(reclamo, Bruno)\n(licencia, Camila)\n(certificado, Diego)\n(licencia, Elena)\nEstado después de insertar:\n\n\n\nTipo\nCola FIFO\n\n\n\n\nlicencia\nAna → Camila → Elena\n\n\nreclamo\nBruno\n\n\ncertificado\nDiego\n\n\n\nOtra forma compacta de verlo:\nlicencia: Ana → Camila → Elena\nreclamo: Bruno\ncertificado: Diego\nSi se atiende licencia, sale Ana, porque fue la primera persona en llegar a la cola de licencias. Después queda:\n\n\n\nTipo\nCola FIFO\n\n\n\n\nlicencia\nCamila → Elena\n\n\nreclamo\nBruno\n\n\ncertificado\nDiego",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Estructuras combinadas"
+    ]
+  },
+  {
+    "objectID": "contenidos/estructuras-combinadas.html#ejemplo-guiado-2-ranking-de-clientes",
+    "href": "contenidos/estructuras-combinadas.html#ejemplo-guiado-2-ranking-de-clientes",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "11 Ejemplo guiado 2: ranking de clientes",
+    "text": "11 Ejemplo guiado 2: ranking de clientes\nSe recibe un flujo de compras:\n(cliente, monto)\nSe quiere reportar los k clientes con mayor monto acumulado.\n\n11.1 Estructuras\nHash[cliente] -&gt; monto acumulado\nMinHeap de tamaño k -&gt; mejores clientes actuales\n\n\n\n\n\nflowchart LR\n    D[\"Datos: cliente, monto\"] --&gt; H[\"Hash: acumular monto por cliente\"]\n    H --&gt; M[\"Entradas: cliente, total\"]\n    M --&gt; P[\"MinHeap de tamaño k\"]\n    P --&gt; T[\"Top-k clientes\"]\n\n\n\n\n\n\n\n\n11.2 Por qué no basta una sola estructura\nSolo hash permite acumular montos por cliente, pero no entrega rápidamente los k mayores. Para obtenerlos habría que recorrer y ordenar o seleccionar después.\nSolo heap ordena por prioridad, pero no acumula bien por cliente sin búsqueda adicional. Si llega otra compra de un cliente ya existente, el heap no encuentra eficientemente esa llave para actualizarla.\nLa combinación separa responsabilidades:\n\n\n\nEstructura\nResponsabilidad\n\n\n\n\nHash\nacumular el monto total por cliente\n\n\nMinHeap de tamaño k\nconservar los mejores k candidatos",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1002,21 +1062,9 @@
   {
     "objectID": "contenidos/estructuras-combinadas.html#errores-típicos",
     "href": "contenidos/estructuras-combinadas.html#errores-típicos",
-    "title": "Estructuras combinadas",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
-    "crumbs": [
-      "Inicio",
-      "Contenidos",
-      "Estructuras combinadas"
-    ]
-  },
-  {
-    "objectID": "contenidos/estructuras-combinadas.html#ejemplo-guiado",
-    "href": "contenidos/estructuras-combinadas.html#ejemplo-guiado",
-    "title": "Estructuras combinadas",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "12 Errores típicos",
+    "text": "12 Errores típicos\n\n\n\n\n\n\nAdvertenciaError típico: usar hash cuando se necesita orden\n\n\n\nHash no mantiene llaves ordenadas. Si el enunciado pide mínimo, máximo, sucesor, predecesor u orden ascendente, hace falta otra estructura o un paso de ordenamiento.\n\n\n\n\n\n\n\n\nAdvertenciaError típico: usar heap para buscar cualquier llave\n\n\n\nUn heap permite mirar rápido el mínimo o máximo, pero no encontrar eficientemente un elemento arbitrario por llave. Para búsqueda por llave suele hacer falta un hash adicional.\n\n\n\n\n\n\n\n\nAdvertenciaError típico: usar cola cuando hay prioridad\n\n\n\nUna cola FIFO atiende al más antiguo. Si el criterio es “más urgente”, “menor costo” o “mayor puntaje”, probablemente se necesita un heap.\n\n\n\n\n\n\n\n\nAdvertenciaError típico: usar lista ligada como si fuera arreglo\n\n\n\nEn una lista ligada no hay acceso eficiente por índice. Es útil cuando se tienen punteros a nodos o cuando se quiere insertar/eliminar cambiando enlaces.\n\n\n\n\n\n\n\n\nAdvertenciaError típico: usar Union-Find para reconstruir caminos\n\n\n\nUnion-Find responde si dos elementos están en la misma componente. No guarda el camino exacto entre ellos.\n\n\n\n\n\n\n\n\nAdvertenciaError típico: mezclar estructuras sin justificar roles\n\n\n\nDecir “uso hash y heap” no basta. Hay que explicar qué guarda cada una, qué operación acelera y por qué esa operación aparece muchas veces en el problema.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1026,9 +1074,33 @@
   {
     "objectID": "contenidos/estructuras-combinadas.html#problema-representativo-de-interrogación",
     "href": "contenidos/estructuras-combinadas.html#problema-representativo-de-interrogación",
-    "title": "Estructuras combinadas",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "13 Problema representativo de interrogación",
+    "text": "13 Problema representativo de interrogación\n\n\nVer enunciado\n\nUna plataforma de soporte recibe tickets de estudiantes. Cada ticket tiene:\n(curso, estudiante, urgencia)\nLa plataforma debe soportar estas operaciones:\nagregar_ticket(curso, estudiante, urgencia)\natender_ticket(curso)\ncurso_con_mas_tickets()\nLa operación atender_ticket(curso) atiende al estudiante que llegó primero dentro de ese curso. La operación curso_con_mas_tickets() retorna un curso con la mayor cantidad de tickets pendientes.\nPropón estructuras de datos para implementar estas operaciones eficientemente. Explica qué guarda cada estructura, por qué se usa y la complejidad esperada de cada operación.\n\n\n\nVer solución\n\nEl enunciado tiene dos necesidades distintas:\n\nAcceso rápido a la fila de un curso.\nSaber qué curso tiene más tickets pendientes.\n\nPara la primera necesidad:\nHash[curso] -&gt; Cola FIFO de tickets\nEl hash usa curso como llave. El valor asociado es una cola FIFO de tickets de ese curso. La cola conserva el orden de llegada, por eso atender_ticket(curso) atiende al estudiante más antiguo dentro del curso indicado.\nPara la segunda necesidad:\nMaxHeap -&gt; pares (cantidad_pendiente, curso)\nEl heap permite consultar un curso con más tickets pendientes mirando la raíz. La cantidad pendiente cambia cuando se agrega o atiende un ticket, por lo que el heap debe actualizarse.\nUna implementación posible:\nagregar_ticket(curso, estudiante, urgencia):\n    if H no contiene curso:\n        H[curso] &lt;- cola vacia\n\n    Enqueue(H[curso], (estudiante, urgencia))\n    cantidad[curso] &lt;- cantidad[curso] + 1\n    actualizar MaxHeap con (cantidad[curso], curso)\natender_ticket(curso):\n    if H no contiene curso or H[curso] esta vacia:\n        return \"no hay tickets\"\n\n    ticket &lt;- Dequeue(H[curso])\n    cantidad[curso] &lt;- cantidad[curso] - 1\n    actualizar MaxHeap con (cantidad[curso], curso)\n    return ticket.estudiante\ncurso_con_mas_tickets():\n    return curso guardado en la raiz del MaxHeap\nComplejidades esperadas, si hay c cursos:\n\n\n\n\n\n\n\n\nOperación\nComplejidad\nJustificación\n\n\n\n\nagregar_ticket\nO(log c)\nhash O(1) esperado, cola O(1), actualización de heap O(log c)\n\n\natender_ticket\nO(log c)\nhash O(1) esperado, cola O(1), actualización de heap O(log c)\n\n\ncurso_con_mas_tickets\nO(1)\nmirar la raíz del heap\n\n\n\nSi el heap no permite modificar prioridad directamente, se puede usar inserción duplicada con validación perezosa. Cada vez que cambia cantidad[curso], se inserta un nuevo par (cantidad, curso). Al consultar la raíz, se verifica si esa cantidad coincide con la cantidad real guardada para el curso. Si no coincide, se descarta la entrada antigua y se revisa la siguiente.\nLa urgencia aparece en el dato de entrada, pero el enunciado de atender_ticket(curso) pide atender al que llegó primero dentro del curso. Por eso la fila interna es FIFO, no un heap por urgencia.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Estructuras combinadas"
+    ]
+  },
+  {
+    "objectID": "contenidos/estructuras-combinadas.html#preguntas-de-repaso",
+    "href": "contenidos/estructuras-combinadas.html#preguntas-de-repaso",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "14 Preguntas de repaso",
+    "text": "14 Preguntas de repaso\n\n¿Por qué no basta decir “uso un hash” si el problema también pide orden de llegada?\n¿Qué estructura usarías para atender al primero que llegó?\n¿Qué estructura usarías para obtener repetidamente el mayor puntaje?\n¿Por qué un heap no reemplaza a una tabla de hash?\n¿Por qué una tabla de hash no reemplaza a un heap?\n¿Qué estructura usarías para modelar ciudades y vuelos directos?\n¿Qué estructura usarías para saber si dos nodos ya están conectados?\n¿Qué debe guardar el valor de un hash cuando se combina con otra estructura?",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Estructuras combinadas"
+    ]
+  },
+  {
+    "objectID": "contenidos/estructuras-combinadas.html#ejercicios-breves",
+    "href": "contenidos/estructuras-combinadas.html#ejercicios-breves",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "15 Ejercicios breves",
+    "text": "15 Ejercicios breves\n\n15.1 Básico\nPara cada caso, indica una estructura principal y justifica en una línea:\n\nBuscar datos de estudiante por RUT.\nAtender personas en orden de llegada.\nObtener siempre la tarea más urgente.\nRepresentar prerrequisitos entre cursos.\nSaber si dos computadores están en la misma red.\n\n\n\n15.2 Medio\nUn sistema recibe pedidos con la forma:\n(producto, cliente)\nDebe soportar:\nagregar_pedido(producto, cliente)\natender_pedido(producto)\natender_pedido(producto) debe retornar el cliente más antiguo que pidió ese producto. Propón estructuras, explica qué guarda cada una y estima la complejidad esperada.\n\n\n15.3 Evaluación\nUn sistema recibe transacciones:\n(cliente, monto)\nDebe reportar los k clientes con mayor monto acumulado. Propón una combinación de estructuras, explica por qué hash solo no basta, por qué heap solo no basta y entrega la complejidad típica.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1038,9 +1110,9 @@
   {
     "objectID": "contenidos/estructuras-combinadas.html#checklist-de-estudio",
     "href": "contenidos/estructuras-combinadas.html#checklist-de-estudio",
-    "title": "Estructuras combinadas",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "title": "Estructuras combinadas: hash, heap, listas, colas y conjuntos",
+    "section": "16 Checklist de estudio",
+    "text": "16 Checklist de estudio\n\nPuedo explicar qué rol cumple hash.\nPuedo explicar qué rol cumple heap.\nPuedo explicar qué rol cumple una lista ligada.\nPuedo explicar qué rol cumple una cola FIFO.\nPuedo explicar qué rol cumple una pila.\nPuedo explicar qué rol cumple un grafo.\nPuedo explicar qué rol cumple Union-Find.\nPuedo resolver un problema hash + cola.\nPuedo resolver un problema hash + heap.\nPuedo justificar por qué hash no mantiene orden.\nPuedo justificar por qué un heap no busca cualquier llave eficientemente.\nPuedo justificar por qué una cola FIFO no sirve para prioridad.\nPuedo justificar por qué Union-Find no reconstruye caminos.\nPuedo escribir pseudocódigo básico de Enqueue, Dequeue, HeapInsert y ExtractMin.\nPuedo separar las necesidades de un enunciado en operaciones concretas.",
     "crumbs": [
       "Inicio",
       "Contenidos",

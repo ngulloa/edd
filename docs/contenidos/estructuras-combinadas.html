@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Estructuras combinadas – Estudio I2 EDD</title>
+<title>Estructuras combinadas: hash, heap, listas, colas y conjuntos – Estudio I2 EDD</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,9 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -252,16 +255,50 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#tabla-de-decisión-rápida" id="toc-tabla-de-decisión-rápida" class="nav-link" data-scroll-target="#tabla-de-decisión-rápida"><span class="header-section-number">4</span> Tabla de decisión rápida</a></li>
+  <li><a href="#comparación-conceptual-de-estructuras" id="toc-comparación-conceptual-de-estructuras" class="nav-link" data-scroll-target="#comparación-conceptual-de-estructuras"><span class="header-section-number">5</span> Comparación conceptual de estructuras</a></li>
+  <li><a href="#patrones-frecuentes-de-combinación" id="toc-patrones-frecuentes-de-combinación" class="nav-link" data-scroll-target="#patrones-frecuentes-de-combinación"><span class="header-section-number">6</span> Patrones frecuentes de combinación</a>
+  <ul class="collapse">
+  <li><a href="#hash-cola-fifo" id="toc-hash-cola-fifo" class="nav-link" data-scroll-target="#hash-cola-fifo"><span class="header-section-number">6.1</span> Hash + cola FIFO</a></li>
+  <li><a href="#hash-heap" id="toc-hash-heap" class="nav-link" data-scroll-target="#hash-heap"><span class="header-section-number">6.2</span> Hash + heap</a></li>
+  <li><a href="#hash-lista-ligada" id="toc-hash-lista-ligada" class="nav-link" data-scroll-target="#hash-lista-ligada"><span class="header-section-number">6.3</span> Hash + lista ligada</a></li>
+  <li><a href="#hash-grafo" id="toc-hash-grafo" class="nav-link" data-scroll-target="#hash-grafo"><span class="header-section-number">6.4</span> Hash + grafo</a></li>
+  <li><a href="#grafo-cola-o-pila" id="toc-grafo-cola-o-pila" class="nav-link" data-scroll-target="#grafo-cola-o-pila"><span class="header-section-number">6.5</span> Grafo + cola o pila</a></li>
+  <li><a href="#kruskal-union-find" id="toc-kruskal-union-find" class="nav-link" data-scroll-target="#kruskal-union-find"><span class="header-section-number">6.6</span> Kruskal + Union-Find</a></li>
+  </ul></li>
+  <li><a href="#cómo-reconocer-combinaciones-en-un-enunciado" id="toc-cómo-reconocer-combinaciones-en-un-enunciado" class="nav-link" data-scroll-target="#cómo-reconocer-combinaciones-en-un-enunciado"><span class="header-section-number">7</span> Cómo reconocer combinaciones en un enunciado</a></li>
+  <li><a href="#pseudocódigo-base" id="toc-pseudocódigo-base" class="nav-link" data-scroll-target="#pseudocódigo-base"><span class="header-section-number">8</span> Pseudocódigo base</a>
+  <ul class="collapse">
+  <li><a href="#cola-fifo" id="toc-cola-fifo" class="nav-link" data-scroll-target="#cola-fifo"><span class="header-section-number">8.1</span> Cola FIFO</a></li>
+  <li><a href="#heap-mínimo" id="toc-heap-mínimo" class="nav-link" data-scroll-target="#heap-mínimo"><span class="header-section-number">8.2</span> Heap mínimo</a></li>
+  <li><a href="#hash-cola-fifo-1" id="toc-hash-cola-fifo-1" class="nav-link" data-scroll-target="#hash-cola-fifo-1"><span class="header-section-number">8.3</span> Hash + cola FIFO</a></li>
+  <li><a href="#hash-heap-para-top-k" id="toc-hash-heap-para-top-k" class="nav-link" data-scroll-target="#hash-heap-para-top-k"><span class="header-section-number">8.4</span> Hash + heap para top-k</a></li>
+  </ul></li>
+  <li><a href="#complejidad-resumida" id="toc-complejidad-resumida" class="nav-link" data-scroll-target="#complejidad-resumida"><span class="header-section-number">9</span> Complejidad resumida</a></li>
+  <li><a href="#ejemplo-guiado-1-sistema-de-trámites" id="toc-ejemplo-guiado-1-sistema-de-trámites" class="nav-link" data-scroll-target="#ejemplo-guiado-1-sistema-de-trámites"><span class="header-section-number">10</span> Ejemplo guiado 1: sistema de trámites</a>
+  <ul class="collapse">
+  <li><a href="#paso-1-identificar-operaciones" id="toc-paso-1-identificar-operaciones" class="nav-link" data-scroll-target="#paso-1-identificar-operaciones"><span class="header-section-number">10.1</span> Paso 1: identificar operaciones</a></li>
+  <li><a href="#paso-2-elegir-estructuras" id="toc-paso-2-elegir-estructuras" class="nav-link" data-scroll-target="#paso-2-elegir-estructuras"><span class="header-section-number">10.2</span> Paso 2: elegir estructuras</a></li>
+  <li><a href="#paso-3-simular" id="toc-paso-3-simular" class="nav-link" data-scroll-target="#paso-3-simular"><span class="header-section-number">10.3</span> Paso 3: simular</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-guiado-2-ranking-de-clientes" id="toc-ejemplo-guiado-2-ranking-de-clientes" class="nav-link" data-scroll-target="#ejemplo-guiado-2-ranking-de-clientes"><span class="header-section-number">11</span> Ejemplo guiado 2: ranking de clientes</a>
+  <ul class="collapse">
+  <li><a href="#estructuras" id="toc-estructuras" class="nav-link" data-scroll-target="#estructuras"><span class="header-section-number">11.1</span> Estructuras</a></li>
+  <li><a href="#por-qué-no-basta-una-sola-estructura" id="toc-por-qué-no-basta-una-sola-estructura" class="nav-link" data-scroll-target="#por-qué-no-basta-una-sola-estructura"><span class="header-section-number">11.2</span> Por qué no basta una sola estructura</a></li>
+  </ul></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">12</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#básico" id="toc-básico" class="nav-link" data-scroll-target="#básico"><span class="header-section-number">15.1</span> Básico</a></li>
+  <li><a href="#medio" id="toc-medio" class="nav-link" data-scroll-target="#medio"><span class="header-section-number">15.2</span> Medio</a></li>
+  <li><a href="#evaluación" id="toc-evaluación" class="nav-link" data-scroll-target="#evaluación"><span class="header-section-number">15.3</span> Evaluación</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +307,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenidos/hash.html">Contenidos</a></li><li class="breadcrumb-item"><a href="../contenidos/estructuras-combinadas.html">Estructuras combinadas</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Estructuras combinadas</h1>
+<h1 class="title">Estructuras combinadas: hash, heap, listas, colas y conjuntos</h1>
 </div>
 
 
@@ -287,56 +324,954 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Aprender a reconocer qué estructura de datos resuelve cada parte de un problema. Al estudiar esta página deberías poder:</p>
+<ul>
+<li>separar un enunciado en operaciones concretas;</li>
+<li>decidir qué estructura hace eficiente cada operación;</li>
+<li>explicar qué guarda cada estructura cuando se combinan varias;</li>
+<li>justificar por qué una estructura no sirve para cierta necesidad;</li>
+<li>estimar la complejidad típica de combinaciones frecuentes.</li>
+</ul>
+<p>En una interrogación no basta con nombrar estructuras. Una respuesta como “uso hash y heap” queda incompleta si no explica qué guarda el hash, qué guarda el heap y qué operación mejora cada uno.</p>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>Muchos problemas no se resuelven con una sola estructura. A veces se necesita una estructura para buscar rápido, otra para respetar orden de llegada, otra para obtener mínimo o máximo, y otra para representar relaciones.</p>
+<p>La pregunta central es:</p>
+<blockquote class="blockquote">
+<p>¿Qué operación necesito hacer muchas veces y qué estructura la hace naturalmente eficiente?</p>
+</blockquote>
+<p>Ejemplos simples:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Necesidad</th>
+<th>Estructura que aparece naturalmente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>buscar por llave</td>
+<td>tabla de hash</td>
+</tr>
+<tr class="even">
+<td>atender por orden de llegada</td>
+<td>cola FIFO</td>
+</tr>
+<tr class="odd">
+<td>obtener mínimo o máximo repetidamente</td>
+<td>heap</td>
+</tr>
+<tr class="even">
+<td>modelar relaciones</td>
+<td>grafo</td>
+</tr>
+<tr class="odd">
+<td>saber si dos elementos están en la misma componente</td>
+<td>Union-Find</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Idea central
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No existe una estructura que sirva para todo. Hash, heap, lista, cola, pila, grafo y Union-Find tienen roles distintos. La clave es justificar qué operación resuelve cada una.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    E["Enunciado"] --&gt; O["Identificar operaciones frecuentes"]
+    O --&gt; H["Buscar por llave: Hash"]
+    O --&gt; Q["Orden de llegada: Cola FIFO"]
+    O --&gt; P["Prioridad: Heap"]
+    O --&gt; G["Relaciones: Grafo"]
+    O --&gt; U["Componentes: Union-Find"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Combinar estructuras no significa mezclar nombres. Significa repartir responsabilidades: una estructura encuentra rápido el grupo correcto, otra mantiene el orden, otra responde prioridad, otra guarda relaciones.</p>
+</div>
+</div>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<p>Antes de comparar estructuras, conviene fijar el vocabulario que se usa en los enunciados.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Qué significa</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Llave</td>
+<td>Dato usado para buscar o agrupar</td>
+<td><code>rut</code>, <code>curso</code>, <code>tipo_tramite</code></td>
+</tr>
+<tr class="even">
+<td>Valor</td>
+<td>Información asociada a una llave</td>
+<td>datos del estudiante, cola de tickets, contador</td>
+</tr>
+<tr class="odd">
+<td>Prioridad</td>
+<td>Criterio que decide qué elemento sale primero</td>
+<td>menor costo, mayor urgencia, mayor monto</td>
+</tr>
+<tr class="even">
+<td>FIFO</td>
+<td>First In, First Out: primero en entrar, primero en salir</td>
+<td>fila de atención</td>
+</tr>
+<tr class="odd">
+<td>LIFO</td>
+<td>Last In, First Out: último en entrar, primero en salir</td>
+<td>pila de deshacer</td>
+</tr>
+<tr class="even">
+<td>Vecino</td>
+<td>Nodo conectado directamente con otro en un grafo</td>
+<td>ciudad alcanzable por vuelo directo</td>
+</tr>
+<tr class="odd">
+<td>Representante</td>
+<td>Elemento que identifica un conjunto en Union-Find</td>
+<td>raíz del conjunto disjunto</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="tabla-de-decisión-rápida" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="tabla-de-decisión-rápida"><span class="header-section-number">4</span> Tabla de decisión rápida</h2>
+<p>Esta tabla no reemplaza el análisis del enunciado, pero ayuda a elegir un punto de partida.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Necesidad del problema</th>
+<th>Estructura más natural</th>
+<th>Por qué</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Buscar por llave</td>
+<td>Hash</td>
+<td>Acceso esperado <code>O(1)</code> a partir de una clave</td>
+</tr>
+<tr class="even">
+<td>Obtener mínimo o máximo repetidamente</td>
+<td>Heap</td>
+<td>La raíz contiene el elemento de prioridad extrema</td>
+</tr>
+<tr class="odd">
+<td>Atender por orden de llegada</td>
+<td>Cola FIFO</td>
+<td>El primero que entra es el primero que sale</td>
+</tr>
+<tr class="even">
+<td>Deshacer o explorar último estado</td>
+<td>Pila</td>
+<td>El último estado agregado se revisa primero</td>
+</tr>
+<tr class="odd">
+<td>Insertar/eliminar con punteros conocidos</td>
+<td>Lista ligada</td>
+<td>Cambiar enlaces puede costar <code>O(1)</code></td>
+</tr>
+<tr class="even">
+<td>Modelar relaciones</td>
+<td>Grafo</td>
+<td>Representa nodos y aristas</td>
+</tr>
+<tr class="odd">
+<td>Saber si dos elementos están conectados</td>
+<td>Union-Find</td>
+<td>Mantiene componentes disjuntas</td>
+</tr>
+<tr class="even">
+<td>Mantener llaves ordenadas</td>
+<td>Árbol balanceado o estructura ordenada</td>
+<td>Hash no conserva orden entre llaves</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="comparación-conceptual-de-estructuras" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="comparación-conceptual-de-estructuras"><span class="header-section-number">5</span> Comparación conceptual de estructuras</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estructura</th>
+<th>Sirve para</th>
+<th>No sirve para</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hash</td>
+<td>Acceder rápido por llave, contar, agrupar</td>
+<td>Mantener orden global, mínimo, máximo, sucesor o predecesor</td>
+</tr>
+<tr class="even">
+<td>Heap</td>
+<td>Obtener rápido el mínimo o máximo según prioridad</td>
+<td>Buscar eficientemente cualquier llave arbitraria</td>
+</tr>
+<tr class="odd">
+<td>Lista ligada</td>
+<td>Insertar o eliminar con punteros conocidos</td>
+<td>Acceso aleatorio eficiente por índice</td>
+</tr>
+<tr class="even">
+<td>Cola FIFO</td>
+<td>Atender en orden de llegada</td>
+<td>Atender por prioridad</td>
+</tr>
+<tr class="odd">
+<td>Pila</td>
+<td>Deshacer, backtracking, explorar último estado</td>
+<td>Atender por antigüedad</td>
+</tr>
+<tr class="even">
+<td>Grafo</td>
+<td>Modelar relaciones, caminos y dependencias</td>
+<td>Acceso directo por llave sin una estructura auxiliar</td>
+</tr>
+<tr class="odd">
+<td>Union-Find</td>
+<td>Saber si dos elementos están en la misma componente</td>
+<td>Reconstruir caminos específicos</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="patrones-frecuentes-de-combinación" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="patrones-frecuentes-de-combinación"><span class="header-section-number">6</span> Patrones frecuentes de combinación</h2>
+<section id="hash-cola-fifo" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="hash-cola-fifo"><span class="header-section-number">6.1</span> Hash + cola FIFO</h3>
+<p>Aparece cuando hay categorías y dentro de cada categoría se debe respetar el orden de llegada.</p>
+<pre class="text"><code>Hash[tipo] -&gt; Cola FIFO de personas</code></pre>
+<ul>
+<li><strong>Cuándo aparece:</strong> trámites por tipo, filas por curso, pedidos por producto.</li>
+<li><strong>Qué guarda cada estructura:</strong> el hash usa la categoría como llave; el valor es una cola FIFO con los elementos de esa categoría.</li>
+<li><strong>Qué operación mejora:</strong> encontrar rápido la fila correcta y atender al más antiguo dentro de esa fila.</li>
+<li><strong>Complejidad típica:</strong> agregar y atender cuestan <code>O(1)</code> esperado si el hash está bien distribuido.</li>
+<li><strong>Error frecuente:</strong> usar solo una cola global y perder la separación por tipo.</li>
+</ul>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="hash-heap" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="hash-heap"><span class="header-section-number">6.2</span> Hash + heap</h3>
+<p>Aparece cuando primero se acumula o agrupa información por llave y luego se necesita obtener los mayores o menores según una prioridad.</p>
+<pre class="text"><code>Hash[cliente] -&gt; monto acumulado
+Heap -&gt; clientes ordenados por monto</code></pre>
+<ul>
+<li><strong>Cuándo aparece:</strong> rankings, top-k, tareas por urgencia, mejores clientes por total acumulado.</li>
+<li><strong>Qué guarda cada estructura:</strong> el hash guarda el acumulado por llave; el heap guarda candidatos ordenados por prioridad.</li>
+<li><strong>Qué operación mejora:</strong> el hash evita buscar linealmente el cliente; el heap evita ordenar todo cada vez que se consulta prioridad.</li>
+<li><strong>Complejidad típica:</strong> acumular <code>n</code> datos cuesta <code>O(n)</code> esperado; mantener top-<code>k</code> entre <code>m</code> llaves cuesta <code>O(m log k)</code>.</li>
+<li><strong>Error frecuente:</strong> creer que el heap permite actualizar o encontrar cualquier cliente en <code>O(1)</code>. Un heap por sí solo no busca llaves arbitrarias eficientemente.</li>
+</ul>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="hash-lista-ligada" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="hash-lista-ligada"><span class="header-section-number">6.3</span> Hash + lista ligada</h3>
+<p>Aparece dentro de una tabla de hash con encadenamiento, cuando varias llaves caen en el mismo bucket.</p>
+<pre class="text"><code>A[h(k)] -&gt; lista ligada de pares (llave, valor)</code></pre>
+<ul>
+<li><strong>Cuándo aparece:</strong> implementación de hash por encadenamiento.</li>
+<li><strong>Qué guarda cada estructura:</strong> el arreglo de hash apunta a buckets; cada bucket es una lista de pares <code>(llave, valor)</code>.</li>
+<li><strong>Qué operación mejora:</strong> permite manejar colisiones sin mover todos los elementos del arreglo.</li>
+<li><strong>Complejidad típica:</strong> búsqueda e inserción esperadas <code>O(1)</code> si las listas se mantienen cortas; peor caso <code>O(n)</code>.</li>
+<li><strong>Error frecuente:</strong> guardar solo el valor. Si hay colisiones, se necesita conservar la llave para verificar que el par encontrado corresponde.</li>
+</ul>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+<section id="hash-grafo" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="hash-grafo"><span class="header-section-number">6.4</span> Hash + grafo</h3>
+<p>Aparece cuando los nodos del grafo tienen etiquetas externas, como nombres de ciudades, personas, cursos o servidores.</p>
+<pre class="text"><code>Hash[nombre] -&gt; nodo interno
+nodo.vecinos -&gt; lista de adyacencia</code></pre>
+<ul>
+<li><strong>Cuándo aparece:</strong> redes de contactos, vuelos entre ciudades, prerrequisitos entre cursos, dependencias entre tareas.</li>
+<li><strong>Qué guarda cada estructura:</strong> el hash traduce etiquetas a nodos internos; el grafo guarda vecinos mediante listas de adyacencia.</li>
+<li><strong>Qué operación mejora:</strong> crear o buscar un nodo por etiqueta sin recorrer todos los nodos.</li>
+<li><strong>Complejidad típica:</strong> buscar o crear nodo <code>O(1)</code> esperado; recorrer el grafo con listas de adyacencia <code>O(V + E)</code>.</li>
+<li><strong>Error frecuente:</strong> representar relaciones como un hash plano sin guardar vecinos, lo que impide recorrer caminos o dependencias.</li>
+</ul>
+</section>
+<section id="grafo-cola-o-pila" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="grafo-cola-o-pila"><span class="header-section-number">6.5</span> Grafo + cola o pila</h3>
+<p>Aparece cuando se debe recorrer un grafo.</p>
+<ul>
+<li><strong>Cuándo aparece:</strong> búsqueda por niveles, conectividad, caminos no ponderados, exploración profunda.</li>
+<li><strong>Qué guarda cada estructura:</strong> el grafo guarda nodos y aristas; la cola de BFS guarda la frontera por niveles; la pila o recursión de DFS guarda el camino de exploración actual.</li>
+<li><strong>Qué operación mejora:</strong> la cola permite visitar por distancia en número de aristas; la pila permite profundizar antes de retroceder.</li>
+<li><strong>Complejidad típica:</strong> BFS y DFS cuestan <code>O(V + E)</code> con listas de adyacencia.</li>
+<li><strong>Error frecuente:</strong> usar pila cuando el enunciado necesita el camino con menor cantidad de aristas en un grafo no ponderado; para eso se usa BFS con cola.</li>
+</ul>
+</section>
+<section id="kruskal-union-find" class="level3" data-number="6.6">
+<h3 data-number="6.6" class="anchored" data-anchor-id="kruskal-union-find"><span class="header-section-number">6.6</span> Kruskal + Union-Find</h3>
+<p>Aparece en el algoritmo de Kruskal para construir un árbol de expansión mínimo. Aquí solo interesa reconocer el patrón; Kruskal se estudia con más detalle en su propia página.</p>
+<pre class="text"><code>Si Find(u) != Find(v):
+    agregar arista (u, v)
+    Union(u, v)</code></pre>
+<ul>
+<li><strong>Cuándo aparece:</strong> selección de aristas de menor costo sin formar ciclos.</li>
+<li><strong>Qué guarda cada estructura:</strong> la lista de aristas se ordena por costo; Union-Find guarda las componentes conectadas actuales.</li>
+<li><strong>Qué operación mejora:</strong> verificar rápidamente si una arista une dos componentes distintas.</li>
+<li><strong>Complejidad típica:</strong> domina ordenar aristas, usualmente <code>O(E log E)</code>; las operaciones de Union-Find son casi constantes amortizadas.</li>
+<li><strong>Error frecuente:</strong> pedirle a Union-Find que entregue el camino entre dos nodos. Union-Find responde conectividad por componente, no reconstruye rutas.</li>
+</ul>
+</section>
+</section>
+<section id="cómo-reconocer-combinaciones-en-un-enunciado" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="cómo-reconocer-combinaciones-en-un-enunciado"><span class="header-section-number">7</span> Cómo reconocer combinaciones en un enunciado</h2>
+<p>Lee el enunciado buscando verbos: agregar, buscar, atender, extraer, conectar, recorrer, consultar. Esos verbos suelen revelar las operaciones repetidas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Frase del enunciado</th>
+<th>Señal</th>
+<th>Posible estructura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“dado un identificador, encontrar…”</td>
+<td>búsqueda por llave</td>
+<td>Hash</td>
+</tr>
+<tr class="even">
+<td>“por cada tipo/categoría/curso…”</td>
+<td>grupos separados</td>
+<td>Hash como estructura externa</td>
+</tr>
+<tr class="odd">
+<td>“el primero que llegó…”</td>
+<td>orden de llegada</td>
+<td>Cola FIFO</td>
+</tr>
+<tr class="even">
+<td>“el último estado…”</td>
+<td>último en entrar</td>
+<td>Pila</td>
+</tr>
+<tr class="odd">
+<td>“el de mayor prioridad…”</td>
+<td>máximo o mínimo repetido</td>
+<td>Heap</td>
+</tr>
+<tr class="even">
+<td>“relaciones entre elementos…”</td>
+<td>nodos y aristas</td>
+<td>Grafo</td>
+</tr>
+<tr class="odd">
+<td>“dependencias entre tareas…”</td>
+<td>aristas dirigidas</td>
+<td>Grafo dirigido</td>
+</tr>
+<tr class="even">
+<td>“saber si ya están conectados…”</td>
+<td>componentes</td>
+<td>Union-Find</td>
+</tr>
+<tr class="odd">
+<td>“orden ascendente”, “sucesor”, “predecesor”</td>
+<td>orden entre llaves</td>
+<td>Estructura ordenada, no hash</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cómo enfrentar un enunciado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Primero escribe las operaciones que se repiten. Después, al lado de cada operación, anota qué estructura la hace naturalmente eficiente. Solo al final combina las estructuras y explica qué guarda cada una.</p>
+</div>
+</div>
+</section>
+<section id="pseudocódigo-base" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="pseudocódigo-base"><span class="header-section-number">8</span> Pseudocódigo base</h2>
+<section id="cola-fifo" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="cola-fifo"><span class="header-section-number">8.1</span> Cola FIFO</h3>
+<p><strong>Input:</strong> cola <code>Q</code>, elemento <code>x</code>. <strong>Output:</strong> cola <code>Q</code> actualizada con <code>x</code> al final.</p>
+<pre class="text"><code>Enqueue(Q, x):
+    insertar x al final de Q</code></pre>
+<p><strong>Input:</strong> cola <code>Q</code>. <strong>Output:</strong> elemento más antiguo de <code>Q</code>.</p>
+<pre class="text"><code>Dequeue(Q):
+    if Q esta vacia:
+        error "cola vacia"
+
+    x &lt;- cabeza de Q
+    eliminar cabeza de Q
+    return x</code></pre>
+</section>
+<section id="heap-mínimo" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="heap-mínimo"><span class="header-section-number">8.2</span> Heap mínimo</h3>
+<p><strong>Input:</strong> heap mínimo <code>H</code>, elemento <code>x</code>. <strong>Output:</strong> heap <code>H</code> actualizado manteniendo la propiedad de heap.</p>
+<pre class="text"><code>HeapInsert(H, x):
+    insertar x al final de H
+    i &lt;- posicion de x
+
+    while i tiene padre and H[i] &lt; H[parent(i)]:
+        intercambiar H[i] con H[parent(i)]
+        i &lt;- parent(i)</code></pre>
+<p><strong>Input:</strong> heap mínimo <code>H</code>. <strong>Output:</strong> menor elemento almacenado en <code>H</code>.</p>
+<pre class="text"><code>ExtractMin(H):
+    if H esta vacio:
+        error "heap vacio"
+
+    minimo &lt;- H[0]
+    H[0] &lt;- ultimo elemento de H
+    eliminar ultimo elemento
+    HeapifyDown(H, 0)
+    return minimo</code></pre>
+<p><strong>Input:</strong> heap mínimo <code>H</code>, índice <code>i</code>. <strong>Output:</strong> heap <code>H</code> reparado desde la posición <code>i</code> hacia abajo.</p>
+<pre class="text"><code>HeapifyDown(H, i):
+    while i tenga algun hijo menor que H[i]:
+        j &lt;- indice del menor hijo de i
+        intercambiar H[i] con H[j]
+        i &lt;- j</code></pre>
+</section>
+<section id="hash-cola-fifo-1" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="hash-cola-fifo-1"><span class="header-section-number">8.3</span> Hash + cola FIFO</h3>
+<p><strong>Input:</strong> tabla de hash <code>H</code>, tipo de solicitud <code>tipo</code>, persona <code>persona</code>. <strong>Output:</strong> <code>persona</code> agregada al final de la cola asociada a <code>tipo</code>.</p>
+<pre class="text"><code>AgregarSolicitud(H, tipo, persona):
+    if H no contiene tipo:
+        H[tipo] &lt;- cola vacia
+
+    Enqueue(H[tipo], persona)</code></pre>
+<p><strong>Input:</strong> tabla de hash <code>H</code>, tipo de solicitud <code>tipo</code>. <strong>Output:</strong> siguiente persona por orden de llegada para ese <code>tipo</code>, o mensaje si no hay solicitudes.</p>
+<pre class="text"><code>AtenderSolicitud(H, tipo):
+    if H no contiene tipo:
+        return "no hay solicitudes"
+
+    if H[tipo] esta vacia:
+        return "no hay solicitudes"
+
+    return Dequeue(H[tipo])</code></pre>
+</section>
+<section id="hash-heap-para-top-k" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="hash-heap-para-top-k"><span class="header-section-number">8.4</span> Hash + heap para top-k</h3>
+<p><strong>Input:</strong> lista <code>datos</code> con pares <code>(cliente, monto)</code> y entero <code>k</code>. <strong>Output:</strong> hasta <code>k</code> clientes con mayor monto acumulado.</p>
+<pre class="text"><code>TopKClientes(datos, k):
+    acumulado &lt;- tabla hash vacia
+
+    for (cliente, monto) in datos:
+        if acumulado no contiene cliente:
+            acumulado[cliente] &lt;- 0
+        acumulado[cliente] &lt;- acumulado[cliente] + monto
+
+    H &lt;- min-heap vacio
+
+    for cliente in claves(acumulado):
+        total &lt;- acumulado[cliente]
+        par &lt;- (total, cliente)
+
+        if size(H) &lt; k:
+            HeapInsert(H, par)
+        else if total &gt; minimo(H).total:
+            ExtractMin(H)
+            HeapInsert(H, par)
+
+    return elementos de H</code></pre>
+<p>La idea es mantener en el heap solo los <code>k</code> mejores clientes vistos hasta ahora. Como es un min-heap, la raíz es el peor de esos <code>k</code>; si llega un cliente mejor, se reemplaza la raíz.</p>
+</section>
+</section>
+<section id="complejidad-resumida" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="complejidad-resumida"><span class="header-section-number">9</span> Complejidad resumida</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 30%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Patrón</th>
+<th>Operación principal</th>
+<th style="text-align: right;">Complejidad esperada o típica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hash + cola</td>
+<td>Agregar o atender por tipo</td>
+<td style="text-align: right;"><code>O(1)</code> esperado</td>
+</tr>
+<tr class="even">
+<td>Hash + heap</td>
+<td>Mantener top-<code>k</code> después de acumular</td>
+<td style="text-align: right;"><code>O(m log k)</code></td>
+</tr>
+<tr class="odd">
+<td>Hash + grafo</td>
+<td>Buscar o crear nodo por etiqueta</td>
+<td style="text-align: right;"><code>O(1)</code> esperado</td>
+</tr>
+<tr class="even">
+<td>Grafo + cola</td>
+<td>BFS</td>
+<td style="text-align: right;"><code>O(V + E)</code></td>
+</tr>
+<tr class="odd">
+<td>Grafo + pila/recursión</td>
+<td>DFS</td>
+<td style="text-align: right;"><code>O(V + E)</code></td>
+</tr>
+<tr class="even">
+<td>Kruskal + Union-Find</td>
+<td>Construir árbol de expansión mínimo</td>
+<td style="text-align: right;"><code>O(E log E)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Donde <code>m</code> es la cantidad de llaves distintas, <code>V</code> la cantidad de vértices y <code>E</code> la cantidad de aristas.</p>
+</section>
+<section id="ejemplo-guiado-1-sistema-de-trámites" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ejemplo-guiado-1-sistema-de-trámites"><span class="header-section-number">10</span> Ejemplo guiado 1: sistema de trámites</h2>
+<p>Un sistema municipal recibe solicitudes con esta forma:</p>
+<pre class="text"><code>(tipo_tramite, nombre_persona)</code></pre>
+<p>La regla dice: cuando se atiende un tipo de trámite, debe salir la persona que pidió ese tipo hace más tiempo.</p>
+<section id="paso-1-identificar-operaciones" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="paso-1-identificar-operaciones"><span class="header-section-number">10.1</span> Paso 1: identificar operaciones</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operación</th>
+<th>Qué exige</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Agregar solicitud</td>
+<td>encontrar rápido la fila del tipo de trámite</td>
+</tr>
+<tr class="even">
+<td>Atender solicitud</td>
+<td>extraer la persona más antigua de ese tipo</td>
+</tr>
+<tr class="odd">
+<td>Mantener tipos separados</td>
+<td>agrupar solicitudes por llave</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="paso-2-elegir-estructuras" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="paso-2-elegir-estructuras"><span class="header-section-number">10.2</span> Paso 2: elegir estructuras</h3>
+<pre class="text"><code>Hash[tipo_tramite] -&gt; Cola FIFO de personas</code></pre>
+<ul>
+<li>El hash permite llegar rápido al tipo de trámite.</li>
+<li>La cola FIFO conserva el orden de llegada dentro de ese tipo.</li>
+</ul>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    S["Solicitud: licencia, Ana"] --&gt; H["Hash por tipo"]
+    H --&gt; L["licencia"]
+    L --&gt; Q["Ana → Camila → Elena"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="paso-3-simular" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="paso-3-simular"><span class="header-section-number">10.3</span> Paso 3: simular</h3>
+<p>Solicitudes:</p>
+<pre class="text"><code>(licencia, Ana)
+(reclamo, Bruno)
+(licencia, Camila)
+(certificado, Diego)
+(licencia, Elena)</code></pre>
+<p>Estado después de insertar:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Cola FIFO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>licencia</td>
+<td>Ana → Camila → Elena</td>
+</tr>
+<tr class="even">
+<td>reclamo</td>
+<td>Bruno</td>
+</tr>
+<tr class="odd">
+<td>certificado</td>
+<td>Diego</td>
+</tr>
+</tbody>
+</table>
+<p>Otra forma compacta de verlo:</p>
+<pre class="text"><code>licencia: Ana → Camila → Elena
+reclamo: Bruno
+certificado: Diego</code></pre>
+<p>Si se atiende <code>licencia</code>, sale <code>Ana</code>, porque fue la primera persona en llegar a la cola de licencias. Después queda:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Cola FIFO</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>licencia</td>
+<td>Camila → Elena</td>
+</tr>
+<tr class="even">
+<td>reclamo</td>
+<td>Bruno</td>
+</tr>
+<tr class="odd">
+<td>certificado</td>
+<td>Diego</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="ejemplo-guiado-2-ranking-de-clientes" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="ejemplo-guiado-2-ranking-de-clientes"><span class="header-section-number">11</span> Ejemplo guiado 2: ranking de clientes</h2>
+<p>Se recibe un flujo de compras:</p>
+<pre class="text"><code>(cliente, monto)</code></pre>
+<p>Se quiere reportar los <code>k</code> clientes con mayor monto acumulado.</p>
+<section id="estructuras" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="estructuras"><span class="header-section-number">11.1</span> Estructuras</h3>
+<pre class="text"><code>Hash[cliente] -&gt; monto acumulado
+MinHeap de tamaño k -&gt; mejores clientes actuales</code></pre>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    D["Datos: cliente, monto"] --&gt; H["Hash: acumular monto por cliente"]
+    H --&gt; M["Entradas: cliente, total"]
+    M --&gt; P["MinHeap de tamaño k"]
+    P --&gt; T["Top-k clientes"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="por-qué-no-basta-una-sola-estructura" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="por-qué-no-basta-una-sola-estructura"><span class="header-section-number">11.2</span> Por qué no basta una sola estructura</h3>
+<p>Solo hash permite acumular montos por cliente, pero no entrega rápidamente los <code>k</code> mayores. Para obtenerlos habría que recorrer y ordenar o seleccionar después.</p>
+<p>Solo heap ordena por prioridad, pero no acumula bien por cliente sin búsqueda adicional. Si llega otra compra de un cliente ya existente, el heap no encuentra eficientemente esa llave para actualizarla.</p>
+<p>La combinación separa responsabilidades:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Estructura</th>
+<th>Responsabilidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hash</td>
+<td>acumular el monto total por cliente</td>
+</tr>
+<tr class="even">
+<td>MinHeap de tamaño <code>k</code></td>
+<td>conservar los mejores <code>k</code> candidatos</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="errores-típicos" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">12</span> Errores típicos</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico: usar hash cuando se necesita orden
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hash no mantiene llaves ordenadas. Si el enunciado pide mínimo, máximo, sucesor, predecesor u orden ascendente, hace falta otra estructura o un paso de ordenamiento.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico: usar heap para buscar cualquier llave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un heap permite mirar rápido el mínimo o máximo, pero no encontrar eficientemente un elemento arbitrario por llave. Para búsqueda por llave suele hacer falta un hash adicional.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico: usar cola cuando hay prioridad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una cola FIFO atiende al más antiguo. Si el criterio es “más urgente”, “menor costo” o “mayor puntaje”, probablemente se necesita un heap.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico: usar lista ligada como si fuera arreglo
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En una lista ligada no hay acceso eficiente por índice. Es útil cuando se tienen punteros a nodos o cuando se quiere insertar/eliminar cambiando enlaces.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico: usar Union-Find para reconstruir caminos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Union-Find responde si dos elementos están en la misma componente. No guarda el camino exacto entre ellos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico: mezclar estructuras sin justificar roles
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Decir “uso hash y heap” no basta. Hay que explicar qué guarda cada una, qué operación acelera y por qué esa operación aparece muchas veces en el problema.</p>
+</div>
+</div>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Una plataforma de soporte recibe tickets de estudiantes. Cada ticket tiene:</p>
+<pre class="text"><code>(curso, estudiante, urgencia)</code></pre>
+<p>La plataforma debe soportar estas operaciones:</p>
+<pre class="text"><code>agregar_ticket(curso, estudiante, urgencia)
+atender_ticket(curso)
+curso_con_mas_tickets()</code></pre>
+<p>La operación <code>atender_ticket(curso)</code> atiende al estudiante que llegó primero dentro de ese curso. La operación <code>curso_con_mas_tickets()</code> retorna un curso con la mayor cantidad de tickets pendientes.</p>
+<p>Propón estructuras de datos para implementar estas operaciones eficientemente. Explica qué guarda cada estructura, por qué se usa y la complejidad esperada de cada operación.</p>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>El enunciado tiene dos necesidades distintas:</p>
+<ol type="1">
+<li>Acceso rápido a la fila de un curso.</li>
+<li>Saber qué curso tiene más tickets pendientes.</li>
+</ol>
+<p>Para la primera necesidad:</p>
+<pre class="text"><code>Hash[curso] -&gt; Cola FIFO de tickets</code></pre>
+<p>El hash usa <code>curso</code> como llave. El valor asociado es una cola FIFO de tickets de ese curso. La cola conserva el orden de llegada, por eso <code>atender_ticket(curso)</code> atiende al estudiante más antiguo dentro del curso indicado.</p>
+<p>Para la segunda necesidad:</p>
+<pre class="text"><code>MaxHeap -&gt; pares (cantidad_pendiente, curso)</code></pre>
+<p>El heap permite consultar un curso con más tickets pendientes mirando la raíz. La cantidad pendiente cambia cuando se agrega o atiende un ticket, por lo que el heap debe actualizarse.</p>
+<p>Una implementación posible:</p>
+<pre class="text"><code>agregar_ticket(curso, estudiante, urgencia):
+    if H no contiene curso:
+        H[curso] &lt;- cola vacia
+
+    Enqueue(H[curso], (estudiante, urgencia))
+    cantidad[curso] &lt;- cantidad[curso] + 1
+    actualizar MaxHeap con (cantidad[curso], curso)</code></pre>
+<pre class="text"><code>atender_ticket(curso):
+    if H no contiene curso or H[curso] esta vacia:
+        return "no hay tickets"
+
+    ticket &lt;- Dequeue(H[curso])
+    cantidad[curso] &lt;- cantidad[curso] - 1
+    actualizar MaxHeap con (cantidad[curso], curso)
+    return ticket.estudiante</code></pre>
+<pre class="text"><code>curso_con_mas_tickets():
+    return curso guardado en la raiz del MaxHeap</code></pre>
+<p>Complejidades esperadas, si hay <code>c</code> cursos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operación</th>
+<th style="text-align: right;">Complejidad</th>
+<th>Justificación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>agregar_ticket</code></td>
+<td style="text-align: right;"><code>O(log c)</code></td>
+<td>hash <code>O(1)</code> esperado, cola <code>O(1)</code>, actualización de heap <code>O(log c)</code></td>
+</tr>
+<tr class="even">
+<td><code>atender_ticket</code></td>
+<td style="text-align: right;"><code>O(log c)</code></td>
+<td>hash <code>O(1)</code> esperado, cola <code>O(1)</code>, actualización de heap <code>O(log c)</code></td>
+</tr>
+<tr class="odd">
+<td><code>curso_con_mas_tickets</code></td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td>mirar la raíz del heap</td>
+</tr>
+</tbody>
+</table>
+<p>Si el heap no permite modificar prioridad directamente, se puede usar inserción duplicada con validación perezosa. Cada vez que cambia <code>cantidad[curso]</code>, se inserta un nuevo par <code>(cantidad, curso)</code>. Al consultar la raíz, se verifica si esa cantidad coincide con la cantidad real guardada para el curso. Si no coincide, se descarta la entrada antigua y se revisa la siguiente.</p>
+<p>La urgencia aparece en el dato de entrada, pero el enunciado de <code>atender_ticket(curso)</code> pide atender al que llegó primero dentro del curso. Por eso la fila interna es FIFO, no un heap por urgencia.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>¿Por qué no basta decir “uso un hash” si el problema también pide orden de llegada?</li>
+<li>¿Qué estructura usarías para atender al primero que llegó?</li>
+<li>¿Qué estructura usarías para obtener repetidamente el mayor puntaje?</li>
+<li>¿Por qué un heap no reemplaza a una tabla de hash?</li>
+<li>¿Por qué una tabla de hash no reemplaza a un heap?</li>
+<li>¿Qué estructura usarías para modelar ciudades y vuelos directos?</li>
+<li>¿Qué estructura usarías para saber si dos nodos ya están conectados?</li>
+<li>¿Qué debe guardar el valor de un hash cuando se combina con otra estructura?</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</h2>
+<section id="básico" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="básico"><span class="header-section-number">15.1</span> Básico</h3>
+<p>Para cada caso, indica una estructura principal y justifica en una línea:</p>
+<ol type="1">
+<li>Buscar datos de estudiante por RUT.</li>
+<li>Atender personas en orden de llegada.</li>
+<li>Obtener siempre la tarea más urgente.</li>
+<li>Representar prerrequisitos entre cursos.</li>
+<li>Saber si dos computadores están en la misma red.</li>
+</ol>
+</section>
+<section id="medio" class="level3" data-number="15.2">
+<h3 data-number="15.2" class="anchored" data-anchor-id="medio"><span class="header-section-number">15.2</span> Medio</h3>
+<p>Un sistema recibe pedidos con la forma:</p>
+<pre class="text"><code>(producto, cliente)</code></pre>
+<p>Debe soportar:</p>
+<pre class="text"><code>agregar_pedido(producto, cliente)
+atender_pedido(producto)</code></pre>
+<p><code>atender_pedido(producto)</code> debe retornar el cliente más antiguo que pidió ese producto. Propón estructuras, explica qué guarda cada una y estima la complejidad esperada.</p>
+</section>
+<section id="evaluación" class="level3" data-number="15.3">
+<h3 data-number="15.3" class="anchored" data-anchor-id="evaluación"><span class="header-section-number">15.3</span> Evaluación</h3>
+<p>Un sistema recibe transacciones:</p>
+<pre class="text"><code>(cliente, monto)</code></pre>
+<p>Debe reportar los <code>k</code> clientes con mayor monto acumulado. Propón una combinación de estructuras, explica por qué hash solo no basta, por qué heap solo no basta y entrega la complejidad típica.</p>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Puedo explicar qué rol cumple hash.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué rol cumple heap.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué rol cumple una lista ligada.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué rol cumple una cola FIFO.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué rol cumple una pila.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué rol cumple un grafo.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué rol cumple Union-Find.</label></li>
+<li><label><input type="checkbox">Puedo resolver un problema hash + cola.</label></li>
+<li><label><input type="checkbox">Puedo resolver un problema hash + heap.</label></li>
+<li><label><input type="checkbox">Puedo justificar por qué hash no mantiene orden.</label></li>
+<li><label><input type="checkbox">Puedo justificar por qué un heap no busca cualquier llave eficientemente.</label></li>
+<li><label><input type="checkbox">Puedo justificar por qué una cola FIFO no sirve para prioridad.</label></li>
+<li><label><input type="checkbox">Puedo justificar por qué Union-Find no reconstruye caminos.</label></li>
+<li><label><input type="checkbox">Puedo escribir pseudocódigo básico de <code>Enqueue</code>, <code>Dequeue</code>, <code>HeapInsert</code> y <code>ExtractMin</code>.</label></li>
+<li><label><input type="checkbox">Puedo separar las necesidades de un enunciado en operaciones concretas.</label></li>
+</ul>
 
 
 </section>

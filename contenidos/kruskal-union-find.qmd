@@ -1,55 +1,544 @@
 ---
-title: "Kruskal y Union-Find"
+title: "Kruskal, MST y Union-Find"
 ---
+
+## Objetivo de aprendizaje
+
+Comprender el algoritmo de Kruskal como una estrategia codiciosa para construir un **árbol de cobertura mínimo** en un grafo no dirigido ponderado. Al estudiar esta página deberías poder:
+
+- definir qué es un MST;
+- reconocer cuándo un enunciado pide conectar todos los vértices con costo mínimo;
+- explicar por qué Kruskal procesa aristas de menor a mayor costo;
+- distinguir una arista aceptada de una arista rechazada;
+- usar Union-Find para saber si dos vértices ya están en la misma componente;
+- escribir el pseudocódigo de `Kruskal`, `MakeSet`, `Find` y `Union`;
+- justificar la complejidad usual y la mejora posible cuando los pesos son enteros en un rango pequeño;
+- no confundir MST con caminos mínimos, Dijkstra ni BFS.
 
 ## Idea central del tema
 
-Pendiente de desarrollo.
+Kruskal construye una solución desde abajo hacia arriba. Al inicio no hay un único árbol: hay un **bosque** con un árbol por cada vértice. Luego revisa las aristas ordenadas por costo creciente y agrega solo las que conectan componentes distintas.
 
-## Cuándo usar esta técnica o estructura
+La regla completa es:
 
-Pendiente de desarrollo.
+> Agregar la arista más barata disponible que no forme ciclo.
+
+La parte "que no forme ciclo" es tan importante como la parte "más barata". Una arista puede ser barata y aun así rechazarse si sus extremos ya están conectados por aristas aceptadas antes.
+
+::: {.callout-note}
+## Intuición
+
+Kruskal va uniendo islas. Cada vértice parte solo; una arista aceptada une dos grupos separados. Si una arista une dos vértices que ya están en el mismo grupo, no conecta nada nuevo y solo cerraría un ciclo.
+:::
+
+```{mermaid}
+flowchart LR
+    A["Aristas ordenadas por costo"] --> B["Tomar siguiente arista"]
+    B --> C{"¿Find(u) != Find(v)?"}
+    C -->|Sí| D["Agregar arista a T"]
+    D --> E["Union(u, v)"]
+    C -->|No| F["Descartar: formaría ciclo"]
+    E --> G{"¿T tiene |V|-1 aristas?"}
+    F --> G
+    G -->|No| B
+    G -->|Sí| H["MST completo"]
+```
+
+## Antes de partir: vocabulario mínimo
+
+| Concepto | Qué significa | Por qué importa |
+|---|---|---|
+| Grafo no dirigido | Una arista entre `u` y `v` conecta ambos sentidos. | MST estándar se define sobre grafos no dirigidos. |
+| Grafo ponderado | Cada arista tiene costo, peso, distancia o valor asociado. | Kruskal necesita comparar costos de aristas. |
+| Árbol | Grafo conexo y sin ciclos. | El resultado buscado debe conectar sin cerrar ciclos. |
+| Árbol de cobertura | Árbol que incluye todos los vértices del grafo. | No basta conectar algunos vértices baratos. |
+| MST | Minimum Spanning Tree: árbol de cobertura de costo mínimo. | Es el objetivo de Kruskal. |
+| Bosque | Colección de árboles separados. | Kruskal comienza con un árbol por vértice. |
+| Componente | Grupo de vértices conectados entre sí. | Una arista aceptada une dos componentes. |
+| Ciclo | Camino que vuelve a un vértice ya visitado. | Kruskal rechaza aristas que formen ciclos. |
+| Conjunto disjunto | Estructura que mantiene grupos sin intersección. | Modela las componentes actuales del bosque. |
+| Representante | Elemento usado para identificar un conjunto. | `Find(x)` retorna el representante del grupo de `x`. |
+| `MakeSet(x)` | Crea un conjunto que contiene solo a `x`. | Inicializa una componente por vértice. |
+| `Find(x)` | Retorna el representante del conjunto de `x`. | Permite saber si dos vértices están en la misma componente. |
+| `Union(x, y)` | Une los conjuntos que contienen a `x` e `y`. | Se ejecuta cuando una arista se acepta. |
+| Compresión de caminos | Optimización de `Find` que acorta rutas hacia el representante. | Hace que las consultas futuras sean más rápidas. |
+| Unión por rango | Optimización de `Union` que cuelga el árbol más bajo del más alto. | Evita árboles internos muy profundos. |
+
+## Cuándo usar Kruskal
+
+Usa Kruskal cuando el problema pide conectar elementos con costo total mínimo y el modelo natural es un grafo no dirigido ponderado.
+
+| Señal en el enunciado | Lectura probable | Kruskal encaja porque |
+|---|---|---|
+| "Conectar todos los nodos al menor costo" | Árbol de cobertura mínimo | Debe cubrir todos los vértices minimizando costo total. |
+| "Red mínima de cables, caminos o tuberías" | Grafo no dirigido ponderado | Las conexiones disponibles son aristas con costo. |
+| "Evitar ciclos" | Se necesita un árbol o bosque | Kruskal agrega solo aristas que no forman ciclo. |
+| "Lista de conexiones posibles con costo" | Aristas explícitas | Kruskal trabaja directamente ordenando aristas. |
+| "El grafo puede no ser conexo" | Bosque de cobertura mínimo | Kruskal conecta cada componente por separado. |
+| "Camino más barato desde un origen" | Caminos mínimos | No corresponde Kruskal; pensar en Dijkstra o BFS según el grafo. |
+
+::: {.callout-tip}
+## Cómo reconocer MST en un enunciado
+
+Busca tres señales juntas: hay que conectar todos los vértices, las conexiones tienen costo y el objetivo es minimizar el costo total de la red completa, no la distancia desde un origen.
+:::
+
+::: {.callout-warning}
+## MST no es caminos mínimos
+
+Kruskal no resuelve rutas más cortas. Un MST minimiza el costo total de conectar todos los vértices; Dijkstra y BFS responden preguntas sobre caminos desde un origen.
+:::
 
 ## Conceptos mínimos
 
-Pendiente de desarrollo.
+### MST
 
-## Operaciones o algoritmo principal
+Un árbol de cobertura mínimo de un grafo `G = (V, E)` es un subconjunto de aristas que cumple tres condiciones:
 
-Pendiente de desarrollo.
+1. Cubre todos los vértices de `V`.
+2. No tiene ciclos.
+3. Tiene costo total mínimo entre todos los árboles que cubren `V`.
+
+Si el grafo es conexo y tiene `|V|` vértices, cualquier árbol de cobertura tiene:
+
+$$
+|T| = |V| - 1
+$$
+
+Aquí `T` es el conjunto de aristas elegidas. La igualdad dice que, para cubrir todos los vértices sin ciclos, se necesitan exactamente `|V| - 1` aristas.
+
+### Requisitos del grafo
+
+Kruskal se aplica al problema estándar de MST cuando el grafo es:
+
+- **no dirigido**, porque una conexión sirve en ambos sentidos;
+- **ponderado**, porque cada arista tiene costo;
+- **usualmente conexo**, porque se quiere un único árbol que cubra todos los vértices.
+
+Si el grafo no es conexo, no existe un único árbol que cubra todos los vértices. En ese caso Kruskal retorna un **bosque mínimo**: un MST dentro de cada componente conectada.
+
+### Bosque parcial
+
+Al comienzo, Kruskal no ha aceptado ninguna arista. Por eso el bosque parcial contiene `|V|` componentes: una por cada vértice.
+
+| Momento | Componentes en el bosque | Aristas aceptadas |
+|---|---:|---:|
+| Inicio | `|V|` | `0` |
+| Después de aceptar 1 arista | `|V| - 1` | `1` |
+| Después de aceptar `k` aristas | `|V| - k` | `k` |
+| MST completo en grafo conexo | `1` | `|V| - 1` |
+
+Cada arista aceptada une dos componentes distintas. Por eso reduce en 1 la cantidad de componentes. Si una arista no reduce la cantidad de componentes, significa que sus extremos ya estaban conectados y que agregarla formaría un ciclo.
+
+### Por qué aceptar une y rechazar evita ciclos
+
+En el bosque parcial `T`, dos vértices están en la misma componente si ya existe un camino entre ellos usando solo aristas aceptadas.
+
+Para una arista `(u, v)`:
+
+- si `Find(u) = Find(v)`, entonces `u` y `v` ya están conectados en `T`; agregar `(u, v)` cerraría un ciclo;
+- si `Find(u) != Find(v)`, entonces `u` y `v` están en componentes distintas; agregar `(u, v)` une esas componentes y no puede formar ciclo.
+
+::: {.callout-important}
+## Condición clave
+
+Una arista se acepta exactamente cuando `Find(u) != Find(v)`. Después de aceptarla, se ejecuta `Union(u, v)` para registrar que ambas componentes quedaron unidas.
+:::
+
+## Algoritmo de Kruskal
+
+Kruskal tiene tres fases:
+
+1. Crear un conjunto disjunto por cada vértice.
+2. Ordenar las aristas por costo creciente.
+3. Recorrer las aristas ordenadas y aceptar solo las que conectan componentes distintas.
+
+La decisión codiciosa está en revisar primero las aristas más baratas. La prueba de factibilidad está en evitar ciclos mediante Union-Find.
+
+| Parte greedy | En Kruskal |
+|---|---|
+| Candidatos | Aristas del grafo |
+| `Select` | Siguiente arista de menor costo |
+| `Feasible` | `Find(u) != Find(v)` |
+| `Union` conceptual | Agregar la arista a `T` |
+| Estructura auxiliar | Union-Find para mantener componentes |
+| Objetivo | Minimizar el costo total del árbol de cobertura |
+
+En un grafo conexo, el algoritmo puede detenerse cuando `T` tiene `|V| - 1` aristas. Si el grafo no es conexo, ese corte no se alcanzará; al terminar de revisar las aristas quedará un bosque mínimo.
+
+## Union-Find
+
+Union-Find, también llamado estructura de conjuntos disjuntos, mantiene una partición de elementos en grupos separados. En Kruskal, esos grupos representan las componentes del bosque parcial.
+
+La estructura ofrece tres operaciones:
+
+| Operación | Qué hace | Uso en Kruskal |
+|---|---|---|
+| `MakeSet(x)` | Crea el conjunto `{x}`. | Cada vértice parte como componente propia. |
+| `Find(x)` | Retorna el representante del conjunto de `x`. | Permite comparar componentes. |
+| `Union(x, y)` | Une los conjuntos de `x` e `y`. | Se ejecuta después de aceptar una arista. |
+
+El representante no es necesariamente el vértice "más importante" del grafo. Es solo una etiqueta interna que identifica el conjunto. Si dos vértices tienen el mismo representante, están en la misma componente.
+
+### Compresión de caminos
+
+`Find(x)` suele seguir punteros desde `x` hasta la raíz del conjunto. La compresión de caminos hace que, durante esa búsqueda, los nodos visitados apunten directamente a la raíz. Así las consultas futuras quedan más cortas.
+
+### Unión por rango
+
+`Union(x, y)` une dos árboles internos. La unión por rango cuelga el árbol de menor rango bajo el de mayor rango. Si ambos tienen el mismo rango, se elige uno como raíz y se aumenta su rango.
+
+Estas dos optimizaciones hacen que las operaciones sean casi constantes en tiempo amortizado.
 
 ## Pseudocódigo claro
 
-Pendiente de desarrollo.
+### Kruskal
+
+**Input:** grafo no dirigido ponderado `G = (V, E)` con costo `w(e)` para cada arista.<br>
+**Output:** conjunto `T` de aristas del MST, o bosque mínimo si `G` no es conexo.
+
+```text
+Kruskal(G):
+    T <- empty
+
+    for v in V(G):
+        MakeSet(v)
+
+    ordenar E(G) por costo creciente
+
+    for (u, v) in E(G):
+        if Find(u) != Find(v):
+            T <- T union {(u, v)}
+            Union(u, v)
+
+    return T
+```
+
+### MakeSet
+
+**Input:** elemento `x`.<br>
+**Output:** conjunto singleton `{x}` representado por `parent` y `rank`.
+
+```text
+MakeSet(x):
+    parent[x] <- x
+    rank[x] <- 0
+```
+
+### Find con compresión de caminos
+
+**Input:** elemento `x`.<br>
+**Output:** representante del conjunto que contiene a `x`.
+
+```text
+Find(x):
+    if parent[x] != x:
+        parent[x] <- Find(parent[x])
+
+    return parent[x]
+```
+
+### Union por rango
+
+**Input:** elementos `x` e `y`.<br>
+**Output:** unión de los conjuntos que contienen a `x` e `y`.
+
+```text
+Union(x, y):
+    rx <- Find(x)
+    ry <- Find(y)
+
+    if rx = ry:
+        return
+
+    if rank[rx] < rank[ry]:
+        parent[rx] <- ry
+    else if rank[rx] > rank[ry]:
+        parent[ry] <- rx
+    else:
+        parent[ry] <- rx
+        rank[rx] <- rank[rx] + 1
+```
+
+### Variante con corte temprano
+
+Esta variante evita revisar aristas innecesarias cuando el grafo es conexo y el MST ya está completo.
+
+**Input:** grafo no dirigido ponderado `G = (V, E)` con costo `w(e)` para cada arista.<br>
+**Output:** conjunto `T` de aristas del MST si `G` es conexo; bosque mínimo si no alcanza `|V| - 1` aristas.
+
+```text
+KruskalCorteTemprano(G):
+    T <- empty
+
+    for v in V(G):
+        MakeSet(v)
+
+    ordenar E(G) por costo creciente
+
+    for (u, v) in E(G):
+        if Find(u) != Find(v):
+            T <- T union {(u, v)}
+            Union(u, v)
+
+            if |T| = |V(G)| - 1:
+                break
+
+    return T
+```
 
 ## Complejidad
 
-Pendiente de desarrollo.
+Usaremos `|V|` para la cantidad de vértices y `|E|` para la cantidad de aristas.
 
-## Errores típicos
+| Fase | Costo | Comentario |
+|---|---:|---|
+| Crear conjuntos con `MakeSet` | `O(|V|)` | Un conjunto por vértice. |
+| Ordenar aristas por costo | `O(|E| log |E|)` | Domina en la implementación usual. |
+| Revisar aristas | `O(|E|)` iteraciones | Cada arista se considera a lo más una vez. |
+| Operaciones `Find` | `O(|E|α(|V|))` amortizado | Dos consultas por arista procesada. |
+| Operaciones `Union` | `O(|V|α(|V|))` amortizado | En un MST conexo hay `|V| - 1` uniones aceptadas. |
+| Total usual | `O(|E| log |E|)` | La ordenación domina. |
 
-Pendiente de desarrollo.
+Con compresión de caminos y unión por rango, Union-Find cuesta:
+
+$$
+O(|E|\alpha(|V|))
+$$
+
+La función `α` es la inversa de Ackermann. Crece tan lento que en la práctica se trata como casi constante, pero en análisis asintótico se mantiene la notación.
+
+La complejidad usual de Kruskal está dominada por ordenar las aristas:
+
+$$
+O(|E| \log |E|)
+$$
+
+En grafos simples se cumple `|E| <= |V|^2`. Por eso también se suele escribir:
+
+$$
+\log |E| \in O(\log |V|)
+$$
+
+y la cota puede expresarse como:
+
+$$
+O(|E| \log |V|)
+$$
+
+### Pesos enteros en rango pequeño
+
+Si los costos de las aristas son enteros en el rango `1` a `|V|`, se puede usar Counting Sort para ordenar en:
+
+$$
+O(|E| + |V|)
+$$
+
+En un grafo conexo, `|V| = O(|E|)`, por lo que la ordenación deja de dominar. El costo relevante puede quedar como:
+
+$$
+O(|E|\alpha(|V|))
+$$
+
+La lógica de Kruskal no cambia. Solo cambia la forma de ordenar las aristas.
 
 ## Ejemplo guiado
 
-Pendiente de desarrollo.
+Considera un grafo no dirigido ponderado con vértices:
+
+```text
+A, B, C, D, E, F
+```
+
+Las aristas disponibles son:
+
+| Arista | Costo |
+|---|---:|
+| `(A, B)` | 1 |
+| `(B, C)` | 2 |
+| `(A, C)` | 3 |
+| `(C, D)` | 4 |
+| `(B, D)` | 5 |
+| `(D, E)` | 6 |
+| `(C, E)` | 7 |
+| `(E, F)` | 8 |
+| `(A, F)` | 12 |
+
+Ya están ordenadas de menor a mayor costo. Como hay 6 vértices, un MST debe tener:
+
+$$
+|T| = 6 - 1 = 5
+$$
+
+aristas.
+
+| Paso | Arista revisada | Decisión | Razón | `T` después del paso | Costo acumulado |
+|---:|---|---|---|---|---:|
+| 1 | `(A, B)` | Aceptar | `A` y `B` están en componentes distintas. | `{(A,B)}` | 1 |
+| 2 | `(B, C)` | Aceptar | Une `{A,B}` con `C`. | `{(A,B), (B,C)}` | 3 |
+| 3 | `(A, C)` | Rechazar | `A` y `C` ya están conectados; formaría ciclo. | `{(A,B), (B,C)}` | 3 |
+| 4 | `(C, D)` | Aceptar | Une `{A,B,C}` con `D`. | `{(A,B), (B,C), (C,D)}` | 7 |
+| 5 | `(B, D)` | Rechazar | `B` y `D` ya están en la misma componente. | `{(A,B), (B,C), (C,D)}` | 7 |
+| 6 | `(D, E)` | Aceptar | Une `{A,B,C,D}` con `E`. | `{(A,B), (B,C), (C,D), (D,E)}` | 13 |
+| 7 | `(C, E)` | Rechazar | `C` y `E` ya están conectados; formaría ciclo. | `{(A,B), (B,C), (C,D), (D,E)}` | 13 |
+| 8 | `(E, F)` | Aceptar | Une `{A,B,C,D,E}` con `F`. | `{(A,B), (B,C), (C,D), (D,E), (E,F)}` | 21 |
+
+El algoritmo puede terminar en el paso 8 porque ya aceptó `|V| - 1 = 5` aristas. La arista `(A, F)` no necesita revisarse si se usa corte temprano.
+
+El MST obtenido tiene costo total:
+
+$$
+1 + 2 + 4 + 6 + 8 = 21
+$$
+
+Observa que se rechazaron al menos dos aristas baratas, `(A, C)` y `(B, D)`, porque la condición correcta no es "aceptar toda arista barata", sino aceptar solo las que unen componentes distintas.
+
+## Kruskal, Prim, Dijkstra y BFS: diferencias
+
+| Algoritmo | Pregunta que responde | Tipo de grafo típico | Resultado | No confundir con |
+|---|---|---|---|---|
+| Kruskal | ¿Cómo conecto todos los vértices con costo total mínimo? | No dirigido ponderado | MST o bosque mínimo | Caminos desde un origen |
+| Prim | ¿Cómo conecto todos los vértices con costo total mínimo? | No dirigido ponderado | MST | Dijkstra, aunque ambos pueden usar prioridad |
+| Dijkstra | ¿Cuál es el costo mínimo desde un origen a cada vértice? | Ponderado con pesos no negativos | Distancias y padres de caminos mínimos | MST |
+| BFS | ¿Cuál es la menor cantidad de aristas desde un origen? | No ponderado | Distancias por niveles y padres | MST o rutas ponderadas |
+
+Un MST minimiza el costo total de la red completa. No garantiza que el camino entre dos vértices dentro del MST sea el camino más corto en el grafo original.
+
+## Errores típicos
+
+| Error | Por qué está mal | Corrección |
+|---|---|---|
+| Usar Kruskal para caminos mínimos. | Kruskal no calcula distancias desde un origen. | Usar BFS en grafos no ponderados o Dijkstra con pesos no negativos. |
+| Agregar toda arista barata. | Una arista barata puede formar ciclo. | Agregar solo si `Find(u) != Find(v)`. |
+| Olvidar que el grafo debe ser no dirigido. | MST estándar no se define igual en grafos dirigidos. | Modelar como no dirigido o justificar otro problema. |
+| No inicializar con `MakeSet`. | Union-Find no conoce las componentes iniciales. | Crear un conjunto singleton por vértice. |
+| Confundir `Find` con búsqueda en grafo. | `Find` no recorre caminos del grafo original. | Entenderlo como consulta de representante de componente. |
+| Pensar que Union-Find reconstruye rutas. | Solo responde conectividad por componente. | Para caminos concretos se necesitan otros algoritmos y arreglos de padres. |
+| Decir que siempre hay MST aunque el grafo no sea conexo. | Un árbol debe cubrir todos los vértices y ser conexo. | En grafos no conexos, Kruskal retorna un bosque mínimo. |
+| Afirmar que el MST siempre es único. | Empates de costos pueden producir varios MST. | La unicidad se garantiza bajo condiciones adicionales, por ejemplo pesos todos distintos. |
+| Omitir la ordenación de aristas. | La elección codiciosa depende del orden creciente. | Ordenar antes de procesar o usar una estructura equivalente. |
+| Decir solo `O(|E|)` para Kruskal usual. | Falta contar el ordenamiento. | La cota usual es `O(|E| log |E|)`. |
 
 ## Problema representativo de interrogación
 
 <details>
 <summary>Ver enunciado</summary>
 
-Pendiente de desarrollo.
+Considera el algoritmo de Kruskal aplicado a un grafo no dirigido ponderado `G = (V, E)`.
+
+1. Explica para qué sirve Union-Find dentro de Kruskal.
+2. Indica la complejidad usual de Kruskal cuando las aristas se ordenan con un algoritmo de comparación.
+3. Supón ahora que todos los costos de las aristas son enteros en el rango `1` a `|V|`. Explica cómo cambia la complejidad si se usa Counting Sort para ordenar las aristas.
 
 </details>
 
 <details>
 <summary>Ver solución</summary>
 
-Pendiente de desarrollo.
+Union-Find mantiene las componentes del bosque parcial construido por Kruskal. Para cada arista `(u, v)`, se consulta si sus extremos ya pertenecen a la misma componente:
+
+- si `Find(u) = Find(v)`, agregar `(u, v)` formaría ciclo, por lo que se rechaza;
+- si `Find(u) != Find(v)`, la arista conecta dos componentes distintas, se acepta y luego se ejecuta `Union(u, v)`.
+
+La complejidad usual se separa así:
+
+| Parte | Costo |
+|---|---:|
+| Inicializar conjuntos | `O(|V|)` |
+| Ordenar aristas por comparación | `O(|E| log |E|)` |
+| Operaciones Union-Find optimizadas | `O(|E|α(|V|))` amortizado |
+
+El término dominante usual es la ordenación, por lo que Kruskal cuesta:
+
+$$
+O(|E|\log |E|)
+$$
+
+Las operaciones de Union-Find son casi constantes amortizadas cuando se usa compresión de caminos y unión por rango.
+
+Si los costos son enteros en el rango `1` a `|V|`, Counting Sort puede ordenar las aristas en:
+
+$$
+O(|E| + |V|)
+$$
+
+En un grafo conexo se cumple `|V| = O(|E|)`, así que la ordenación queda lineal respecto de las aristas. En ese escenario, el costo relevante puede quedar como:
+
+$$
+O(|E|\alpha(|V|))
+$$
+
+No cambia la decisión de Kruskal. Cambia la implementación de la etapa de ordenación.
 
 </details>
 
+## Preguntas de repaso
+
+1. ¿Qué significa MST y cuáles son sus tres propiedades?
+2. ¿Por qué Kruskal parte con un bosque y no con un árbol completo?
+3. ¿Qué representa una componente durante la ejecución de Kruskal?
+4. ¿Por qué aceptar una arista reduce en 1 la cantidad de componentes?
+5. ¿Por qué `Find(u) = Find(v)` implica que agregar `(u, v)` formaría ciclo?
+6. ¿Cuántas aristas tiene un MST si el grafo conexo tiene `n` vértices?
+7. ¿Qué ocurre si el grafo no es conexo?
+8. ¿Qué parte domina la complejidad usual de Kruskal?
+9. ¿Cuándo puede mejorar la ordenación usando Counting Sort?
+10. ¿Por qué Kruskal no sirve para caminos mínimos?
+
+## Ejercicios breves
+
+### Ejercicio 1
+
+Simula Kruskal sobre estas aristas ya ordenadas:
+
+| Arista | Costo |
+|---|---:|
+| `(1, 2)` | 1 |
+| `(2, 3)` | 2 |
+| `(1, 3)` | 3 |
+| `(3, 4)` | 4 |
+| `(2, 4)` | 5 |
+
+Indica en cada paso si la arista se acepta o se rechaza, y explica la razón usando componentes.
+
+### Ejercicio 2
+
+Para un grafo conexo con `10` vértices, responde:
+
+1. ¿Cuántas aristas tendrá su MST?
+2. ¿Cuántas uniones efectivas ejecutará Kruskal si usa corte temprano?
+3. ¿Puede revisar más aristas que las aceptadas?
+
+### Ejercicio 3
+
+Construye un grafo pequeño donde el MST no contenga el camino más corto entre dos vértices. Explica por qué esto no contradice la definición de MST.
+
+### Ejercicio 4
+
+Indica si cada afirmación es verdadera o falsa:
+
+| Afirmación | Respuesta |
+|---|---|
+| Kruskal sirve para grafos no dirigidos ponderados. | |
+| Si una arista es la más barata disponible, siempre se acepta. | |
+| Union-Find permite saber si dos vértices están en la misma componente. | |
+| Un MST minimiza el costo total del árbol, no cada ruta individual. | |
+| Si el grafo no es conexo, Kruskal retorna un único MST. | |
+
 ## Checklist de estudio
 
-Pendiente de desarrollo.
+- [ ] Sé definir MST como árbol de cobertura mínimo.
+- [ ] Sé explicar que el MST cubre todos los vértices, no tiene ciclos y minimiza costo total.
+- [ ] Sé reconocer que Kruskal requiere un grafo no dirigido ponderado.
+- [ ] Sé explicar qué pasa si el grafo no es conexo.
+- [ ] Sé simular Kruskal desde un bosque inicial.
+- [ ] Sé justificar por qué una arista aceptada une dos componentes.
+- [ ] Sé justificar por qué una arista rechazada evita un ciclo.
+- [ ] Sé usar la condición `Find(u) != Find(v)`.
+- [ ] Sé escribir `MakeSet`, `Find`, `Union` y `Kruskal`.
+- [ ] Sé explicar compresión de caminos y unión por rango.
+- [ ] Sé calcular que un MST con `|V|` vértices tiene `|V| - 1` aristas.
+- [ ] Sé justificar la complejidad usual `O(|E| log |E|)`.
+- [ ] Sé explicar la mejora con Counting Sort cuando los pesos son enteros en `1` a `|V|`.
+- [ ] Sé diferenciar Kruskal, Prim, Dijkstra y BFS.
+- [ ] No confundo MST con caminos mínimos.

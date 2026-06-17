@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Kruskal y Union-Find – Estudio I2 EDD</title>
+<title>Kruskal, MST y Union-Find – Estudio I2 EDD</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,7 +71,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -252,16 +284,48 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#cuándo-usar-kruskal" id="toc-cuándo-usar-kruskal" class="nav-link" data-scroll-target="#cuándo-usar-kruskal"><span class="header-section-number">4</span> Cuándo usar Kruskal</a></li>
+  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</a>
+  <ul class="collapse">
+  <li><a href="#mst" id="toc-mst" class="nav-link" data-scroll-target="#mst"><span class="header-section-number">5.1</span> MST</a></li>
+  <li><a href="#requisitos-del-grafo" id="toc-requisitos-del-grafo" class="nav-link" data-scroll-target="#requisitos-del-grafo"><span class="header-section-number">5.2</span> Requisitos del grafo</a></li>
+  <li><a href="#bosque-parcial" id="toc-bosque-parcial" class="nav-link" data-scroll-target="#bosque-parcial"><span class="header-section-number">5.3</span> Bosque parcial</a></li>
+  <li><a href="#por-qué-aceptar-une-y-rechazar-evita-ciclos" id="toc-por-qué-aceptar-une-y-rechazar-evita-ciclos" class="nav-link" data-scroll-target="#por-qué-aceptar-une-y-rechazar-evita-ciclos"><span class="header-section-number">5.4</span> Por qué aceptar une y rechazar evita ciclos</a></li>
+  </ul></li>
+  <li><a href="#algoritmo-de-kruskal" id="toc-algoritmo-de-kruskal" class="nav-link" data-scroll-target="#algoritmo-de-kruskal"><span class="header-section-number">6</span> Algoritmo de Kruskal</a></li>
+  <li><a href="#union-find" id="toc-union-find" class="nav-link" data-scroll-target="#union-find"><span class="header-section-number">7</span> Union-Find</a>
+  <ul class="collapse">
+  <li><a href="#compresión-de-caminos" id="toc-compresión-de-caminos" class="nav-link" data-scroll-target="#compresión-de-caminos"><span class="header-section-number">7.1</span> Compresión de caminos</a></li>
+  <li><a href="#unión-por-rango" id="toc-unión-por-rango" class="nav-link" data-scroll-target="#unión-por-rango"><span class="header-section-number">7.2</span> Unión por rango</a></li>
+  </ul></li>
+  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">8</span> Pseudocódigo claro</a>
+  <ul class="collapse">
+  <li><a href="#kruskal" id="toc-kruskal" class="nav-link" data-scroll-target="#kruskal"><span class="header-section-number">8.1</span> Kruskal</a></li>
+  <li><a href="#makeset" id="toc-makeset" class="nav-link" data-scroll-target="#makeset"><span class="header-section-number">8.2</span> MakeSet</a></li>
+  <li><a href="#find-con-compresión-de-caminos" id="toc-find-con-compresión-de-caminos" class="nav-link" data-scroll-target="#find-con-compresión-de-caminos"><span class="header-section-number">8.3</span> Find con compresión de caminos</a></li>
+  <li><a href="#union-por-rango" id="toc-union-por-rango" class="nav-link" data-scroll-target="#union-por-rango"><span class="header-section-number">8.4</span> Union por rango</a></li>
+  <li><a href="#variante-con-corte-temprano" id="toc-variante-con-corte-temprano" class="nav-link" data-scroll-target="#variante-con-corte-temprano"><span class="header-section-number">8.5</span> Variante con corte temprano</a></li>
+  </ul></li>
+  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">9</span> Complejidad</a>
+  <ul class="collapse">
+  <li><a href="#pesos-enteros-en-rango-pequeño" id="toc-pesos-enteros-en-rango-pequeño" class="nav-link" data-scroll-target="#pesos-enteros-en-rango-pequeño"><span class="header-section-number">9.1</span> Pesos enteros en rango pequeño</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">10</span> Ejemplo guiado</a></li>
+  <li><a href="#kruskal-prim-dijkstra-y-bfs-diferencias" id="toc-kruskal-prim-dijkstra-y-bfs-diferencias" class="nav-link" data-scroll-target="#kruskal-prim-dijkstra-y-bfs-diferencias"><span class="header-section-number">11</span> Kruskal, Prim, Dijkstra y BFS: diferencias</a></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">12</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">15.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">15.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">15.3</span> Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4"><span class="header-section-number">15.4</span> Ejercicio 4</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +334,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenidos/hash.html">Contenidos</a></li><li class="breadcrumb-item"><a href="../contenidos/kruskal-union-find.html">Kruskal y Union-Find</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Kruskal y Union-Find</h1>
+<h1 class="title">Kruskal, MST y Union-Find</h1>
 </div>
 
 
@@ -287,56 +351,1019 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Comprender el algoritmo de Kruskal como una estrategia codiciosa para construir un <strong>árbol de cobertura mínimo</strong> en un grafo no dirigido ponderado. Al estudiar esta página deberías poder:</p>
+<ul>
+<li>definir qué es un MST;</li>
+<li>reconocer cuándo un enunciado pide conectar todos los vértices con costo mínimo;</li>
+<li>explicar por qué Kruskal procesa aristas de menor a mayor costo;</li>
+<li>distinguir una arista aceptada de una arista rechazada;</li>
+<li>usar Union-Find para saber si dos vértices ya están en la misma componente;</li>
+<li>escribir el pseudocódigo de <code>Kruskal</code>, <code>MakeSet</code>, <code>Find</code> y <code>Union</code>;</li>
+<li>justificar la complejidad usual y la mejora posible cuando los pesos son enteros en un rango pequeño;</li>
+<li>no confundir MST con caminos mínimos, Dijkstra ni BFS.</li>
+</ul>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>Kruskal construye una solución desde abajo hacia arriba. Al inicio no hay un único árbol: hay un <strong>bosque</strong> con un árbol por cada vértice. Luego revisa las aristas ordenadas por costo creciente y agrega solo las que conectan componentes distintas.</p>
+<p>La regla completa es:</p>
+<blockquote class="blockquote">
+<p>Agregar la arista más barata disponible que no forme ciclo.</p>
+</blockquote>
+<p>La parte “que no forme ciclo” es tan importante como la parte “más barata”. Una arista puede ser barata y aun así rechazarse si sus extremos ya están conectados por aristas aceptadas antes.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Kruskal va uniendo islas. Cada vértice parte solo; una arista aceptada une dos grupos separados. Si una arista une dos vértices que ya están en el mismo grupo, no conecta nada nuevo y solo cerraría un ciclo.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Aristas ordenadas por costo"] --&gt; B["Tomar siguiente arista"]
+    B --&gt; C{"¿Find(u) != Find(v)?"}
+    C --&gt;|Sí| D["Agregar arista a T"]
+    D --&gt; E["Union(u, v)"]
+    C --&gt;|No| F["Descartar: formaría ciclo"]
+    E --&gt; G{"¿T tiene |V|-1 aristas?"}
+    F --&gt; G
+    G --&gt;|No| B
+    G --&gt;|Sí| H["MST completo"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Qué significa</th>
+<th>Por qué importa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Grafo no dirigido</td>
+<td>Una arista entre <code>u</code> y <code>v</code> conecta ambos sentidos.</td>
+<td>MST estándar se define sobre grafos no dirigidos.</td>
+</tr>
+<tr class="even">
+<td>Grafo ponderado</td>
+<td>Cada arista tiene costo, peso, distancia o valor asociado.</td>
+<td>Kruskal necesita comparar costos de aristas.</td>
+</tr>
+<tr class="odd">
+<td>Árbol</td>
+<td>Grafo conexo y sin ciclos.</td>
+<td>El resultado buscado debe conectar sin cerrar ciclos.</td>
+</tr>
+<tr class="even">
+<td>Árbol de cobertura</td>
+<td>Árbol que incluye todos los vértices del grafo.</td>
+<td>No basta conectar algunos vértices baratos.</td>
+</tr>
+<tr class="odd">
+<td>MST</td>
+<td>Minimum Spanning Tree: árbol de cobertura de costo mínimo.</td>
+<td>Es el objetivo de Kruskal.</td>
+</tr>
+<tr class="even">
+<td>Bosque</td>
+<td>Colección de árboles separados.</td>
+<td>Kruskal comienza con un árbol por vértice.</td>
+</tr>
+<tr class="odd">
+<td>Componente</td>
+<td>Grupo de vértices conectados entre sí.</td>
+<td>Una arista aceptada une dos componentes.</td>
+</tr>
+<tr class="even">
+<td>Ciclo</td>
+<td>Camino que vuelve a un vértice ya visitado.</td>
+<td>Kruskal rechaza aristas que formen ciclos.</td>
+</tr>
+<tr class="odd">
+<td>Conjunto disjunto</td>
+<td>Estructura que mantiene grupos sin intersección.</td>
+<td>Modela las componentes actuales del bosque.</td>
+</tr>
+<tr class="even">
+<td>Representante</td>
+<td>Elemento usado para identificar un conjunto.</td>
+<td><code>Find(x)</code> retorna el representante del grupo de <code>x</code>.</td>
+</tr>
+<tr class="odd">
+<td><code>MakeSet(x)</code></td>
+<td>Crea un conjunto que contiene solo a <code>x</code>.</td>
+<td>Inicializa una componente por vértice.</td>
+</tr>
+<tr class="even">
+<td><code>Find(x)</code></td>
+<td>Retorna el representante del conjunto de <code>x</code>.</td>
+<td>Permite saber si dos vértices están en la misma componente.</td>
+</tr>
+<tr class="odd">
+<td><code>Union(x, y)</code></td>
+<td>Une los conjuntos que contienen a <code>x</code> e <code>y</code>.</td>
+<td>Se ejecuta cuando una arista se acepta.</td>
+</tr>
+<tr class="even">
+<td>Compresión de caminos</td>
+<td>Optimización de <code>Find</code> que acorta rutas hacia el representante.</td>
+<td>Hace que las consultas futuras sean más rápidas.</td>
+</tr>
+<tr class="odd">
+<td>Unión por rango</td>
+<td>Optimización de <code>Union</code> que cuelga el árbol más bajo del más alto.</td>
+<td>Evita árboles internos muy profundos.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cuándo-usar-kruskal" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-usar-kruskal"><span class="header-section-number">4</span> Cuándo usar Kruskal</h2>
+<p>Usa Kruskal cuando el problema pide conectar elementos con costo total mínimo y el modelo natural es un grafo no dirigido ponderado.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Señal en el enunciado</th>
+<th>Lectura probable</th>
+<th>Kruskal encaja porque</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Conectar todos los nodos al menor costo”</td>
+<td>Árbol de cobertura mínimo</td>
+<td>Debe cubrir todos los vértices minimizando costo total.</td>
+</tr>
+<tr class="even">
+<td>“Red mínima de cables, caminos o tuberías”</td>
+<td>Grafo no dirigido ponderado</td>
+<td>Las conexiones disponibles son aristas con costo.</td>
+</tr>
+<tr class="odd">
+<td>“Evitar ciclos”</td>
+<td>Se necesita un árbol o bosque</td>
+<td>Kruskal agrega solo aristas que no forman ciclo.</td>
+</tr>
+<tr class="even">
+<td>“Lista de conexiones posibles con costo”</td>
+<td>Aristas explícitas</td>
+<td>Kruskal trabaja directamente ordenando aristas.</td>
+</tr>
+<tr class="odd">
+<td>“El grafo puede no ser conexo”</td>
+<td>Bosque de cobertura mínimo</td>
+<td>Kruskal conecta cada componente por separado.</td>
+</tr>
+<tr class="even">
+<td>“Camino más barato desde un origen”</td>
+<td>Caminos mínimos</td>
+<td>No corresponde Kruskal; pensar en Dijkstra o BFS según el grafo.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Cómo reconocer MST en un enunciado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Busca tres señales juntas: hay que conectar todos los vértices, las conexiones tienen costo y el objetivo es minimizar el costo total de la red completa, no la distancia desde un origen.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>MST no es caminos mínimos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Kruskal no resuelve rutas más cortas. Un MST minimiza el costo total de conectar todos los vértices; Dijkstra y BFS responden preguntas sobre caminos desde un origen.</p>
+</div>
+</div>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="conceptos-mínimos" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</h2>
+<section id="mst" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="mst"><span class="header-section-number">5.1</span> MST</h3>
+<p>Un árbol de cobertura mínimo de un grafo <code>G = (V, E)</code> es un subconjunto de aristas que cumple tres condiciones:</p>
+<ol type="1">
+<li>Cubre todos los vértices de <code>V</code>.</li>
+<li>No tiene ciclos.</li>
+<li>Tiene costo total mínimo entre todos los árboles que cubren <code>V</code>.</li>
+</ol>
+<p>Si el grafo es conexo y tiene <code>|V|</code> vértices, cualquier árbol de cobertura tiene:</p>
+<p><span class="math display">\[
+|T| = |V| - 1
+\]</span></p>
+<p>Aquí <code>T</code> es el conjunto de aristas elegidas. La igualdad dice que, para cubrir todos los vértices sin ciclos, se necesitan exactamente <code>|V| - 1</code> aristas.</p>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="requisitos-del-grafo" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="requisitos-del-grafo"><span class="header-section-number">5.2</span> Requisitos del grafo</h3>
+<p>Kruskal se aplica al problema estándar de MST cuando el grafo es:</p>
+<ul>
+<li><strong>no dirigido</strong>, porque una conexión sirve en ambos sentidos;</li>
+<li><strong>ponderado</strong>, porque cada arista tiene costo;</li>
+<li><strong>usualmente conexo</strong>, porque se quiere un único árbol que cubra todos los vértices.</li>
+</ul>
+<p>Si el grafo no es conexo, no existe un único árbol que cubra todos los vértices. En ese caso Kruskal retorna un <strong>bosque mínimo</strong>: un MST dentro de cada componente conectada.</p>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="bosque-parcial" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="bosque-parcial"><span class="header-section-number">5.3</span> Bosque parcial</h3>
+<p>Al comienzo, Kruskal no ha aceptado ninguna arista. Por eso el bosque parcial contiene <code>|V|</code> componentes: una por cada vértice.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Momento</th>
+<th style="text-align: right;">Componentes en el bosque</th>
+<th style="text-align: right;">Aristas aceptadas</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inicio</td>
+<td style="text-align: right;"><code>|V|</code></td>
+<td style="text-align: right;"><code>0</code></td>
+</tr>
+<tr class="even">
+<td>Después de aceptar 1 arista</td>
+<td style="text-align: right;"><code>|V| - 1</code></td>
+<td style="text-align: right;"><code>1</code></td>
+</tr>
+<tr class="odd">
+<td>Después de aceptar <code>k</code> aristas</td>
+<td style="text-align: right;"><code>|V| - k</code></td>
+<td style="text-align: right;"><code>k</code></td>
+</tr>
+<tr class="even">
+<td>MST completo en grafo conexo</td>
+<td style="text-align: right;"><code>1</code></td>
+<td style="text-align: right;"><code>|V| - 1</code></td>
+</tr>
+</tbody>
+</table>
+<p>Cada arista aceptada une dos componentes distintas. Por eso reduce en 1 la cantidad de componentes. Si una arista no reduce la cantidad de componentes, significa que sus extremos ya estaban conectados y que agregarla formaría un ciclo.</p>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="por-qué-aceptar-une-y-rechazar-evita-ciclos" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="por-qué-aceptar-une-y-rechazar-evita-ciclos"><span class="header-section-number">5.4</span> Por qué aceptar une y rechazar evita ciclos</h3>
+<p>En el bosque parcial <code>T</code>, dos vértices están en la misma componente si ya existe un camino entre ellos usando solo aristas aceptadas.</p>
+<p>Para una arista <code>(u, v)</code>:</p>
+<ul>
+<li>si <code>Find(u) = Find(v)</code>, entonces <code>u</code> y <code>v</code> ya están conectados en <code>T</code>; agregar <code>(u, v)</code> cerraría un ciclo;</li>
+<li>si <code>Find(u) != Find(v)</code>, entonces <code>u</code> y <code>v</code> están en componentes distintas; agregar <code>(u, v)</code> une esas componentes y no puede formar ciclo.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Condición clave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una arista se acepta exactamente cuando <code>Find(u) != Find(v)</code>. Después de aceptarla, se ejecuta <code>Union(u, v)</code> para registrar que ambas componentes quedaron unidas.</p>
+</div>
+</div>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+</section>
+<section id="algoritmo-de-kruskal" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="algoritmo-de-kruskal"><span class="header-section-number">6</span> Algoritmo de Kruskal</h2>
+<p>Kruskal tiene tres fases:</p>
+<ol type="1">
+<li>Crear un conjunto disjunto por cada vértice.</li>
+<li>Ordenar las aristas por costo creciente.</li>
+<li>Recorrer las aristas ordenadas y aceptar solo las que conectan componentes distintas.</li>
+</ol>
+<p>La decisión codiciosa está en revisar primero las aristas más baratas. La prueba de factibilidad está en evitar ciclos mediante Union-Find.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte greedy</th>
+<th>En Kruskal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Candidatos</td>
+<td>Aristas del grafo</td>
+</tr>
+<tr class="even">
+<td><code>Select</code></td>
+<td>Siguiente arista de menor costo</td>
+</tr>
+<tr class="odd">
+<td><code>Feasible</code></td>
+<td><code>Find(u) != Find(v)</code></td>
+</tr>
+<tr class="even">
+<td><code>Union</code> conceptual</td>
+<td>Agregar la arista a <code>T</code></td>
+</tr>
+<tr class="odd">
+<td>Estructura auxiliar</td>
+<td>Union-Find para mantener componentes</td>
+</tr>
+<tr class="even">
+<td>Objetivo</td>
+<td>Minimizar el costo total del árbol de cobertura</td>
+</tr>
+</tbody>
+</table>
+<p>En un grafo conexo, el algoritmo puede detenerse cuando <code>T</code> tiene <code>|V| - 1</code> aristas. Si el grafo no es conexo, ese corte no se alcanzará; al terminar de revisar las aristas quedará un bosque mínimo.</p>
+</section>
+<section id="union-find" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="union-find"><span class="header-section-number">7</span> Union-Find</h2>
+<p>Union-Find, también llamado estructura de conjuntos disjuntos, mantiene una partición de elementos en grupos separados. En Kruskal, esos grupos representan las componentes del bosque parcial.</p>
+<p>La estructura ofrece tres operaciones:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Operación</th>
+<th>Qué hace</th>
+<th>Uso en Kruskal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>MakeSet(x)</code></td>
+<td>Crea el conjunto <code>{x}</code>.</td>
+<td>Cada vértice parte como componente propia.</td>
+</tr>
+<tr class="even">
+<td><code>Find(x)</code></td>
+<td>Retorna el representante del conjunto de <code>x</code>.</td>
+<td>Permite comparar componentes.</td>
+</tr>
+<tr class="odd">
+<td><code>Union(x, y)</code></td>
+<td>Une los conjuntos de <code>x</code> e <code>y</code>.</td>
+<td>Se ejecuta después de aceptar una arista.</td>
+</tr>
+</tbody>
+</table>
+<p>El representante no es necesariamente el vértice “más importante” del grafo. Es solo una etiqueta interna que identifica el conjunto. Si dos vértices tienen el mismo representante, están en la misma componente.</p>
+<section id="compresión-de-caminos" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="compresión-de-caminos"><span class="header-section-number">7.1</span> Compresión de caminos</h3>
+<p><code>Find(x)</code> suele seguir punteros desde <code>x</code> hasta la raíz del conjunto. La compresión de caminos hace que, durante esa búsqueda, los nodos visitados apunten directamente a la raíz. Así las consultas futuras quedan más cortas.</p>
+</section>
+<section id="unión-por-rango" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="unión-por-rango"><span class="header-section-number">7.2</span> Unión por rango</h3>
+<p><code>Union(x, y)</code> une dos árboles internos. La unión por rango cuelga el árbol de menor rango bajo el de mayor rango. Si ambos tienen el mismo rango, se elige uno como raíz y se aumenta su rango.</p>
+<p>Estas dos optimizaciones hacen que las operaciones sean casi constantes en tiempo amortizado.</p>
+</section>
+</section>
+<section id="pseudocódigo-claro" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">8</span> Pseudocódigo claro</h2>
+<section id="kruskal" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="kruskal"><span class="header-section-number">8.1</span> Kruskal</h3>
+<p><strong>Input:</strong> grafo no dirigido ponderado <code>G = (V, E)</code> con costo <code>w(e)</code> para cada arista.<br> <strong>Output:</strong> conjunto <code>T</code> de aristas del MST, o bosque mínimo si <code>G</code> no es conexo.</p>
+<pre class="text"><code>Kruskal(G):
+    T &lt;- empty
+
+    for v in V(G):
+        MakeSet(v)
+
+    ordenar E(G) por costo creciente
+
+    for (u, v) in E(G):
+        if Find(u) != Find(v):
+            T &lt;- T union {(u, v)}
+            Union(u, v)
+
+    return T</code></pre>
+</section>
+<section id="makeset" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="makeset"><span class="header-section-number">8.2</span> MakeSet</h3>
+<p><strong>Input:</strong> elemento <code>x</code>.<br> <strong>Output:</strong> conjunto singleton <code>{x}</code> representado por <code>parent</code> y <code>rank</code>.</p>
+<pre class="text"><code>MakeSet(x):
+    parent[x] &lt;- x
+    rank[x] &lt;- 0</code></pre>
+</section>
+<section id="find-con-compresión-de-caminos" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="find-con-compresión-de-caminos"><span class="header-section-number">8.3</span> Find con compresión de caminos</h3>
+<p><strong>Input:</strong> elemento <code>x</code>.<br> <strong>Output:</strong> representante del conjunto que contiene a <code>x</code>.</p>
+<pre class="text"><code>Find(x):
+    if parent[x] != x:
+        parent[x] &lt;- Find(parent[x])
+
+    return parent[x]</code></pre>
+</section>
+<section id="union-por-rango" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="union-por-rango"><span class="header-section-number">8.4</span> Union por rango</h3>
+<p><strong>Input:</strong> elementos <code>x</code> e <code>y</code>.<br> <strong>Output:</strong> unión de los conjuntos que contienen a <code>x</code> e <code>y</code>.</p>
+<pre class="text"><code>Union(x, y):
+    rx &lt;- Find(x)
+    ry &lt;- Find(y)
+
+    if rx = ry:
+        return
+
+    if rank[rx] &lt; rank[ry]:
+        parent[rx] &lt;- ry
+    else if rank[rx] &gt; rank[ry]:
+        parent[ry] &lt;- rx
+    else:
+        parent[ry] &lt;- rx
+        rank[rx] &lt;- rank[rx] + 1</code></pre>
+</section>
+<section id="variante-con-corte-temprano" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="variante-con-corte-temprano"><span class="header-section-number">8.5</span> Variante con corte temprano</h3>
+<p>Esta variante evita revisar aristas innecesarias cuando el grafo es conexo y el MST ya está completo.</p>
+<p><strong>Input:</strong> grafo no dirigido ponderado <code>G = (V, E)</code> con costo <code>w(e)</code> para cada arista.<br> <strong>Output:</strong> conjunto <code>T</code> de aristas del MST si <code>G</code> es conexo; bosque mínimo si no alcanza <code>|V| - 1</code> aristas.</p>
+<pre class="text"><code>KruskalCorteTemprano(G):
+    T &lt;- empty
+
+    for v in V(G):
+        MakeSet(v)
+
+    ordenar E(G) por costo creciente
+
+    for (u, v) in E(G):
+        if Find(u) != Find(v):
+            T &lt;- T union {(u, v)}
+            Union(u, v)
+
+            if |T| = |V(G)| - 1:
+                break
+
+    return T</code></pre>
+</section>
+</section>
+<section id="complejidad" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">9</span> Complejidad</h2>
+<p>Usaremos <code>|V|</code> para la cantidad de vértices y <code>|E|</code> para la cantidad de aristas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fase</th>
+<th style="text-align: right;">Costo</th>
+<th>Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Crear conjuntos con <code>MakeSet</code></td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+<td>Un conjunto por vértice.</td>
+</tr>
+<tr class="even">
+<td>Ordenar aristas por costo</td>
+<td style="text-align: right;"><code>O(|E| log |E|)</code></td>
+<td>Domina en la implementación usual.</td>
+</tr>
+<tr class="odd">
+<td>Revisar aristas</td>
+<td style="text-align: right;"><code>O(|E|)</code> iteraciones</td>
+<td>Cada arista se considera a lo más una vez.</td>
+</tr>
+<tr class="even">
+<td>Operaciones <code>Find</code></td>
+<td style="text-align: right;"><code>O(|E|α(|V|))</code> amortizado</td>
+<td>Dos consultas por arista procesada.</td>
+</tr>
+<tr class="odd">
+<td>Operaciones <code>Union</code></td>
+<td style="text-align: right;"><code>O(|V|α(|V|))</code> amortizado</td>
+<td>En un MST conexo hay <code>|V| - 1</code> uniones aceptadas.</td>
+</tr>
+<tr class="even">
+<td>Total usual</td>
+<td style="text-align: right;"><code>O(|E| log |E|)</code></td>
+<td>La ordenación domina.</td>
+</tr>
+</tbody>
+</table>
+<p>Con compresión de caminos y unión por rango, Union-Find cuesta:</p>
+<p><span class="math display">\[
+O(|E|\alpha(|V|))
+\]</span></p>
+<p>La función <code>α</code> es la inversa de Ackermann. Crece tan lento que en la práctica se trata como casi constante, pero en análisis asintótico se mantiene la notación.</p>
+<p>La complejidad usual de Kruskal está dominada por ordenar las aristas:</p>
+<p><span class="math display">\[
+O(|E| \log |E|)
+\]</span></p>
+<p>En grafos simples se cumple <code>|E| &lt;= |V|^2</code>. Por eso también se suele escribir:</p>
+<p><span class="math display">\[
+\log |E| \in O(\log |V|)
+\]</span></p>
+<p>y la cota puede expresarse como:</p>
+<p><span class="math display">\[
+O(|E| \log |V|)
+\]</span></p>
+<section id="pesos-enteros-en-rango-pequeño" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="pesos-enteros-en-rango-pequeño"><span class="header-section-number">9.1</span> Pesos enteros en rango pequeño</h3>
+<p>Si los costos de las aristas son enteros en el rango <code>1</code> a <code>|V|</code>, se puede usar Counting Sort para ordenar en:</p>
+<p><span class="math display">\[
+O(|E| + |V|)
+\]</span></p>
+<p>En un grafo conexo, <code>|V| = O(|E|)</code>, por lo que la ordenación deja de dominar. El costo relevante puede quedar como:</p>
+<p><span class="math display">\[
+O(|E|\alpha(|V|))
+\]</span></p>
+<p>La lógica de Kruskal no cambia. Solo cambia la forma de ordenar las aristas.</p>
+</section>
+</section>
+<section id="ejemplo-guiado" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">10</span> Ejemplo guiado</h2>
+<p>Considera un grafo no dirigido ponderado con vértices:</p>
+<pre class="text"><code>A, B, C, D, E, F</code></pre>
+<p>Las aristas disponibles son:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Arista</th>
+<th style="text-align: right;">Costo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>(A, B)</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td><code>(B, C)</code></td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td><code>(A, C)</code></td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td><code>(C, D)</code></td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td><code>(B, D)</code></td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td><code>(D, E)</code></td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td><code>(C, E)</code></td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td><code>(E, F)</code></td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td><code>(A, F)</code></td>
+<td style="text-align: right;">12</td>
+</tr>
+</tbody>
+</table>
+<p>Ya están ordenadas de menor a mayor costo. Como hay 6 vértices, un MST debe tener:</p>
+<p><span class="math display">\[
+|T| = 6 - 1 = 5
+\]</span></p>
+<p>aristas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Paso</th>
+<th>Arista revisada</th>
+<th>Decisión</th>
+<th>Razón</th>
+<th><code>T</code> después del paso</th>
+<th style="text-align: right;">Costo acumulado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td><code>(A, B)</code></td>
+<td>Aceptar</td>
+<td><code>A</code> y <code>B</code> están en componentes distintas.</td>
+<td><code>{(A,B)}</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td><code>(B, C)</code></td>
+<td>Aceptar</td>
+<td>Une <code>{A,B}</code> con <code>C</code>.</td>
+<td><code>{(A,B), (B,C)}</code></td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td><code>(A, C)</code></td>
+<td>Rechazar</td>
+<td><code>A</code> y <code>C</code> ya están conectados; formaría ciclo.</td>
+<td><code>{(A,B), (B,C)}</code></td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td><code>(C, D)</code></td>
+<td>Aceptar</td>
+<td>Une <code>{A,B,C}</code> con <code>D</code>.</td>
+<td><code>{(A,B), (B,C), (C,D)}</code></td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td><code>(B, D)</code></td>
+<td>Rechazar</td>
+<td><code>B</code> y <code>D</code> ya están en la misma componente.</td>
+<td><code>{(A,B), (B,C), (C,D)}</code></td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">6</td>
+<td><code>(D, E)</code></td>
+<td>Aceptar</td>
+<td>Une <code>{A,B,C,D}</code> con <code>E</code>.</td>
+<td><code>{(A,B), (B,C), (C,D), (D,E)}</code></td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7</td>
+<td><code>(C, E)</code></td>
+<td>Rechazar</td>
+<td><code>C</code> y <code>E</code> ya están conectados; formaría ciclo.</td>
+<td><code>{(A,B), (B,C), (C,D), (D,E)}</code></td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8</td>
+<td><code>(E, F)</code></td>
+<td>Aceptar</td>
+<td>Une <code>{A,B,C,D,E}</code> con <code>F</code>.</td>
+<td><code>{(A,B), (B,C), (C,D), (D,E), (E,F)}</code></td>
+<td style="text-align: right;">21</td>
+</tr>
+</tbody>
+</table>
+<p>El algoritmo puede terminar en el paso 8 porque ya aceptó <code>|V| - 1 = 5</code> aristas. La arista <code>(A, F)</code> no necesita revisarse si se usa corte temprano.</p>
+<p>El MST obtenido tiene costo total:</p>
+<p><span class="math display">\[
+1 + 2 + 4 + 6 + 8 = 21
+\]</span></p>
+<p>Observa que se rechazaron al menos dos aristas baratas, <code>(A, C)</code> y <code>(B, D)</code>, porque la condición correcta no es “aceptar toda arista barata”, sino aceptar solo las que unen componentes distintas.</p>
+</section>
+<section id="kruskal-prim-dijkstra-y-bfs-diferencias" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="kruskal-prim-dijkstra-y-bfs-diferencias"><span class="header-section-number">11</span> Kruskal, Prim, Dijkstra y BFS: diferencias</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Algoritmo</th>
+<th>Pregunta que responde</th>
+<th>Tipo de grafo típico</th>
+<th>Resultado</th>
+<th>No confundir con</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kruskal</td>
+<td>¿Cómo conecto todos los vértices con costo total mínimo?</td>
+<td>No dirigido ponderado</td>
+<td>MST o bosque mínimo</td>
+<td>Caminos desde un origen</td>
+</tr>
+<tr class="even">
+<td>Prim</td>
+<td>¿Cómo conecto todos los vértices con costo total mínimo?</td>
+<td>No dirigido ponderado</td>
+<td>MST</td>
+<td>Dijkstra, aunque ambos pueden usar prioridad</td>
+</tr>
+<tr class="odd">
+<td>Dijkstra</td>
+<td>¿Cuál es el costo mínimo desde un origen a cada vértice?</td>
+<td>Ponderado con pesos no negativos</td>
+<td>Distancias y padres de caminos mínimos</td>
+<td>MST</td>
+</tr>
+<tr class="even">
+<td>BFS</td>
+<td>¿Cuál es la menor cantidad de aristas desde un origen?</td>
+<td>No ponderado</td>
+<td>Distancias por niveles y padres</td>
+<td>MST o rutas ponderadas</td>
+</tr>
+</tbody>
+</table>
+<p>Un MST minimiza el costo total de la red completa. No garantiza que el camino entre dos vértices dentro del MST sea el camino más corto en el grafo original.</p>
+</section>
+<section id="errores-típicos" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">12</span> Errores típicos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Por qué está mal</th>
+<th>Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Usar Kruskal para caminos mínimos.</td>
+<td>Kruskal no calcula distancias desde un origen.</td>
+<td>Usar BFS en grafos no ponderados o Dijkstra con pesos no negativos.</td>
+</tr>
+<tr class="even">
+<td>Agregar toda arista barata.</td>
+<td>Una arista barata puede formar ciclo.</td>
+<td>Agregar solo si <code>Find(u) != Find(v)</code>.</td>
+</tr>
+<tr class="odd">
+<td>Olvidar que el grafo debe ser no dirigido.</td>
+<td>MST estándar no se define igual en grafos dirigidos.</td>
+<td>Modelar como no dirigido o justificar otro problema.</td>
+</tr>
+<tr class="even">
+<td>No inicializar con <code>MakeSet</code>.</td>
+<td>Union-Find no conoce las componentes iniciales.</td>
+<td>Crear un conjunto singleton por vértice.</td>
+</tr>
+<tr class="odd">
+<td>Confundir <code>Find</code> con búsqueda en grafo.</td>
+<td><code>Find</code> no recorre caminos del grafo original.</td>
+<td>Entenderlo como consulta de representante de componente.</td>
+</tr>
+<tr class="even">
+<td>Pensar que Union-Find reconstruye rutas.</td>
+<td>Solo responde conectividad por componente.</td>
+<td>Para caminos concretos se necesitan otros algoritmos y arreglos de padres.</td>
+</tr>
+<tr class="odd">
+<td>Decir que siempre hay MST aunque el grafo no sea conexo.</td>
+<td>Un árbol debe cubrir todos los vértices y ser conexo.</td>
+<td>En grafos no conexos, Kruskal retorna un bosque mínimo.</td>
+</tr>
+<tr class="even">
+<td>Afirmar que el MST siempre es único.</td>
+<td>Empates de costos pueden producir varios MST.</td>
+<td>La unicidad se garantiza bajo condiciones adicionales, por ejemplo pesos todos distintos.</td>
+</tr>
+<tr class="odd">
+<td>Omitir la ordenación de aristas.</td>
+<td>La elección codiciosa depende del orden creciente.</td>
+<td>Ordenar antes de procesar o usar una estructura equivalente.</td>
+</tr>
+<tr class="even">
+<td>Decir solo <code>O(|E|)</code> para Kruskal usual.</td>
+<td>Falta contar el ordenamiento.</td>
+<td>La cota usual es <code>O(|E| log |E|)</code>.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Considera el algoritmo de Kruskal aplicado a un grafo no dirigido ponderado <code>G = (V, E)</code>.</p>
+<ol type="1">
+<li>Explica para qué sirve Union-Find dentro de Kruskal.</li>
+<li>Indica la complejidad usual de Kruskal cuando las aristas se ordenan con un algoritmo de comparación.</li>
+<li>Supón ahora que todos los costos de las aristas son enteros en el rango <code>1</code> a <code>|V|</code>. Explica cómo cambia la complejidad si se usa Counting Sort para ordenar las aristas.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Union-Find mantiene las componentes del bosque parcial construido por Kruskal. Para cada arista <code>(u, v)</code>, se consulta si sus extremos ya pertenecen a la misma componente:</p>
+<ul>
+<li>si <code>Find(u) = Find(v)</code>, agregar <code>(u, v)</code> formaría ciclo, por lo que se rechaza;</li>
+<li>si <code>Find(u) != Find(v)</code>, la arista conecta dos componentes distintas, se acepta y luego se ejecuta <code>Union(u, v)</code>.</li>
+</ul>
+<p>La complejidad usual se separa así:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th style="text-align: right;">Costo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Inicializar conjuntos</td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+</tr>
+<tr class="even">
+<td>Ordenar aristas por comparación</td>
+<td style="text-align: right;"><code>O(|E| log |E|)</code></td>
+</tr>
+<tr class="odd">
+<td>Operaciones Union-Find optimizadas</td>
+<td style="text-align: right;"><code>O(|E|α(|V|))</code> amortizado</td>
+</tr>
+</tbody>
+</table>
+<p>El término dominante usual es la ordenación, por lo que Kruskal cuesta:</p>
+<p><span class="math display">\[
+O(|E|\log |E|)
+\]</span></p>
+<p>Las operaciones de Union-Find son casi constantes amortizadas cuando se usa compresión de caminos y unión por rango.</p>
+<p>Si los costos son enteros en el rango <code>1</code> a <code>|V|</code>, Counting Sort puede ordenar las aristas en:</p>
+<p><span class="math display">\[
+O(|E| + |V|)
+\]</span></p>
+<p>En un grafo conexo se cumple <code>|V| = O(|E|)</code>, así que la ordenación queda lineal respecto de las aristas. En ese escenario, el costo relevante puede quedar como:</p>
+<p><span class="math display">\[
+O(|E|\alpha(|V|))
+\]</span></p>
+<p>No cambia la decisión de Kruskal. Cambia la implementación de la etapa de ordenación.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>¿Qué significa MST y cuáles son sus tres propiedades?</li>
+<li>¿Por qué Kruskal parte con un bosque y no con un árbol completo?</li>
+<li>¿Qué representa una componente durante la ejecución de Kruskal?</li>
+<li>¿Por qué aceptar una arista reduce en 1 la cantidad de componentes?</li>
+<li>¿Por qué <code>Find(u) = Find(v)</code> implica que agregar <code>(u, v)</code> formaría ciclo?</li>
+<li>¿Cuántas aristas tiene un MST si el grafo conexo tiene <code>n</code> vértices?</li>
+<li>¿Qué ocurre si el grafo no es conexo?</li>
+<li>¿Qué parte domina la complejidad usual de Kruskal?</li>
+<li>¿Cuándo puede mejorar la ordenación usando Counting Sort?</li>
+<li>¿Por qué Kruskal no sirve para caminos mínimos?</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">15.1</span> Ejercicio 1</h3>
+<p>Simula Kruskal sobre estas aristas ya ordenadas:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Arista</th>
+<th style="text-align: right;">Costo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>(1, 2)</code></td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td><code>(2, 3)</code></td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td><code>(1, 3)</code></td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td><code>(3, 4)</code></td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td><code>(2, 4)</code></td>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+<p>Indica en cada paso si la arista se acepta o se rechaza, y explica la razón usando componentes.</p>
+</section>
+<section id="ejercicio-2" class="level3" data-number="15.2">
+<h3 data-number="15.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">15.2</span> Ejercicio 2</h3>
+<p>Para un grafo conexo con <code>10</code> vértices, responde:</p>
+<ol type="1">
+<li>¿Cuántas aristas tendrá su MST?</li>
+<li>¿Cuántas uniones efectivas ejecutará Kruskal si usa corte temprano?</li>
+<li>¿Puede revisar más aristas que las aceptadas?</li>
+</ol>
+</section>
+<section id="ejercicio-3" class="level3" data-number="15.3">
+<h3 data-number="15.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">15.3</span> Ejercicio 3</h3>
+<p>Construye un grafo pequeño donde el MST no contenga el camino más corto entre dos vértices. Explica por qué esto no contradice la definición de MST.</p>
+</section>
+<section id="ejercicio-4" class="level3" data-number="15.4">
+<h3 data-number="15.4" class="anchored" data-anchor-id="ejercicio-4"><span class="header-section-number">15.4</span> Ejercicio 4</h3>
+<p>Indica si cada afirmación es verdadera o falsa:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Afirmación</th>
+<th>Respuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Kruskal sirve para grafos no dirigidos ponderados.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Si una arista es la más barata disponible, siempre se acepta.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Union-Find permite saber si dos vértices están en la misma componente.</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Un MST minimiza el costo total del árbol, no cada ruta individual.</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Si el grafo no es conexo, Kruskal retorna un único MST.</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Sé definir MST como árbol de cobertura mínimo.</label></li>
+<li><label><input type="checkbox">Sé explicar que el MST cubre todos los vértices, no tiene ciclos y minimiza costo total.</label></li>
+<li><label><input type="checkbox">Sé reconocer que Kruskal requiere un grafo no dirigido ponderado.</label></li>
+<li><label><input type="checkbox">Sé explicar qué pasa si el grafo no es conexo.</label></li>
+<li><label><input type="checkbox">Sé simular Kruskal desde un bosque inicial.</label></li>
+<li><label><input type="checkbox">Sé justificar por qué una arista aceptada une dos componentes.</label></li>
+<li><label><input type="checkbox">Sé justificar por qué una arista rechazada evita un ciclo.</label></li>
+<li><label><input type="checkbox">Sé usar la condición <code>Find(u) != Find(v)</code>.</label></li>
+<li><label><input type="checkbox">Sé escribir <code>MakeSet</code>, <code>Find</code>, <code>Union</code> y <code>Kruskal</code>.</label></li>
+<li><label><input type="checkbox">Sé explicar compresión de caminos y unión por rango.</label></li>
+<li><label><input type="checkbox">Sé calcular que un MST con <code>|V|</code> vértices tiene <code>|V| - 1</code> aristas.</label></li>
+<li><label><input type="checkbox">Sé justificar la complejidad usual <code>O(|E| log |E|)</code>.</label></li>
+<li><label><input type="checkbox">Sé explicar la mejora con Counting Sort cuando los pesos son enteros en <code>1</code> a <code>|V|</code>.</label></li>
+<li><label><input type="checkbox">Sé diferenciar Kruskal, Prim, Dijkstra y BFS.</label></li>
+<li><label><input type="checkbox">No confundo MST con caminos mínimos.</label></li>
+</ul>
 
 
 </section>

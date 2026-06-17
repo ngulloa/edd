@@ -1,0 +1,5 @@
+/pdf/
+/.quarto/
+**/*.quarto_ipynb
+/apoyo/hash_base.md
+/apoyo/contenido_hash_base.md

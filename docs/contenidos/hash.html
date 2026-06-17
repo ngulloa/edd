@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Hash – Estudio I2 EDD</title>
+<title>Tablas de hash y diccionarios – Estudio I2 EDD</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,6 +71,9 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -252,16 +255,54 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#cuándo-usar-tablas-de-hash" id="toc-cuándo-usar-tablas-de-hash" class="nav-link" data-scroll-target="#cuándo-usar-tablas-de-hash"><span class="header-section-number">3</span> Cuándo usar tablas de hash</a></li>
+  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">4</span> Conceptos mínimos</a>
+  <ul class="collapse">
+  <li><a href="#diccionario" id="toc-diccionario" class="nav-link" data-scroll-target="#diccionario"><span class="header-section-number">4.1</span> Diccionario</a></li>
+  <li><a href="#función-de-hash" id="toc-función-de-hash" class="nav-link" data-scroll-target="#función-de-hash"><span class="header-section-number">4.2</span> Función de hash</a></li>
+  <li><a href="#tabla-de-hash" id="toc-tabla-de-hash" class="nav-link" data-scroll-target="#tabla-de-hash"><span class="header-section-number">4.3</span> Tabla de hash</a></li>
+  <li><a href="#colisión" id="toc-colisión" class="nav-link" data-scroll-target="#colisión"><span class="header-section-number">4.4</span> Colisión</a></li>
+  </ul></li>
+  <li><a href="#operaciones-principales" id="toc-operaciones-principales" class="nav-link" data-scroll-target="#operaciones-principales"><span class="header-section-number">5</span> Operaciones principales</a>
+  <ul class="collapse">
+  <li><a href="#asociar-o-insertar" id="toc-asociar-o-insertar" class="nav-link" data-scroll-target="#asociar-o-insertar"><span class="header-section-number">5.1</span> Asociar o insertar</a></li>
+  <li><a href="#actualizar" id="toc-actualizar" class="nav-link" data-scroll-target="#actualizar"><span class="header-section-number">5.2</span> Actualizar</a></li>
+  <li><a href="#obtener" id="toc-obtener" class="nav-link" data-scroll-target="#obtener"><span class="header-section-number">5.3</span> Obtener</a></li>
+  <li><a href="#eliminar" id="toc-eliminar" class="nav-link" data-scroll-target="#eliminar"><span class="header-section-number">5.4</span> Eliminar</a></li>
+  </ul></li>
+  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">6</span> Pseudocódigo claro</a>
+  <ul class="collapse">
+  <li><a href="#hash-directo-ideal" id="toc-hash-directo-ideal" class="nav-link" data-scroll-target="#hash-directo-ideal"><span class="header-section-number">6.1</span> Hash directo ideal</a></li>
+  <li><a href="#encadenamiento" id="toc-encadenamiento" class="nav-link" data-scroll-target="#encadenamiento"><span class="header-section-number">6.2</span> Encadenamiento</a></li>
+  <li><a href="#sondeo-lineal" id="toc-sondeo-lineal" class="nav-link" data-scroll-target="#sondeo-lineal"><span class="header-section-number">6.3</span> Sondeo lineal</a></li>
+  </ul></li>
+  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">7</span> Complejidad</a></li>
+  <li><a href="#colisiones" id="toc-colisiones" class="nav-link" data-scroll-target="#colisiones"><span class="header-section-number">8</span> Colisiones</a>
+  <ul class="collapse">
+  <li><a href="#encadenamiento-1" id="toc-encadenamiento-1" class="nav-link" data-scroll-target="#encadenamiento-1"><span class="header-section-number">8.1</span> Encadenamiento</a></li>
+  <li><a href="#direccionamiento-abierto" id="toc-direccionamiento-abierto" class="nav-link" data-scroll-target="#direccionamiento-abierto"><span class="header-section-number">8.2</span> Direccionamiento abierto</a></li>
+  </ul></li>
+  <li><a href="#factor-de-carga-y-rehashing" id="toc-factor-de-carga-y-rehashing" class="nav-link" data-scroll-target="#factor-de-carga-y-rehashing"><span class="header-section-number">9</span> Factor de carga y rehashing</a>
+  <ul class="collapse">
+  <li><a href="#rehashing" id="toc-rehashing" class="nav-link" data-scroll-target="#rehashing"><span class="header-section-number">9.1</span> Rehashing</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">10</span> Ejemplo guiado</a>
+  <ul class="collapse">
+  <li><a href="#resultado-con-encadenamiento" id="toc-resultado-con-encadenamiento" class="nav-link" data-scroll-target="#resultado-con-encadenamiento"><span class="header-section-number">10.1</span> Resultado con encadenamiento</a></li>
+  <li><a href="#resultado-con-sondeo-lineal" id="toc-resultado-con-sondeo-lineal" class="nav-link" data-scroll-target="#resultado-con-sondeo-lineal"><span class="header-section-number">10.2</span> Resultado con sondeo lineal</a></li>
+  </ul></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">11</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">12</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">13</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">14</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">14.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">14.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">14.3</span> Ejercicio 3</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">15</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +311,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenidos/hash.html">Contenidos</a></li><li class="breadcrumb-item"><a href="../contenidos/hash.html">Hash</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Hash</h1>
+<h1 class="title">Tablas de hash y diccionarios</h1>
 </div>
 
 
@@ -287,56 +328,974 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Comprender que una tabla de hash es una forma de implementar un <strong>diccionario llave-valor</strong>. Al estudiar esta página deberías poder:</p>
+<ul>
+<li>explicar qué es un diccionario;</li>
+<li>definir una función de hash;</li>
+<li>aplicar hashing modular;</li>
+<li>resolver colisiones mediante encadenamiento o direccionamiento abierto;</li>
+<li>usar sondeo lineal;</li>
+<li>calcular el factor de carga;</li>
+<li>explicar cuándo hacer rehashing;</li>
+<li>reconocer que una tabla de hash <strong>no mantiene orden</strong>.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una tabla de hash está diseñada para buscar por llave, no para mantener las llaves ordenadas. No debe usarse para responder sucesor, predecesor, mínimo o máximo.</p>
+</div>
+</div>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>Un <strong>diccionario</strong> es una estructura que almacena pares:</p>
+<p>[ (, ) ]</p>
+<p>La llave identifica el dato y el valor es la información asociada. Por ejemplo:</p>
+<pre class="text"><code>RUT -&gt; datos de estudiante
+codigo_producto -&gt; stock disponible
+tipo_tramite -&gt; cola de personas esperando</code></pre>
+<p>Una tabla de hash implementa este diccionario usando un arreglo <code>A</code> de tamaño <code>m</code>. Para decidir en qué posición guardar o buscar una llave <code>k</code>, se usa una función de hash:</p>
+<p>[ h : K {0, , m - 1} ]</p>
+<p>La celda relevante es:</p>
+<p>[ A[h(k)] ]</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    K["Llave k"] --&gt; H["Función h(k)"]
+    H --&gt; I["Índice 0 ... m-1"]
+    I --&gt; A["Celda A[h(k)]"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La tabla no guarda los elementos según su orden natural. La posición depende de <code>h(k)</code> y de la estrategia usada para manejar colisiones.</p>
+</div>
+</div>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cuándo-usar-tablas-de-hash" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="cuándo-usar-tablas-de-hash"><span class="header-section-number">3</span> Cuándo usar tablas de hash</h2>
+<p>Usa una tabla de hash cuando el problema pide acceso rápido a partir de una llave:</p>
+<ul>
+<li>verificar si un elemento pertenece a un conjunto;</li>
+<li>contar frecuencias;</li>
+<li>asociar identificadores con datos;</li>
+<li>agrupar elementos por categoría;</li>
+<li>acceder a una lista, cola, pila, heap u otra estructura asociada a una clave;</li>
+<li>implementar un diccionario con operaciones esperadas eficientes.</li>
+</ul>
+<p>No es la estructura adecuada si el problema pide principalmente:</p>
+<ul>
+<li>obtener el mínimo o máximo global;</li>
+<li>recorrer las llaves en orden creciente;</li>
+<li>encontrar sucesor o predecesor;</li>
+<li>mantener un ranking ordenado;</li>
+<li>responder consultas de rango.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Necesidad del problema</th>
+<th>Estructura más natural</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Buscar por llave</td>
+<td>Tabla de hash</td>
+</tr>
+<tr class="even">
+<td>Obtener mínimo o máximo rápidamente</td>
+<td>Heap</td>
+</tr>
+<tr class="odd">
+<td>Atender por orden de llegada</td>
+<td>Cola FIFO</td>
+</tr>
+<tr class="even">
+<td>Mantener llaves ordenadas</td>
+<td>Árbol binario de búsqueda balanceado</td>
+</tr>
+<tr class="odd">
+<td>Modelar relaciones entre entidades</td>
+<td>Grafo</td>
+</tr>
+<tr class="even">
+<td>Saber si dos elementos están en la misma componente</td>
+<td>Union-Find</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hash y heap no son lo mismo. Un hash busca por llave; un heap entrega rápido el mínimo o máximo según prioridad. Si el problema pregunta “el más chico”, “el más grande” o “el siguiente”, una tabla de hash por sí sola no es suficiente.</p>
+</div>
+</div>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="conceptos-mínimos" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">4</span> Conceptos mínimos</h2>
+<section id="diccionario" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="diccionario"><span class="header-section-number">4.1</span> Diccionario</h3>
+<p>Un diccionario almacena pares <code>(llave, valor)</code> y ofrece estas operaciones principales:</p>
+<ul>
+<li><strong>asociar</strong> un valor <code>v</code> a una llave <code>k</code>;</li>
+<li><strong>actualizar</strong> el valor asociado a una llave ya existente;</li>
+<li><strong>obtener</strong> el valor asociado a una llave;</li>
+<li><strong>eliminar</strong> una llave y su valor.</li>
+</ul>
+<p>La llave debe permitir identificar el par buscado. Si hay colisiones, no basta guardar solo el valor: también se debe guardar la llave para verificar que el elemento encontrado corresponde a la búsqueda.</p>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="función-de-hash" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="función-de-hash"><span class="header-section-number">4.2</span> Función de hash</h3>
+<p>Una función de hash transforma una llave del conjunto <code>K</code> en un índice válido de la tabla:</p>
+<p>[ h : K {0, , m - 1} ]</p>
+<p>Un ejemplo típico para llaves enteras es el <strong>hashing modular</strong>:</p>
+<p>[ h(k) = k m ]</p>
+<p>Si <code>m = 7</code>, entonces <code>h(15) = 15 mod 7 = 1</code>.</p>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="tabla-de-hash" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="tabla-de-hash"><span class="header-section-number">4.3</span> Tabla de hash</h3>
+<p>Una tabla de hash es un arreglo <code>A</code> indexado por el valor de la función de hash. Para una llave <code>k</code>, se revisa la posición:</p>
+<p>[ A[h(k)] ]</p>
+<p>Como el espacio de llaves suele ser mucho más grande que el tamaño de la tabla, distintas llaves pueden caer en la misma celda.</p>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="colisión" class="level3" data-number="4.4">
+<h3 data-number="4.4" class="anchored" data-anchor-id="colisión"><span class="header-section-number">4.4</span> Colisión</h3>
+<p>Hay una <strong>colisión</strong> cuando dos llaves distintas producen el mismo índice:</p>
+<p>[ h(k_1) = h(k_2), k_1 k_2 ]</p>
+<p>Con <code>h(k) = k mod 7</code>:</p>
+<pre class="text"><code>37 mod 7 = 2
+51 mod 7 = 2
+58 mod 7 = 2</code></pre>
+<p>Las llaves <code>37</code>, <code>51</code> y <code>58</code> colisionan en el índice <code>2</code>.</p>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+<section id="operaciones-principales" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="operaciones-principales"><span class="header-section-number">5</span> Operaciones principales</h2>
+<section id="asociar-o-insertar" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="asociar-o-insertar"><span class="header-section-number">5.1</span> Asociar o insertar</h3>
+<p>Para asociar <code>v</code> a la llave <code>k</code>:</p>
+<ol type="1">
+<li>Calcular <code>h(k)</code>.</li>
+<li>Ir a la celda <code>A[h(k)]</code>.</li>
+<li>Si la llave ya existe, actualizar su valor.</li>
+<li>Si la llave no existe, insertar el par <code>(k, v)</code>.</li>
+<li>Si hay colisión, aplicar la estrategia correspondiente.</li>
+</ol>
+</section>
+<section id="actualizar" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="actualizar"><span class="header-section-number">5.2</span> Actualizar</h3>
+<p>Actualizar consiste en buscar la llave y reemplazar solo su valor asociado. La llave se mantiene.</p>
+<pre class="text"><code>antes:  "ana" -&gt; 3
+despues: "ana" -&gt; 4</code></pre>
+</section>
+<section id="obtener" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="obtener"><span class="header-section-number">5.3</span> Obtener</h3>
+<p>Para obtener el valor asociado a <code>k</code>, se calcula <code>h(k)</code> y se busca la llave en la celda o en la secuencia de celdas correspondiente.</p>
+</section>
+<section id="eliminar" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="eliminar"><span class="header-section-number">5.4</span> Eliminar</h3>
+<p>La eliminación depende de la estrategia de colisiones:</p>
+<ul>
+<li>con <strong>encadenamiento</strong>, se elimina el nodo desde la lista del bucket;</li>
+<li>con <strong>direccionamiento abierto</strong>, eliminar es más delicado, porque reemplazar una celda por <code>NIL</code> puede cortar búsquedas futuras.</li>
+</ul>
+</section>
+</section>
+<section id="pseudocódigo-claro" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">6</span> Pseudocódigo claro</h2>
+<section id="hash-directo-ideal" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="hash-directo-ideal"><span class="header-section-number">6.1</span> Hash directo ideal</h3>
+<p>El siguiente pseudocódigo directo solo es correcto en el escenario ideal sin colisiones o cuando la celda <code>A[h(k)]</code> maneja internamente las colisiones.</p>
+<pre class="text"><code>HashSearch(A, k):
+    return A[h(k)]
+
+HashInsert(A, k, v):
+    A[h(k)] &lt;- v
+
+HashDelete(A, k):
+    A[h(k)] &lt;- NIL</code></pre>
+</section>
+<section id="encadenamiento" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="encadenamiento"><span class="header-section-number">6.2</span> Encadenamiento</h3>
+<p>En encadenamiento, cada celda del arreglo contiene una lista de pares <code>(llave, valor)</code>.</p>
+<pre class="text"><code>ChainedHashSearch(A, k):
+    buscar la llave k en la lista A[h(k)]
+
+ChainedHashInsert(A, k, v):
+    insertar (k, v) al inicio de la lista A[h(k)]
+
+ChainedHashDelete(A, k):
+    eliminar el nodo con llave k desde la lista A[h(k)]</code></pre>
+</section>
+<section id="sondeo-lineal" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="sondeo-lineal"><span class="header-section-number">6.3</span> Sondeo lineal</h3>
+<p>El sondeo lineal es una forma de <strong>direccionamiento abierto</strong>. Los elementos se guardan directamente en el arreglo. Si la posición <code>h(k)</code> está ocupada, se revisa la siguiente, luego la siguiente, y así sucesivamente:</p>
+<p>[ h(k),&nbsp;h(k)+1,&nbsp;h(k)+2,&nbsp; ]</p>
+<p>Los índices se calculan módulo <code>m</code> para volver al inicio de la tabla.</p>
+<pre class="text"><code>LinearProbingSearch(A, k, m):
+    i &lt;- h(k)
+    pasos &lt;- 0
+
+    while A[i] != NIL and pasos &lt; m:
+        if A[i].key = k:
+            return A[i].value
+
+        i &lt;- (i + 1) mod m
+        pasos &lt;- pasos + 1
+
+    return NOT_FOUND</code></pre>
+<pre class="text"><code>LinearProbingInsert(A, k, v, m):
+    i &lt;- h(k)
+    pasos &lt;- 0
+
+    while A[i] != NIL and pasos &lt; m:
+        if A[i].key = k:
+            A[i].value &lt;- v
+            return
+
+        i &lt;- (i + 1) mod m
+        pasos &lt;- pasos + 1
+
+    if pasos = m:
+        error "tabla llena"
+
+    A[i] &lt;- (k, v)</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En sondeo lineal, la búsqueda debe seguir la misma secuencia usada por la inserción. No basta revisar solo <code>A[h(k)]</code>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="complejidad" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">7</span> Complejidad</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Operación</th>
+<th style="text-align: right;">Complejidad esperada</th>
+<th>Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Asociar o insertar</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td>Puede requerir manejar colisiones</td>
+</tr>
+<tr class="even">
+<td>Actualizar</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td>Primero se busca la llave</td>
+</tr>
+<tr class="odd">
+<td>Obtener</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td>Esperada, no garantizada</td>
+</tr>
+<tr class="even">
+<td>Eliminar</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td>Más simple con encadenamiento</td>
+</tr>
+<tr class="odd">
+<td>Rehashing</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+<td>Reinserta los <code>n</code> elementos</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nota
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La complejidad <code>O(1)</code> es esperada. Puede degradarse si la función de hash distribuye mal las llaves o si el factor de carga es alto.</p>
+</div>
+</div>
+<p>En el peor caso, muchas llaves pueden caer en el mismo lugar. Entonces una búsqueda puede terminar recorriendo muchos elementos, llegando a <code>O(n)</code>.</p>
+</section>
+<section id="colisiones" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="colisiones"><span class="header-section-number">8</span> Colisiones</h2>
+<section id="encadenamiento-1" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="encadenamiento-1"><span class="header-section-number">8.1</span> Encadenamiento</h3>
+<p>En <strong>encadenamiento</strong>, cada celda del arreglo es un bucket que contiene una lista de pares. Todas las llaves que llegan al mismo índice se guardan en esa lista.</p>
+<p>Ejemplo con <code>m = 7</code>, <code>h(k) = k mod 7</code> y llaves <code>15, 37, 51, 29, 58</code>, insertando al inicio de cada lista:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Índice</th>
+<th>Lista</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>∅</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>29 → 15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>58 → 51 → 37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>∅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>∅</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td>∅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td>∅</td>
+</tr>
+</tbody>
+</table>
+<p>Ventajas:</p>
+<ul>
+<li>eliminar es directo, porque se borra un nodo de la lista;</li>
+<li>cada bucket puede almacenar más de un elemento;</li>
+<li>es simple de razonar en ejercicios.</li>
+</ul>
+<p>Desventajas:</p>
+<ul>
+<li>si muchas llaves caen en el mismo bucket, la lista crece;</li>
+<li>requiere estructuras adicionales para las listas.</li>
+</ul>
+</section>
+<section id="direccionamiento-abierto" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="direccionamiento-abierto"><span class="header-section-number">8.2</span> Direccionamiento abierto</h3>
+<p>En <strong>direccionamiento abierto</strong>, todos los pares se almacenan dentro del mismo arreglo <code>A</code>. Si una celda está ocupada, se busca otra celda disponible siguiendo una regla de sondeo.</p>
+<p>En <strong>sondeo lineal</strong>, la regla es revisar posiciones consecutivas. Para las mismas llaves del ejemplo, el resultado es:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Índice</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>∅</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>29</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td>58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td>∅</td>
+</tr>
+</tbody>
+</table>
+<p>Ventajas:</p>
+<ul>
+<li>no usa listas externas;</li>
+<li>todo queda almacenado dentro del arreglo.</li>
+</ul>
+<p>Desventajas:</p>
+<ul>
+<li>se forman bloques de posiciones ocupadas;</li>
+<li>al llenarse la tabla, las búsquedas se vuelven más largas;</li>
+<li>eliminar requiere cuidado, normalmente usando marcas especiales de borrado.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si el problema incluye muchas eliminaciones, encadenamiento suele ser más cómodo que direccionamiento abierto con sondeo lineal.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="factor-de-carga-y-rehashing" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="factor-de-carga-y-rehashing"><span class="header-section-number">9</span> Factor de carga y rehashing</h2>
+<p>El <strong>factor de carga</strong> mide qué tan llena está la tabla:</p>
+<p>[ = ]</p>
+<p>donde:</p>
+<ul>
+<li><code>n</code> es la cantidad de elementos almacenados;</li>
+<li><code>m</code> es el tamaño del arreglo.</li>
+</ul>
+<p>Mientras mayor es <code>lambda</code>, más probable es tener colisiones y secuencias largas de búsqueda.</p>
+<section id="rehashing" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="rehashing"><span class="header-section-number">9.1</span> Rehashing</h3>
+<p>Cuando el factor de carga supera un umbral razonable, se puede hacer <strong>rehashing</strong>:</p>
+<ol type="1">
+<li>Crear una nueva tabla, normalmente más grande.</li>
+<li>Definir una nueva función hash, ajustada al nuevo tamaño.</li>
+<li>Reinsertar todos los elementos en la nueva tabla.</li>
+</ol>
+<p>El costo del rehashing es <code>O(n)</code> porque hay que procesar los <code>n</code> elementos almacenados.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El rehashing es costoso cuando ocurre, pero permite recuperar búsquedas e inserciones esperadas <code>O(1)</code> al reducir colisiones.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ejemplo-guiado" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">10</span> Ejemplo guiado</h2>
+<p>Supongamos:</p>
+<pre class="text"><code>m = 7
+h(k) = k mod 7
+llaves = 15, 37, 51, 29, 58</code></pre>
+<p>Primero calculamos los índices:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Llave</th>
+<th style="text-align: right;">h(k) = k mod 7</th>
+<th>Observación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">1</td>
+<td>Se inserta directo</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">2</td>
+<td>Se inserta directo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">2</td>
+<td>Colisiona con 37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">1</td>
+<td>Colisiona con 15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">2</td>
+<td>Colisiona con 37 y 51</td>
+</tr>
+</tbody>
+</table>
+<section id="resultado-con-encadenamiento" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="resultado-con-encadenamiento"><span class="header-section-number">10.1</span> Resultado con encadenamiento</h3>
+<p>Si cada nueva llave se inserta al inicio de la lista:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Índice</th>
+<th>Estado final</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>∅</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>29 → 15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>58 → 51 → 37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>∅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>∅</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td>∅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td>∅</td>
+</tr>
+</tbody>
+</table>
+<p>Para buscar <code>58</code>, se calcula <code>h(58) = 2</code> y se revisa la lista del índice <code>2</code>.</p>
+</section>
+<section id="resultado-con-sondeo-lineal" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="resultado-con-sondeo-lineal"><span class="header-section-number">10.2</span> Resultado con sondeo lineal</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Paso</th>
+<th style="text-align: right;">Llave</th>
+<th style="text-align: right;">h(k)</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">1</td>
+<td>Se guarda en índice 1</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">2</td>
+<td>Se guarda en índice 2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">2</td>
+<td>Índice 2 ocupado; se guarda en índice 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">1</td>
+<td>Índices 1, 2 y 3 ocupados; se guarda en índice 4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">2</td>
+<td>Índices 2, 3 y 4 ocupados; se guarda en índice 5</td>
+</tr>
+</tbody>
+</table>
+<p>Estado final:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Índice</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>∅</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>37</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>29</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td>58</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td>∅</td>
+</tr>
+</tbody>
+</table>
+<p>Para buscar <code>29</code>, se calcula <code>h(29) = 1</code>. La búsqueda debe revisar:</p>
+<pre class="text"><code>1 -&gt; 2 -&gt; 3 -&gt; 4</code></pre>
+<p>hasta encontrar la llave. Si una llave no está en la tabla, la búsqueda continúa hasta encontrar <code>NIL</code> o hasta completar <code>m</code> pasos.</p>
+</section>
+</section>
+<section id="errores-típicos" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">11</span> Errores típicos</h2>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error 1: intentar ordenar una tabla de hash
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una tabla de hash no mantiene orden. La posición física de una llave depende de <code>h(k)</code> y de las colisiones, no de la relación menor/mayor entre llaves.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error 2: responder sucesor, predecesor, mínimo o máximo con hash
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La tabla de hash no entrega esas operaciones de forma eficiente. Para orden, usa una estructura ordenada; para mínimo o máximo frecuente, considera un heap.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error 3: confundir hash con heap
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Hash sirve para acceso por llave. Heap sirve para obtener mínimo o máximo según prioridad. Sus objetivos son distintos.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error 4: guardar solo el valor y no la llave
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si hay colisiones, dos llaves distintas pueden llegar al mismo lugar. Por eso cada elemento debe conservar su llave.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error 5: eliminar mal en direccionamiento abierto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si se reemplaza una celda por <code>NIL</code>, se puede cortar la secuencia de búsqueda y hacer que otros elementos parezcan ausentes.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error 6: asumir que <code>O(1)</code> está garantizado siempre
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La eficiencia esperada depende de una buena distribución, pocas colisiones y un factor de carga controlado.</p>
+</div>
+</div>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">12</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Un sistema municipal recibe solicitudes para distintos tipos de trámite. Cada solicitud llega como:</p>
+<pre class="text"><code>(tipo_tramite, nombre_persona)</code></pre>
+<p>Ejemplos de <code>tipo_tramite</code> son <code>"licencia"</code>, <code>"certificado"</code> y <code>"permiso"</code>.</p>
+<p>Cuando un módulo queda disponible, informa el tipo de trámite que puede atender. El sistema debe llamar a la persona que llegó primero para ese tipo de trámite y eliminarla de la espera.</p>
+<p>Propón una estructura de datos eficiente y justifica:</p>
+<ol type="1">
+<li>qué estructura principal usarías;</li>
+<li>qué se guarda como llave;</li>
+<li>qué se guarda como valor;</li>
+<li>cómo aseguras que se atienda primero a quien llegó antes para cada tipo;</li>
+<li>la complejidad esperada de insertar una solicitud;</li>
+<li>la complejidad esperada de atender una solicitud;</li>
+<li>por qué no corresponde usar solo un heap.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Conviene usar una tabla de hash donde:</p>
+<ul>
+<li>la llave es <code>tipo_tramite</code>;</li>
+<li>el valor asociado a cada llave es una cola FIFO con las personas esperando ese trámite.</li>
+</ul>
+<p>La estructura queda:</p>
+<pre class="text"><code>Hash[tipo_tramite] -&gt; Cola FIFO de personas</code></pre>
+<p>Para agregar una solicitud:</p>
+<pre class="text"><code>AgregarSolicitud(H, tipo_tramite, nombre):
+    if H no contiene tipo_tramite:
+        H[tipo_tramite] &lt;- cola vacia
+
+    Enqueue(H[tipo_tramite], nombre)</code></pre>
+<p>Para atender:</p>
+<pre class="text"><code>AtenderSolicitud(H, tipo_tramite):
+    if H no contiene tipo_tramite:
+        return "no hay solicitudes"
+
+    if H[tipo_tramite] esta vacia:
+        return "no hay solicitudes"
+
+    return Dequeue(H[tipo_tramite])</code></pre>
+<p>La tabla de hash permite acceder al grupo correcto en tiempo esperado <code>O(1)</code>. La cola FIFO asegura que, dentro de cada tipo de trámite, se atienda a quien llegó primero.</p>
+<p>Complejidades esperadas:</p>
+<ul>
+<li>insertar solicitud: <code>O(1)</code> por acceso al hash más <code>O(1)</code> por <code>Enqueue</code>;</li>
+<li>atender solicitud: <code>O(1)</code> por acceso al hash más <code>O(1)</code> por <code>Dequeue</code>.</li>
+</ul>
+<p>No corresponde usar solo un heap porque el criterio no es obtener el mínimo o máximo global. La consulta siempre viene dada por un tipo específico de trámite y exige orden de llegada dentro de ese tipo. Eso se modela naturalmente con hash + cola FIFO.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">13</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>¿Qué operaciones define un diccionario?</li>
+<li>¿Qué representa la función <code>h(k)</code>?</li>
+<li>¿Por qué una tabla de hash no mantiene orden?</li>
+<li>¿Qué es una colisión?</li>
+<li>¿Por qué se debe guardar la llave junto con el valor?</li>
+<li>¿Cuál es la diferencia entre encadenamiento y direccionamiento abierto?</li>
+<li>¿Cómo funciona el sondeo lineal?</li>
+<li>¿Por qué eliminar puede ser delicado en direccionamiento abierto?</li>
+<li>¿Qué mide el factor de carga <code>lambda = n / m</code>?</li>
+<li>¿Cuándo conviene hacer rehashing?</li>
+<li>¿Por qué hash no reemplaza a heap?</li>
+<li>¿Cuándo conviene combinar hash con cola FIFO?</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">14</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="14.1">
+<h3 data-number="14.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">14.1</span> Ejercicio 1</h3>
+<p>Sea <code>m = 5</code>, <code>h(k) = k mod 5</code> y las llaves:</p>
+<pre class="text"><code>12, 7, 18, 3, 22</code></pre>
+<ol type="1">
+<li>Inserta las llaves usando encadenamiento.</li>
+<li>Inserta las llaves usando sondeo lineal.</li>
+<li>Indica en qué pasos ocurren colisiones.</li>
+</ol>
+<details>
+<summary>
+Ver solución sugerida
+</summary>
+<p>Valores de hash:</p>
+<pre class="text"><code>12 mod 5 = 2
+7 mod 5 = 2
+18 mod 5 = 3
+3 mod 5 = 3
+22 mod 5 = 2</code></pre>
+<p>Con encadenamiento, insertando al inicio:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Índice</th>
+<th>Lista</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>∅</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>∅</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>22 → 7 → 12</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>3 → 18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>∅</td>
+</tr>
+</tbody>
+</table>
+<p>Con sondeo lineal:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Índice</th>
+<th>Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td>22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td>12</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td>18</td>
+</tr>
+</tbody>
+</table>
+<p>Las colisiones ocurren al insertar <code>7</code>, <code>3</code> y <code>22</code>.</p>
+</details>
+</section>
+<section id="ejercicio-2" class="level3" data-number="14.2">
+<h3 data-number="14.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">14.2</span> Ejercicio 2</h3>
+<p>Indica si cada afirmación es verdadera o falsa:</p>
+<ol type="1">
+<li>Una tabla de hash permite recorrer las llaves en orden creciente.</li>
+<li>Dos llaves distintas pueden tener el mismo valor de hash.</li>
+<li>En sondeo lineal, una llave siempre queda guardada en <code>A[h(k)]</code>.</li>
+<li>El factor de carga mide qué tan llena está la tabla.</li>
+<li>Si se necesita obtener siempre el mínimo, un heap suele ser más apropiado que una tabla de hash.</li>
+</ol>
+<details>
+<summary>
+Ver solución sugerida
+</summary>
+<ol type="1">
+<li>Falso. La tabla de hash no mantiene orden.</li>
+<li>Verdadero. Eso es una colisión.</li>
+<li>Falso. Puede quedar en otra posición por colisión.</li>
+<li>Verdadero.</li>
+<li>Verdadero.</li>
+</ol>
+</details>
+</section>
+<section id="ejercicio-3" class="level3" data-number="14.3">
+<h3 data-number="14.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">14.3</span> Ejercicio 3</h3>
+<p>Tienes que almacenar el último puntaje obtenido por cada estudiante, usando su identificador como llave.</p>
+<ol type="1">
+<li>¿Qué representa la llave?</li>
+<li>¿Qué representa el valor?</li>
+<li>Si llega un nuevo puntaje para un estudiante ya existente, ¿qué operación del diccionario corresponde?</li>
+</ol>
+<details>
+<summary>
+Ver solución sugerida
+</summary>
+<ol type="1">
+<li>La llave es el identificador del estudiante.</li>
+<li>El valor es el puntaje almacenado.</li>
+<li>Corresponde actualizar el valor asociado a esa llave.</li>
+</ol>
+</details>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">15</span> Checklist de estudio</h2>
+<p>Antes de cerrar esta página, verifica que puedes responder:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">¿Qué es un diccionario llave-valor?</label></li>
+<li><label><input type="checkbox">¿Cuáles son las operaciones principales de un diccionario?</label></li>
+<li><label><input type="checkbox">¿Qué hace una función de hash?</label></li>
+<li><label><input type="checkbox">¿Cómo se calcula <code>h(k) = k mod m</code>?</label></li>
+<li><label><input type="checkbox">¿Qué significa que una tabla sea un arreglo <code>A</code> indexado por <code>h(k)</code>?</label></li>
+<li><label><input type="checkbox">¿Qué es una colisión?</label></li>
+<li><label><input type="checkbox">¿Cómo funciona encadenamiento?</label></li>
+<li><label><input type="checkbox">¿Cómo funciona direccionamiento abierto?</label></li>
+<li><label><input type="checkbox">¿Cómo funciona sondeo lineal?</label></li>
+<li><label><input type="checkbox">¿Qué mide <code>lambda = n / m</code>?</label></li>
+<li><label><input type="checkbox">¿Qué pasos tiene el rehashing?</label></li>
+<li><label><input type="checkbox">¿Por qué rehashing cuesta <code>O(n)</code>?</label></li>
+<li><label><input type="checkbox">¿Por qué una tabla de hash no se ordena?</label></li>
+<li><label><input type="checkbox">¿Por qué hash no sirve para sucesor, predecesor, mínimo o máximo?</label></li>
+<li><label><input type="checkbox">¿Cuál es la diferencia entre hash y heap?</label></li>
+<li><label><input type="checkbox">¿Cuándo conviene combinar hash con cola FIFO?</label></li>
+</ul>
 
 
 </section>

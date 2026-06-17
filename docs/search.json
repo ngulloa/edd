@@ -134,9 +134,21 @@
   {
     "objectID": "contenidos/hash.html",
     "href": "contenidos/hash.html",
-    "title": "Hash",
+    "title": "Tablas de hash y diccionarios",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Comprender que una tabla de hash es una forma de implementar un diccionario llave-valor. Al estudiar esta página deberías poder:\n\nexplicar qué es un diccionario;\ndefinir una función de hash;\naplicar hashing modular;\nresolver colisiones mediante encadenamiento o direccionamiento abierto;\nusar sondeo lineal;\ncalcular el factor de carga;\nexplicar cuándo hacer rehashing;\nreconocer que una tabla de hash no mantiene orden.\n\n\n\n\n\n\n\nImportante\n\n\n\nUna tabla de hash está diseñada para buscar por llave, no para mantener las llaves ordenadas. No debe usarse para responder sucesor, predecesor, mínimo o máximo.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Hash"
+    ]
+  },
+  {
+    "objectID": "contenidos/hash.html#objetivo-de-aprendizaje",
+    "href": "contenidos/hash.html#objetivo-de-aprendizaje",
+    "title": "Tablas de hash y diccionarios",
+    "section": "",
+    "text": "Comprender que una tabla de hash es una forma de implementar un diccionario llave-valor. Al estudiar esta página deberías poder:\n\nexplicar qué es un diccionario;\ndefinir una función de hash;\naplicar hashing modular;\nresolver colisiones mediante encadenamiento o direccionamiento abierto;\nusar sondeo lineal;\ncalcular el factor de carga;\nexplicar cuándo hacer rehashing;\nreconocer que una tabla de hash no mantiene orden.\n\n\n\n\n\n\n\nImportante\n\n\n\nUna tabla de hash está diseñada para buscar por llave, no para mantener las llaves ordenadas. No debe usarse para responder sucesor, predecesor, mínimo o máximo.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -146,9 +158,9 @@
   {
     "objectID": "contenidos/hash.html#idea-central-del-tema",
     "href": "contenidos/hash.html#idea-central-del-tema",
-    "title": "Hash",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "title": "Tablas de hash y diccionarios",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nUn diccionario es una estructura que almacena pares:\n[ (, ) ]\nLa llave identifica el dato y el valor es la información asociada. Por ejemplo:\nRUT -&gt; datos de estudiante\ncodigo_producto -&gt; stock disponible\ntipo_tramite -&gt; cola de personas esperando\nUna tabla de hash implementa este diccionario usando un arreglo A de tamaño m. Para decidir en qué posición guardar o buscar una llave k, se usa una función de hash:\n[ h : K {0, , m - 1} ]\nLa celda relevante es:\n[ A[h(k)] ]\n\n\n\n\n\nflowchart LR\n    K[\"Llave k\"] --&gt; H[\"Función h(k)\"]\n    H --&gt; I[\"Índice 0 ... m-1\"]\n    I --&gt; A[\"Celda A[h(k)]\"]\n\n\n\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nLa tabla no guarda los elementos según su orden natural. La posición depende de h(k) y de la estrategia usada para manejar colisiones.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -156,11 +168,11 @@
     ]
   },
   {
-    "objectID": "contenidos/hash.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/hash.html#cuándo-usar-esta-técnica-o-estructura",
-    "title": "Hash",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "objectID": "contenidos/hash.html#cuándo-usar-tablas-de-hash",
+    "href": "contenidos/hash.html#cuándo-usar-tablas-de-hash",
+    "title": "Tablas de hash y diccionarios",
+    "section": "3 Cuándo usar tablas de hash",
+    "text": "3 Cuándo usar tablas de hash\nUsa una tabla de hash cuando el problema pide acceso rápido a partir de una llave:\n\nverificar si un elemento pertenece a un conjunto;\ncontar frecuencias;\nasociar identificadores con datos;\nagrupar elementos por categoría;\nacceder a una lista, cola, pila, heap u otra estructura asociada a una clave;\nimplementar un diccionario con operaciones esperadas eficientes.\n\nNo es la estructura adecuada si el problema pide principalmente:\n\nobtener el mínimo o máximo global;\nrecorrer las llaves en orden creciente;\nencontrar sucesor o predecesor;\nmantener un ranking ordenado;\nresponder consultas de rango.\n\n\n\n\nNecesidad del problema\nEstructura más natural\n\n\n\n\nBuscar por llave\nTabla de hash\n\n\nObtener mínimo o máximo rápidamente\nHeap\n\n\nAtender por orden de llegada\nCola FIFO\n\n\nMantener llaves ordenadas\nÁrbol binario de búsqueda balanceado\n\n\nModelar relaciones entre entidades\nGrafo\n\n\nSaber si dos elementos están en la misma componente\nUnion-Find\n\n\n\n\n\n\n\n\n\nAdvertencia\n\n\n\nHash y heap no son lo mismo. Un hash busca por llave; un heap entrega rápido el mínimo o máximo según prioridad. Si el problema pregunta “el más chico”, “el más grande” o “el siguiente”, una tabla de hash por sí sola no es suficiente.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -170,9 +182,9 @@
   {
     "objectID": "contenidos/hash.html#conceptos-mínimos",
     "href": "contenidos/hash.html#conceptos-mínimos",
-    "title": "Hash",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "title": "Tablas de hash y diccionarios",
+    "section": "4 Conceptos mínimos",
+    "text": "4 Conceptos mínimos\n\n4.1 Diccionario\nUn diccionario almacena pares (llave, valor) y ofrece estas operaciones principales:\n\nasociar un valor v a una llave k;\nactualizar el valor asociado a una llave ya existente;\nobtener el valor asociado a una llave;\neliminar una llave y su valor.\n\nLa llave debe permitir identificar el par buscado. Si hay colisiones, no basta guardar solo el valor: también se debe guardar la llave para verificar que el elemento encontrado corresponde a la búsqueda.\n\n\n4.2 Función de hash\nUna función de hash transforma una llave del conjunto K en un índice válido de la tabla:\n[ h : K {0, , m - 1} ]\nUn ejemplo típico para llaves enteras es el hashing modular:\n[ h(k) = k m ]\nSi m = 7, entonces h(15) = 15 mod 7 = 1.\n\n\n4.3 Tabla de hash\nUna tabla de hash es un arreglo A indexado por el valor de la función de hash. Para una llave k, se revisa la posición:\n[ A[h(k)] ]\nComo el espacio de llaves suele ser mucho más grande que el tamaño de la tabla, distintas llaves pueden caer en la misma celda.\n\n\n4.4 Colisión\nHay una colisión cuando dos llaves distintas producen el mismo índice:\n[ h(k_1) = h(k_2), k_1 k_2 ]\nCon h(k) = k mod 7:\n37 mod 7 = 2\n51 mod 7 = 2\n58 mod 7 = 2\nLas llaves 37, 51 y 58 colisionan en el índice 2.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -180,11 +192,11 @@
     ]
   },
   {
-    "objectID": "contenidos/hash.html#operaciones-o-algoritmo-principal",
-    "href": "contenidos/hash.html#operaciones-o-algoritmo-principal",
-    "title": "Hash",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "objectID": "contenidos/hash.html#operaciones-principales",
+    "href": "contenidos/hash.html#operaciones-principales",
+    "title": "Tablas de hash y diccionarios",
+    "section": "5 Operaciones principales",
+    "text": "5 Operaciones principales\n\n5.1 Asociar o insertar\nPara asociar v a la llave k:\n\nCalcular h(k).\nIr a la celda A[h(k)].\nSi la llave ya existe, actualizar su valor.\nSi la llave no existe, insertar el par (k, v).\nSi hay colisión, aplicar la estrategia correspondiente.\n\n\n\n5.2 Actualizar\nActualizar consiste en buscar la llave y reemplazar solo su valor asociado. La llave se mantiene.\nantes:  \"ana\" -&gt; 3\ndespues: \"ana\" -&gt; 4\n\n\n5.3 Obtener\nPara obtener el valor asociado a k, se calcula h(k) y se busca la llave en la celda o en la secuencia de celdas correspondiente.\n\n\n5.4 Eliminar\nLa eliminación depende de la estrategia de colisiones:\n\ncon encadenamiento, se elimina el nodo desde la lista del bucket;\ncon direccionamiento abierto, eliminar es más delicado, porque reemplazar una celda por NIL puede cortar búsquedas futuras.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -194,9 +206,9 @@
   {
     "objectID": "contenidos/hash.html#pseudocódigo-claro",
     "href": "contenidos/hash.html#pseudocódigo-claro",
-    "title": "Hash",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "title": "Tablas de hash y diccionarios",
+    "section": "6 Pseudocódigo claro",
+    "text": "6 Pseudocódigo claro\n\n6.1 Hash directo ideal\nEl siguiente pseudocódigo directo solo es correcto en el escenario ideal sin colisiones o cuando la celda A[h(k)] maneja internamente las colisiones.\nHashSearch(A, k):\n    return A[h(k)]\n\nHashInsert(A, k, v):\n    A[h(k)] &lt;- v\n\nHashDelete(A, k):\n    A[h(k)] &lt;- NIL\n\n\n6.2 Encadenamiento\nEn encadenamiento, cada celda del arreglo contiene una lista de pares (llave, valor).\nChainedHashSearch(A, k):\n    buscar la llave k en la lista A[h(k)]\n\nChainedHashInsert(A, k, v):\n    insertar (k, v) al inicio de la lista A[h(k)]\n\nChainedHashDelete(A, k):\n    eliminar el nodo con llave k desde la lista A[h(k)]\n\n\n6.3 Sondeo lineal\nEl sondeo lineal es una forma de direccionamiento abierto. Los elementos se guardan directamente en el arreglo. Si la posición h(k) está ocupada, se revisa la siguiente, luego la siguiente, y así sucesivamente:\n[ h(k), h(k)+1, h(k)+2,  ]\nLos índices se calculan módulo m para volver al inicio de la tabla.\nLinearProbingSearch(A, k, m):\n    i &lt;- h(k)\n    pasos &lt;- 0\n\n    while A[i] != NIL and pasos &lt; m:\n        if A[i].key = k:\n            return A[i].value\n\n        i &lt;- (i + 1) mod m\n        pasos &lt;- pasos + 1\n\n    return NOT_FOUND\nLinearProbingInsert(A, k, v, m):\n    i &lt;- h(k)\n    pasos &lt;- 0\n\n    while A[i] != NIL and pasos &lt; m:\n        if A[i].key = k:\n            A[i].value &lt;- v\n            return\n\n        i &lt;- (i + 1) mod m\n        pasos &lt;- pasos + 1\n\n    if pasos = m:\n        error \"tabla llena\"\n\n    A[i] &lt;- (k, v)\n\n\n\n\n\n\nAdvertencia\n\n\n\nEn sondeo lineal, la búsqueda debe seguir la misma secuencia usada por la inserción. No basta revisar solo A[h(k)].",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -206,9 +218,9 @@
   {
     "objectID": "contenidos/hash.html#complejidad",
     "href": "contenidos/hash.html#complejidad",
-    "title": "Hash",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
+    "title": "Tablas de hash y diccionarios",
+    "section": "7 Complejidad",
+    "text": "7 Complejidad\n\n\n\nOperación\nComplejidad esperada\nComentario\n\n\n\n\nAsociar o insertar\nO(1)\nPuede requerir manejar colisiones\n\n\nActualizar\nO(1)\nPrimero se busca la llave\n\n\nObtener\nO(1)\nEsperada, no garantizada\n\n\nEliminar\nO(1)\nMás simple con encadenamiento\n\n\nRehashing\nO(n)\nReinserta los n elementos\n\n\n\n\n\n\n\n\n\nNota\n\n\n\nLa complejidad O(1) es esperada. Puede degradarse si la función de hash distribuye mal las llaves o si el factor de carga es alto.\n\n\nEn el peor caso, muchas llaves pueden caer en el mismo lugar. Entonces una búsqueda puede terminar recorriendo muchos elementos, llegando a O(n).",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -216,11 +228,23 @@
     ]
   },
   {
-    "objectID": "contenidos/hash.html#errores-típicos",
-    "href": "contenidos/hash.html#errores-típicos",
-    "title": "Hash",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
+    "objectID": "contenidos/hash.html#colisiones",
+    "href": "contenidos/hash.html#colisiones",
+    "title": "Tablas de hash y diccionarios",
+    "section": "8 Colisiones",
+    "text": "8 Colisiones\n\n8.1 Encadenamiento\nEn encadenamiento, cada celda del arreglo es un bucket que contiene una lista de pares. Todas las llaves que llegan al mismo índice se guardan en esa lista.\nEjemplo con m = 7, h(k) = k mod 7 y llaves 15, 37, 51, 29, 58, insertando al inicio de cada lista:\n\n\n\nÍndice\nLista\n\n\n\n\n0\n∅\n\n\n1\n29 → 15\n\n\n2\n58 → 51 → 37\n\n\n3\n∅\n\n\n4\n∅\n\n\n5\n∅\n\n\n6\n∅\n\n\n\nVentajas:\n\neliminar es directo, porque se borra un nodo de la lista;\ncada bucket puede almacenar más de un elemento;\nes simple de razonar en ejercicios.\n\nDesventajas:\n\nsi muchas llaves caen en el mismo bucket, la lista crece;\nrequiere estructuras adicionales para las listas.\n\n\n\n8.2 Direccionamiento abierto\nEn direccionamiento abierto, todos los pares se almacenan dentro del mismo arreglo A. Si una celda está ocupada, se busca otra celda disponible siguiendo una regla de sondeo.\nEn sondeo lineal, la regla es revisar posiciones consecutivas. Para las mismas llaves del ejemplo, el resultado es:\n\n\n\nÍndice\nValor\n\n\n\n\n0\n∅\n\n\n1\n15\n\n\n2\n37\n\n\n3\n51\n\n\n4\n29\n\n\n5\n58\n\n\n6\n∅\n\n\n\nVentajas:\n\nno usa listas externas;\ntodo queda almacenado dentro del arreglo.\n\nDesventajas:\n\nse forman bloques de posiciones ocupadas;\nal llenarse la tabla, las búsquedas se vuelven más largas;\neliminar requiere cuidado, normalmente usando marcas especiales de borrado.\n\n\n\n\n\n\n\nTip\n\n\n\nSi el problema incluye muchas eliminaciones, encadenamiento suele ser más cómodo que direccionamiento abierto con sondeo lineal.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Hash"
+    ]
+  },
+  {
+    "objectID": "contenidos/hash.html#factor-de-carga-y-rehashing",
+    "href": "contenidos/hash.html#factor-de-carga-y-rehashing",
+    "title": "Tablas de hash y diccionarios",
+    "section": "9 Factor de carga y rehashing",
+    "text": "9 Factor de carga y rehashing\nEl factor de carga mide qué tan llena está la tabla:\n[ = ]\ndonde:\n\nn es la cantidad de elementos almacenados;\nm es el tamaño del arreglo.\n\nMientras mayor es lambda, más probable es tener colisiones y secuencias largas de búsqueda.\n\n9.1 Rehashing\nCuando el factor de carga supera un umbral razonable, se puede hacer rehashing:\n\nCrear una nueva tabla, normalmente más grande.\nDefinir una nueva función hash, ajustada al nuevo tamaño.\nReinsertar todos los elementos en la nueva tabla.\n\nEl costo del rehashing es O(n) porque hay que procesar los n elementos almacenados.\n\n\n\n\n\n\nImportante\n\n\n\nEl rehashing es costoso cuando ocurre, pero permite recuperar búsquedas e inserciones esperadas O(1) al reducir colisiones.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -230,9 +254,21 @@
   {
     "objectID": "contenidos/hash.html#ejemplo-guiado",
     "href": "contenidos/hash.html#ejemplo-guiado",
-    "title": "Hash",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "title": "Tablas de hash y diccionarios",
+    "section": "10 Ejemplo guiado",
+    "text": "10 Ejemplo guiado\nSupongamos:\nm = 7\nh(k) = k mod 7\nllaves = 15, 37, 51, 29, 58\nPrimero calculamos los índices:\n\n\n\nLlave\nh(k) = k mod 7\nObservación\n\n\n\n\n15\n1\nSe inserta directo\n\n\n37\n2\nSe inserta directo\n\n\n51\n2\nColisiona con 37\n\n\n29\n1\nColisiona con 15\n\n\n58\n2\nColisiona con 37 y 51\n\n\n\n\n10.1 Resultado con encadenamiento\nSi cada nueva llave se inserta al inicio de la lista:\n\n\n\nÍndice\nEstado final\n\n\n\n\n0\n∅\n\n\n1\n29 → 15\n\n\n2\n58 → 51 → 37\n\n\n3\n∅\n\n\n4\n∅\n\n\n5\n∅\n\n\n6\n∅\n\n\n\nPara buscar 58, se calcula h(58) = 2 y se revisa la lista del índice 2.\n\n\n10.2 Resultado con sondeo lineal\n\n\n\nPaso\nLlave\nh(k)\nAcción\n\n\n\n\n1\n15\n1\nSe guarda en índice 1\n\n\n2\n37\n2\nSe guarda en índice 2\n\n\n3\n51\n2\nÍndice 2 ocupado; se guarda en índice 3\n\n\n4\n29\n1\nÍndices 1, 2 y 3 ocupados; se guarda en índice 4\n\n\n5\n58\n2\nÍndices 2, 3 y 4 ocupados; se guarda en índice 5\n\n\n\nEstado final:\n\n\n\nÍndice\nValor\n\n\n\n\n0\n∅\n\n\n1\n15\n\n\n2\n37\n\n\n3\n51\n\n\n4\n29\n\n\n5\n58\n\n\n6\n∅\n\n\n\nPara buscar 29, se calcula h(29) = 1. La búsqueda debe revisar:\n1 -&gt; 2 -&gt; 3 -&gt; 4\nhasta encontrar la llave. Si una llave no está en la tabla, la búsqueda continúa hasta encontrar NIL o hasta completar m pasos.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Hash"
+    ]
+  },
+  {
+    "objectID": "contenidos/hash.html#errores-típicos",
+    "href": "contenidos/hash.html#errores-típicos",
+    "title": "Tablas de hash y diccionarios",
+    "section": "11 Errores típicos",
+    "text": "11 Errores típicos\n\n\n\n\n\n\nAdvertenciaError 1: intentar ordenar una tabla de hash\n\n\n\nUna tabla de hash no mantiene orden. La posición física de una llave depende de h(k) y de las colisiones, no de la relación menor/mayor entre llaves.\n\n\n\n\n\n\n\n\nAdvertenciaError 2: responder sucesor, predecesor, mínimo o máximo con hash\n\n\n\nLa tabla de hash no entrega esas operaciones de forma eficiente. Para orden, usa una estructura ordenada; para mínimo o máximo frecuente, considera un heap.\n\n\n\n\n\n\n\n\nAdvertenciaError 3: confundir hash con heap\n\n\n\nHash sirve para acceso por llave. Heap sirve para obtener mínimo o máximo según prioridad. Sus objetivos son distintos.\n\n\n\n\n\n\n\n\nAdvertenciaError 4: guardar solo el valor y no la llave\n\n\n\nSi hay colisiones, dos llaves distintas pueden llegar al mismo lugar. Por eso cada elemento debe conservar su llave.\n\n\n\n\n\n\n\n\nAdvertenciaError 5: eliminar mal en direccionamiento abierto\n\n\n\nSi se reemplaza una celda por NIL, se puede cortar la secuencia de búsqueda y hacer que otros elementos parezcan ausentes.\n\n\n\n\n\n\n\n\nAdvertenciaError 6: asumir que O(1) está garantizado siempre\n\n\n\nLa eficiencia esperada depende de una buena distribución, pocas colisiones y un factor de carga controlado.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -242,9 +278,33 @@
   {
     "objectID": "contenidos/hash.html#problema-representativo-de-interrogación",
     "href": "contenidos/hash.html#problema-representativo-de-interrogación",
-    "title": "Hash",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "title": "Tablas de hash y diccionarios",
+    "section": "12 Problema representativo de interrogación",
+    "text": "12 Problema representativo de interrogación\n\n\nVer enunciado\n\nUn sistema municipal recibe solicitudes para distintos tipos de trámite. Cada solicitud llega como:\n(tipo_tramite, nombre_persona)\nEjemplos de tipo_tramite son \"licencia\", \"certificado\" y \"permiso\".\nCuando un módulo queda disponible, informa el tipo de trámite que puede atender. El sistema debe llamar a la persona que llegó primero para ese tipo de trámite y eliminarla de la espera.\nPropón una estructura de datos eficiente y justifica:\n\nqué estructura principal usarías;\nqué se guarda como llave;\nqué se guarda como valor;\ncómo aseguras que se atienda primero a quien llegó antes para cada tipo;\nla complejidad esperada de insertar una solicitud;\nla complejidad esperada de atender una solicitud;\npor qué no corresponde usar solo un heap.\n\n\n\n\nVer solución\n\nConviene usar una tabla de hash donde:\n\nla llave es tipo_tramite;\nel valor asociado a cada llave es una cola FIFO con las personas esperando ese trámite.\n\nLa estructura queda:\nHash[tipo_tramite] -&gt; Cola FIFO de personas\nPara agregar una solicitud:\nAgregarSolicitud(H, tipo_tramite, nombre):\n    if H no contiene tipo_tramite:\n        H[tipo_tramite] &lt;- cola vacia\n\n    Enqueue(H[tipo_tramite], nombre)\nPara atender:\nAtenderSolicitud(H, tipo_tramite):\n    if H no contiene tipo_tramite:\n        return \"no hay solicitudes\"\n\n    if H[tipo_tramite] esta vacia:\n        return \"no hay solicitudes\"\n\n    return Dequeue(H[tipo_tramite])\nLa tabla de hash permite acceder al grupo correcto en tiempo esperado O(1). La cola FIFO asegura que, dentro de cada tipo de trámite, se atienda a quien llegó primero.\nComplejidades esperadas:\n\ninsertar solicitud: O(1) por acceso al hash más O(1) por Enqueue;\natender solicitud: O(1) por acceso al hash más O(1) por Dequeue.\n\nNo corresponde usar solo un heap porque el criterio no es obtener el mínimo o máximo global. La consulta siempre viene dada por un tipo específico de trámite y exige orden de llegada dentro de ese tipo. Eso se modela naturalmente con hash + cola FIFO.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Hash"
+    ]
+  },
+  {
+    "objectID": "contenidos/hash.html#preguntas-de-repaso",
+    "href": "contenidos/hash.html#preguntas-de-repaso",
+    "title": "Tablas de hash y diccionarios",
+    "section": "13 Preguntas de repaso",
+    "text": "13 Preguntas de repaso\n\n¿Qué operaciones define un diccionario?\n¿Qué representa la función h(k)?\n¿Por qué una tabla de hash no mantiene orden?\n¿Qué es una colisión?\n¿Por qué se debe guardar la llave junto con el valor?\n¿Cuál es la diferencia entre encadenamiento y direccionamiento abierto?\n¿Cómo funciona el sondeo lineal?\n¿Por qué eliminar puede ser delicado en direccionamiento abierto?\n¿Qué mide el factor de carga lambda = n / m?\n¿Cuándo conviene hacer rehashing?\n¿Por qué hash no reemplaza a heap?\n¿Cuándo conviene combinar hash con cola FIFO?",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Hash"
+    ]
+  },
+  {
+    "objectID": "contenidos/hash.html#ejercicios-breves",
+    "href": "contenidos/hash.html#ejercicios-breves",
+    "title": "Tablas de hash y diccionarios",
+    "section": "14 Ejercicios breves",
+    "text": "14 Ejercicios breves\n\n14.1 Ejercicio 1\nSea m = 5, h(k) = k mod 5 y las llaves:\n12, 7, 18, 3, 22\n\nInserta las llaves usando encadenamiento.\nInserta las llaves usando sondeo lineal.\nIndica en qué pasos ocurren colisiones.\n\n\n\nVer solución sugerida\n\nValores de hash:\n12 mod 5 = 2\n7 mod 5 = 2\n18 mod 5 = 3\n3 mod 5 = 3\n22 mod 5 = 2\nCon encadenamiento, insertando al inicio:\n\n\n\nÍndice\nLista\n\n\n\n\n0\n∅\n\n\n1\n∅\n\n\n2\n22 → 7 → 12\n\n\n3\n3 → 18\n\n\n4\n∅\n\n\n\nCon sondeo lineal:\n\n\n\nÍndice\nValor\n\n\n\n\n0\n3\n\n\n1\n22\n\n\n2\n12\n\n\n3\n7\n\n\n4\n18\n\n\n\nLas colisiones ocurren al insertar 7, 3 y 22.\n\n\n\n14.2 Ejercicio 2\nIndica si cada afirmación es verdadera o falsa:\n\nUna tabla de hash permite recorrer las llaves en orden creciente.\nDos llaves distintas pueden tener el mismo valor de hash.\nEn sondeo lineal, una llave siempre queda guardada en A[h(k)].\nEl factor de carga mide qué tan llena está la tabla.\nSi se necesita obtener siempre el mínimo, un heap suele ser más apropiado que una tabla de hash.\n\n\n\nVer solución sugerida\n\n\nFalso. La tabla de hash no mantiene orden.\nVerdadero. Eso es una colisión.\nFalso. Puede quedar en otra posición por colisión.\nVerdadero.\nVerdadero.\n\n\n\n\n14.3 Ejercicio 3\nTienes que almacenar el último puntaje obtenido por cada estudiante, usando su identificador como llave.\n\n¿Qué representa la llave?\n¿Qué representa el valor?\nSi llega un nuevo puntaje para un estudiante ya existente, ¿qué operación del diccionario corresponde?\n\n\n\nVer solución sugerida\n\n\nLa llave es el identificador del estudiante.\nEl valor es el puntaje almacenado.\nCorresponde actualizar el valor asociado a esa llave.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -254,9 +314,9 @@
   {
     "objectID": "contenidos/hash.html#checklist-de-estudio",
     "href": "contenidos/hash.html#checklist-de-estudio",
-    "title": "Hash",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "title": "Tablas de hash y diccionarios",
+    "section": "15 Checklist de estudio",
+    "text": "15 Checklist de estudio\nAntes de cerrar esta página, verifica que puedes responder:\n\n¿Qué es un diccionario llave-valor?\n¿Cuáles son las operaciones principales de un diccionario?\n¿Qué hace una función de hash?\n¿Cómo se calcula h(k) = k mod m?\n¿Qué significa que una tabla sea un arreglo A indexado por h(k)?\n¿Qué es una colisión?\n¿Cómo funciona encadenamiento?\n¿Cómo funciona direccionamiento abierto?\n¿Cómo funciona sondeo lineal?\n¿Qué mide lambda = n / m?\n¿Qué pasos tiene el rehashing?\n¿Por qué rehashing cuesta O(n)?\n¿Por qué una tabla de hash no se ordena?\n¿Por qué hash no sirve para sucesor, predecesor, mínimo o máximo?\n¿Cuál es la diferencia entre hash y heap?\n¿Cuándo conviene combinar hash con cola FIFO?",
     "crumbs": [
       "Inicio",
       "Contenidos",

@@ -71,7 +71,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -252,16 +284,40 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#cómo-leer-un-enunciado" id="toc-cómo-leer-un-enunciado" class="nav-link" data-scroll-target="#cómo-leer-un-enunciado"><span class="header-section-number">4</span> Cómo leer un enunciado</a></li>
+  <li><a href="#tabla-de-decisión-rápida" id="toc-tabla-de-decisión-rápida" class="nav-link" data-scroll-target="#tabla-de-decisión-rápida"><span class="header-section-number">5</span> Tabla de decisión rápida</a></li>
+  <li><a href="#comparación-por-operación-dominante" id="toc-comparación-por-operación-dominante" class="nav-link" data-scroll-target="#comparación-por-operación-dominante"><span class="header-section-number">6</span> Comparación por operación dominante</a></li>
+  <li><a href="#backtracking-greedy-y-programación-dinámica" id="toc-backtracking-greedy-y-programación-dinámica" class="nav-link" data-scroll-target="#backtracking-greedy-y-programación-dinámica"><span class="header-section-number">7</span> Backtracking, greedy y programación dinámica</a></li>
+  <li><a href="#grafos-elegir-el-algoritmo-correcto" id="toc-grafos-elegir-el-algoritmo-correcto" class="nav-link" data-scroll-target="#grafos-elegir-el-algoritmo-correcto"><span class="header-section-number">8</span> Grafos: elegir el algoritmo correcto</a></li>
+  <li><a href="#pseudocódigo-de-diagnóstico" id="toc-pseudocódigo-de-diagnóstico" class="nav-link" data-scroll-target="#pseudocódigo-de-diagnóstico"><span class="header-section-number">9</span> Pseudocódigo de diagnóstico</a>
+  <ul class="collapse">
+  <li><a href="#diagnosticar-una-técnica" id="toc-diagnosticar-una-técnica" class="nav-link" data-scroll-target="#diagnosticar-una-técnica"><span class="header-section-number">9.1</span> Diagnosticar una técnica</a></li>
+  <li><a href="#plantilla-de-respuesta-de-interrogación" id="toc-plantilla-de-respuesta-de-interrogación" class="nav-link" data-scroll-target="#plantilla-de-respuesta-de-interrogación"><span class="header-section-number">9.2</span> Plantilla de respuesta de interrogación</a></li>
+  <li><a href="#elegir-entre-búsqueda-y-optimización" id="toc-elegir-entre-búsqueda-y-optimización" class="nav-link" data-scroll-target="#elegir-entre-búsqueda-y-optimización"><span class="header-section-number">9.3</span> Elegir entre búsqueda y optimización</a></li>
+  </ul></li>
+  <li><a href="#complejidad-cómo-justificar-por-fases" id="toc-complejidad-cómo-justificar-por-fases" class="nav-link" data-scroll-target="#complejidad-cómo-justificar-por-fases"><span class="header-section-number">10</span> Complejidad: cómo justificar por fases</a></li>
+  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">11</span> Ejemplo guiado</a>
+  <ul class="collapse">
+  <li><a href="#mini-enunciado-1-hash-cola" id="toc-mini-enunciado-1-hash-cola" class="nav-link" data-scroll-target="#mini-enunciado-1-hash-cola"><span class="header-section-number">11.1</span> Mini-enunciado 1: hash + cola</a></li>
+  <li><a href="#mini-enunciado-2-backtracking-csp" id="toc-mini-enunciado-2-backtracking-csp" class="nav-link" data-scroll-target="#mini-enunciado-2-backtracking-csp"><span class="header-section-number">11.2</span> Mini-enunciado 2: backtracking / CSP</a></li>
+  <li><a href="#mini-enunciado-3-kruskal-o-prim" id="toc-mini-enunciado-3-kruskal-o-prim" class="nav-link" data-scroll-target="#mini-enunciado-3-kruskal-o-prim"><span class="header-section-number">11.3</span> Mini-enunciado 3: Kruskal o Prim</a></li>
+  <li><a href="#mini-enunciado-4-programación-dinámica" id="toc-mini-enunciado-4-programación-dinámica" class="nav-link" data-scroll-target="#mini-enunciado-4-programación-dinámica"><span class="header-section-number">11.4</span> Mini-enunciado 4: programación dinámica</a></li>
+  </ul></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">12</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">15.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">15.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">15.3</span> Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4"><span class="header-section-number">15.4</span> Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5" id="toc-ejercicio-5" class="nav-link" data-scroll-target="#ejercicio-5"><span class="header-section-number">15.5</span> Ejercicio 5</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -287,56 +343,1255 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Aprender a leer un enunciado de Estructuras de Datos y Algoritmos para elegir una estructura o técnica adecuada. Al terminar esta página deberías poder:</p>
+<ul>
+<li>identificar la operación dominante de un problema;</li>
+<li>distinguir cuándo usar hash, heap, cola, lista, grafo o Union-Find;</li>
+<li>separar problemas de búsqueda, optimización, restricciones y grafos;</li>
+<li>comparar backtracking, greedy y programación dinámica sin confundir sus roles;</li>
+<li>elegir algoritmos de grafos según la pregunta: recorrido, conectividad, ciclos, DAG, CFC, puentes, MST o caminos mínimos;</li>
+<li>justificar complejidades por fases;</li>
+<li>explicar por qué una alternativa típica no aplica.</li>
+</ul>
+<p>La meta no es memorizar nombres. La meta es construir una respuesta defendible: qué estructura guarda qué información, qué operación acelera, qué algoritmo se aplica y por qué la complejidad queda razonablemente acotada.</p>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>En una interrogación, un mismo enunciado puede mezclar varias necesidades. Puede pedir acceso rápido por identificador, orden de llegada, conectividad, optimización o restricciones. La técnica correcta aparece cuando separas esas necesidades.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La elección de una estructura depende de la operación dominante. Si el problema consulta por llave, piensa en hash; si extrae por prioridad, piensa en heap; si procesa por orden de llegada, piensa en cola FIFO; si pregunta conectividad incremental, piensa en Union-Find.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Leer enunciado"] --&gt; B["Detectar operación dominante"]
+    B --&gt; C["Elegir estructura o técnica"]
+    C --&gt; D["Justificar complejidad"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>La pregunta guía es:</p>
+<blockquote class="blockquote">
+<p>¿Qué operación se repite muchas veces y qué estructura o algoritmo la resuelve naturalmente?</p>
+</blockquote>
+<p>Por ejemplo, una tabla de hash sirve para acceso por llave, no para ordenar. Un heap sirve para obtener el mínimo o máximo por prioridad, no para buscar cualquier identificador de forma eficiente. Union-Find sirve para mantener componentes y responder conectividad incremental, no para reconstruir caminos.</p>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Significado para decidir técnica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Llave</td>
+<td>Identificador usado para acceder a un dato. Sugiere hash.</td>
+</tr>
+<tr class="even">
+<td>Prioridad</td>
+<td>Criterio para extraer mínimo o máximo. Sugiere heap.</td>
+</tr>
+<tr class="odd">
+<td>FIFO</td>
+<td>Orden “primero en entrar, primero en salir”. Sugiere cola.</td>
+</tr>
+<tr class="even">
+<td>Restricción</td>
+<td>Regla que una solución no puede violar. Sugiere CSP/backtracking.</td>
+</tr>
+<tr class="odd">
+<td>Dominio</td>
+<td>Valores posibles para una variable en un CSP.</td>
+</tr>
+<tr class="even">
+<td>Estado parcial</td>
+<td>Construcción incompleta que puede extenderse o descartarse.</td>
+</tr>
+<tr class="odd">
+<td>Elección local</td>
+<td>Decisión tomada con información actual. Sugiere greedy si se puede justificar.</td>
+</tr>
+<tr class="even">
+<td>Subproblema</td>
+<td>Versión menor del problema original. Sugiere DP si se repite.</td>
+</tr>
+<tr class="odd">
+<td>Recurrencia</td>
+<td>Relación que calcula un estado desde estados más pequeños.</td>
+</tr>
+<tr class="even">
+<td>Grafo</td>
+<td>Modelo de vértices y aristas para relaciones, rutas o dependencias.</td>
+</tr>
+<tr class="odd">
+<td>DAG</td>
+<td>Grafo dirigido acíclico. Es requisito para orden topológico.</td>
+</tr>
+<tr class="even">
+<td>CFC</td>
+<td>Componente fuertemente conectada en un grafo dirigido.</td>
+</tr>
+<tr class="odd">
+<td>MST</td>
+<td>Árbol de cobertura mínimo: conecta todos los vértices con costo total mínimo.</td>
+</tr>
+<tr class="even">
+<td>Camino mínimo</td>
+<td>Ruta de menor distancia o costo desde un origen. No es lo mismo que MST.</td>
+</tr>
+<tr class="odd">
+<td>Componente</td>
+<td>Grupo de vértices conectados. Puede requerir BFS, DFS o Union-Find.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cómo-leer-un-enunciado" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cómo-leer-un-enunciado"><span class="header-section-number">4</span> Cómo leer un enunciado</h2>
+<p>Antes de elegir una técnica, lee el problema en seis capas. Este orden evita saltar directo a un algoritmo por una palabra suelta.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Capa de lectura</th>
+<th>Pregunta que debes responder</th>
+<th>Señal típica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Objetivo</td>
+<td>¿Qué pide producir o decidir?</td>
+<td>“encontrar”, “minimizar”, “verificar”, “clasificar”</td>
+</tr>
+<tr class="even">
+<td>Operaciones dominantes</td>
+<td>¿Qué se hace muchas veces?</td>
+<td>buscar, insertar, extraer, unir, recorrer, asignar</td>
+</tr>
+<tr class="odd">
+<td>Restricciones</td>
+<td>¿Qué condiciones no se pueden romper?</td>
+<td>celdas prohibidas, no traslape, no ciclos, capacidad</td>
+</tr>
+<tr class="even">
+<td>Estructura de entrada</td>
+<td>¿Los datos vienen como llaves, lista, aristas, matriz o eventos?</td>
+<td><code>(id, dato)</code>, aristas con costo, tareas y requisitos</td>
+</tr>
+<tr class="odd">
+<td>Salida esperada</td>
+<td>¿Pide valor, camino, conjunto, orden o todas las soluciones?</td>
+<td>distancia, padres, MST, asignación, tabla DP</td>
+</tr>
+<tr class="even">
+<td>Complejidad pedida</td>
+<td>¿Hay límite de eficiencia o tamaño grande?</td>
+<td><code>n</code> grande, muchas consultas, grafo disperso</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Señales del enunciado
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Subraya verbos y sustantivos operacionales: consultar por identificador, atender al primero, extraer el menor, asignar bajo restricciones, conectar sedes, ordenar dependencias, calcular distancia o reconstruir camino.</p>
+</div>
+</div>
+<p>Un buen diagnóstico no dice solo “uso grafo” o “uso DP”. Debe decir qué representan los vértices, aristas, estados, llaves, colas o componentes.</p>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="tabla-de-decisión-rápida" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="tabla-de-decisión-rápida"><span class="header-section-number">5</span> Tabla de decisión rápida</h2>
+<p>Esta tabla ayuda a elegir un punto de partida. Después de usarla, igual debes justificar la elección con el objetivo y las operaciones del problema.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Señal del enunciado</th>
+<th>Técnica o estructura probable</th>
+<th>Por qué</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“consultar por identificador”, “RUT”, “código”, “id”</td>
+<td>Hash</td>
+<td>Acceso esperado eficiente por llave.</td>
+</tr>
+<tr class="even">
+<td>“mantener el menor/mayor disponible”, “prioridad”</td>
+<td>Heap</td>
+<td>La raíz entrega el mínimo o máximo.</td>
+</tr>
+<tr class="odd">
+<td>“primero que llegó”, “orden de llegada”</td>
+<td>Cola FIFO</td>
+<td>Conserva antigüedad.</td>
+</tr>
+<tr class="even">
+<td>“último estado”, “deshacer”</td>
+<td>Pila</td>
+<td>Procesa lo más reciente primero.</td>
+</tr>
+<tr class="odd">
+<td>“insertar/eliminar con punteros conocidos”</td>
+<td>Lista ligada</td>
+<td>Cambiar enlaces puede ser eficiente.</td>
+</tr>
+<tr class="even">
+<td>“variables, dominios y restricciones”</td>
+<td>Backtracking / CSP</td>
+<td>Se construyen asignaciones factibles.</td>
+</tr>
+<tr class="odd">
+<td>“todas las soluciones”</td>
+<td>Backtracking</td>
+<td>Debe explorar el espacio de soluciones.</td>
+</tr>
+<tr class="even">
+<td>“decisión local definitiva”</td>
+<td>Greedy</td>
+<td>Requiere demostrar elección segura.</td>
+</tr>
+<tr class="odd">
+<td>“subproblemas repetidos”, <code>p(i, S)</code></td>
+<td>Programación dinámica</td>
+<td>Se define estado, recurrencia y memoria.</td>
+</tr>
+<tr class="even">
+<td>“relaciones, rutas, dependencias”</td>
+<td>Grafo</td>
+<td>Los objetos son vértices y las relaciones aristas.</td>
+</tr>
+<tr class="odd">
+<td>“menor número de aristas”</td>
+<td>BFS</td>
+<td>Explora por niveles en grafos no ponderados.</td>
+</tr>
+<tr class="even">
+<td>“ciclo dirigido”, “componentes”, “puentes”</td>
+<td>DFS o variante</td>
+<td>DFS revela estructura profunda.</td>
+</tr>
+<tr class="odd">
+<td>“ordenar tareas con requisitos”</td>
+<td>TopSort</td>
+<td>Solo si el grafo es DAG.</td>
+</tr>
+<tr class="even">
+<td>“conectar todos con costo mínimo”</td>
+<td>Kruskal o Prim</td>
+<td>Es un problema de MST.</td>
+</tr>
+<tr class="odd">
+<td>“camino mínimo con pesos no negativos”</td>
+<td>Dijkstra</td>
+<td>Optimiza distancias desde un origen.</td>
+</tr>
+<tr class="even">
+<td>“saber si dos elementos ya están conectados al agregar enlaces”</td>
+<td>Union-Find</td>
+<td>Mantiene componentes disjuntas.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="comparación-por-operación-dominante" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="comparación-por-operación-dominante"><span class="header-section-number">6</span> Comparación por operación dominante</h2>
+<p>Cada estructura tiene una responsabilidad natural. Cuando un problema necesita más de una responsabilidad, se combinan estructuras.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estructura</th>
+<th>Operación dominante</th>
+<th>Sirve para</th>
+<th>No sirve para</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hash</td>
+<td>Buscar, insertar o actualizar por llave</td>
+<td>Diccionarios, conteos, agrupación por identificador</td>
+<td>Mantener orden, sucesor, predecesor, mínimo global</td>
+</tr>
+<tr class="even">
+<td>Heap</td>
+<td>Extraer mínimo o máximo por prioridad</td>
+<td>Prioridades, top-k, eventos por urgencia</td>
+<td>Buscar cualquier llave en forma eficiente</td>
+</tr>
+<tr class="odd">
+<td>Cola FIFO</td>
+<td>Atender por orden de llegada</td>
+<td>Filas, BFS, procesamiento por antigüedad</td>
+<td>Atender por prioridad</td>
+</tr>
+<tr class="even">
+<td>Lista</td>
+<td>Recorrer o enlazar elementos</td>
+<td>Secuencias, buckets de hash, inserción con referencia</td>
+<td>Acceso aleatorio eficiente por índice</td>
+</tr>
+<tr class="odd">
+<td>Grafo</td>
+<td>Modelar relaciones</td>
+<td>Caminos, dependencias, ciclos, componentes, MST</td>
+<td>Acceso directo por llave sin apoyo adicional</td>
+</tr>
+<tr class="even">
+<td>Union-Find</td>
+<td>Unir componentes y consultar conectividad</td>
+<td>Kruskal, conectividad incremental</td>
+<td>Reconstruir caminos o calcular distancias</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Mezcla de estructuras
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un enunciado puede requerir una estructura para acceso, otra para orden y otra para conectividad. Decir “uso hash + heap + grafo” solo es válido si explicas qué guarda cada una y qué operación resuelve.</p>
+</div>
+</div>
+<p>Ejemplos frecuentes:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Necesidad mixta</th>
+<th>Combinación razonable</th>
+<th>Rol de cada parte</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Atender por tipo y antigüedad</td>
+<td>Hash + cola FIFO</td>
+<td>Hash encuentra el tipo; cola conserva llegada.</td>
+</tr>
+<tr class="even">
+<td>Ranking con actualizaciones por cliente</td>
+<td>Hash + heap</td>
+<td>Hash acumula por cliente; heap entrega prioridad.</td>
+</tr>
+<tr class="odd">
+<td>Grafo con nombres externos</td>
+<td>Hash + lista de adyacencia</td>
+<td>Hash traduce nombres; grafo guarda vecinos.</td>
+</tr>
+<tr class="even">
+<td>Kruskal</td>
+<td>Ordenar aristas + Union-Find</td>
+<td>Orden da greedy; Union-Find evita ciclos.</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="backtracking-greedy-y-programación-dinámica" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="backtracking-greedy-y-programación-dinámica"><span class="header-section-number">7</span> Backtracking, greedy y programación dinámica</h2>
+<p>Estas tres técnicas suelen aparecer en problemas de búsqueda u optimización, pero responden preguntas distintas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Técnica</th>
+<th>Qué hace</th>
+<th>Cuándo usar</th>
+<th>Qué debe aparecer en la respuesta</th>
+<th>Riesgo típico</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Backtracking</td>
+<td>Explora decisiones y retrocede</td>
+<td>Variables, dominios y restricciones</td>
+<td>CSP, caso base, validación, deshacer, podas</td>
+<td>Olvidar deshacer o no modelar restricciones</td>
+</tr>
+<tr class="even">
+<td>Greedy</td>
+<td>Toma decisiones locales definitivas</td>
+<td>Existe una elección local segura</td>
+<td>Candidatos, <code>Select</code>, <code>Feasible</code>, objetivo, prueba o contraejemplo</td>
+<td>Usarlo porque “suena natural” sin justificar</td>
+</tr>
+<tr class="odd">
+<td>Programación dinámica</td>
+<td>Resuelve subproblemas y guarda resultados</td>
+<td>Hay recurrencia y subproblemas solapados</td>
+<td>Estado, caso base, recurrencia, orden, reconstrucción si aplica</td>
+<td>Dibujar una tabla sin definir qué significa</td>
+</tr>
+</tbody>
+</table>
+<p>Backtracking parte modelando:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte del CSP</th>
+<th>Pregunta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variables</td>
+<td>¿Qué cosas debo asignar?</td>
+</tr>
+<tr class="even">
+<td>Dominios</td>
+<td>¿Qué valores puede tomar cada variable?</td>
+</tr>
+<tr class="odd">
+<td>Restricciones</td>
+<td>¿Qué asignaciones son inválidas?</td>
+</tr>
+<tr class="even">
+<td>Objetivo</td>
+<td>¿Busco existencia, todas las soluciones u optimización?</td>
+</tr>
+</tbody>
+</table>
+<p>Greedy exige explicar por qué una decisión local puede quedar fija. Si no puedes justificar optimalidad, debes buscar un contraejemplo o cambiar de técnica.</p>
+<p>Programación dinámica exige una definición precisa de estado. Una respuesta mínima debe incluir subproblema, recurrencia, caso base, orden de llenado y reconstrucción si el enunciado pide la solución concreta.</p>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="grafos-elegir-el-algoritmo-correcto" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="grafos-elegir-el-algoritmo-correcto"><span class="header-section-number">8</span> Grafos: elegir el algoritmo correcto</h2>
+<p>Modelar como grafo es solo el primer paso. Después debes distinguir qué pregunta se hace sobre el grafo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Pregunta del enunciado</th>
+<th>Algoritmo recomendado</th>
+<th>Condición clave</th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recorrer o marcar alcanzables</td>
+<td>BFS o DFS</td>
+<td>Grafo representado correctamente</td>
+<td>Visitados y, si se guarda, árbol de recorrido</td>
+</tr>
+<tr class="even">
+<td>Menor número de aristas desde un origen</td>
+<td>BFS</td>
+<td>Grafo no ponderado</td>
+<td><code>dist</code> y <code>parent</code></td>
+</tr>
+<tr class="odd">
+<td>Profundizar, detectar ciclo dirigido</td>
+<td>DFS con colores</td>
+<td>Arista hacia gris indica ciclo</td>
+<td>Verdadero/falso o ciclo detectado</td>
+</tr>
+<tr class="even">
+<td>Ordenar tareas con dependencias</td>
+<td>TopSort</td>
+<td>Grafo dirigido acíclico</td>
+<td>Orden válido si es DAG</td>
+</tr>
+<tr class="odd">
+<td>Componentes fuertemente conectadas</td>
+<td>Kosaraju</td>
+<td>Grafo dirigido</td>
+<td>Grupos CFC</td>
+</tr>
+<tr class="even">
+<td>Aristas cuya eliminación desconecta</td>
+<td>Puentes con DFS</td>
+<td>Grafo no dirigido</td>
+<td>Lista de puentes</td>
+</tr>
+<tr class="odd">
+<td>Conectar todos con costo total mínimo</td>
+<td>Kruskal</td>
+<td>No dirigido ponderado</td>
+<td>MST o bosque mínimo</td>
+</tr>
+<tr class="even">
+<td>Conectar todos desde un vértice creciendo por costo</td>
+<td>Prim</td>
+<td>No dirigido ponderado</td>
+<td>MST</td>
+</tr>
+<tr class="odd">
+<td>Distancia mínima con pesos no negativos</td>
+<td>Dijkstra</td>
+<td>Pesos no negativos</td>
+<td>Distancias desde un origen</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>MST y caminos mínimos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>MST no es lo mismo que caminos mínimos. Kruskal y Prim minimizan el costo total de conectar todos los vértices; BFS y Dijkstra minimizan distancia desde un origen hacia otros vértices.</p>
+</div>
+</div>
+<p>Dos reglas que evitan confusiones:</p>
+<ul>
+<li>BFS sirve para caminos mínimos no ponderados, porque todos los bordes cuentan lo mismo.</li>
+<li>Dijkstra sirve para caminos mínimos con pesos no negativos, porque compara costos acumulados.</li>
+</ul>
+<p>Union-Find aparece en Kruskal para evitar ciclos al agregar aristas. No guarda padres de caminos, no entrega rutas y no reemplaza BFS, DFS ni Dijkstra.</p>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+<section id="pseudocódigo-de-diagnóstico" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="pseudocódigo-de-diagnóstico"><span class="header-section-number">9</span> Pseudocódigo de diagnóstico</h2>
+<section id="diagnosticar-una-técnica" class="level3" data-number="9.1">
+<h3 data-number="9.1" class="anchored" data-anchor-id="diagnosticar-una-técnica"><span class="header-section-number">9.1</span> Diagnosticar una técnica</h3>
+<p><strong>Input:</strong> enunciado de un problema.<br> <strong>Output:</strong> técnica candidata y razón principal.</p>
+<pre class="text"><code>DiagnosticarTecnica(enunciado):
+    objetivo &lt;- identificar que pide producir o decidir
+    operaciones &lt;- listar verbos que se repiten
+    entrada &lt;- identificar llaves, eventos, aristas, restricciones o estados
+
+    if operaciones incluyen consulta por identificador:
+        return "Hash", "acceso por llave"
+
+    if operaciones incluyen extraer minimo o maximo repetidamente:
+        return "Heap", "acceso por prioridad"
+
+    if operaciones incluyen atender al primero que llego:
+        return "Cola FIFO", "orden de llegada"
+
+    if entrada contiene variables, dominios y restricciones:
+        if objetivo pide todas las soluciones o existencia:
+            return "Backtracking", "exploracion con validacion y deshacer"
+        if aparecen estados repetidos:
+            return "Programacion dinamica", "recurrencia con memoria"
+
+    if objetivo pide optimizar con decisiones locales definitivas:
+        if existe argumento de eleccion segura:
+            return "Greedy", "decision local justificable"
+        else:
+            return "DP o backtracking", "greedy requiere prueba o contraejemplo"
+
+    if entrada contiene vertices y relaciones:
+        if objetivo pide distancia no ponderada:
+            return "BFS", "niveles desde un origen"
+        if objetivo pide ciclos, CFC, puentes u orden:
+            return "DFS o variante", "estructura profunda del grafo"
+        if objetivo pide conectar todos con costo minimo:
+            return "Kruskal o Prim", "MST"
+        if objetivo pide distancias ponderadas no negativas:
+            return "Dijkstra", "caminos minimos"
+
+    if operaciones incluyen unir componentes y consultar conectividad:
+        return "Union-Find", "componentes disjuntas"
+
+    return "Analizar combinacion", "puede requerir mas de una estructura"</code></pre>
+</section>
+<section id="plantilla-de-respuesta-de-interrogación" class="level3" data-number="9.2">
+<h3 data-number="9.2" class="anchored" data-anchor-id="plantilla-de-respuesta-de-interrogación"><span class="header-section-number">9.2</span> Plantilla de respuesta de interrogación</h3>
+<p><strong>Input:</strong> enunciado de desarrollo.<br> <strong>Output:</strong> respuesta ordenada con técnica, algoritmo, justificación y complejidad.</p>
+<pre class="text"><code>ResponderProblema(enunciado):
+    escribir objetivo en una frase
+    listar operaciones dominantes
+    identificar estructura de entrada y salida pedida
+    elegir estructura o tecnica principal
+
+    si hay estructuras combinadas:
+        explicar que guarda cada una
+        explicar que operacion acelera cada una
+
+    escribir algoritmo o pseudocodigo
+    justificar por que responde el objetivo
+    calcular complejidad por fases
+    mencionar una alternativa incorrecta comun y por que falla</code></pre>
+</section>
+<section id="elegir-entre-búsqueda-y-optimización" class="level3" data-number="9.3">
+<h3 data-number="9.3" class="anchored" data-anchor-id="elegir-entre-búsqueda-y-optimización"><span class="header-section-number">9.3</span> Elegir entre búsqueda y optimización</h3>
+<p><strong>Input:</strong> problema de búsqueda, factibilidad u optimización.<br> <strong>Output:</strong> técnica más razonable entre backtracking, greedy y programación dinámica.</p>
+<pre class="text"><code>ElegirEntreBusquedaOptimizacion(problema):
+    if hay variables, dominios y restricciones:
+        if se piden todas las soluciones:
+            return "Backtracking de enumeracion"
+        if se pide existencia:
+            return "Backtracking de decision con podas"
+        if se pide optimizar una funcion objetivo:
+            return "Backtracking de optimizacion o DP si hay estados repetidos"
+
+    if hay decision local que no se reconsidera:
+        if se puede demostrar eleccion segura:
+            return "Greedy"
+        else:
+            return "Contraejemplo, DP o backtracking"
+
+    if la solucion depende de subproblemas repetidos:
+        definir estado
+        definir caso base
+        definir recurrencia
+        definir orden de llenado
+        return "Programacion dinamica"
+
+    return "Modelar mejor el problema antes de elegir tecnica"</code></pre>
+</section>
+</section>
+<section id="complejidad-cómo-justificar-por-fases" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="complejidad-cómo-justificar-por-fases"><span class="header-section-number">10</span> Complejidad: cómo justificar por fases</h2>
+<p>Una respuesta completa no solo escribe la cota final. Debe decir qué parte del algoritmo produce cada costo.</p>
+<p>Usaremos <code>n</code> para cantidad de datos generales, <code>K</code> para tamaño máximo de dominio en backtracking, <code>S</code> para una suma o capacidad en DP, <code>|V|</code> para vértices y <code>|E|</code> para aristas.</p>
+<p>Backtracking con <code>n</code> variables y dominio máximo <code>K</code> puede explorar:</p>
+<p><span class="math display">\[
+O(K^n)
+\]</span></p>
+<p>Un recorrido de grafo con lista de adyacencia procesa vértices y aristas:</p>
+<p><span class="math display">\[
+O(|V| + |E|)
+\]</span></p>
+<p>Kruskal suele estar dominado por ordenar aristas:</p>
+<p><span class="math display">\[
+O(|E| \log |E|)
+\]</span></p>
+<p>Una DP de subconjuntos con <code>n</code> elementos y suma objetivo <code>S</code> suele tener:</p>
+<p><span class="math display">\[
+O(nS)
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 40%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fase</th>
+<th style="text-align: right;">Costo típico</th>
+<th>Cómo se justifica</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Construir hash</td>
+<td style="text-align: right;"><code>O(n)</code> esperado</td>
+<td>Se procesa cada elemento una vez.</td>
+</tr>
+<tr class="even">
+<td>Buscar en hash</td>
+<td style="text-align: right;"><code>O(1)</code> esperado</td>
+<td>Depende de colisiones y factor de carga.</td>
+</tr>
+<tr class="odd">
+<td>Insertar o extraer de heap</td>
+<td style="text-align: right;"><code>O(log n)</code></td>
+<td>Se repara el árbol de heap.</td>
+</tr>
+<tr class="even">
+<td>Enqueue / Dequeue</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td>Operación en extremos de la cola.</td>
+</tr>
+<tr class="odd">
+<td>Recorrer grafo con lista</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td>Cada vértice y arista se visita constante veces.</td>
+</tr>
+<tr class="even">
+<td>TopSort, Kosaraju, puentes</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td>Son variantes de DFS con estructuras auxiliares.</td>
+</tr>
+<tr class="odd">
+<td>Kruskal</td>
+<td style="text-align: right;"><code>O(|E| log |E|)</code></td>
+<td>Ordenar aristas domina.</td>
+</tr>
+<tr class="even">
+<td>Union-Find optimizado</td>
+<td style="text-align: right;"><code>O(α(n))</code> amortizado</td>
+<td>Casi constante por operación.</td>
+</tr>
+<tr class="odd">
+<td>Backtracking</td>
+<td style="text-align: right;"><code>O(K^n)</code></td>
+<td>Tamaño del árbol de búsqueda.</td>
+</tr>
+<tr class="even">
+<td>DP <code>n x S</code></td>
+<td style="text-align: right;"><code>O(nS)</code></td>
+<td>Estados por costo de transición constante.</td>
+</tr>
+<tr class="odd">
+<td>Greedy con ordenamiento</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+<td>Ordenar domina el barrido lineal.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ejemplo-guiado" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">11</span> Ejemplo guiado</h2>
+<section id="mini-enunciado-1-hash-cola" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="mini-enunciado-1-hash-cola"><span class="header-section-number">11.1</span> Mini-enunciado 1: hash + cola</h3>
+<p>“Un sistema recibe solicitudes como <code>(tipo, persona)</code>. Cuando se atiende un tipo, debe salir la persona que pidió ese tipo hace más tiempo.”</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Señales del enunciado</td>
+<td><code>tipo</code> actúa como llave; “hace más tiempo” exige FIFO dentro del tipo.</td>
+</tr>
+<tr class="even">
+<td>Técnica o estructura elegida</td>
+<td>Hash + cola FIFO.</td>
+</tr>
+<tr class="odd">
+<td>Por qué aplica</td>
+<td>El hash encuentra la cola del tipo en <code>O(1)</code> esperado; la cola entrega al más antiguo.</td>
+</tr>
+<tr class="even">
+<td>Alternativa incorrecta</td>
+<td>Solo hash, porque permite llegar al tipo pero no conserva orden de llegada.</td>
+</tr>
+</tbody>
+</table>
+<p>La estructura puede describirse como:</p>
+<pre class="text"><code>Hash[tipo] -&gt; Cola FIFO de personas</code></pre>
+</section>
+<section id="mini-enunciado-2-backtracking-csp" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="mini-enunciado-2-backtracking-csp"><span class="header-section-number">11.2</span> Mini-enunciado 2: backtracking / CSP</h3>
+<p>“Hay que ubicar <code>k</code> estaciones en una grilla. Algunas celdas están prohibidas y todas las zonas prioritarias deben quedar cubiertas.”</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Señales del enunciado</td>
+<td>Hay variables, dominios y restricciones.</td>
+</tr>
+<tr class="even">
+<td>Técnica o estructura elegida</td>
+<td>Backtracking / CSP.</td>
+</tr>
+<tr class="odd">
+<td>Por qué aplica</td>
+<td>Cada estación es una variable; su dominio son celdas válidas; las restricciones descartan celdas prohibidas, repeticiones y coberturas incompletas.</td>
+</tr>
+<tr class="even">
+<td>Alternativa incorrecta</td>
+<td>Greedy sin prueba, porque elegir la celda que cubre más ahora puede impedir cubrir zonas futuras.</td>
+</tr>
+</tbody>
+</table>
+<p>El modelamiento mínimo sería:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th>Propuesta</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Variables</td>
+<td><code>E_1, E_2, ..., E_k</code></td>
+</tr>
+<tr class="even">
+<td>Dominios</td>
+<td>Celdas disponibles de la grilla</td>
+</tr>
+<tr class="odd">
+<td>Restricciones</td>
+<td>No prohibidas, no repetidas, cubrir zonas prioritarias</td>
+</tr>
+<tr class="even">
+<td>Objetivo</td>
+<td>Existencia, todas las soluciones u optimización según el enunciado</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mini-enunciado-3-kruskal-o-prim" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="mini-enunciado-3-kruskal-o-prim"><span class="header-section-number">11.3</span> Mini-enunciado 3: Kruskal o Prim</h3>
+<p>“Se tienen sedes y conexiones posibles entre sedes, cada conexión con costo. Se quiere conectar todas las sedes minimizando el costo total.”</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Señales del enunciado</td>
+<td>Conectar todos, costo por arista, minimizar costo total de la red.</td>
+</tr>
+<tr class="even">
+<td>Técnica o estructura elegida</td>
+<td>Kruskal o Prim.</td>
+</tr>
+<tr class="odd">
+<td>Por qué aplica</td>
+<td>Es un MST sobre grafo no dirigido ponderado. Kruskal es directo si las aristas vienen como lista.</td>
+</tr>
+<tr class="even">
+<td>Alternativa incorrecta</td>
+<td>Dijkstra, porque Dijkstra calcula caminos mínimos desde un origen, no una red total mínima.</td>
+</tr>
+</tbody>
+</table>
+<p>Kruskal además usa Union-Find para evitar ciclos:</p>
+<pre class="text"><code>if Find(u) != Find(v):
+    agregar (u, v)
+    Union(u, v)</code></pre>
+</section>
+<section id="mini-enunciado-4-programación-dinámica" class="level3" data-number="11.4">
+<h3 data-number="11.4" class="anchored" data-anchor-id="mini-enunciado-4-programación-dinámica"><span class="header-section-number">11.4</span> Mini-enunciado 4: programación dinámica</h3>
+<p>“Dado un arreglo de números positivos, decidir si existe un subconjunto que suma exactamente <code>S</code>. En la recursión aparecen llamados repetidos del tipo <code>p(i, S)</code>.”</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Aspecto</th>
+<th>Lectura</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Señales del enunciado</td>
+<td>Decisión tomar/no tomar; suma restante; estados repetidos <code>p(i, S)</code>.</td>
+</tr>
+<tr class="even">
+<td>Técnica o estructura elegida</td>
+<td>Programación dinámica.</td>
+</tr>
+<tr class="odd">
+<td>Por qué aplica</td>
+<td>Se define un estado por índice y suma restante, con recurrencia y memoización o tabla.</td>
+</tr>
+<tr class="even">
+<td>Alternativa incorrecta</td>
+<td>Backtracking puro, porque recalcula muchas veces los mismos estados.</td>
+</tr>
+</tbody>
+</table>
+<p>Una recurrencia típica es:</p>
+<p><span class="math display">\[
+p(i, S) = p(i + 1, S - A[i]) \lor p(i + 1, S)
+\]</span></p>
+<p>Aquí <code>p(i, S)</code> significa: “¿puedo formar suma <code>S</code> usando elementos desde la posición <code>i</code> en adelante?”.</p>
+</section>
+</section>
+<section id="errores-típicos" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">12</span> Errores típicos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Por qué está mal</th>
+<th>Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Usar hash para ordenar</td>
+<td>Hash no mantiene orden útil.</td>
+<td>Usar hash para llave y otra estructura para orden.</td>
+</tr>
+<tr class="even">
+<td>Usar heap para buscar cualquier <code>id</code></td>
+<td>Heap solo garantiza acceso al mínimo o máximo.</td>
+<td>Usar hash para identificadores.</td>
+</tr>
+<tr class="odd">
+<td>Usar cola cuando hay prioridad</td>
+<td>FIFO respeta llegada, no urgencia.</td>
+<td>Usar heap si el criterio es prioridad.</td>
+</tr>
+<tr class="even">
+<td>Usar Union-Find para reconstruir camino</td>
+<td>Union-Find solo sabe componentes.</td>
+<td>Usar BFS/DFS con <code>parent</code> para caminos.</td>
+</tr>
+<tr class="odd">
+<td>Llamar greedy a cualquier algoritmo que ordena</td>
+<td>Ordenar no prueba optimalidad.</td>
+<td>Definir elección segura o entregar contraejemplo.</td>
+</tr>
+<tr class="even">
+<td>Usar backtracking sin variables ni dominios</td>
+<td>La recursión queda sin modelo.</td>
+<td>Escribir CSP: variables, dominios, restricciones.</td>
+</tr>
+<tr class="odd">
+<td>Usar DP sin estado definido</td>
+<td>La tabla no tiene significado.</td>
+<td>Definir <code>DP[...]</code> en una frase precisa.</td>
+</tr>
+<tr class="even">
+<td>Aplicar TopSort en un grafo con ciclos</td>
+<td>El orden topológico solo existe en DAG.</td>
+<td>Detectar ciclos primero.</td>
+</tr>
+<tr class="odd">
+<td>Usar Kruskal para caminos mínimos</td>
+<td>MST minimiza costo total de conexión, no rutas.</td>
+<td>Usar BFS o Dijkstra según pesos.</td>
+</tr>
+<tr class="even">
+<td>Usar BFS con pesos distintos</td>
+<td>BFS cuenta aristas, no costos distintos.</td>
+<td>Usar Dijkstra si los pesos son no negativos.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">13</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Para cada caso, clasifica la técnica o estructura más adecuada, justifica brevemente y menciona una alternativa incorrecta común.</p>
+<ol type="1">
+<li>Un sistema debe consultar rápidamente si un estudiante tiene autorización usando su identificador único.</li>
+<li>Se deben asignar objetos a contenedores bajo restricciones de compatibilidad, capacidad y prohibiciones.</li>
+<li>Una universidad debe conectar sedes con enlaces de costo conocido minimizando el costo total de la red.</li>
+<li>En un grafo no ponderado, se pide la distancia mínima en número de aristas desde una sede inicial hasta todas las demás.</li>
+<li>Se quiere decidir si existe un subconjunto que suma <code>S</code>, y la formulación natural repite estados del tipo <code>p(i, S)</code>.</li>
+<li>Se deben seleccionar actividades sin traslape. En una variante todas valen lo mismo; en otra cada actividad tiene una ganancia.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Caso</th>
+<th>Técnica adecuada</th>
+<th>Justificación</th>
+<th>Alternativa incorrecta común</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Consulta por identificador único</td>
+<td>Hash</td>
+<td>La operación dominante es buscar por llave.</td>
+<td>Heap, porque no se consulta por prioridad.</td>
+</tr>
+<tr class="even">
+<td>Asignación de objetos bajo restricciones</td>
+<td>Backtracking / CSP</td>
+<td>Hay variables, dominios y restricciones; puede requerir existencia, todas las soluciones, podas o heurísticas.</td>
+<td>Greedy sin prueba, porque una asignación local puede bloquear una solución válida.</td>
+</tr>
+<tr class="odd">
+<td>Conexión de sedes con costo mínimo</td>
+<td>Kruskal o Prim</td>
+<td>Se pide conectar todos los vértices minimizando costo total: MST.</td>
+<td>Dijkstra, porque no pide distancias desde un origen.</td>
+</tr>
+<tr class="even">
+<td>Distancia mínima en grafo no ponderado</td>
+<td>BFS</td>
+<td>Explora por niveles y entrega menor número de aristas.</td>
+<td>DFS, porque no garantiza distancia mínima.</td>
+</tr>
+<tr class="odd">
+<td>Subconjuntos con recurrencia <code>p(i, S)</code></td>
+<td>Programación dinámica</td>
+<td>Hay subproblemas repetidos por índice y suma restante.</td>
+<td>Backtracking puro, porque recalcula estados equivalentes.</td>
+</tr>
+<tr class="even">
+<td>Actividades con o sin ganancias</td>
+<td>Greedy si todas valen lo mismo; DP si tienen ganancias arbitrarias</td>
+<td>Sin ganancias, ordenar por término temprano maximiza cantidad; con ganancias, se compara tomar/no tomar.</td>
+<td>Greedy por mayor ganancia inmediata, porque puede bloquear una combinación mejor.</td>
+</tr>
+</tbody>
+</table>
+<p>Una respuesta completa además debería decir qué se guarda. Por ejemplo, en el caso de autorizaciones:</p>
+<pre class="text"><code>Hash[id_estudiante] -&gt; datos_de_autorizacion</code></pre>
+<p>En el caso de actividades con ganancias, una definición posible de estado es:</p>
+<p><span class="math display">\[
+OPT(j) = \text{máxima ganancia usando las primeras } j \text{ actividades}
+\]</span></p>
+<p>La diferencia importante es que el problema sin ganancias maximiza cantidad; el problema con ganancias maximiza valor total.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">14</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>¿Por qué la operación dominante es más importante que el nombre de la estructura?</li>
+<li>¿Qué diferencia hay entre buscar por llave y buscar por prioridad?</li>
+<li>¿Por qué hash no sirve para ordenar?</li>
+<li>¿Por qué heap no permite buscar cualquier identificador eficientemente?</li>
+<li>¿Qué garantiza una cola FIFO?</li>
+<li>¿Qué responde Union-Find y qué no responde?</li>
+<li>¿Qué tres elementos mínimos definen un CSP?</li>
+<li>¿Qué debe demostrarse para aceptar una solución greedy?</li>
+<li>¿Qué elementos mínimos necesita una DP?</li>
+<li>¿Por qué BFS entrega caminos mínimos en grafos no ponderados?</li>
+<li>¿Cuándo existe un orden topológico?</li>
+<li>¿Por qué Kruskal es greedy?</li>
+<li>¿Por qué MST no es lo mismo que caminos mínimos?</li>
+<li>¿Cómo separas la complejidad de un algoritmo por fases?</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">15</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="15.1">
+<h3 data-number="15.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">15.1</span> Ejercicio 1</h3>
+<p>Clasifica cada frase con una estructura principal: hash, heap, cola, grafo o Union-Find.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Frase</th>
+<th>Estructura esperada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Dado un código, obtener los datos asociados”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Extraer siempre la tarea de mayor urgencia”</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>“Atender al estudiante que llegó primero”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Saber si dos computadores ya quedaron conectados al agregar cables”</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>“Representar vuelos directos entre ciudades”</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ejercicio-2" class="level3" data-number="15.2">
+<h3 data-number="15.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">15.2</span> Ejercicio 2</h3>
+<p>Indica si conviene backtracking, greedy o programación dinámica.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Frase</th>
+<th>Técnica esperada</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Probar asignaciones de horarios respetando salas y profesores”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Elegir charlas sin ganancia maximizando cantidad”</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>“Elegir charlas con ganancia maximizando valor total”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Decidir si hay subconjunto de suma <code>S</code> con estados repetidos”</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ejercicio-3" class="level3" data-number="15.3">
+<h3 data-number="15.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">15.3</span> Ejercicio 3</h3>
+<p>Para cada caso de grafo, elige BFS, DFS, TopSort, Kosaraju, puentes, Kruskal, Prim o Dijkstra.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Caso</th>
+<th>Algoritmo esperado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Menor cantidad de aristas desde un origen</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Detectar ciclo dirigido</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Ordenar cursos con prerrequisitos</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Encontrar componentes fuertemente conectadas</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Encontrar aristas críticas en grafo no dirigido</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Conectar todos los nodos con costo total mínimo</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Camino mínimo con pesos no negativos</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="ejercicio-4" class="level3" data-number="15.4">
+<h3 data-number="15.4" class="anchored" data-anchor-id="ejercicio-4"><span class="header-section-number">15.4</span> Ejercicio 4</h3>
+<p>Da un contraejemplo pequeño para una regla greedy que parezca razonable pero falle. Debe incluir la regla, la solución que produce y una solución mejor.</p>
+</section>
+<section id="ejercicio-5" class="level3" data-number="15.5">
+<h3 data-number="15.5" class="anchored" data-anchor-id="ejercicio-5"><span class="header-section-number">15.5</span> Ejercicio 5</h3>
+<p>Toma un enunciado mixto inventado por ti y separa tres responsabilidades: acceso, orden y conectividad. Propón una estructura para cada responsabilidad.</p>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">16</span> Checklist de estudio</h2>
+<p>Antes de cerrar esta página, verifica que puedes:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">identificar la operación dominante de un enunciado;</label></li>
+<li><label><input type="checkbox">explicar cuándo usar hash y cuándo no;</label></li>
+<li><label><input type="checkbox">explicar cuándo usar heap y cuándo no;</label></li>
+<li><label><input type="checkbox">justificar una cola FIFO por orden de llegada;</label></li>
+<li><label><input type="checkbox">distinguir lista, cola, heap y hash por operación;</label></li>
+<li><label><input type="checkbox">explicar qué responde Union-Find;</label></li>
+<li><label><input type="checkbox">modelar backtracking con variables, dominios y restricciones;</label></li>
+<li><label><input type="checkbox">adaptar backtracking para existencia, todas las soluciones u optimización;</label></li>
+<li><label><input type="checkbox">reconocer que greedy requiere prueba de optimalidad o contraejemplo;</label></li>
+<li><label><input type="checkbox">formular una DP con estado, recurrencia, caso base y orden;</label></li>
+<li><label><input type="checkbox">elegir BFS para caminos mínimos no ponderados;</label></li>
+<li><label><input type="checkbox">elegir Dijkstra para pesos no negativos;</label></li>
+<li><label><input type="checkbox">elegir TopSort solo en DAG;</label></li>
+<li><label><input type="checkbox">distinguir CFC, componentes conectadas y puentes;</label></li>
+<li><label><input type="checkbox">explicar por qué Kruskal usa Union-Find;</label></li>
+<li><label><input type="checkbox">distinguir MST de caminos mínimos;</label></li>
+<li><label><input type="checkbox">justificar complejidad por fases;</label></li>
+<li><label><input type="checkbox">resolver casos donde se combinan varias estructuras.</label></li>
+</ul>
 
 
 </section>

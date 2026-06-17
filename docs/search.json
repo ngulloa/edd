@@ -1112,7 +1112,19 @@
     "href": "contenidos/comparacion-tecnicas.html",
     "title": "Comparación de técnicas",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Aprender a leer un enunciado de Estructuras de Datos y Algoritmos para elegir una estructura o técnica adecuada. Al terminar esta página deberías poder:\n\nidentificar la operación dominante de un problema;\ndistinguir cuándo usar hash, heap, cola, lista, grafo o Union-Find;\nseparar problemas de búsqueda, optimización, restricciones y grafos;\ncomparar backtracking, greedy y programación dinámica sin confundir sus roles;\nelegir algoritmos de grafos según la pregunta: recorrido, conectividad, ciclos, DAG, CFC, puentes, MST o caminos mínimos;\njustificar complejidades por fases;\nexplicar por qué una alternativa típica no aplica.\n\nLa meta no es memorizar nombres. La meta es construir una respuesta defendible: qué estructura guarda qué información, qué operación acelera, qué algoritmo se aplica y por qué la complejidad queda razonablemente acotada.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Comparación de técnicas"
+    ]
+  },
+  {
+    "objectID": "contenidos/comparacion-tecnicas.html#objetivo-de-aprendizaje",
+    "href": "contenidos/comparacion-tecnicas.html#objetivo-de-aprendizaje",
+    "title": "Comparación de técnicas",
+    "section": "",
+    "text": "Aprender a leer un enunciado de Estructuras de Datos y Algoritmos para elegir una estructura o técnica adecuada. Al terminar esta página deberías poder:\n\nidentificar la operación dominante de un problema;\ndistinguir cuándo usar hash, heap, cola, lista, grafo o Union-Find;\nseparar problemas de búsqueda, optimización, restricciones y grafos;\ncomparar backtracking, greedy y programación dinámica sin confundir sus roles;\nelegir algoritmos de grafos según la pregunta: recorrido, conectividad, ciclos, DAG, CFC, puentes, MST o caminos mínimos;\njustificar complejidades por fases;\nexplicar por qué una alternativa típica no aplica.\n\nLa meta no es memorizar nombres. La meta es construir una respuesta defendible: qué estructura guarda qué información, qué operación acelera, qué algoritmo se aplica y por qué la complejidad queda razonablemente acotada.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1123,8 +1135,8 @@
     "objectID": "contenidos/comparacion-tecnicas.html#idea-central-del-tema",
     "href": "contenidos/comparacion-tecnicas.html#idea-central-del-tema",
     "title": "Comparación de técnicas",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nEn una interrogación, un mismo enunciado puede mezclar varias necesidades. Puede pedir acceso rápido por identificador, orden de llegada, conectividad, optimización o restricciones. La técnica correcta aparece cuando separas esas necesidades.\n\n\n\n\n\n\nNotaIntuición\n\n\n\nLa elección de una estructura depende de la operación dominante. Si el problema consulta por llave, piensa en hash; si extrae por prioridad, piensa en heap; si procesa por orden de llegada, piensa en cola FIFO; si pregunta conectividad incremental, piensa en Union-Find.\n\n\n\n\n\n\n\nflowchart LR\n    A[\"Leer enunciado\"] --&gt; B[\"Detectar operación dominante\"]\n    B --&gt; C[\"Elegir estructura o técnica\"]\n    C --&gt; D[\"Justificar complejidad\"]\n\n\n\n\n\n\nLa pregunta guía es:\n\n¿Qué operación se repite muchas veces y qué estructura o algoritmo la resuelve naturalmente?\n\nPor ejemplo, una tabla de hash sirve para acceso por llave, no para ordenar. Un heap sirve para obtener el mínimo o máximo por prioridad, no para buscar cualquier identificador de forma eficiente. Union-Find sirve para mantener componentes y responder conectividad incremental, no para reconstruir caminos.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1132,11 +1144,11 @@
     ]
   },
   {
-    "objectID": "contenidos/comparacion-tecnicas.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/comparacion-tecnicas.html#cuándo-usar-esta-técnica-o-estructura",
+    "objectID": "contenidos/comparacion-tecnicas.html#antes-de-partir-vocabulario-mínimo",
+    "href": "contenidos/comparacion-tecnicas.html#antes-de-partir-vocabulario-mínimo",
     "title": "Comparación de técnicas",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "section": "3 Antes de partir: vocabulario mínimo",
+    "text": "3 Antes de partir: vocabulario mínimo\n\n\n\n\n\n\n\nConcepto\nSignificado para decidir técnica\n\n\n\n\nLlave\nIdentificador usado para acceder a un dato. Sugiere hash.\n\n\nPrioridad\nCriterio para extraer mínimo o máximo. Sugiere heap.\n\n\nFIFO\nOrden “primero en entrar, primero en salir”. Sugiere cola.\n\n\nRestricción\nRegla que una solución no puede violar. Sugiere CSP/backtracking.\n\n\nDominio\nValores posibles para una variable en un CSP.\n\n\nEstado parcial\nConstrucción incompleta que puede extenderse o descartarse.\n\n\nElección local\nDecisión tomada con información actual. Sugiere greedy si se puede justificar.\n\n\nSubproblema\nVersión menor del problema original. Sugiere DP si se repite.\n\n\nRecurrencia\nRelación que calcula un estado desde estados más pequeños.\n\n\nGrafo\nModelo de vértices y aristas para relaciones, rutas o dependencias.\n\n\nDAG\nGrafo dirigido acíclico. Es requisito para orden topológico.\n\n\nCFC\nComponente fuertemente conectada en un grafo dirigido.\n\n\nMST\nÁrbol de cobertura mínimo: conecta todos los vértices con costo total mínimo.\n\n\nCamino mínimo\nRuta de menor distancia o costo desde un origen. No es lo mismo que MST.\n\n\nComponente\nGrupo de vértices conectados. Puede requerir BFS, DFS o Union-Find.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1144,11 +1156,11 @@
     ]
   },
   {
-    "objectID": "contenidos/comparacion-tecnicas.html#conceptos-mínimos",
-    "href": "contenidos/comparacion-tecnicas.html#conceptos-mínimos",
+    "objectID": "contenidos/comparacion-tecnicas.html#cómo-leer-un-enunciado",
+    "href": "contenidos/comparacion-tecnicas.html#cómo-leer-un-enunciado",
     "title": "Comparación de técnicas",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "section": "4 Cómo leer un enunciado",
+    "text": "4 Cómo leer un enunciado\nAntes de elegir una técnica, lee el problema en seis capas. Este orden evita saltar directo a un algoritmo por una palabra suelta.\n\n\n\n\n\n\n\n\nCapa de lectura\nPregunta que debes responder\nSeñal típica\n\n\n\n\nObjetivo\n¿Qué pide producir o decidir?\n“encontrar”, “minimizar”, “verificar”, “clasificar”\n\n\nOperaciones dominantes\n¿Qué se hace muchas veces?\nbuscar, insertar, extraer, unir, recorrer, asignar\n\n\nRestricciones\n¿Qué condiciones no se pueden romper?\nceldas prohibidas, no traslape, no ciclos, capacidad\n\n\nEstructura de entrada\n¿Los datos vienen como llaves, lista, aristas, matriz o eventos?\n(id, dato), aristas con costo, tareas y requisitos\n\n\nSalida esperada\n¿Pide valor, camino, conjunto, orden o todas las soluciones?\ndistancia, padres, MST, asignación, tabla DP\n\n\nComplejidad pedida\n¿Hay límite de eficiencia o tamaño grande?\nn grande, muchas consultas, grafo disperso\n\n\n\n\n\n\n\n\n\nTipSeñales del enunciado\n\n\n\nSubraya verbos y sustantivos operacionales: consultar por identificador, atender al primero, extraer el menor, asignar bajo restricciones, conectar sedes, ordenar dependencias, calcular distancia o reconstruir camino.\n\n\nUn buen diagnóstico no dice solo “uso grafo” o “uso DP”. Debe decir qué representan los vértices, aristas, estados, llaves, colas o componentes.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1156,11 +1168,11 @@
     ]
   },
   {
-    "objectID": "contenidos/comparacion-tecnicas.html#operaciones-o-algoritmo-principal",
-    "href": "contenidos/comparacion-tecnicas.html#operaciones-o-algoritmo-principal",
+    "objectID": "contenidos/comparacion-tecnicas.html#tabla-de-decisión-rápida",
+    "href": "contenidos/comparacion-tecnicas.html#tabla-de-decisión-rápida",
     "title": "Comparación de técnicas",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "section": "5 Tabla de decisión rápida",
+    "text": "5 Tabla de decisión rápida\nEsta tabla ayuda a elegir un punto de partida. Después de usarla, igual debes justificar la elección con el objetivo y las operaciones del problema.\n\n\n\n\n\n\n\n\nSeñal del enunciado\nTécnica o estructura probable\nPor qué\n\n\n\n\n“consultar por identificador”, “RUT”, “código”, “id”\nHash\nAcceso esperado eficiente por llave.\n\n\n“mantener el menor/mayor disponible”, “prioridad”\nHeap\nLa raíz entrega el mínimo o máximo.\n\n\n“primero que llegó”, “orden de llegada”\nCola FIFO\nConserva antigüedad.\n\n\n“último estado”, “deshacer”\nPila\nProcesa lo más reciente primero.\n\n\n“insertar/eliminar con punteros conocidos”\nLista ligada\nCambiar enlaces puede ser eficiente.\n\n\n“variables, dominios y restricciones”\nBacktracking / CSP\nSe construyen asignaciones factibles.\n\n\n“todas las soluciones”\nBacktracking\nDebe explorar el espacio de soluciones.\n\n\n“decisión local definitiva”\nGreedy\nRequiere demostrar elección segura.\n\n\n“subproblemas repetidos”, p(i, S)\nProgramación dinámica\nSe define estado, recurrencia y memoria.\n\n\n“relaciones, rutas, dependencias”\nGrafo\nLos objetos son vértices y las relaciones aristas.\n\n\n“menor número de aristas”\nBFS\nExplora por niveles en grafos no ponderados.\n\n\n“ciclo dirigido”, “componentes”, “puentes”\nDFS o variante\nDFS revela estructura profunda.\n\n\n“ordenar tareas con requisitos”\nTopSort\nSolo si el grafo es DAG.\n\n\n“conectar todos con costo mínimo”\nKruskal o Prim\nEs un problema de MST.\n\n\n“camino mínimo con pesos no negativos”\nDijkstra\nOptimiza distancias desde un origen.\n\n\n“saber si dos elementos ya están conectados al agregar enlaces”\nUnion-Find\nMantiene componentes disjuntas.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1168,11 +1180,11 @@
     ]
   },
   {
-    "objectID": "contenidos/comparacion-tecnicas.html#pseudocódigo-claro",
-    "href": "contenidos/comparacion-tecnicas.html#pseudocódigo-claro",
+    "objectID": "contenidos/comparacion-tecnicas.html#comparación-por-operación-dominante",
+    "href": "contenidos/comparacion-tecnicas.html#comparación-por-operación-dominante",
     "title": "Comparación de técnicas",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "section": "6 Comparación por operación dominante",
+    "text": "6 Comparación por operación dominante\nCada estructura tiene una responsabilidad natural. Cuando un problema necesita más de una responsabilidad, se combinan estructuras.\n\n\n\n\n\n\n\n\n\nEstructura\nOperación dominante\nSirve para\nNo sirve para\n\n\n\n\nHash\nBuscar, insertar o actualizar por llave\nDiccionarios, conteos, agrupación por identificador\nMantener orden, sucesor, predecesor, mínimo global\n\n\nHeap\nExtraer mínimo o máximo por prioridad\nPrioridades, top-k, eventos por urgencia\nBuscar cualquier llave en forma eficiente\n\n\nCola FIFO\nAtender por orden de llegada\nFilas, BFS, procesamiento por antigüedad\nAtender por prioridad\n\n\nLista\nRecorrer o enlazar elementos\nSecuencias, buckets de hash, inserción con referencia\nAcceso aleatorio eficiente por índice\n\n\nGrafo\nModelar relaciones\nCaminos, dependencias, ciclos, componentes, MST\nAcceso directo por llave sin apoyo adicional\n\n\nUnion-Find\nUnir componentes y consultar conectividad\nKruskal, conectividad incremental\nReconstruir caminos o calcular distancias\n\n\n\n\n\n\n\n\n\nAdvertenciaMezcla de estructuras\n\n\n\nUn enunciado puede requerir una estructura para acceso, otra para orden y otra para conectividad. Decir “uso hash + heap + grafo” solo es válido si explicas qué guarda cada una y qué operación resuelve.\n\n\nEjemplos frecuentes:\n\n\n\n\n\n\n\n\nNecesidad mixta\nCombinación razonable\nRol de cada parte\n\n\n\n\nAtender por tipo y antigüedad\nHash + cola FIFO\nHash encuentra el tipo; cola conserva llegada.\n\n\nRanking con actualizaciones por cliente\nHash + heap\nHash acumula por cliente; heap entrega prioridad.\n\n\nGrafo con nombres externos\nHash + lista de adyacencia\nHash traduce nombres; grafo guarda vecinos.\n\n\nKruskal\nOrdenar aristas + Union-Find\nOrden da greedy; Union-Find evita ciclos.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1180,11 +1192,11 @@
     ]
   },
   {
-    "objectID": "contenidos/comparacion-tecnicas.html#complejidad",
-    "href": "contenidos/comparacion-tecnicas.html#complejidad",
+    "objectID": "contenidos/comparacion-tecnicas.html#backtracking-greedy-y-programación-dinámica",
+    "href": "contenidos/comparacion-tecnicas.html#backtracking-greedy-y-programación-dinámica",
     "title": "Comparación de técnicas",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
+    "section": "7 Backtracking, greedy y programación dinámica",
+    "text": "7 Backtracking, greedy y programación dinámica\nEstas tres técnicas suelen aparecer en problemas de búsqueda u optimización, pero responden preguntas distintas.\n\n\n\n\n\n\n\n\n\n\nTécnica\nQué hace\nCuándo usar\nQué debe aparecer en la respuesta\nRiesgo típico\n\n\n\n\nBacktracking\nExplora decisiones y retrocede\nVariables, dominios y restricciones\nCSP, caso base, validación, deshacer, podas\nOlvidar deshacer o no modelar restricciones\n\n\nGreedy\nToma decisiones locales definitivas\nExiste una elección local segura\nCandidatos, Select, Feasible, objetivo, prueba o contraejemplo\nUsarlo porque “suena natural” sin justificar\n\n\nProgramación dinámica\nResuelve subproblemas y guarda resultados\nHay recurrencia y subproblemas solapados\nEstado, caso base, recurrencia, orden, reconstrucción si aplica\nDibujar una tabla sin definir qué significa\n\n\n\nBacktracking parte modelando:\n\n\n\nParte del CSP\nPregunta\n\n\n\n\nVariables\n¿Qué cosas debo asignar?\n\n\nDominios\n¿Qué valores puede tomar cada variable?\n\n\nRestricciones\n¿Qué asignaciones son inválidas?\n\n\nObjetivo\n¿Busco existencia, todas las soluciones u optimización?\n\n\n\nGreedy exige explicar por qué una decisión local puede quedar fija. Si no puedes justificar optimalidad, debes buscar un contraejemplo o cambiar de técnica.\nProgramación dinámica exige una definición precisa de estado. Una respuesta mínima debe incluir subproblema, recurrencia, caso base, orden de llenado y reconstrucción si el enunciado pide la solución concreta.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1192,11 +1204,35 @@
     ]
   },
   {
-    "objectID": "contenidos/comparacion-tecnicas.html#errores-típicos",
-    "href": "contenidos/comparacion-tecnicas.html#errores-típicos",
+    "objectID": "contenidos/comparacion-tecnicas.html#grafos-elegir-el-algoritmo-correcto",
+    "href": "contenidos/comparacion-tecnicas.html#grafos-elegir-el-algoritmo-correcto",
     "title": "Comparación de técnicas",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
+    "section": "8 Grafos: elegir el algoritmo correcto",
+    "text": "8 Grafos: elegir el algoritmo correcto\nModelar como grafo es solo el primer paso. Después debes distinguir qué pregunta se hace sobre el grafo.\n\n\n\n\n\n\n\n\n\nPregunta del enunciado\nAlgoritmo recomendado\nCondición clave\nResultado\n\n\n\n\nRecorrer o marcar alcanzables\nBFS o DFS\nGrafo representado correctamente\nVisitados y, si se guarda, árbol de recorrido\n\n\nMenor número de aristas desde un origen\nBFS\nGrafo no ponderado\ndist y parent\n\n\nProfundizar, detectar ciclo dirigido\nDFS con colores\nArista hacia gris indica ciclo\nVerdadero/falso o ciclo detectado\n\n\nOrdenar tareas con dependencias\nTopSort\nGrafo dirigido acíclico\nOrden válido si es DAG\n\n\nComponentes fuertemente conectadas\nKosaraju\nGrafo dirigido\nGrupos CFC\n\n\nAristas cuya eliminación desconecta\nPuentes con DFS\nGrafo no dirigido\nLista de puentes\n\n\nConectar todos con costo total mínimo\nKruskal\nNo dirigido ponderado\nMST o bosque mínimo\n\n\nConectar todos desde un vértice creciendo por costo\nPrim\nNo dirigido ponderado\nMST\n\n\nDistancia mínima con pesos no negativos\nDijkstra\nPesos no negativos\nDistancias desde un origen\n\n\n\n\n\n\n\n\n\nImportanteMST y caminos mínimos\n\n\n\nMST no es lo mismo que caminos mínimos. Kruskal y Prim minimizan el costo total de conectar todos los vértices; BFS y Dijkstra minimizan distancia desde un origen hacia otros vértices.\n\n\nDos reglas que evitan confusiones:\n\nBFS sirve para caminos mínimos no ponderados, porque todos los bordes cuentan lo mismo.\nDijkstra sirve para caminos mínimos con pesos no negativos, porque compara costos acumulados.\n\nUnion-Find aparece en Kruskal para evitar ciclos al agregar aristas. No guarda padres de caminos, no entrega rutas y no reemplaza BFS, DFS ni Dijkstra.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Comparación de técnicas"
+    ]
+  },
+  {
+    "objectID": "contenidos/comparacion-tecnicas.html#pseudocódigo-de-diagnóstico",
+    "href": "contenidos/comparacion-tecnicas.html#pseudocódigo-de-diagnóstico",
+    "title": "Comparación de técnicas",
+    "section": "9 Pseudocódigo de diagnóstico",
+    "text": "9 Pseudocódigo de diagnóstico\n\n9.1 Diagnosticar una técnica\nInput: enunciado de un problema. Output: técnica candidata y razón principal.\nDiagnosticarTecnica(enunciado):\n    objetivo &lt;- identificar que pide producir o decidir\n    operaciones &lt;- listar verbos que se repiten\n    entrada &lt;- identificar llaves, eventos, aristas, restricciones o estados\n\n    if operaciones incluyen consulta por identificador:\n        return \"Hash\", \"acceso por llave\"\n\n    if operaciones incluyen extraer minimo o maximo repetidamente:\n        return \"Heap\", \"acceso por prioridad\"\n\n    if operaciones incluyen atender al primero que llego:\n        return \"Cola FIFO\", \"orden de llegada\"\n\n    if entrada contiene variables, dominios y restricciones:\n        if objetivo pide todas las soluciones o existencia:\n            return \"Backtracking\", \"exploracion con validacion y deshacer\"\n        if aparecen estados repetidos:\n            return \"Programacion dinamica\", \"recurrencia con memoria\"\n\n    if objetivo pide optimizar con decisiones locales definitivas:\n        if existe argumento de eleccion segura:\n            return \"Greedy\", \"decision local justificable\"\n        else:\n            return \"DP o backtracking\", \"greedy requiere prueba o contraejemplo\"\n\n    if entrada contiene vertices y relaciones:\n        if objetivo pide distancia no ponderada:\n            return \"BFS\", \"niveles desde un origen\"\n        if objetivo pide ciclos, CFC, puentes u orden:\n            return \"DFS o variante\", \"estructura profunda del grafo\"\n        if objetivo pide conectar todos con costo minimo:\n            return \"Kruskal o Prim\", \"MST\"\n        if objetivo pide distancias ponderadas no negativas:\n            return \"Dijkstra\", \"caminos minimos\"\n\n    if operaciones incluyen unir componentes y consultar conectividad:\n        return \"Union-Find\", \"componentes disjuntas\"\n\n    return \"Analizar combinacion\", \"puede requerir mas de una estructura\"\n\n\n9.2 Plantilla de respuesta de interrogación\nInput: enunciado de desarrollo. Output: respuesta ordenada con técnica, algoritmo, justificación y complejidad.\nResponderProblema(enunciado):\n    escribir objetivo en una frase\n    listar operaciones dominantes\n    identificar estructura de entrada y salida pedida\n    elegir estructura o tecnica principal\n\n    si hay estructuras combinadas:\n        explicar que guarda cada una\n        explicar que operacion acelera cada una\n\n    escribir algoritmo o pseudocodigo\n    justificar por que responde el objetivo\n    calcular complejidad por fases\n    mencionar una alternativa incorrecta comun y por que falla\n\n\n9.3 Elegir entre búsqueda y optimización\nInput: problema de búsqueda, factibilidad u optimización. Output: técnica más razonable entre backtracking, greedy y programación dinámica.\nElegirEntreBusquedaOptimizacion(problema):\n    if hay variables, dominios y restricciones:\n        if se piden todas las soluciones:\n            return \"Backtracking de enumeracion\"\n        if se pide existencia:\n            return \"Backtracking de decision con podas\"\n        if se pide optimizar una funcion objetivo:\n            return \"Backtracking de optimizacion o DP si hay estados repetidos\"\n\n    if hay decision local que no se reconsidera:\n        if se puede demostrar eleccion segura:\n            return \"Greedy\"\n        else:\n            return \"Contraejemplo, DP o backtracking\"\n\n    if la solucion depende de subproblemas repetidos:\n        definir estado\n        definir caso base\n        definir recurrencia\n        definir orden de llenado\n        return \"Programacion dinamica\"\n\n    return \"Modelar mejor el problema antes de elegir tecnica\"",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Comparación de técnicas"
+    ]
+  },
+  {
+    "objectID": "contenidos/comparacion-tecnicas.html#complejidad-cómo-justificar-por-fases",
+    "href": "contenidos/comparacion-tecnicas.html#complejidad-cómo-justificar-por-fases",
+    "title": "Comparación de técnicas",
+    "section": "10 Complejidad: cómo justificar por fases",
+    "text": "10 Complejidad: cómo justificar por fases\nUna respuesta completa no solo escribe la cota final. Debe decir qué parte del algoritmo produce cada costo.\nUsaremos n para cantidad de datos generales, K para tamaño máximo de dominio en backtracking, S para una suma o capacidad en DP, |V| para vértices y |E| para aristas.\nBacktracking con n variables y dominio máximo K puede explorar:\n\\[\nO(K^n)\n\\]\nUn recorrido de grafo con lista de adyacencia procesa vértices y aristas:\n\\[\nO(|V| + |E|)\n\\]\nKruskal suele estar dominado por ordenar aristas:\n\\[\nO(|E| \\log |E|)\n\\]\nUna DP de subconjuntos con n elementos y suma objetivo S suele tener:\n\\[\nO(nS)\n\\]\n\n\n\n\n\n\n\n\nFase\nCosto típico\nCómo se justifica\n\n\n\n\nConstruir hash\nO(n) esperado\nSe procesa cada elemento una vez.\n\n\nBuscar en hash\nO(1) esperado\nDepende de colisiones y factor de carga.\n\n\nInsertar o extraer de heap\nO(log n)\nSe repara el árbol de heap.\n\n\nEnqueue / Dequeue\nO(1)\nOperación en extremos de la cola.\n\n\nRecorrer grafo con lista\nO(|V| + |E|)\nCada vértice y arista se visita constante veces.\n\n\nTopSort, Kosaraju, puentes\nO(|V| + |E|)\nSon variantes de DFS con estructuras auxiliares.\n\n\nKruskal\nO(|E| log |E|)\nOrdenar aristas domina.\n\n\nUnion-Find optimizado\nO(α(n)) amortizado\nCasi constante por operación.\n\n\nBacktracking\nO(K^n)\nTamaño del árbol de búsqueda.\n\n\nDP n x S\nO(nS)\nEstados por costo de transición constante.\n\n\nGreedy con ordenamiento\nO(n log n)\nOrdenar domina el barrido lineal.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1207,8 +1243,20 @@
     "objectID": "contenidos/comparacion-tecnicas.html#ejemplo-guiado",
     "href": "contenidos/comparacion-tecnicas.html#ejemplo-guiado",
     "title": "Comparación de técnicas",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "section": "11 Ejemplo guiado",
+    "text": "11 Ejemplo guiado\n\n11.1 Mini-enunciado 1: hash + cola\n“Un sistema recibe solicitudes como (tipo, persona). Cuando se atiende un tipo, debe salir la persona que pidió ese tipo hace más tiempo.”\n\n\n\n\n\n\n\nAspecto\nLectura\n\n\n\n\nSeñales del enunciado\ntipo actúa como llave; “hace más tiempo” exige FIFO dentro del tipo.\n\n\nTécnica o estructura elegida\nHash + cola FIFO.\n\n\nPor qué aplica\nEl hash encuentra la cola del tipo en O(1) esperado; la cola entrega al más antiguo.\n\n\nAlternativa incorrecta\nSolo hash, porque permite llegar al tipo pero no conserva orden de llegada.\n\n\n\nLa estructura puede describirse como:\nHash[tipo] -&gt; Cola FIFO de personas\n\n\n11.2 Mini-enunciado 2: backtracking / CSP\n“Hay que ubicar k estaciones en una grilla. Algunas celdas están prohibidas y todas las zonas prioritarias deben quedar cubiertas.”\n\n\n\n\n\n\n\nAspecto\nLectura\n\n\n\n\nSeñales del enunciado\nHay variables, dominios y restricciones.\n\n\nTécnica o estructura elegida\nBacktracking / CSP.\n\n\nPor qué aplica\nCada estación es una variable; su dominio son celdas válidas; las restricciones descartan celdas prohibidas, repeticiones y coberturas incompletas.\n\n\nAlternativa incorrecta\nGreedy sin prueba, porque elegir la celda que cubre más ahora puede impedir cubrir zonas futuras.\n\n\n\nEl modelamiento mínimo sería:\n\n\n\n\n\n\n\nParte\nPropuesta\n\n\n\n\nVariables\nE_1, E_2, ..., E_k\n\n\nDominios\nCeldas disponibles de la grilla\n\n\nRestricciones\nNo prohibidas, no repetidas, cubrir zonas prioritarias\n\n\nObjetivo\nExistencia, todas las soluciones u optimización según el enunciado\n\n\n\n\n\n11.3 Mini-enunciado 3: Kruskal o Prim\n“Se tienen sedes y conexiones posibles entre sedes, cada conexión con costo. Se quiere conectar todas las sedes minimizando el costo total.”\n\n\n\n\n\n\n\nAspecto\nLectura\n\n\n\n\nSeñales del enunciado\nConectar todos, costo por arista, minimizar costo total de la red.\n\n\nTécnica o estructura elegida\nKruskal o Prim.\n\n\nPor qué aplica\nEs un MST sobre grafo no dirigido ponderado. Kruskal es directo si las aristas vienen como lista.\n\n\nAlternativa incorrecta\nDijkstra, porque Dijkstra calcula caminos mínimos desde un origen, no una red total mínima.\n\n\n\nKruskal además usa Union-Find para evitar ciclos:\nif Find(u) != Find(v):\n    agregar (u, v)\n    Union(u, v)\n\n\n11.4 Mini-enunciado 4: programación dinámica\n“Dado un arreglo de números positivos, decidir si existe un subconjunto que suma exactamente S. En la recursión aparecen llamados repetidos del tipo p(i, S).”\n\n\n\n\n\n\n\nAspecto\nLectura\n\n\n\n\nSeñales del enunciado\nDecisión tomar/no tomar; suma restante; estados repetidos p(i, S).\n\n\nTécnica o estructura elegida\nProgramación dinámica.\n\n\nPor qué aplica\nSe define un estado por índice y suma restante, con recurrencia y memoización o tabla.\n\n\nAlternativa incorrecta\nBacktracking puro, porque recalcula muchas veces los mismos estados.\n\n\n\nUna recurrencia típica es:\n\\[\np(i, S) = p(i + 1, S - A[i]) \\lor p(i + 1, S)\n\\]\nAquí p(i, S) significa: “¿puedo formar suma S usando elementos desde la posición i en adelante?”.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Comparación de técnicas"
+    ]
+  },
+  {
+    "objectID": "contenidos/comparacion-tecnicas.html#errores-típicos",
+    "href": "contenidos/comparacion-tecnicas.html#errores-típicos",
+    "title": "Comparación de técnicas",
+    "section": "12 Errores típicos",
+    "text": "12 Errores típicos\n\n\n\n\n\n\n\n\nError\nPor qué está mal\nCorrección\n\n\n\n\nUsar hash para ordenar\nHash no mantiene orden útil.\nUsar hash para llave y otra estructura para orden.\n\n\nUsar heap para buscar cualquier id\nHeap solo garantiza acceso al mínimo o máximo.\nUsar hash para identificadores.\n\n\nUsar cola cuando hay prioridad\nFIFO respeta llegada, no urgencia.\nUsar heap si el criterio es prioridad.\n\n\nUsar Union-Find para reconstruir camino\nUnion-Find solo sabe componentes.\nUsar BFS/DFS con parent para caminos.\n\n\nLlamar greedy a cualquier algoritmo que ordena\nOrdenar no prueba optimalidad.\nDefinir elección segura o entregar contraejemplo.\n\n\nUsar backtracking sin variables ni dominios\nLa recursión queda sin modelo.\nEscribir CSP: variables, dominios, restricciones.\n\n\nUsar DP sin estado definido\nLa tabla no tiene significado.\nDefinir DP[...] en una frase precisa.\n\n\nAplicar TopSort en un grafo con ciclos\nEl orden topológico solo existe en DAG.\nDetectar ciclos primero.\n\n\nUsar Kruskal para caminos mínimos\nMST minimiza costo total de conexión, no rutas.\nUsar BFS o Dijkstra según pesos.\n\n\nUsar BFS con pesos distintos\nBFS cuenta aristas, no costos distintos.\nUsar Dijkstra si los pesos son no negativos.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1219,8 +1267,32 @@
     "objectID": "contenidos/comparacion-tecnicas.html#problema-representativo-de-interrogación",
     "href": "contenidos/comparacion-tecnicas.html#problema-representativo-de-interrogación",
     "title": "Comparación de técnicas",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "section": "13 Problema representativo de interrogación",
+    "text": "13 Problema representativo de interrogación\n\n\nVer enunciado\n\nPara cada caso, clasifica la técnica o estructura más adecuada, justifica brevemente y menciona una alternativa incorrecta común.\n\nUn sistema debe consultar rápidamente si un estudiante tiene autorización usando su identificador único.\nSe deben asignar objetos a contenedores bajo restricciones de compatibilidad, capacidad y prohibiciones.\nUna universidad debe conectar sedes con enlaces de costo conocido minimizando el costo total de la red.\nEn un grafo no ponderado, se pide la distancia mínima en número de aristas desde una sede inicial hasta todas las demás.\nSe quiere decidir si existe un subconjunto que suma S, y la formulación natural repite estados del tipo p(i, S).\nSe deben seleccionar actividades sin traslape. En una variante todas valen lo mismo; en otra cada actividad tiene una ganancia.\n\n\n\n\nVer solución\n\n\n\n\n\n\n\n\n\n\nCaso\nTécnica adecuada\nJustificación\nAlternativa incorrecta común\n\n\n\n\nConsulta por identificador único\nHash\nLa operación dominante es buscar por llave.\nHeap, porque no se consulta por prioridad.\n\n\nAsignación de objetos bajo restricciones\nBacktracking / CSP\nHay variables, dominios y restricciones; puede requerir existencia, todas las soluciones, podas o heurísticas.\nGreedy sin prueba, porque una asignación local puede bloquear una solución válida.\n\n\nConexión de sedes con costo mínimo\nKruskal o Prim\nSe pide conectar todos los vértices minimizando costo total: MST.\nDijkstra, porque no pide distancias desde un origen.\n\n\nDistancia mínima en grafo no ponderado\nBFS\nExplora por niveles y entrega menor número de aristas.\nDFS, porque no garantiza distancia mínima.\n\n\nSubconjuntos con recurrencia p(i, S)\nProgramación dinámica\nHay subproblemas repetidos por índice y suma restante.\nBacktracking puro, porque recalcula estados equivalentes.\n\n\nActividades con o sin ganancias\nGreedy si todas valen lo mismo; DP si tienen ganancias arbitrarias\nSin ganancias, ordenar por término temprano maximiza cantidad; con ganancias, se compara tomar/no tomar.\nGreedy por mayor ganancia inmediata, porque puede bloquear una combinación mejor.\n\n\n\nUna respuesta completa además debería decir qué se guarda. Por ejemplo, en el caso de autorizaciones:\nHash[id_estudiante] -&gt; datos_de_autorizacion\nEn el caso de actividades con ganancias, una definición posible de estado es:\n\\[\nOPT(j) = \\text{máxima ganancia usando las primeras } j \\text{ actividades}\n\\]\nLa diferencia importante es que el problema sin ganancias maximiza cantidad; el problema con ganancias maximiza valor total.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Comparación de técnicas"
+    ]
+  },
+  {
+    "objectID": "contenidos/comparacion-tecnicas.html#preguntas-de-repaso",
+    "href": "contenidos/comparacion-tecnicas.html#preguntas-de-repaso",
+    "title": "Comparación de técnicas",
+    "section": "14 Preguntas de repaso",
+    "text": "14 Preguntas de repaso\n\n¿Por qué la operación dominante es más importante que el nombre de la estructura?\n¿Qué diferencia hay entre buscar por llave y buscar por prioridad?\n¿Por qué hash no sirve para ordenar?\n¿Por qué heap no permite buscar cualquier identificador eficientemente?\n¿Qué garantiza una cola FIFO?\n¿Qué responde Union-Find y qué no responde?\n¿Qué tres elementos mínimos definen un CSP?\n¿Qué debe demostrarse para aceptar una solución greedy?\n¿Qué elementos mínimos necesita una DP?\n¿Por qué BFS entrega caminos mínimos en grafos no ponderados?\n¿Cuándo existe un orden topológico?\n¿Por qué Kruskal es greedy?\n¿Por qué MST no es lo mismo que caminos mínimos?\n¿Cómo separas la complejidad de un algoritmo por fases?",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Comparación de técnicas"
+    ]
+  },
+  {
+    "objectID": "contenidos/comparacion-tecnicas.html#ejercicios-breves",
+    "href": "contenidos/comparacion-tecnicas.html#ejercicios-breves",
+    "title": "Comparación de técnicas",
+    "section": "15 Ejercicios breves",
+    "text": "15 Ejercicios breves\n\n15.1 Ejercicio 1\nClasifica cada frase con una estructura principal: hash, heap, cola, grafo o Union-Find.\n\n\n\n\n\n\n\nFrase\nEstructura esperada\n\n\n\n\n“Dado un código, obtener los datos asociados”\n\n\n\n“Extraer siempre la tarea de mayor urgencia”\n\n\n\n“Atender al estudiante que llegó primero”\n\n\n\n“Saber si dos computadores ya quedaron conectados al agregar cables”\n\n\n\n“Representar vuelos directos entre ciudades”\n\n\n\n\n\n\n15.2 Ejercicio 2\nIndica si conviene backtracking, greedy o programación dinámica.\n\n\n\nFrase\nTécnica esperada\n\n\n\n\n“Probar asignaciones de horarios respetando salas y profesores”\n\n\n\n“Elegir charlas sin ganancia maximizando cantidad”\n\n\n\n“Elegir charlas con ganancia maximizando valor total”\n\n\n\n“Decidir si hay subconjunto de suma S con estados repetidos”\n\n\n\n\n\n\n15.3 Ejercicio 3\nPara cada caso de grafo, elige BFS, DFS, TopSort, Kosaraju, puentes, Kruskal, Prim o Dijkstra.\n\n\n\nCaso\nAlgoritmo esperado\n\n\n\n\nMenor cantidad de aristas desde un origen\n\n\n\nDetectar ciclo dirigido\n\n\n\nOrdenar cursos con prerrequisitos\n\n\n\nEncontrar componentes fuertemente conectadas\n\n\n\nEncontrar aristas críticas en grafo no dirigido\n\n\n\nConectar todos los nodos con costo total mínimo\n\n\n\nCamino mínimo con pesos no negativos\n\n\n\n\n\n\n15.4 Ejercicio 4\nDa un contraejemplo pequeño para una regla greedy que parezca razonable pero falle. Debe incluir la regla, la solución que produce y una solución mejor.\n\n\n15.5 Ejercicio 5\nToma un enunciado mixto inventado por ti y separa tres responsabilidades: acceso, orden y conectividad. Propón una estructura para cada responsabilidad.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -1231,8 +1303,8 @@
     "objectID": "contenidos/comparacion-tecnicas.html#checklist-de-estudio",
     "href": "contenidos/comparacion-tecnicas.html#checklist-de-estudio",
     "title": "Comparación de técnicas",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "section": "16 Checklist de estudio",
+    "text": "16 Checklist de estudio\nAntes de cerrar esta página, verifica que puedes:\n\nidentificar la operación dominante de un enunciado;\nexplicar cuándo usar hash y cuándo no;\nexplicar cuándo usar heap y cuándo no;\njustificar una cola FIFO por orden de llegada;\ndistinguir lista, cola, heap y hash por operación;\nexplicar qué responde Union-Find;\nmodelar backtracking con variables, dominios y restricciones;\nadaptar backtracking para existencia, todas las soluciones u optimización;\nreconocer que greedy requiere prueba de optimalidad o contraejemplo;\nformular una DP con estado, recurrencia, caso base y orden;\nelegir BFS para caminos mínimos no ponderados;\nelegir Dijkstra para pesos no negativos;\nelegir TopSort solo en DAG;\ndistinguir CFC, componentes conectadas y puentes;\nexplicar por qué Kruskal usa Union-Find;\ndistinguir MST de caminos mínimos;\njustificar complejidad por fases;\nresolver casos donde se combinan varias estructuras.",
     "crumbs": [
       "Inicio",
       "Contenidos",

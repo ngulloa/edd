@@ -155,6 +155,10 @@ table {
   overflow-x: auto;
 }
 
+.mermaid {
+  overflow-x: auto;
+}
+
 @media (max-width: 720px) {
   .page-columns .content,
   main.content {

@@ -338,7 +338,8 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="idea-central-del-tema" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
-<p>Muchos problemas no se resuelven con una sola estructura. A veces se necesita una estructura para buscar rápido, otra para respetar orden de llegada, otra para obtener mínimo o máximo, y otra para representar relaciones.</p>
+<p>Muchos problemas no se resuelven con una sola estructura. <strong>Combinar estructuras</strong> significa asignar una responsabilidad clara a cada una: una puede buscar rápido, otra respetar orden de llegada, otra obtener mínimo o máximo, y otra representar relaciones.</p>
+<p>La combinación no se justifica por el nombre de las estructuras, sino por lo que guardan y por la operación que cada una hace eficiente.</p>
 <p>La pregunta central es:</p>
 <blockquote class="blockquote">
 <p>¿Qué operación necesito hacer muchas veces y qué estructura la hace naturalmente eficiente?</p>
@@ -354,7 +355,7 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>buscar por llave</td>
-<td>tabla de hash</td>
+<td>Tabla de hash</td>
 </tr>
 <tr class="even">
 <td>atender por orden de llegada</td>
@@ -493,13 +494,13 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Buscar por llave</td>
-<td>Hash</td>
-<td>Acceso esperado <code>O(1)</code> a partir de una clave</td>
+<td>Tabla de hash</td>
+<td>Calcula una posición a partir de una llave</td>
 </tr>
 <tr class="even">
 <td>Obtener mínimo o máximo repetidamente</td>
 <td>Heap</td>
-<td>La raíz contiene el elemento de prioridad extrema</td>
+<td>Mantiene accesible el elemento de mayor o menor prioridad</td>
 </tr>
 <tr class="odd">
 <td>Atender por orden de llegada</td>
@@ -509,17 +510,17 @@ ul.task-list li input[type="checkbox"] {
 <tr class="even">
 <td>Deshacer o explorar último estado</td>
 <td>Pila</td>
-<td>El último estado agregado se revisa primero</td>
+<td>El último elemento agregado se procesa primero</td>
 </tr>
 <tr class="odd">
 <td>Insertar/eliminar con punteros conocidos</td>
 <td>Lista ligada</td>
-<td>Cambiar enlaces puede costar <code>O(1)</code></td>
+<td>Cambiar enlaces puede ser <code>O(1)</code></td>
 </tr>
 <tr class="even">
-<td>Modelar relaciones</td>
+<td>Modelar relaciones entre entidades</td>
 <td>Grafo</td>
-<td>Representa nodos y aristas</td>
+<td>Representa vértices y aristas</td>
 </tr>
 <tr class="odd">
 <td>Saber si dos elementos están conectados</td>
@@ -528,8 +529,8 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="even">
 <td>Mantener llaves ordenadas</td>
-<td>Árbol balanceado o estructura ordenada</td>
-<td>Hash no conserva orden entre llaves</td>
+<td>Árbol balanceado</td>
+<td>Conserva orden y permite sucesor/predecesor</td>
 </tr>
 </tbody>
 </table>
@@ -552,18 +553,18 @@ ul.task-list li input[type="checkbox"] {
 <tbody>
 <tr class="odd">
 <td>Hash</td>
-<td>Acceder rápido por llave, contar, agrupar</td>
-<td>Mantener orden global, mínimo, máximo, sucesor o predecesor</td>
+<td>Acceso esperado eficiente por llave</td>
+<td>Mantener orden global</td>
 </tr>
 <tr class="even">
 <td>Heap</td>
-<td>Obtener rápido el mínimo o máximo según prioridad</td>
-<td>Buscar eficientemente cualquier llave arbitraria</td>
+<td>Obtener mínimo o máximo rápidamente</td>
+<td>Buscar cualquier llave eficientemente</td>
 </tr>
 <tr class="odd">
 <td>Lista ligada</td>
-<td>Insertar o eliminar con punteros conocidos</td>
-<td>Acceso aleatorio eficiente por índice</td>
+<td>Insertar/eliminar nodos con punteros conocidos</td>
+<td>Acceso aleatorio eficiente</td>
 </tr>
 <tr class="even">
 <td>Cola FIFO</td>
@@ -572,24 +573,25 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 <tr class="odd">
 <td>Pila</td>
-<td>Deshacer, backtracking, explorar último estado</td>
+<td>Deshacer o procesar el último estado</td>
 <td>Atender por antigüedad</td>
 </tr>
 <tr class="even">
 <td>Grafo</td>
 <td>Modelar relaciones, caminos y dependencias</td>
-<td>Acceso directo por llave sin una estructura auxiliar</td>
+<td>Acceso directo por llave sin estructura auxiliar</td>
 </tr>
 <tr class="odd">
 <td>Union-Find</td>
 <td>Saber si dos elementos están en la misma componente</td>
-<td>Reconstruir caminos específicos</td>
+<td>Reconstruir caminos</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="patrones-frecuentes-de-combinación" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="patrones-frecuentes-de-combinación"><span class="header-section-number">6</span> Patrones frecuentes de combinación</h2>
+<p>En cada patrón conviene leer dos cosas: qué guarda la estructura externa y qué guarda la estructura interna. Esa separación evita respuestas incompletas como “uso hash + cola” sin explicar cuál es la llave, cuál es el valor y qué operación se vuelve eficiente.</p>
 <section id="hash-cola-fifo" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="hash-cola-fifo"><span class="header-section-number">6.1</span> Hash + cola FIFO</h3>
 <p>Aparece cuando hay categorías y dentro de cada categoría se debe respetar el orden de llegada.</p>
@@ -669,6 +671,19 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
 <section id="cómo-reconocer-combinaciones-en-un-enunciado" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="cómo-reconocer-combinaciones-en-un-enunciado"><span class="header-section-number">7</span> Cómo reconocer combinaciones en un enunciado</h2>
 <p>Lee el enunciado buscando verbos: agregar, buscar, atender, extraer, conectar, recorrer, consultar. Esos verbos suelen revelar las operaciones repetidas.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Método de lectura de enunciados
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de elegir estructuras, subraya los verbos operacionales del problema: buscar, insertar, eliminar, atender, extraer mínimo, conectar, recorrer, ordenar. Cada verbo suele sugerir una estructura.</p>
+</div>
+</div>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 33%">
@@ -748,10 +763,12 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
 <h2 data-number="8" class="anchored" data-anchor-id="pseudocódigo-base"><span class="header-section-number">8</span> Pseudocódigo base</h2>
 <section id="cola-fifo" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="cola-fifo"><span class="header-section-number">8.1</span> Cola FIFO</h3>
-<p><strong>Input:</strong> cola <code>Q</code>, elemento <code>x</code>. <strong>Output:</strong> cola <code>Q</code> actualizada con <code>x</code> al final.</p>
+<p><strong>Input:</strong> cola <code>Q</code>, elemento <code>x</code>.</p>
+<p><strong>Output:</strong> cola <code>Q</code> actualizada con <code>x</code> al final.</p>
 <pre class="text"><code>Enqueue(Q, x):
     insertar x al final de Q</code></pre>
-<p><strong>Input:</strong> cola <code>Q</code>. <strong>Output:</strong> elemento más antiguo de <code>Q</code>.</p>
+<p><strong>Input:</strong> cola <code>Q</code>.</p>
+<p><strong>Output:</strong> elemento más antiguo de <code>Q</code>.</p>
 <pre class="text"><code>Dequeue(Q):
     if Q esta vacia:
         error "cola vacia"
@@ -762,7 +779,8 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
 </section>
 <section id="heap-mínimo" class="level3" data-number="8.2">
 <h3 data-number="8.2" class="anchored" data-anchor-id="heap-mínimo"><span class="header-section-number">8.2</span> Heap mínimo</h3>
-<p><strong>Input:</strong> heap mínimo <code>H</code>, elemento <code>x</code>. <strong>Output:</strong> heap <code>H</code> actualizado manteniendo la propiedad de heap.</p>
+<p><strong>Input:</strong> heap mínimo <code>H</code>, elemento <code>x</code>.</p>
+<p><strong>Output:</strong> heap <code>H</code> actualizado manteniendo la propiedad de heap.</p>
 <pre class="text"><code>HeapInsert(H, x):
     insertar x al final de H
     i &lt;- posicion de x
@@ -770,7 +788,8 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
     while i tiene padre and H[i] &lt; H[parent(i)]:
         intercambiar H[i] con H[parent(i)]
         i &lt;- parent(i)</code></pre>
-<p><strong>Input:</strong> heap mínimo <code>H</code>. <strong>Output:</strong> menor elemento almacenado en <code>H</code>.</p>
+<p><strong>Input:</strong> heap mínimo <code>H</code>.</p>
+<p><strong>Output:</strong> menor elemento almacenado en <code>H</code>.</p>
 <pre class="text"><code>ExtractMin(H):
     if H esta vacio:
         error "heap vacio"
@@ -780,7 +799,8 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
     eliminar ultimo elemento
     HeapifyDown(H, 0)
     return minimo</code></pre>
-<p><strong>Input:</strong> heap mínimo <code>H</code>, índice <code>i</code>. <strong>Output:</strong> heap <code>H</code> reparado desde la posición <code>i</code> hacia abajo.</p>
+<p><strong>Input:</strong> heap mínimo <code>H</code>, índice <code>i</code>.</p>
+<p><strong>Output:</strong> heap <code>H</code> reparado desde la posición <code>i</code> hacia abajo.</p>
 <pre class="text"><code>HeapifyDown(H, i):
     while i tenga algun hijo menor que H[i]:
         j &lt;- indice del menor hijo de i
@@ -789,13 +809,15 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
 </section>
 <section id="hash-cola-fifo-1" class="level3" data-number="8.3">
 <h3 data-number="8.3" class="anchored" data-anchor-id="hash-cola-fifo-1"><span class="header-section-number">8.3</span> Hash + cola FIFO</h3>
-<p><strong>Input:</strong> tabla de hash <code>H</code>, tipo de solicitud <code>tipo</code>, persona <code>persona</code>. <strong>Output:</strong> <code>persona</code> agregada al final de la cola asociada a <code>tipo</code>.</p>
+<p><strong>Input:</strong> tabla de hash <code>H</code>, tipo de solicitud <code>tipo</code>, persona <code>persona</code>.</p>
+<p><strong>Output:</strong> <code>persona</code> agregada al final de la cola asociada a <code>tipo</code>.</p>
 <pre class="text"><code>AgregarSolicitud(H, tipo, persona):
     if H no contiene tipo:
         H[tipo] &lt;- cola vacia
 
     Enqueue(H[tipo], persona)</code></pre>
-<p><strong>Input:</strong> tabla de hash <code>H</code>, tipo de solicitud <code>tipo</code>. <strong>Output:</strong> siguiente persona por orden de llegada para ese <code>tipo</code>, o mensaje si no hay solicitudes.</p>
+<p><strong>Input:</strong> tabla de hash <code>H</code>, tipo de solicitud <code>tipo</code>.</p>
+<p><strong>Output:</strong> siguiente persona por orden de llegada para ese <code>tipo</code>, o mensaje si no hay solicitudes.</p>
 <pre class="text"><code>AtenderSolicitud(H, tipo):
     if H no contiene tipo:
         return "no hay solicitudes"
@@ -807,7 +829,8 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
 </section>
 <section id="hash-heap-para-top-k" class="level3" data-number="8.4">
 <h3 data-number="8.4" class="anchored" data-anchor-id="hash-heap-para-top-k"><span class="header-section-number">8.4</span> Hash + heap para top-k</h3>
-<p><strong>Input:</strong> lista <code>datos</code> con pares <code>(cliente, monto)</code> y entero <code>k</code>. <strong>Output:</strong> hasta <code>k</code> clientes con mayor monto acumulado.</p>
+<p><strong>Input:</strong> lista <code>datos</code> con pares <code>(cliente, monto)</code> y entero <code>k</code>.</p>
+<p><strong>Output:</strong> hasta <code>k</code> clientes con mayor monto acumulado.</p>
 <pre class="text"><code>TopKClientes(datos, k):
     acumulado &lt;- tabla hash vacia
 
@@ -836,51 +859,51 @@ nodo.vecinos -&gt; lista de adyacencia</code></pre>
 <h2 data-number="9" class="anchored" data-anchor-id="complejidad-resumida"><span class="header-section-number">9</span> Complejidad resumida</h2>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 30%">
-<col style="width: 40%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Patrón</th>
 <th>Operación principal</th>
-<th style="text-align: right;">Complejidad esperada o típica</th>
+<th>Complejidad esperada o típica</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Hash + cola</td>
-<td>Agregar o atender por tipo</td>
-<td style="text-align: right;"><code>O(1)</code> esperado</td>
+<td>Hash + cola FIFO</td>
+<td>Insertar o atender por tipo</td>
+<td><code>O(1)</code> esperada</td>
 </tr>
 <tr class="even">
 <td>Hash + heap</td>
-<td>Mantener top-<code>k</code> después de acumular</td>
-<td style="text-align: right;"><code>O(m log k)</code></td>
+<td>Acumular por llave y extraer top-k</td>
+<td><code>O(n log k)</code> o similar según implementación</td>
 </tr>
 <tr class="odd">
 <td>Hash + grafo</td>
-<td>Buscar o crear nodo por etiqueta</td>
-<td style="text-align: right;"><code>O(1)</code> esperado</td>
+<td>Mapear etiquetas externas a índices</td>
+<td><code>O(1)</code> esperada por mapeo</td>
 </tr>
 <tr class="even">
 <td>Grafo + cola</td>
 <td>BFS</td>
-<td style="text-align: right;"><code>O(V + E)</code></td>
+<td><code>O(V + E)</code></td>
 </tr>
 <tr class="odd">
 <td>Grafo + pila/recursión</td>
 <td>DFS</td>
-<td style="text-align: right;"><code>O(V + E)</code></td>
+<td><code>O(V + E)</code></td>
 </tr>
 <tr class="even">
 <td>Kruskal + Union-Find</td>
-<td>Construir árbol de expansión mínimo</td>
-<td style="text-align: right;"><code>O(E log E)</code></td>
+<td>Evitar ciclos al construir MST</td>
+<td><code>O(E log E)</code> por ordenamiento</td>
 </tr>
 </tbody>
 </table>
-<p>Donde <code>m</code> es la cantidad de llaves distintas, <code>V</code> la cantidad de vértices y <code>E</code> la cantidad de aristas.</p>
+<p>Donde <code>n</code> es la cantidad de datos procesados, <code>k</code> el tamaño del ranking solicitado, <code>V</code> la cantidad de vértices y <code>E</code> la cantidad de aristas.</p>
 </section>
 <section id="ejemplo-guiado-1-sistema-de-trámites" class="level2" data-number="10">
 <h2 data-number="10" class="anchored" data-anchor-id="ejemplo-guiado-1-sistema-de-trámites"><span class="header-section-number">10</span> Ejemplo guiado 1: sistema de trámites</h2>
@@ -1146,68 +1169,84 @@ curso_con_mas_tickets()</code></pre>
 <summary>
 Ver solución
 </summary>
-<p>El enunciado tiene dos necesidades distintas:</p>
-<ol type="1">
+<p>Primero identificamos qué operaciones exige el enunciado:</p>
+<ul>
 <li>Acceso rápido a la fila de un curso.</li>
+<li>Mantener orden de llegada dentro de cada curso.</li>
 <li>Saber qué curso tiene más tickets pendientes.</li>
-</ol>
-<p>Para la primera necesidad:</p>
-<pre class="text"><code>Hash[curso] -&gt; Cola FIFO de tickets</code></pre>
+</ul>
+<p>La estructura propuesta es:</p>
+<pre class="text"><code>Hash[curso] -&gt; Cola FIFO de tickets
+MaxHeap -&gt; pares (cantidad_pendiente, curso)</code></pre>
 <p>El hash usa <code>curso</code> como llave. El valor asociado es una cola FIFO de tickets de ese curso. La cola conserva el orden de llegada, por eso <code>atender_ticket(curso)</code> atiende al estudiante más antiguo dentro del curso indicado.</p>
-<p>Para la segunda necesidad:</p>
-<pre class="text"><code>MaxHeap -&gt; pares (cantidad_pendiente, curso)</code></pre>
-<p>El heap permite consultar un curso con más tickets pendientes mirando la raíz. La cantidad pendiente cambia cuando se agrega o atiende un ticket, por lo que el heap debe actualizarse.</p>
-<p>Una implementación posible:</p>
+<p>Además, conviene mantener una segunda tabla:</p>
+<pre class="text"><code>cantidad[curso] -&gt; numero de tickets pendientes</code></pre>
+<p>Esa tabla permite validar si la cantidad guardada en el heap sigue vigente. El heap permite mirar candidatos a curso con más tickets pendientes desde la raíz.</p>
+<p><strong>Input:</strong> curso, estudiante y urgencia del ticket nuevo.</p>
+<p><strong>Output:</strong> ticket agregado a la cola del curso y estructuras auxiliares actualizadas.</p>
 <pre class="text"><code>agregar_ticket(curso, estudiante, urgencia):
     if H no contiene curso:
         H[curso] &lt;- cola vacia
+        cantidad[curso] &lt;- 0
 
     Enqueue(H[curso], (estudiante, urgencia))
     cantidad[curso] &lt;- cantidad[curso] + 1
-    actualizar MaxHeap con (cantidad[curso], curso)</code></pre>
+    MaxHeapInsert(M, (cantidad[curso], curso))</code></pre>
+<p><strong>Input:</strong> curso que se quiere atender.</p>
+<p><strong>Output:</strong> estudiante atendido, o mensaje si ese curso no tiene tickets pendientes.</p>
 <pre class="text"><code>atender_ticket(curso):
     if H no contiene curso or H[curso] esta vacia:
         return "no hay tickets"
 
     ticket &lt;- Dequeue(H[curso])
     cantidad[curso] &lt;- cantidad[curso] - 1
-    actualizar MaxHeap con (cantidad[curso], curso)
+    MaxHeapInsert(M, (cantidad[curso], curso))
     return ticket.estudiante</code></pre>
+<p><strong>Input:</strong> estructuras <code>cantidad</code> y <code>M</code>.</p>
+<p><strong>Output:</strong> un curso con la mayor cantidad vigente de tickets pendientes.</p>
 <pre class="text"><code>curso_con_mas_tickets():
-    return curso guardado en la raiz del MaxHeap</code></pre>
+    while M no esta vacio:
+        (cant, curso) &lt;- MaxHeapMax(M)
+
+        if cantidad[curso] = cant and cant &gt; 0:
+            return curso
+
+        ExtractMax(M)
+
+    return "no hay cursos con tickets"</code></pre>
+<p>Si el heap no permite actualizar prioridades directamente, se puede insertar un nuevo par cada vez que cambia la cantidad de tickets de un curso. Al extraer, se verifica si la cantidad coincide con el valor actual en el hash. Si no coincide, se descarta esa entrada antigua. Esta técnica se llama <strong>validación perezosa</strong>: no se borra la entrada vieja cuando queda obsoleta, sino cuando llega a la raíz.</p>
 <p>Complejidades esperadas, si hay <code>c</code> cursos:</p>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 30%">
-<col style="width: 40%">
-<col style="width: 30%">
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Operación</th>
-<th style="text-align: right;">Complejidad</th>
+<th>Complejidad</th>
 <th>Justificación</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><code>agregar_ticket</code></td>
-<td style="text-align: right;"><code>O(log c)</code></td>
-<td>hash <code>O(1)</code> esperado, cola <code>O(1)</code>, actualización de heap <code>O(log c)</code></td>
+<td><code>O(log c)</code></td>
+<td>hash <code>O(1)</code> esperada, cola <code>O(1)</code> e inserción en heap <code>O(log c)</code></td>
 </tr>
 <tr class="even">
 <td><code>atender_ticket</code></td>
-<td style="text-align: right;"><code>O(log c)</code></td>
-<td>hash <code>O(1)</code> esperado, cola <code>O(1)</code>, actualización de heap <code>O(log c)</code></td>
+<td><code>O(log c)</code></td>
+<td>hash <code>O(1)</code> esperada, cola <code>O(1)</code> e inserción de la nueva cantidad en heap <code>O(log c)</code></td>
 </tr>
 <tr class="odd">
 <td><code>curso_con_mas_tickets</code></td>
-<td style="text-align: right;"><code>O(1)</code></td>
-<td>mirar la raíz del heap</td>
+<td><code>O(1)</code> si la raíz está vigente; puede descartar entradas antiguas</td>
+<td>la raíz del heap da el mejor candidato; cada entrada obsoleta se elimina una vez</td>
 </tr>
 </tbody>
 </table>
-<p>Si el heap no permite modificar prioridad directamente, se puede usar inserción duplicada con validación perezosa. Cada vez que cambia <code>cantidad[curso]</code>, se inserta un nuevo par <code>(cantidad, curso)</code>. Al consultar la raíz, se verifica si esa cantidad coincide con la cantidad real guardada para el curso. Si no coincide, se descarta la entrada antigua y se revisa la siguiente.</p>
 <p>La urgencia aparece en el dato de entrada, pero el enunciado de <code>atender_ticket(curso)</code> pide atender al que llegó primero dentro del curso. Por eso la fila interna es FIFO, no un heap por urgencia.</p>
 </details>
 </section>

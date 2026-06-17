@@ -16,7 +16,9 @@ En una interrogación no basta con nombrar estructuras. Una respuesta como "uso 
 
 ## Idea central del tema
 
-Muchos problemas no se resuelven con una sola estructura. A veces se necesita una estructura para buscar rápido, otra para respetar orden de llegada, otra para obtener mínimo o máximo, y otra para representar relaciones.
+Muchos problemas no se resuelven con una sola estructura. **Combinar estructuras** significa asignar una responsabilidad clara a cada una: una puede buscar rápido, otra respetar orden de llegada, otra obtener mínimo o máximo, y otra representar relaciones.
+
+La combinación no se justifica por el nombre de las estructuras, sino por lo que guardan y por la operación que cada una hace eficiente.
 
 La pregunta central es:
 
@@ -26,7 +28,7 @@ Ejemplos simples:
 
 | Necesidad | Estructura que aparece naturalmente |
 |---|---|
-| buscar por llave | tabla de hash |
+| buscar por llave | Tabla de hash |
 | atender por orden de llegada | cola FIFO |
 | obtener mínimo o máximo repetidamente | heap |
 | modelar relaciones | grafo |
@@ -74,28 +76,30 @@ Esta tabla no reemplaza el análisis del enunciado, pero ayuda a elegir un punto
 
 | Necesidad del problema | Estructura más natural | Por qué |
 |---|---|---|
-| Buscar por llave | Hash | Acceso esperado `O(1)` a partir de una clave |
-| Obtener mínimo o máximo repetidamente | Heap | La raíz contiene el elemento de prioridad extrema |
+| Buscar por llave | Tabla de hash | Calcula una posición a partir de una llave |
+| Obtener mínimo o máximo repetidamente | Heap | Mantiene accesible el elemento de mayor o menor prioridad |
 | Atender por orden de llegada | Cola FIFO | El primero que entra es el primero que sale |
-| Deshacer o explorar último estado | Pila | El último estado agregado se revisa primero |
-| Insertar/eliminar con punteros conocidos | Lista ligada | Cambiar enlaces puede costar `O(1)` |
-| Modelar relaciones | Grafo | Representa nodos y aristas |
+| Deshacer o explorar último estado | Pila | El último elemento agregado se procesa primero |
+| Insertar/eliminar con punteros conocidos | Lista ligada | Cambiar enlaces puede ser `O(1)` |
+| Modelar relaciones entre entidades | Grafo | Representa vértices y aristas |
 | Saber si dos elementos están conectados | Union-Find | Mantiene componentes disjuntas |
-| Mantener llaves ordenadas | Árbol balanceado o estructura ordenada | Hash no conserva orden entre llaves |
+| Mantener llaves ordenadas | Árbol balanceado | Conserva orden y permite sucesor/predecesor |
 
 ## Comparación conceptual de estructuras
 
 | Estructura | Sirve para | No sirve para |
 |---|---|---|
-| Hash | Acceder rápido por llave, contar, agrupar | Mantener orden global, mínimo, máximo, sucesor o predecesor |
-| Heap | Obtener rápido el mínimo o máximo según prioridad | Buscar eficientemente cualquier llave arbitraria |
-| Lista ligada | Insertar o eliminar con punteros conocidos | Acceso aleatorio eficiente por índice |
+| Hash | Acceso esperado eficiente por llave | Mantener orden global |
+| Heap | Obtener mínimo o máximo rápidamente | Buscar cualquier llave eficientemente |
+| Lista ligada | Insertar/eliminar nodos con punteros conocidos | Acceso aleatorio eficiente |
 | Cola FIFO | Atender en orden de llegada | Atender por prioridad |
-| Pila | Deshacer, backtracking, explorar último estado | Atender por antigüedad |
-| Grafo | Modelar relaciones, caminos y dependencias | Acceso directo por llave sin una estructura auxiliar |
-| Union-Find | Saber si dos elementos están en la misma componente | Reconstruir caminos específicos |
+| Pila | Deshacer o procesar el último estado | Atender por antigüedad |
+| Grafo | Modelar relaciones, caminos y dependencias | Acceso directo por llave sin estructura auxiliar |
+| Union-Find | Saber si dos elementos están en la misma componente | Reconstruir caminos |
 
 ## Patrones frecuentes de combinación
+
+En cada patrón conviene leer dos cosas: qué guarda la estructura externa y qué guarda la estructura interna. Esa separación evita respuestas incompletas como "uso hash + cola" sin explicar cuál es la llave, cuál es el valor y qué operación se vuelve eficiente.
 
 ### Hash + cola FIFO
 
@@ -185,6 +189,12 @@ Si Find(u) != Find(v):
 
 Lee el enunciado buscando verbos: agregar, buscar, atender, extraer, conectar, recorrer, consultar. Esos verbos suelen revelar las operaciones repetidas.
 
+::: {.callout-tip}
+## Método de lectura de enunciados
+
+Antes de elegir estructuras, subraya los verbos operacionales del problema: buscar, insertar, eliminar, atender, extraer mínimo, conectar, recorrer, ordenar. Cada verbo suele sugerir una estructura.
+:::
+
 | Frase del enunciado | Señal | Posible estructura |
 |---|---|---|
 | "dado un identificador, encontrar..." | búsqueda por llave | Hash |
@@ -208,6 +218,7 @@ Primero escribe las operaciones que se repiten. Después, al lado de cada operac
 ### Cola FIFO
 
 **Input:** cola `Q`, elemento `x`.
+
 **Output:** cola `Q` actualizada con `x` al final.
 
 ```text
@@ -216,6 +227,7 @@ Enqueue(Q, x):
 ```
 
 **Input:** cola `Q`.
+
 **Output:** elemento más antiguo de `Q`.
 
 ```text
@@ -231,6 +243,7 @@ Dequeue(Q):
 ### Heap mínimo
 
 **Input:** heap mínimo `H`, elemento `x`.
+
 **Output:** heap `H` actualizado manteniendo la propiedad de heap.
 
 ```text
@@ -244,6 +257,7 @@ HeapInsert(H, x):
 ```
 
 **Input:** heap mínimo `H`.
+
 **Output:** menor elemento almacenado en `H`.
 
 ```text
@@ -259,6 +273,7 @@ ExtractMin(H):
 ```
 
 **Input:** heap mínimo `H`, índice `i`.
+
 **Output:** heap `H` reparado desde la posición `i` hacia abajo.
 
 ```text
@@ -272,6 +287,7 @@ HeapifyDown(H, i):
 ### Hash + cola FIFO
 
 **Input:** tabla de hash `H`, tipo de solicitud `tipo`, persona `persona`.
+
 **Output:** `persona` agregada al final de la cola asociada a `tipo`.
 
 ```text
@@ -283,6 +299,7 @@ AgregarSolicitud(H, tipo, persona):
 ```
 
 **Input:** tabla de hash `H`, tipo de solicitud `tipo`.
+
 **Output:** siguiente persona por orden de llegada para ese `tipo`, o mensaje si no hay solicitudes.
 
 ```text
@@ -299,6 +316,7 @@ AtenderSolicitud(H, tipo):
 ### Hash + heap para top-k
 
 **Input:** lista `datos` con pares `(cliente, monto)` y entero `k`.
+
 **Output:** hasta `k` clientes con mayor monto acumulado.
 
 ```text
@@ -330,15 +348,15 @@ La idea es mantener en el heap solo los `k` mejores clientes vistos hasta ahora.
 ## Complejidad resumida
 
 | Patrón | Operación principal | Complejidad esperada o típica |
-|---|---|---:|
-| Hash + cola | Agregar o atender por tipo | `O(1)` esperado |
-| Hash + heap | Mantener top-`k` después de acumular | `O(m log k)` |
-| Hash + grafo | Buscar o crear nodo por etiqueta | `O(1)` esperado |
+|---|---|---|
+| Hash + cola FIFO | Insertar o atender por tipo | `O(1)` esperada |
+| Hash + heap | Acumular por llave y extraer top-k | `O(n log k)` o similar según implementación |
+| Hash + grafo | Mapear etiquetas externas a índices | `O(1)` esperada por mapeo |
 | Grafo + cola | BFS | `O(V + E)` |
 | Grafo + pila/recursión | DFS | `O(V + E)` |
-| Kruskal + Union-Find | Construir árbol de expansión mínimo | `O(E log E)` |
+| Kruskal + Union-Find | Evitar ciclos al construir MST | `O(E log E)` por ordenamiento |
 
-Donde `m` es la cantidad de llaves distintas, `V` la cantidad de vértices y `E` la cantidad de aristas.
+Donde `n` es la cantidad de datos procesados, `k` el tamaño del ranking solicitado, `V` la cantidad de vértices y `E` la cantidad de aristas.
 
 ## Ejemplo guiado 1: sistema de trámites
 
@@ -514,38 +532,47 @@ Propón estructuras de datos para implementar estas operaciones eficientemente. 
 <details>
 <summary>Ver solución</summary>
 
-El enunciado tiene dos necesidades distintas:
+Primero identificamos qué operaciones exige el enunciado:
 
-1. Acceso rápido a la fila de un curso.
-2. Saber qué curso tiene más tickets pendientes.
+- Acceso rápido a la fila de un curso.
+- Mantener orden de llegada dentro de cada curso.
+- Saber qué curso tiene más tickets pendientes.
 
-Para la primera necesidad:
+La estructura propuesta es:
 
 ```text
 Hash[curso] -> Cola FIFO de tickets
+MaxHeap -> pares (cantidad_pendiente, curso)
 ```
 
 El hash usa `curso` como llave. El valor asociado es una cola FIFO de tickets de ese curso. La cola conserva el orden de llegada, por eso `atender_ticket(curso)` atiende al estudiante más antiguo dentro del curso indicado.
 
-Para la segunda necesidad:
+Además, conviene mantener una segunda tabla:
 
 ```text
-MaxHeap -> pares (cantidad_pendiente, curso)
+cantidad[curso] -> numero de tickets pendientes
 ```
 
-El heap permite consultar un curso con más tickets pendientes mirando la raíz. La cantidad pendiente cambia cuando se agrega o atiende un ticket, por lo que el heap debe actualizarse.
+Esa tabla permite validar si la cantidad guardada en el heap sigue vigente. El heap permite mirar candidatos a curso con más tickets pendientes desde la raíz.
 
-Una implementación posible:
+**Input:** curso, estudiante y urgencia del ticket nuevo.
+
+**Output:** ticket agregado a la cola del curso y estructuras auxiliares actualizadas.
 
 ```text
 agregar_ticket(curso, estudiante, urgencia):
     if H no contiene curso:
         H[curso] <- cola vacia
+        cantidad[curso] <- 0
 
     Enqueue(H[curso], (estudiante, urgencia))
     cantidad[curso] <- cantidad[curso] + 1
-    actualizar MaxHeap con (cantidad[curso], curso)
+    MaxHeapInsert(M, (cantidad[curso], curso))
 ```
+
+**Input:** curso que se quiere atender.
+
+**Output:** estudiante atendido, o mensaje si ese curso no tiene tickets pendientes.
 
 ```text
 atender_ticket(curso):
@@ -554,24 +581,36 @@ atender_ticket(curso):
 
     ticket <- Dequeue(H[curso])
     cantidad[curso] <- cantidad[curso] - 1
-    actualizar MaxHeap con (cantidad[curso], curso)
+    MaxHeapInsert(M, (cantidad[curso], curso))
     return ticket.estudiante
 ```
 
+**Input:** estructuras `cantidad` y `M`.
+
+**Output:** un curso con la mayor cantidad vigente de tickets pendientes.
+
 ```text
 curso_con_mas_tickets():
-    return curso guardado en la raiz del MaxHeap
+    while M no esta vacio:
+        (cant, curso) <- MaxHeapMax(M)
+
+        if cantidad[curso] = cant and cant > 0:
+            return curso
+
+        ExtractMax(M)
+
+    return "no hay cursos con tickets"
 ```
+
+Si el heap no permite actualizar prioridades directamente, se puede insertar un nuevo par cada vez que cambia la cantidad de tickets de un curso. Al extraer, se verifica si la cantidad coincide con el valor actual en el hash. Si no coincide, se descarta esa entrada antigua. Esta técnica se llama **validación perezosa**: no se borra la entrada vieja cuando queda obsoleta, sino cuando llega a la raíz.
 
 Complejidades esperadas, si hay `c` cursos:
 
 | Operación | Complejidad | Justificación |
-|---|---:|---|
-| `agregar_ticket` | `O(log c)` | hash `O(1)` esperado, cola `O(1)`, actualización de heap `O(log c)` |
-| `atender_ticket` | `O(log c)` | hash `O(1)` esperado, cola `O(1)`, actualización de heap `O(log c)` |
-| `curso_con_mas_tickets` | `O(1)` | mirar la raíz del heap |
-
-Si el heap no permite modificar prioridad directamente, se puede usar inserción duplicada con validación perezosa. Cada vez que cambia `cantidad[curso]`, se inserta un nuevo par `(cantidad, curso)`. Al consultar la raíz, se verifica si esa cantidad coincide con la cantidad real guardada para el curso. Si no coincide, se descarta la entrada antigua y se revisa la siguiente.
+|---|---|---|
+| `agregar_ticket` | `O(log c)` | hash `O(1)` esperada, cola `O(1)` e inserción en heap `O(log c)` |
+| `atender_ticket` | `O(log c)` | hash `O(1)` esperada, cola `O(1)` e inserción de la nueva cantidad en heap `O(log c)` |
+| `curso_con_mas_tickets` | `O(1)` si la raíz está vigente; puede descartar entradas antiguas | la raíz del heap da el mejor candidato; cada entrada obsoleta se elimina una vez |
 
 La urgencia aparece en el dato de entrada, pero el enunciado de `atender_ticket(curso)` pide atender al que llegó primero dentro del curso. Por eso la fila interna es FIFO, no un heap por urgencia.
 

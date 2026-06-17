@@ -115,8 +115,13 @@ code {
 
 pre {
   overflow-x: auto;
-  border-radius: 6px;
+  padding: 1rem;
+  border-radius: 0.6rem;
   border: 1px solid var(--edd-border);
+}
+
+code {
+  white-space: pre;
 }
 
 details {
@@ -133,9 +138,21 @@ summary {
 }
 
 table {
+  width: 100%;
   display: block;
   overflow-x: auto;
   white-space: nowrap;
+}
+
+.table-responsive,
+.quarto-layout-panel,
+.cell-output-display {
+  overflow-x: auto;
+}
+
+.math.display,
+.math {
+  overflow-x: auto;
 }
 
 @media (max-width: 720px) {

@@ -7,13 +7,30 @@ title: "Tablas de hash y diccionarios"
 Comprender que una tabla de hash es una forma de implementar un **diccionario llave-valor**. Al estudiar esta página deberías poder:
 
 - explicar qué es un diccionario;
+- distinguir llave, valor, índice y bucket;
 - definir una función de hash;
 - aplicar hashing modular;
-- resolver colisiones mediante encadenamiento o direccionamiento abierto;
+- reconocer y resolver colisiones mediante encadenamiento o direccionamiento abierto;
 - usar sondeo lineal;
 - calcular el factor de carga;
 - explicar cuándo hacer rehashing;
 - reconocer que una tabla de hash **no mantiene orden**.
+
+## Antes de partir: cuatro palabras clave
+
+Antes de usar fórmulas, conviene separar cuatro ideas que suelen mezclarse:
+
+- **Llave:** dato usado para buscar.
+- **Valor:** información asociada a la llave.
+- **Índice:** posición numérica dentro del arreglo.
+- **Bucket:** celda de la tabla donde pueden caer una o más llaves.
+
+| Concepto | Qué significa | Ejemplo |
+|---|---|---|
+| Llave | Dato usado para buscar | `rut_estudiante` |
+| Valor | Información asociada | datos del estudiante |
+| Índice | Posición en el arreglo | `A[3]` |
+| Bucket | Celda de la tabla | lista guardada en `A[3]` |
 
 ::: {.callout-important}
 Una tabla de hash está diseñada para buscar por llave, no para mantener las llaves ordenadas. No debe usarse para responder sucesor, predecesor, mínimo o máximo.
@@ -23,9 +40,9 @@ Una tabla de hash está diseñada para buscar por llave, no para mantener las ll
 
 Un **diccionario** es una estructura que almacena pares:
 
-\[
+$$
 (\text{llave}, \text{valor})
-\]
+$$
 
 La llave identifica el dato y el valor es la información asociada. Por ejemplo:
 
@@ -35,24 +52,20 @@ codigo_producto -> stock disponible
 tipo_tramite -> cola de personas esperando
 ```
 
-Una tabla de hash implementa este diccionario usando un arreglo `A` de tamaño `m`. Para decidir en qué posición guardar o buscar una llave `k`, se usa una función de hash:
+Una tabla de hash implementa este diccionario usando un arreglo `A` de tamaño `m`. Para decidir en qué posición guardar o buscar una llave `k`, se calcula un índice con una función de hash. La celda relevante se escribe:
 
-\[
-h : K \rightarrow \{0, \dots, m - 1\}
-\]
-
-La celda relevante es:
-
-\[
+$$
 A[h(k)]
-\]
+$$
 
 ```{mermaid}
 flowchart LR
     K["Llave k"] --> H["Función h(k)"]
-    H --> I["Índice 0 ... m-1"]
+    H --> I["Índice entre 0 y m-1"]
     I --> A["Celda A[h(k)]"]
 ```
+
+En palabras: la llave entra a la función `h`; la función devuelve un índice válido; ese índice indica qué bucket del arreglo se debe revisar.
 
 ::: {.callout-note}
 La tabla no guarda los elementos según su orden natural. La posición depende de `h(k)` y de la estrategia usada para manejar colisiones.
@@ -105,27 +118,72 @@ La llave debe permitir identificar el par buscado. Si hay colisiones, no basta g
 
 ### Función de hash
 
-Una función de hash transforma una llave del conjunto `K` en un índice válido de la tabla:
+#### 1. Intuición
 
-\[
-h : K \rightarrow \{0, \dots, m - 1\}
-\]
+Una función de hash es una regla que convierte una llave en un número que sirve como índice del arreglo.
+
+Por ejemplo, si la llave es `rut_estudiante`, la tabla no puede usar directamente el RUT completo como posición física. Primero necesita transformarlo en un índice pequeño, como `0`, `1`, `2` o `3`, dependiendo del tamaño de la tabla.
+
+La función hash **no guarda datos por sí misma**. Solo calcula una posición tentativa. Después, la tabla usa esa posición para insertar, buscar, actualizar o eliminar.
+
+#### 2. Definición formal
+
+Si `K` es el conjunto de llaves posibles y la tabla tiene tamaño `m`, la función hash se escribe:
+
+$$
+h : K \to \{0, \dots, m - 1\}
+$$
+
+Esto significa que `h` recibe una llave y entrega un índice válido entre `0` y `m - 1`.
+
+#### 3. Explicación de símbolos
+
+Donde:
+
+- `K` es el conjunto de llaves posibles.
+- `m` es el tamaño de la tabla.
+- `h(k)` es el índice calculado para la llave `k`.
+- `n` es la cantidad de elementos guardados.
+
+El acceso al bucket calculado se representa así:
+
+$$
+A[h(k)]
+$$
+
+Aquí `A` es el arreglo de la tabla y `A[h(k)]` es la celda que se revisa para la llave `k`.
+
+#### 4. Ejemplo con hashing modular
 
 Un ejemplo típico para llaves enteras es el **hashing modular**:
 
-\[
+$$
 h(k) = k \bmod m
-\]
+$$
 
-Si `m = 7`, entonces `h(15) = 15 mod 7 = 1`.
+Si `m = 7` y `k = 15`, entonces:
+
+```text
+15 mod 7 = 1
+```
+
+Por lo tanto, la llave `15` apunta inicialmente al bucket `A[1]`.
+
+#### 5. Advertencia sobre colisiones
+
+La posición calculada es tentativa porque dos llaves distintas pueden producir el mismo índice. Si eso ocurre, la tabla necesita una estrategia de colisiones.
+
+::: {.callout-warning}
+Calcular `h(k)` no garantiza que el bucket esté libre. Solo indica por dónde comenzar la búsqueda o inserción.
+:::
 
 ### Tabla de hash
 
 Una tabla de hash es un arreglo `A` indexado por el valor de la función de hash. Para una llave `k`, se revisa la posición:
 
-\[
+$$
 A[h(k)]
-\]
+$$
 
 Como el espacio de llaves suele ser mucho más grande que el tamaño de la tabla, distintas llaves pueden caer en la misma celda.
 
@@ -133,11 +191,18 @@ Como el espacio de llaves suele ser mucho más grande que el tamaño de la tabla
 
 Hay una **colisión** cuando dos llaves distintas producen el mismo índice:
 
-\[
+$$
 h(k_1) = h(k_2), \quad k_1 \ne k_2
-\]
+$$
 
-Con `h(k) = k mod 7`:
+Con `m = 7`:
+
+- `h(37) = 37 mod 7 = 2`
+- `h(51) = 51 mod 7 = 2`
+
+Ambas llaves quieren usar `A[2]`. Eso es una colisión.
+
+Con `h(k) = k mod 7`, también ocurre:
 
 ```text
 37 mod 7 = 2
@@ -185,74 +250,148 @@ La eliminación depende de la estrategia de colisiones:
 
 El siguiente pseudocódigo directo solo es correcto en el escenario ideal sin colisiones o cuando la celda `A[h(k)]` maneja internamente las colisiones.
 
+**Input:** tabla `A`, llave `k`.  
+**Output:** valor asociado a `k`, si existe.
+
 ```text
 HashSearch(A, k):
-    return A[h(k)]
-
-HashInsert(A, k, v):
-    A[h(k)] <- v
-
-HashDelete(A, k):
-    A[h(k)] <- NIL
+    indice <- h(k)
+    return A[indice]
 ```
+
+**Input:** tabla `A`, llave `k`, valor `v`.  
+**Output:** tabla `A` con `v` asociado a `k`.
+
+```text
+HashInsert(A, k, v):
+    indice <- h(k)
+    A[indice] <- v
+```
+
+**Input:** tabla `A`, llave `k`.  
+**Output:** tabla `A` sin el valor asociado a `k`.
+
+```text
+HashDelete(A, k):
+    indice <- h(k)
+    A[indice] <- NIL
+```
+
+::: {.callout-warning}
+Este modelo directo sirve para entender la idea base, pero no basta en una tabla real con colisiones. En una implementación real se guarda el par `(llave, valor)`, no solo el valor.
+:::
 
 ### Encadenamiento
 
-En encadenamiento, cada celda del arreglo contiene una lista de pares `(llave, valor)`.
+En encadenamiento, cada celda del arreglo contiene una lista de pares `(llave, valor)`. En vez de guardar un solo par en la celda, la celda apunta a una lista.
+
+**Input:** tabla `A`, llave `k`.  
+**Output:** valor asociado a `k`, si existe.
 
 ```text
 ChainedHashSearch(A, k):
-    buscar la llave k en la lista A[h(k)]
+    indice <- h(k)
 
+    for cada par en A[indice]:
+        if par.llave = k:
+            return par.valor
+
+    return NOT_FOUND
+```
+
+**Input:** tabla `A`, llave `k`, valor `v`.  
+**Output:** tabla `A` con `(k, v)` insertado o actualizado.
+
+```text
 ChainedHashInsert(A, k, v):
-    insertar (k, v) al inicio de la lista A[h(k)]
+    indice <- h(k)
 
+    for cada par en A[indice]:
+        if par.llave = k:
+            par.valor <- v
+            return
+
+    insertar (k, v) al inicio de A[indice]
+```
+
+**Input:** tabla `A`, llave `k`.  
+**Output:** tabla `A` sin el par cuya llave es `k`.
+
+```text
 ChainedHashDelete(A, k):
-    eliminar el nodo con llave k desde la lista A[h(k)]
+    indice <- h(k)
+    eliminar desde A[indice] el par cuya llave es k
 ```
 
 ### Sondeo lineal
 
 El sondeo lineal es una forma de **direccionamiento abierto**. Los elementos se guardan directamente en el arreglo. Si la posición `h(k)` está ocupada, se revisa la siguiente, luego la siguiente, y así sucesivamente:
 
-\[
-h(k),\ h(k)+1,\ h(k)+2,\ \dots
-\]
+$$
+h(k),\ (h(k)+1) \bmod m,\ (h(k)+2) \bmod m,\ \dots
+$$
 
 Los índices se calculan módulo `m` para volver al inicio de la tabla.
 
+La variable `pasos` evita que el algoritmo dé vueltas infinitas si la tabla está llena o si la llave no aparece.
+
+**Input:** tabla `A`, llave `k`, tamaño de tabla `m`.  
+**Output:** valor asociado a `k`, si existe.
+
 ```text
 LinearProbingSearch(A, k, m):
-    i <- h(k)
+    indice <- h(k)
     pasos <- 0
 
-    while A[i] != NIL and pasos < m:
-        if A[i].key = k:
-            return A[i].value
+    while A[indice] != NIL and pasos < m:
+        if A[indice].llave = k:
+            return A[indice].valor
 
-        i <- (i + 1) mod m
+        indice <- (indice + 1) mod m
         pasos <- pasos + 1
 
     return NOT_FOUND
 ```
 
+**Input:** tabla `A`, llave `k`, valor `v`, tamaño de tabla `m`.  
+**Output:** tabla `A` con `(k, v)` insertado o actualizado.
+
 ```text
 LinearProbingInsert(A, k, v, m):
-    i <- h(k)
+    indice <- h(k)
     pasos <- 0
 
-    while A[i] != NIL and pasos < m:
-        if A[i].key = k:
-            A[i].value <- v
+    while A[indice] != NIL and pasos < m:
+        if A[indice].llave = k:
+            A[indice].valor <- v
             return
 
-        i <- (i + 1) mod m
+        indice <- (indice + 1) mod m
         pasos <- pasos + 1
 
     if pasos = m:
         error "tabla llena"
 
-    A[i] <- (k, v)
+    A[indice] <- (k, v)
+```
+
+**Input:** tabla `A`, llave `k`, tamaño de tabla `m`.  
+**Output:** tabla `A` con la llave `k` marcada como eliminada, si aparece.
+
+```text
+LinearProbingDelete(A, k, m):
+    indice <- h(k)
+    pasos <- 0
+
+    while A[indice] != NIL and pasos < m:
+        if A[indice].llave = k:
+            A[indice] <- DELETED
+            return
+
+        indice <- (indice + 1) mod m
+        pasos <- pasos + 1
+
+    return NOT_FOUND
 ```
 
 ::: {.callout-warning}
@@ -263,7 +402,7 @@ En sondeo lineal, la búsqueda debe seguir la misma secuencia usada por la inser
 
 | Operación | Complejidad esperada | Comentario |
 |---|---:|---|
-| Asociar o insertar | `O(1)` | Puede requerir manejar colisiones |
+| Insertar/asociar | `O(1)` | Puede requerir manejar colisiones |
 | Actualizar | `O(1)` | Primero se busca la llave |
 | Obtener | `O(1)` | Esperada, no garantizada |
 | Eliminar | `O(1)` | Más simple con encadenamiento |
@@ -276,6 +415,20 @@ La complejidad `O(1)` es esperada. Puede degradarse si la función de hash distr
 En el peor caso, muchas llaves pueden caer en el mismo lugar. Entonces una búsqueda puede terminar recorriendo muchos elementos, llegando a `O(n)`.
 
 ## Colisiones
+
+Antes de elegir una estrategia, mira el problema mínimo:
+
+Con `m = 7`:
+
+- `h(37) = 37 mod 7 = 2`
+- `h(51) = 51 mod 7 = 2`
+
+Ambas llaves quieren usar `A[2]`. Eso es una colisión.
+
+Hay dos respuestas clásicas:
+
+- **Encadenamiento:** en vez de guardar un solo par en la celda, la celda apunta a una lista.
+- **Direccionamiento abierto:** en vez de crear una lista, se busca otra posición dentro del mismo arreglo.
 
 ### Encadenamiento
 
@@ -339,14 +492,14 @@ Si el problema incluye muchas eliminaciones, encadenamiento suele ser más cómo
 
 El **factor de carga** mide qué tan llena está la tabla:
 
-\[
+$$
 \lambda = \frac{n}{m}
-\]
+$$
 
-donde:
+Donde:
 
-- `n` es la cantidad de elementos almacenados;
-- `m` es el tamaño del arreglo.
+- `n` es la cantidad de elementos guardados.
+- `m` es el tamaño de la tabla.
 
 Mientras mayor es `lambda`, más probable es tener colisiones y secuencias largas de búsqueda.
 
@@ -364,6 +517,16 @@ El costo del rehashing es `O(n)` porque hay que procesar los `n` elementos almac
 El rehashing es costoso cuando ocurre, pero permite recuperar búsquedas e inserciones esperadas `O(1)` al reducir colisiones.
 :::
 
+## Cómo leer el ejemplo guiado
+
+El ejemplo se hará en tres etapas para no mezclar estrategias:
+
+1. Calcular el índice de cada llave.
+2. Insertar con encadenamiento.
+3. Insertar con sondeo lineal.
+
+Primero todos usan la misma función `h(k)`. Después se comparan dos formas distintas de resolver las colisiones.
+
 ## Ejemplo guiado
 
 Supongamos:
@@ -376,19 +539,23 @@ llaves = 15, 37, 51, 29, 58
 
 Primero calculamos los índices:
 
-| Llave | h(k) = k mod 7 | Observación |
-|---:|---:|---|
-| 15 | 1 | Se inserta directo |
-| 37 | 2 | Se inserta directo |
-| 51 | 2 | Colisiona con 37 |
-| 29 | 1 | Colisiona con 15 |
-| 58 | 2 | Colisiona con 37 y 51 |
+| Llave | Cálculo | Índice | Qué ocurre |
+|---:|---|---:|---|
+| 15 | `15 mod 7 = 1` | 1 | Se inserta directo |
+| 37 | `37 mod 7 = 2` | 2 | Se inserta directo |
+| 51 | `51 mod 7 = 2` | 2 | Colisiona con 37 |
+| 29 | `29 mod 7 = 1` | 1 | Colisiona con 15 |
+| 58 | `58 mod 7 = 2` | 2 | Colisiona con 37 y 51 |
 
-### Resultado con encadenamiento
+### Etapa 1: cálculos
+
+La tabla anterior solo calcula el índice inicial. Todavía no decide dónde queda cada llave si hay colisión.
+
+### Etapa 2: resultado con encadenamiento
 
 Si cada nueva llave se inserta al inicio de la lista:
 
-| Índice | Estado final |
+| Índice | Lista |
 |---:|---|
 | 0 | ∅ |
 | 1 | 29 → 15 |
@@ -400,15 +567,17 @@ Si cada nueva llave se inserta al inicio de la lista:
 
 Para buscar `58`, se calcula `h(58) = 2` y se revisa la lista del índice `2`.
 
-### Resultado con sondeo lineal
+### Etapa 3: resultado con sondeo lineal
 
-| Paso | Llave | h(k) | Acción |
-|---:|---:|---:|---|
-| 1 | 15 | 1 | Se guarda en índice 1 |
-| 2 | 37 | 2 | Se guarda en índice 2 |
-| 3 | 51 | 2 | Índice 2 ocupado; se guarda en índice 3 |
-| 4 | 29 | 1 | Índices 1, 2 y 3 ocupados; se guarda en índice 4 |
-| 5 | 58 | 2 | Índices 2, 3 y 4 ocupados; se guarda en índice 5 |
+En sondeo lineal, una colisión no crea una lista. Se sigue avanzando en el mismo arreglo hasta encontrar una celda libre.
+
+| Llave | Índice inicial | Revisión de posiciones | Posición final |
+|---:|---:|---|---:|
+| 15 | 1 | 1 libre | 1 |
+| 37 | 2 | 2 libre | 2 |
+| 51 | 2 | 2 ocupado → 3 libre | 3 |
+| 29 | 1 | 1 ocupado → 2 ocupado → 3 ocupado → 4 libre | 4 |
+| 58 | 2 | 2 ocupado → 3 ocupado → 4 ocupado → 5 libre | 5 |
 
 Estado final:
 
@@ -433,39 +602,39 @@ hasta encontrar la llave. Si una llave no está en la tabla, la búsqueda contin
 ## Errores típicos
 
 ::: {.callout-warning}
-### Error 1: intentar ordenar una tabla de hash
+## Error típico: intentar ordenar una tabla de hash
 
-Una tabla de hash no mantiene orden. La posición física de una llave depende de `h(k)` y de las colisiones, no de la relación menor/mayor entre llaves.
+Una tabla de hash no mantiene orden. La posición física depende de `h(k)` y de las colisiones, no de la relación menor/mayor entre llaves.
 :::
 
 ::: {.callout-warning}
-### Error 2: responder sucesor, predecesor, mínimo o máximo con hash
+## Error típico: responder mínimo, máximo, sucesor o predecesor
 
 La tabla de hash no entrega esas operaciones de forma eficiente. Para orden, usa una estructura ordenada; para mínimo o máximo frecuente, considera un heap.
 :::
 
 ::: {.callout-warning}
-### Error 3: confundir hash con heap
+## Error típico: confundir hash con heap
 
 Hash sirve para acceso por llave. Heap sirve para obtener mínimo o máximo según prioridad. Sus objetivos son distintos.
 :::
 
 ::: {.callout-warning}
-### Error 4: guardar solo el valor y no la llave
+## Error típico: guardar solo el valor y no la llave
 
-Si hay colisiones, dos llaves distintas pueden llegar al mismo lugar. Por eso cada elemento debe conservar su llave.
+Si hay colisiones, dos llaves distintas pueden llegar al mismo lugar. Por eso cada elemento debe conservar su llave junto con su valor.
 :::
 
 ::: {.callout-warning}
-### Error 5: eliminar mal en direccionamiento abierto
+## Error típico: eliminar mal en direccionamiento abierto
 
-Si se reemplaza una celda por `NIL`, se puede cortar la secuencia de búsqueda y hacer que otros elementos parezcan ausentes.
+Si se reemplaza una celda por `NIL`, se puede cortar la secuencia de búsqueda y hacer que otros elementos parezcan ausentes. Por eso se suelen usar marcas como `DELETED`.
 :::
 
 ::: {.callout-warning}
-### Error 6: asumir que `O(1)` está garantizado siempre
+## Error típico: asumir que `O(1)` está garantizado siempre
 
-La eficiencia esperada depende de una buena distribución, pocas colisiones y un factor de carga controlado.
+La eficiencia esperada depende de una buena distribución, pocas colisiones y un factor de carga controlado. En el peor caso, una operación puede costar `O(n)`.
 :::
 
 ## Problema representativo de interrogación
@@ -498,7 +667,13 @@ Propón una estructura de datos eficiente y justifica:
 <details>
 <summary>Ver solución</summary>
 
-Conviene usar una tabla de hash donde:
+Primero identificamos qué exige el enunciado:
+
+- Acceso por tipo de trámite.
+- Orden de llegada dentro de cada tipo.
+- Eliminación del primero de la fila.
+
+Por eso conviene usar una tabla de hash donde:
 
 - la llave es `tipo_tramite`;
 - el valor asociado a cada llave es una cola FIFO con las personas esperando ese trámite.
@@ -622,11 +797,13 @@ Indica si cada afirmación es verdadera o falsa:
 <details>
 <summary>Ver solución sugerida</summary>
 
-1. Falso. La tabla de hash no mantiene orden.
-2. Verdadero. Eso es una colisión.
-3. Falso. Puede quedar en otra posición por colisión.
-4. Verdadero.
-5. Verdadero.
+| Afirmación | Respuesta | Motivo |
+|---:|---|---|
+| 1 | Falso | La tabla de hash no mantiene orden. |
+| 2 | Verdadero | Eso es una colisión. |
+| 3 | Falso | Puede quedar en otra posición por colisión. |
+| 4 | Verdadero | Mide la relación entre elementos guardados y tamaño de tabla. |
+| 5 | Verdadero | Un heap está diseñado para mínimo o máximo según prioridad. |
 
 </details>
 
@@ -634,9 +811,11 @@ Indica si cada afirmación es verdadera o falsa:
 
 Tienes que almacenar el último puntaje obtenido por cada estudiante, usando su identificador como llave.
 
-1. ¿Qué representa la llave?
-2. ¿Qué representa el valor?
-3. Si llega un nuevo puntaje para un estudiante ya existente, ¿qué operación del diccionario corresponde?
+| Pregunta | Respuesta esperada |
+|---|---|
+| ¿Qué representa la llave? | El identificador del estudiante. |
+| ¿Qué representa el valor? | El puntaje almacenado. |
+| Si llega un nuevo puntaje para un estudiante ya existente, ¿qué operación corresponde? | Actualizar el valor asociado a esa llave. |
 
 <details>
 <summary>Ver solución sugerida</summary>

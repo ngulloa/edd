@@ -2,54 +2,863 @@
 title: "Programación dinámica"
 ---
 
+## Objetivo de aprendizaje
+
+Comprender programación dinámica como una técnica para resolver problemas donde conviene comparar opciones y guardar resultados de subproblemas. Al estudiar esta página deberías poder:
+
+- reconocer señales de programación dinámica en un enunciado;
+- distinguir DP de greedy, backtracking y dividir para conquistar;
+- definir subproblemas, estados, casos base y recurrencias;
+- elegir entre memoización y bottom-up;
+- calcular complejidad como número de estados por costo de transición;
+- reconstruir una solución cuando el enunciado no pide solo el valor óptimo;
+- resolver patrones clásicos como charlas con ganancia, mochila 0/1, dar vuelto y partición en dos subconjuntos.
+
 ## Idea central del tema
 
-Pendiente de desarrollo.
+La programación dinámica, o DP, se usa cuando un problema tiene dos propiedades:
 
-## Cuándo usar esta técnica o estructura
+- **Subproblemas solapados:** al resolver el problema de forma recursiva, aparecen varias veces los mismos subproblemas.
+- **Subestructura óptima:** una solución óptima del problema completo se puede construir a partir de soluciones óptimas de subproblemas más pequeños.
 
-Pendiente de desarrollo.
+::: {.callout-important}
+## Idea central
+
+La tabla no es el punto de partida. Primero se define qué significa cada subproblema, luego se escribe la recurrencia y recién después se decide cómo guardar los valores.
+:::
+
+La idea práctica es resolver cada subproblema una sola vez. Si se usa recursión, se guarda el resultado en una estructura de memoria; eso se llama **memoización**. Si se llena una tabla desde casos pequeños hacia casos grandes, se usa un enfoque **bottom-up**.
+
+Un flujo razonable para formular una DP es:
+
+```{mermaid}
+flowchart LR
+    A["Enunciado"] --> B["Definir subproblema"]
+    B --> C["Casos base"]
+    C --> D["Recurrencia"]
+    D --> E["Orden de llenado"]
+    E --> F["Complejidad"]
+    F --> G["Reconstrucción"]
+```
+
+::: {.callout-note}
+## Intuición
+
+DP no adivina una decisión local. DP compara opciones, guarda el mejor resultado de cada estado y reutiliza esos resultados cuando vuelven a aparecer.
+:::
+
+## Antes de partir: vocabulario mínimo
+
+| Concepto | Qué significa | Pregunta guía |
+|---|---|---|
+| Problema de optimización | Problema donde se busca maximizar o minimizar una cantidad | Qué significa "mejor" |
+| Subproblema | Versión más pequeña o parcial del problema original | Qué parte del problema puedo resolver por separado |
+| Estado | Parámetros que identifican completamente un subproblema | Qué datos necesito para saber dónde estoy |
+| Caso base | Estado cuyo valor se conoce directamente | Dónde termina la recurrencia |
+| Recurrencia | Fórmula que expresa un estado usando estados más simples | Cómo combino respuestas previas |
+| Transición | Opción evaluada para pasar de un estado a otro | Qué decisiones comparo |
+| Memoización | Recursión con almacenamiento de resultados ya calculados | Cómo evito repetir llamadas |
+| Bottom-up | Llenado iterativo desde estados base hacia estados mayores | En qué orden lleno la tabla |
+| Reconstrucción | Proceso para recuperar las decisiones tomadas | Qué elementos forman la solución |
+
+Una definición de estado debe ser precisa. No basta escribir `DP[i]` sin explicar qué representa `i`. Una buena respuesta empieza con una frase del tipo:
+
+```text
+DP[i][w] = mejor valor usando los primeros i objetos con capacidad w
+```
+
+Esa frase determina qué significa cada celda y qué dependencias puede tener.
+
+## Cuándo usar programación dinámica
+
+Conviene pensar en DP cuando el problema tiene muchas combinaciones posibles, pero esas combinaciones comparten subproblemas.
+
+| Señal en el enunciado | Lectura posible |
+|---|---|
+| "máxima ganancia", "mínimo costo", "menor cantidad" | Hay una función objetivo |
+| "tomar o no tomar" | Puede haber una recurrencia con dos opciones |
+| "capacidad restante", "monto restante", "índice actual" | Esos valores pueden formar el estado |
+| "subsecuencia", "subconjunto", "partición" | Puede haber subproblemas solapados |
+| "una estrategia greedy plausible falla" | Puede ser necesario comparar opciones |
+| "se pide recurrencia" | Se espera definir subproblema, caso base y transición |
+| "se pide la solución concreta" | Hay que considerar reconstrucción |
+
+No todo problema con máximo o mínimo es DP. Para justificar DP deben aparecer subproblemas solapados y subestructura óptima. Si los subproblemas son independientes y no se repiten, puede bastar dividir para conquistar. Si una decisión local segura está demostrada, puede bastar greedy.
+
+::: {.callout-tip}
+## Consejo de estudio
+
+Antes de escribir código, intenta responder: qué significa el estado, qué opciones compara, cuáles son los casos base y en qué orden se calculan los estados.
+:::
+
+## Diferencia con otras técnicas
+
+| Técnica | Qué hace | Diferencia clave con DP |
+|---|---|---|
+| Greedy | Toma decisiones locales definitivas | DP compara opciones y guarda resultados antes de decidir |
+| Backtracking | Explora asignaciones, valida y puede retroceder | DP evita recomputar subproblemas equivalentes |
+| Dividir para conquistar | Divide en subproblemas disjuntos | DP aparece cuando los subproblemas se solapan |
+| Fuerza bruta | Prueba combinaciones sin reutilizar estructura | DP guarda respuestas parciales y las reutiliza |
+
+Greedy y DP suelen confundirse en problemas de optimización. La diferencia central es que greedy toma una decisión local y no vuelve atrás; DP evalúa alternativas como "tomar/no tomar", "usar/no usar" o "cortar/no cortar" y guarda el mejor resultado de cada estado.
+
+Backtracking también explora decisiones, pero puede visitar el mismo subproblema muchas veces desde ramas distintas. DP reconoce que esos subproblemas son equivalentes y los calcula una sola vez.
+
+Dividir para conquistar, como mergesort, divide el problema en partes disjuntas. DP se vuelve útil cuando las partes se superponen y el mismo cálculo reaparece.
 
 ## Conceptos mínimos
 
-Pendiente de desarrollo.
+### Subproblemas solapados
 
-## Operaciones o algoritmo principal
+Hay subproblemas solapados cuando la recursión natural repite estados. Por ejemplo, en dar vuelto para un monto `S`, el monto restante `4` puede aparecer después de varias decisiones distintas. Sin memoria, se calcula muchas veces; con DP, se calcula una vez.
 
-Pendiente de desarrollo.
+### Subestructura óptima
+
+Un problema tiene subestructura óptima cuando una solución óptima se puede construir usando soluciones óptimas de subproblemas. En mochila 0/1, si el objeto `i` se toma, el resto debe ser la mejor solución posible con los objetos anteriores y la capacidad restante.
+
+### Estado suficiente
+
+El estado debe contener toda la información necesaria para decidir el futuro. Si falta una variable, la recurrencia mezcla situaciones distintas. Si sobra una variable, la tabla se vuelve más grande de lo necesario.
+
+| Estado | Qué guarda | Riesgo si está mal definido |
+|---|---|---|
+| `DP[i]` | Mejor valor hasta el índice `i` | Puede faltar capacidad, monto o compatibilidad |
+| `DP[i][w]` | Mejor valor hasta `i` con capacidad `w` | Sirve para mochila, pero no para intervalos sin ordenar |
+| `DP[T][k]` | Mejor respuesta para monto `T` con primeras `k` monedas | Sirve para limitar denominaciones |
+| `P(k, S)` | Si se puede formar suma `S` desde el índice `k` | Sirve para partición o subset sum |
+
+### Recurrencia
+
+La recurrencia expresa cómo calcular un estado desde estados más simples. Debe incluir todas las opciones relevantes y elegir con el operador adecuado:
+
+- `max` si se maximiza ganancia o valor;
+- `min` si se minimiza costo, cantidad o distancia;
+- `or` si se pregunta si existe una solución;
+- suma si se cuenta cantidad de formas.
+
+### Reconstrucción
+
+El valor óptimo no siempre basta. Si el enunciado pide qué charlas tomar, qué objetos seleccionar o qué monedas usar, se debe reconstruir la solución comparando decisiones o guardando un arreglo auxiliar.
+
+::: {.callout-warning}
+## Error típico
+
+Si el enunciado pide la solución concreta y no solo el valor óptimo, responder únicamente `DP[n][W]` queda incompleto. Hay que recuperar las decisiones que produjeron ese valor.
+:::
+
+## Receta para formular una DP
+
+Una respuesta ordenada puede seguir esta receta:
+
+| Paso | Qué escribir | Pregunta que responde |
+|---|---|---|
+| 1 | Definir el subproblema | Qué significa `DP[...]` |
+| 2 | Identificar casos base | Qué estados se conocen directamente |
+| 3 | Escribir la recurrencia | Qué opciones se comparan |
+| 4 | Elegir memoización o bottom-up | Cómo se guardan los resultados |
+| 5 | Definir orden de llenado | Qué estados deben estar listos antes |
+| 6 | Calcular complejidad | Cuántos estados hay y cuánto cuesta cada uno |
+| 7 | Reconstruir si corresponde | Cómo se recuperan decisiones concretas |
+
+::: {.callout-important}
+## Modelo antes que tabla
+
+No empieces dibujando una matriz. Primero escribe una frase precisa: `DP[...] = ...`. Esa frase determina dimensiones, casos base, recurrencia y orden de llenado.
+:::
 
 ## Pseudocódigo claro
 
-Pendiente de desarrollo.
+### Memoización genérica
+
+La memoización mantiene el estilo recursivo, pero evita repetir subproblemas ya resueltos.
+
+**Input:** estado inicial del problema y estructura `M` para guardar resultados.
+
+**Output:** valor óptimo asociado al estado inicial.
+
+```text
+DP_Memo(estado):
+    if estado es caso base:
+        return valor_base
+
+    if M[estado] != NIL:
+        return M[estado]
+
+    mejor <- peor_valor_posible
+
+    for decision in decisiones_validas(estado):
+        nuevo_estado <- aplicar(decision, estado)
+        candidato <- valor(decision) + DP_Memo(nuevo_estado)
+        mejor <- mejor_entre(mejor, candidato)
+
+    M[estado] <- mejor
+    return mejor
+```
+
+La línea `M[estado] <- mejor` es lo que evita recomputar. Sin esa línea, el algoritmo vuelve a ser una recursión exponencial en muchos problemas.
+
+### Bottom-up genérico
+
+Bottom-up llena una tabla en un orden donde cada estado consulta solo estados ya calculados.
+
+**Input:** datos del problema, dimensiones de la tabla y casos base.
+
+**Output:** valor óptimo del problema completo.
+
+```text
+DP_BottomUp(datos):
+    inicializar tabla DP con casos base
+
+    for estado in orden_valido:
+        DP[estado] <- combinar estados anteriores segun recurrencia
+
+    return DP[estado_final]
+```
+
+El punto delicado es `orden_valido`. Si la recurrencia usa `DP[i - 1][w]`, entonces la fila `i - 1` debe estar calculada antes de la fila `i`. Si usa montos menores, se llenan montos de menor a mayor.
+
+### Reconstrucción genérica
+
+Cuando se necesita la solución concreta, se camina hacia atrás desde el estado final.
+
+**Input:** tabla `DP`, estado final y datos del problema.
+
+**Output:** decisiones que forman una solución óptima.
+
+```text
+Reconstruir(estado):
+    if estado es caso base:
+        return empty
+
+    decision <- identificar decision que explica DP[estado]
+    estado_anterior <- retroceder(estado, decision)
+
+    return Reconstruir(estado_anterior) union {decision}
+```
+
+En algunas implementaciones se guarda explícitamente una tabla `decision`. En otras se compara el valor de celdas vecinas para deducir si se tomó o no una opción.
 
 ## Complejidad
 
-Pendiente de desarrollo.
+La complejidad de una DP se calcula con esta regla:
+
+$$
+T = \#\text{estados} \cdot \text{costo de transición}
+$$
+
+Donde `#estados` es la cantidad de celdas o llamadas distintas posibles, y el costo de transición es cuánto se demora calcular cada estado una vez que sus dependencias están listas.
+
+| Patrón | Cantidad de estados | Costo por estado | Tiempo |
+|---|---:|---:|---:|
+| `DP[i]` con `i = 0..n` | `O(n)` | `O(1)` | `O(n)` |
+| `DP[i][w]` con `i = 0..n`, `w = 0..W` | `O(nW)` | `O(1)` | `O(nW)` |
+| `DP[T][k]` con `T = 0..S`, `k = 0..n` | `O(Sn)` | `O(1)` | `O(Sn)` |
+| Estado con `m` transiciones posibles | depende del estado | `O(m)` | estados por `m` |
+
+La memoria suele ser el número de estados guardados. A veces puede reducirse si una fila depende solo de la fila anterior, pero esa optimización no debe ocultar la recurrencia original.
+
+::: {.callout-note}
+## Cómo justificar complejidad
+
+Una respuesta completa dice cuántos estados existen, cuánto cuesta calcular cada estado y cuánto espacio ocupa la tabla o memo.
+:::
+
+## Ejemplo guiado 1: charlas con ganancia
+
+### Problema
+
+Se tienen `n` charlas. Cada charla `j` tiene inicio `s[j]`, término `f[j]` y ganancia `v[j]`. Se quiere elegir un subconjunto de charlas compatibles que maximice la ganancia total.
+
+Este problema se parece a selección de charlas greedy, pero la ganancia cambia el objetivo. Una charla larga con alta ganancia puede ser mejor que varias charlas cortas de baja ganancia.
+
+::: {.callout-warning}
+## Relación con greedy
+
+Charlas sin ganancia se resuelve con greedy ordenando por término temprano. Charlas con ganancia requiere comparar tomar o no tomar cada charla; por eso aparece programación dinámica.
+:::
+
+### Subproblema
+
+Primero se ordenan las charlas por hora de término creciente. Definimos:
+
+- `v[j]`: ganancia de la charla `j`;
+- `b(j)`: índice de la última charla compatible con `j` que termina antes de que empiece `j`;
+- `OPT(j)`: máxima ganancia usando solo las primeras `j` charlas.
+
+### Recurrencia
+
+Para la charla `j` hay dos opciones:
+
+1. Tomar `j`: se gana `v_j` y se suma lo mejor compatible antes de ella, `OPT(b(j))`.
+2. No tomar `j`: se conserva lo mejor usando las primeras `j - 1` charlas.
+
+$$
+OPT(j) = \max\{v_j + OPT(b(j)),\ OPT(j - 1)\}
+$$
+
+El caso base es:
+
+$$
+OPT(0) = 0
+$$
+
+Aquí `OPT(0)` significa que no hay charlas disponibles, por lo que la ganancia máxima es cero.
+
+### Ejemplo pequeño
+
+| Charla | Inicio | Fin | Ganancia | `b(j)` |
+|---|---:|---:|---:|---:|
+| 1 | 1 | 3 | 5 | 0 |
+| 2 | 2 | 5 | 6 | 0 |
+| 3 | 4 | 6 | 5 | 1 |
+| 4 | 6 | 7 | 4 | 3 |
+| 5 | 5 | 8 | 11 | 2 |
+
+| `j` | Tomar `j` | Saltar `j` | `OPT(j)` |
+|---:|---:|---:|---:|
+| 0 | no aplica | no aplica | 0 |
+| 1 | `5 + OPT(0) = 5` | `OPT(0) = 0` | 5 |
+| 2 | `6 + OPT(0) = 6` | `OPT(1) = 5` | 6 |
+| 3 | `5 + OPT(1) = 10` | `OPT(2) = 6` | 10 |
+| 4 | `4 + OPT(3) = 14` | `OPT(3) = 10` | 14 |
+| 5 | `11 + OPT(2) = 17` | `OPT(4) = 14` | 17 |
+
+La mejor ganancia es `17`, tomando las charlas `2` y `5`.
+
+### Pseudocódigo bottom-up
+
+**Input:** `n` charlas ordenadas por término, ganancias `v[1..n]` y compatibilidades `b[1..n]`.
+
+**Output:** máxima ganancia total.
+
+```text
+CharlasConGanancia(n, v, b):
+    M[0] <- 0
+
+    for j = 1 to n:
+        tomar <- v[j] + M[b[j]]
+        saltar <- M[j - 1]
+        M[j] <- max(tomar, saltar)
+
+    return M[n]
+```
+
+### Reconstrucción
+
+Si se pide qué charlas tomar, se compara si el valor de `M[j]` viene de tomar o saltar la charla `j`.
+
+**Input:** tabla `M`, ganancias `v`, compatibilidades `b` e índice `j`.
+
+**Output:** conjunto de charlas seleccionadas.
+
+```text
+ReconstruirCharlas(j, M, v, b):
+    if j = 0:
+        return empty
+
+    tomar <- v[j] + M[b[j]]
+    saltar <- M[j - 1]
+
+    if tomar >= saltar:
+        return ReconstruirCharlas(b[j], M, v, b) union {j}
+    else:
+        return ReconstruirCharlas(j - 1, M, v, b)
+```
+
+### Complejidad
+
+Si `b(j)` ya está calculado, llenar la tabla cuesta `O(n)`. Si se debe ordenar y calcular `b(j)` con búsqueda binaria, el costo típico total es `O(n log n)`.
+
+| Parte | Complejidad |
+|---|---:|
+| Ordenar charlas | `O(n log n)` |
+| Calcular `b(j)` con búsqueda binaria | `O(n log n)` |
+| Llenar tabla | `O(n)` |
+| Reconstruir solución | `O(n)` |
+| Memoria | `O(n)` |
+
+## Ejemplo guiado 2: mochila 0/1
+
+### Problema
+
+Hay `n` objetos. Cada objeto `i` tiene peso `peso[i]` y valor `valor[i]`. La mochila tiene capacidad máxima `W`. Cada objeto se puede tomar completo o no tomar. No se puede partir.
+
+::: {.callout-warning}
+## Mochila fraccionable no es mochila 0/1
+
+Mochila fraccionable permite tomar una parte de un objeto y admite una estrategia greedy por razón valor/peso. En mochila 0/1 cada objeto se toma o se descarta; esa misma regla greedy simple puede fallar.
+:::
+
+### Subproblema
+
+Definimos:
+
+$$
+DP[i][w] = \text{máximo valor usando los primeros } i \text{ objetos con capacidad } w
+$$
+
+Donde `i` indica cuántos objetos se consideran y `w` indica la capacidad disponible.
+
+### Recurrencia
+
+Para el objeto `i` hay dos opciones:
+
+1. No tomarlo: queda `DP[i - 1][w]`.
+2. Tomarlo, si cabe: queda `DP[i - 1][w - peso_i] + valor_i`.
+
+$$
+DP[i][w] =
+\begin{cases}
+DP[i - 1][w], & \text{si } peso_i > w \\
+\max\{DP[i - 1][w],\ DP[i - 1][w - peso_i] + valor_i\}, & \text{si } peso_i \le w
+\end{cases}
+$$
+
+Casos base:
+
+$$
+DP[0][w] = 0
+$$
+
+$$
+DP[i][0] = 0
+$$
+
+El primer caso dice que con cero objetos no se obtiene valor. El segundo dice que con capacidad cero no se puede cargar nada.
+
+### Pseudocódigo bottom-up
+
+**Input:** cantidad de objetos `n`, capacidad `W`, arreglos `peso` y `valor`.
+
+**Output:** máximo valor alcanzable con capacidad `W`.
+
+```text
+Mochila01(n, W, peso, valor):
+    for w = 0 to W:
+        DP[0][w] <- 0
+
+    for i = 1 to n:
+        DP[i][0] <- 0
+
+    for i = 1 to n:
+        for w = 1 to W:
+            DP[i][w] <- DP[i - 1][w]
+
+            if peso[i] <= w:
+                candidato <- DP[i - 1][w - peso[i]] + valor[i]
+                DP[i][w] <- max(DP[i][w], candidato)
+
+    return DP[n][W]
+```
+
+### Reconstrucción
+
+**Input:** tabla `DP`, arreglos `peso` y `valor`, índice `i` y capacidad `w`.
+
+**Output:** conjunto de objetos seleccionados.
+
+```text
+ReconstruirMochila(i, w, DP, peso):
+    if i = 0 or w = 0:
+        return empty
+
+    if DP[i][w] = DP[i - 1][w]:
+        return ReconstruirMochila(i - 1, w, DP, peso)
+    else:
+        return ReconstruirMochila(i - 1, w - peso[i], DP, peso) union {i}
+```
+
+### Complejidad
+
+La tabla tiene `(n + 1)(W + 1)` estados y cada estado se calcula en tiempo constante.
+
+| Recurso | Complejidad |
+|---|---:|
+| Estados | `O(nW)` |
+| Costo por transición | `O(1)` |
+| Tiempo | `O(nW)` |
+| Memoria | `O(nW)` |
+
+## Ejemplo guiado 3: dar vuelto
+
+### Problema
+
+Se quiere formar un monto `S` usando la menor cantidad de monedas. Hay monedas de valores `v[1..n]` y se asume cantidad ilimitada de cada denominación.
+
+### Contraejemplo greedy
+
+La estrategia greedy de tomar siempre la moneda más grande posible puede fallar. Con monedas `{6, 4, 1}` y monto `S = 8`, greedy toma:
+
+```text
+8 = 6 + 1 + 1
+```
+
+Eso usa 3 monedas. Pero el óptimo es:
+
+```text
+8 = 4 + 4
+```
+
+Eso usa 2 monedas. Por lo tanto, en sistemas de monedas no canónicos, dar vuelto puede necesitar DP.
+
+### Subproblema
+
+Definimos:
+
+$$
+Z[T][k] = \text{mínimo número de monedas para formar } T \text{ usando las primeras } k \text{ denominaciones}
+$$
+
+Donde `T` es el monto objetivo parcial y `k` indica cuántas denominaciones se pueden usar.
+
+### Recurrencia
+
+Para la moneda `v_k`, hay dos opciones:
+
+1. No usar la denominación `k`: queda `Z[T][k - 1]`.
+2. Usar una moneda de valor `v_k`: queda `Z[T - v_k][k] + 1`, porque se puede volver a usar la misma moneda.
+
+$$
+Z[T][k] = \min\{Z[T][k - 1],\ Z[T - v_k][k] + 1\}
+$$
+
+La segunda opción solo existe si `T - v_k >= 0`.
+
+Casos base:
+
+$$
+Z[0][k] = 0
+$$
+
+$$
+Z[T][0] = +\infty \quad \text{si } T > 0
+$$
+
+### Pseudocódigo bottom-up
+
+**Input:** monto `S`, cantidad de denominaciones `n` y valores `v[1..n]`.
+
+**Output:** mínimo número de monedas para formar `S`, o `+infinito` si no se puede.
+
+```text
+DarVuelto(S, n, v):
+    for T = 1 to S:
+        Z[T][0] <- +infinito
+
+    for k = 0 to n:
+        Z[0][k] <- 0
+
+    for k = 1 to n:
+        for T = 1 to S:
+            no_usar <- Z[T][k - 1]
+            usar <- +infinito
+
+            if T >= v[k]:
+                usar <- Z[T - v[k]][k] + 1
+
+            Z[T][k] <- min(no_usar, usar)
+
+    return Z[S][n]
+```
+
+### Reconstrucción
+
+**Input:** tabla `Z`, monto `T`, índice `k` y valores `v`.
+
+**Output:** multiconjunto de monedas usadas.
+
+```text
+ReconstruirVuelto(T, k, Z, v):
+    if T = 0:
+        return empty
+
+    if k = 0:
+        return FAIL
+
+    if Z[T][k] = Z[T][k - 1]:
+        return ReconstruirVuelto(T, k - 1, Z, v)
+    else:
+        return ReconstruirVuelto(T - v[k], k, Z, v) union {v[k]}
+```
+
+### Complejidad
+
+| Recurso | Complejidad |
+|---|---:|
+| Estados | `O(Sn)` |
+| Costo por transición | `O(1)` |
+| Tiempo | `O(Sn)` |
+| Memoria | `O(Sn)` |
+
+## Ejemplo guiado 4: partición en dos subconjuntos
+
+### Problema
+
+Dado un arreglo de números positivos `A[1..n]`, se quiere saber si puede dividirse en dos subconjuntos con igual suma.
+
+Si la suma total es impar, la respuesta es `false`. Si es par, basta preguntar si existe un subconjunto que sume la mitad:
+
+$$
+S = \frac{\sum_{i=1}^{n} A[i]}{2}
+$$
+
+### Subproblema
+
+Definimos:
+
+$$
+P(k, S) = \text{true si se puede formar suma } S \text{ usando elementos desde } k \text{ hasta } n
+$$
+
+Donde `k` es el índice actual y `S` es la suma restante que se quiere formar.
+
+### Casos base
+
+| Caso | Respuesta | Motivo |
+|---|---|---|
+| `S = 0` | `true` | Ya se formó la suma buscada |
+| `S < 0` | `false` | La suma se pasó |
+| `k > n` y `S > 0` | `false` | No quedan elementos |
+
+### Recurrencia
+
+Para el elemento `A[k]`, se compara tomarlo o no tomarlo:
+
+$$
+P(k, S) = P(k + 1, S - A[k]) \lor P(k + 1, S)
+$$
+
+El operador `\lor` significa "o lógico": basta que una de las dos opciones sea posible.
+
+### Pseudocódigo con memoización
+
+**Input:** arreglo `A[1..n]`.
+
+**Output:** `true` si puede dividirse en dos subconjuntos de igual suma; `false` en caso contrario.
+
+```text
+ParticionIgual(A, n):
+    total <- suma(A)
+
+    if total mod 2 != 0:
+        return false
+
+    objetivo <- total / 2
+    inicializar M con NIL
+    return PuedeFormar(1, objetivo, A, n, M)
+
+PuedeFormar(k, S, A, n, M):
+    if S = 0:
+        return true
+
+    if S < 0:
+        return false
+
+    if k > n:
+        return false
+
+    if M[k][S] != NIL:
+        return M[k][S]
+
+    tomar <- PuedeFormar(k + 1, S - A[k], A, n, M)
+    no_tomar <- PuedeFormar(k + 1, S, A, n, M)
+    M[k][S] <- tomar or no_tomar
+    return M[k][S]
+```
+
+### Complejidad
+
+Si `S` es la mitad de la suma total, hay `O(nS)` estados y cada estado compara dos opciones en tiempo constante.
+
+| Recurso | Complejidad |
+|---|---:|
+| Estados | `O(nS)` |
+| Costo por transición | `O(1)` |
+| Tiempo | `O(nS)` |
+| Memoria | `O(nS)` |
 
 ## Errores típicos
 
-Pendiente de desarrollo.
+| Error | Por qué está mal | Corrección |
+|---|---|---|
+| Empezar por la tabla sin definir el subproblema | No se sabe qué significa cada celda | Escribir primero `DP[...] = ...` |
+| Confundir greedy con DP | Greedy decide localmente; DP compara opciones | Identificar las alternativas de la recurrencia |
+| Olvidar casos base | La recurrencia no termina o consulta valores inválidos | Definir índices, monto o capacidad cero |
+| Usar un estado insuficiente | Mezcla situaciones distintas en la misma celda | Agregar los parámetros que afectan el futuro |
+| Usar un estado excesivo | Aumenta tiempo y memoria sin necesidad | Eliminar información que no cambia decisiones futuras |
+| Llenar en orden inválido | Se consultan celdas no calculadas | Revisar dependencias de la recurrencia |
+| Dar solo el valor cuando piden la solución | Falta reconstruir decisiones | Guardar decisiones o comparar celdas hacia atrás |
+| Aplicar mochila fraccionable a mochila 0/1 | En 0/1 no se pueden tomar fracciones | Usar la recurrencia tomar/no tomar |
+| Decir que todo óptimo es DP | No siempre hay solapamiento útil | Justificar subproblemas solapados y subestructura óptima |
 
-## Ejemplo guiado
+::: {.callout-warning}
+## Error típico
 
-Pendiente de desarrollo.
+Una recurrencia sin definición de estado es ambigua. La frase que define `DP[...]` debe permitir entender exactamente qué representa cada parámetro.
+:::
 
 ## Problema representativo de interrogación
 
 <details>
 <summary>Ver enunciado</summary>
 
-Pendiente de desarrollo.
+Una productora organiza `n` charlas. Cada charla `j` tiene:
+
+- hora de inicio `s[j]`;
+- hora de término `f[j]`;
+- ganancia `v[j]`.
+
+No se pueden seleccionar dos charlas que se traslapen. Se pide obtener la máxima ganancia posible y, además, indicar qué charlas se seleccionan.
+
+1. Define el subproblema.
+2. Escribe la recurrencia y el caso base.
+3. Da pseudocódigo bottom-up.
+4. Explica la complejidad.
+5. Explica cómo reconstruir las charlas escogidas.
+6. Explica por qué no basta el algoritmo greedy de charlas sin ganancia.
 
 </details>
 
 <details>
 <summary>Ver solución</summary>
 
-Pendiente de desarrollo.
+Primero se ordenan las charlas por hora de término creciente. Luego se calcula `b(j)`, que corresponde a la última charla compatible con `j`: la de mayor índice menor que `j` que termina antes o justo cuando empieza `j`.
+
+Definimos el subproblema:
+
+$$
+OPT(j) = \text{máxima ganancia usando solo las primeras } j \text{ charlas}
+$$
+
+Para cada charla `j` hay dos opciones: tomarla o no tomarla. Si se toma, se suma su ganancia `v_j` y se continúa con la mejor solución compatible anterior `OPT(b(j))`. Si no se toma, queda `OPT(j - 1)`.
+
+$$
+OPT(j) = \max\{v_j + OPT(b(j)),\ OPT(j - 1)\}
+$$
+
+Caso base:
+
+$$
+OPT(0) = 0
+$$
+
+**Input:** `n` charlas ordenadas por término, ganancias `v` y arreglo de compatibilidades `b`.
+
+**Output:** máxima ganancia total.
+
+```text
+CharlasConGanancia(n, v, b):
+    M[0] <- 0
+
+    for j = 1 to n:
+        tomar <- v[j] + M[b[j]]
+        saltar <- M[j - 1]
+        M[j] <- max(tomar, saltar)
+
+    return M[n]
+```
+
+Para reconstruir, se vuelve desde `j = n`. Si tomar `j` explica el valor de `M[j]`, se agrega `j` y se salta a `b[j]`. Si no, se retrocede a `j - 1`.
+
+**Input:** tabla `M`, ganancias `v`, compatibilidades `b` e índice `j`.
+
+**Output:** conjunto de charlas seleccionadas.
+
+```text
+ReconstruirCharlas(j, M, v, b):
+    if j = 0:
+        return empty
+
+    if v[j] + M[b[j]] >= M[j - 1]:
+        return ReconstruirCharlas(b[j], M, v, b) union {j}
+    else:
+        return ReconstruirCharlas(j - 1, M, v, b)
+```
+
+Complejidad:
+
+| Parte | Complejidad |
+|---|---:|
+| Ordenar charlas | `O(n log n)` |
+| Calcular `b(j)` con búsqueda binaria | `O(n log n)` |
+| Llenar `M` | `O(n)` |
+| Reconstruir solución | `O(n)` |
+| Memoria | `O(n)` |
+
+Si `b(j)` ya viene dado, la DP cuesta `O(n)` tiempo y `O(n)` memoria. Si hay que ordenar y calcular compatibilidades, domina `O(n log n)`.
+
+No basta el greedy de charlas sin ganancia porque ese algoritmo maximiza cantidad de charlas, no ganancia total. Con ganancias, una charla compatible que termina temprano puede aportar poco valor, mientras una charla más larga puede aportar mucho más. Por eso se debe comparar tomar y no tomar cada charla.
 
 </details>
 
+## Preguntas de repaso
+
+1. Qué son subproblemas solapados.
+2. Qué significa subestructura óptima.
+3. Por qué la tabla no debe ser el punto de partida.
+4. Qué debe contener una definición de estado.
+5. Qué diferencia hay entre memoización y bottom-up.
+6. Por qué greedy y DP no son lo mismo.
+7. Por qué DP evita recomputar subproblemas que backtracking podría repetir.
+8. Qué diferencia hay entre dividir para conquistar y DP.
+9. Cómo se calcula la complejidad de una DP.
+10. Cuándo se necesita reconstrucción.
+11. Por qué mochila 0/1 no se resuelve igual que mochila fraccionable.
+12. Por qué greedy falla para `{6, 4, 1}` y `S = 8`.
+
+## Ejercicios breves
+
+### Ejercicio 1
+
+Para monedas `{6, 4, 1}` y `S = 8`:
+
+1. Aplica la estrategia greedy de tomar la moneda más grande posible.
+2. Escribe una combinación óptima.
+3. Explica por qué este ejemplo justifica usar DP.
+
+### Ejercicio 2
+
+Para una mochila con capacidad `W = 6`, pesos `[2, 2, 3]` y valores `[1, 2, 5]`:
+
+1. Define `DP[i][w]`.
+2. Calcula el valor de `DP[3][6]`.
+3. Indica qué objetos se seleccionan.
+
+### Ejercicio 3
+
+Da un ejemplo de charlas con ganancia donde elegir la charla que termina primero no maximiza la ganancia total.
+
+### Ejercicio 4
+
+Para `A = [3, 1, 1, 2, 2, 1]`, responde si se puede particionar en dos subconjuntos de igual suma. Define el objetivo `S` y explica qué pregunta responde `P(k, S)`.
+
+### Ejercicio 5
+
+Indica si cada frase sugiere greedy, backtracking, dividir para conquistar o DP:
+
+| Frase | Técnica probable |
+|---|---|
+| "Elijo la mejor opción local y no vuelvo atrás" | |
+| "Pruebo asignaciones y deshago cuando violan restricciones" | |
+| "Divido en mitades independientes y combino" | |
+| "Comparo opciones y guardo estados repetidos" | |
+
 ## Checklist de estudio
 
-Pendiente de desarrollo.
+- [ ] Puedo explicar qué son subproblemas solapados.
+- [ ] Puedo explicar qué es subestructura óptima.
+- [ ] Puedo definir un estado `DP[...]` con parámetros suficientes.
+- [ ] Puedo escribir casos base antes de la recurrencia.
+- [ ] Puedo escribir recurrencias con `min`, `max` u `or`.
+- [ ] Puedo pasar de una recurrencia a memoización.
+- [ ] Puedo pasar de una recurrencia a bottom-up.
+- [ ] Puedo definir un orden de llenado válido.
+- [ ] Puedo calcular complejidad como estados por transición.
+- [ ] Puedo distinguir DP de greedy.
+- [ ] Puedo distinguir DP de backtracking.
+- [ ] Puedo distinguir DP de dividir para conquistar.
+- [ ] Puedo resolver charlas con ganancia.
+- [ ] Puedo resolver mochila 0/1.
+- [ ] Puedo resolver dar vuelto con DP y explicar el contraejemplo greedy.
+- [ ] Puedo resolver partición en dos subconjuntos.
+- [ ] Puedo reconstruir la solución cuando el enunciado lo pide.

@@ -71,7 +71,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -252,16 +284,77 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#cuándo-usar-programación-dinámica" id="toc-cuándo-usar-programación-dinámica" class="nav-link" data-scroll-target="#cuándo-usar-programación-dinámica"><span class="header-section-number">4</span> Cuándo usar programación dinámica</a></li>
+  <li><a href="#diferencia-con-otras-técnicas" id="toc-diferencia-con-otras-técnicas" class="nav-link" data-scroll-target="#diferencia-con-otras-técnicas"><span class="header-section-number">5</span> Diferencia con otras técnicas</a></li>
+  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">6</span> Conceptos mínimos</a>
+  <ul class="collapse">
+  <li><a href="#subproblemas-solapados" id="toc-subproblemas-solapados" class="nav-link" data-scroll-target="#subproblemas-solapados"><span class="header-section-number">6.1</span> Subproblemas solapados</a></li>
+  <li><a href="#subestructura-óptima" id="toc-subestructura-óptima" class="nav-link" data-scroll-target="#subestructura-óptima"><span class="header-section-number">6.2</span> Subestructura óptima</a></li>
+  <li><a href="#estado-suficiente" id="toc-estado-suficiente" class="nav-link" data-scroll-target="#estado-suficiente"><span class="header-section-number">6.3</span> Estado suficiente</a></li>
+  <li><a href="#recurrencia" id="toc-recurrencia" class="nav-link" data-scroll-target="#recurrencia"><span class="header-section-number">6.4</span> Recurrencia</a></li>
+  <li><a href="#reconstrucción" id="toc-reconstrucción" class="nav-link" data-scroll-target="#reconstrucción"><span class="header-section-number">6.5</span> Reconstrucción</a></li>
+  </ul></li>
+  <li><a href="#receta-para-formular-una-dp" id="toc-receta-para-formular-una-dp" class="nav-link" data-scroll-target="#receta-para-formular-una-dp"><span class="header-section-number">7</span> Receta para formular una DP</a></li>
+  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">8</span> Pseudocódigo claro</a>
+  <ul class="collapse">
+  <li><a href="#memoización-genérica" id="toc-memoización-genérica" class="nav-link" data-scroll-target="#memoización-genérica"><span class="header-section-number">8.1</span> Memoización genérica</a></li>
+  <li><a href="#bottom-up-genérico" id="toc-bottom-up-genérico" class="nav-link" data-scroll-target="#bottom-up-genérico"><span class="header-section-number">8.2</span> Bottom-up genérico</a></li>
+  <li><a href="#reconstrucción-genérica" id="toc-reconstrucción-genérica" class="nav-link" data-scroll-target="#reconstrucción-genérica"><span class="header-section-number">8.3</span> Reconstrucción genérica</a></li>
+  </ul></li>
+  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">9</span> Complejidad</a></li>
+  <li><a href="#ejemplo-guiado-1-charlas-con-ganancia" id="toc-ejemplo-guiado-1-charlas-con-ganancia" class="nav-link" data-scroll-target="#ejemplo-guiado-1-charlas-con-ganancia"><span class="header-section-number">10</span> Ejemplo guiado 1: charlas con ganancia</a>
+  <ul class="collapse">
+  <li><a href="#problema" id="toc-problema" class="nav-link" data-scroll-target="#problema"><span class="header-section-number">10.1</span> Problema</a></li>
+  <li><a href="#subproblema" id="toc-subproblema" class="nav-link" data-scroll-target="#subproblema"><span class="header-section-number">10.2</span> Subproblema</a></li>
+  <li><a href="#recurrencia-1" id="toc-recurrencia-1" class="nav-link" data-scroll-target="#recurrencia-1"><span class="header-section-number">10.3</span> Recurrencia</a></li>
+  <li><a href="#ejemplo-pequeño" id="toc-ejemplo-pequeño" class="nav-link" data-scroll-target="#ejemplo-pequeño"><span class="header-section-number">10.4</span> Ejemplo pequeño</a></li>
+  <li><a href="#pseudocódigo-bottom-up" id="toc-pseudocódigo-bottom-up" class="nav-link" data-scroll-target="#pseudocódigo-bottom-up"><span class="header-section-number">10.5</span> Pseudocódigo bottom-up</a></li>
+  <li><a href="#reconstrucción-1" id="toc-reconstrucción-1" class="nav-link" data-scroll-target="#reconstrucción-1"><span class="header-section-number">10.6</span> Reconstrucción</a></li>
+  <li><a href="#complejidad-1" id="toc-complejidad-1" class="nav-link" data-scroll-target="#complejidad-1"><span class="header-section-number">10.7</span> Complejidad</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-guiado-2-mochila-01" id="toc-ejemplo-guiado-2-mochila-01" class="nav-link" data-scroll-target="#ejemplo-guiado-2-mochila-01"><span class="header-section-number">11</span> Ejemplo guiado 2: mochila 0/1</a>
+  <ul class="collapse">
+  <li><a href="#problema-1" id="toc-problema-1" class="nav-link" data-scroll-target="#problema-1"><span class="header-section-number">11.1</span> Problema</a></li>
+  <li><a href="#subproblema-1" id="toc-subproblema-1" class="nav-link" data-scroll-target="#subproblema-1"><span class="header-section-number">11.2</span> Subproblema</a></li>
+  <li><a href="#recurrencia-2" id="toc-recurrencia-2" class="nav-link" data-scroll-target="#recurrencia-2"><span class="header-section-number">11.3</span> Recurrencia</a></li>
+  <li><a href="#pseudocódigo-bottom-up-1" id="toc-pseudocódigo-bottom-up-1" class="nav-link" data-scroll-target="#pseudocódigo-bottom-up-1"><span class="header-section-number">11.4</span> Pseudocódigo bottom-up</a></li>
+  <li><a href="#reconstrucción-2" id="toc-reconstrucción-2" class="nav-link" data-scroll-target="#reconstrucción-2"><span class="header-section-number">11.5</span> Reconstrucción</a></li>
+  <li><a href="#complejidad-2" id="toc-complejidad-2" class="nav-link" data-scroll-target="#complejidad-2"><span class="header-section-number">11.6</span> Complejidad</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-guiado-3-dar-vuelto" id="toc-ejemplo-guiado-3-dar-vuelto" class="nav-link" data-scroll-target="#ejemplo-guiado-3-dar-vuelto"><span class="header-section-number">12</span> Ejemplo guiado 3: dar vuelto</a>
+  <ul class="collapse">
+  <li><a href="#problema-2" id="toc-problema-2" class="nav-link" data-scroll-target="#problema-2"><span class="header-section-number">12.1</span> Problema</a></li>
+  <li><a href="#contraejemplo-greedy" id="toc-contraejemplo-greedy" class="nav-link" data-scroll-target="#contraejemplo-greedy"><span class="header-section-number">12.2</span> Contraejemplo greedy</a></li>
+  <li><a href="#subproblema-2" id="toc-subproblema-2" class="nav-link" data-scroll-target="#subproblema-2"><span class="header-section-number">12.3</span> Subproblema</a></li>
+  <li><a href="#recurrencia-3" id="toc-recurrencia-3" class="nav-link" data-scroll-target="#recurrencia-3"><span class="header-section-number">12.4</span> Recurrencia</a></li>
+  <li><a href="#pseudocódigo-bottom-up-2" id="toc-pseudocódigo-bottom-up-2" class="nav-link" data-scroll-target="#pseudocódigo-bottom-up-2"><span class="header-section-number">12.5</span> Pseudocódigo bottom-up</a></li>
+  <li><a href="#reconstrucción-3" id="toc-reconstrucción-3" class="nav-link" data-scroll-target="#reconstrucción-3"><span class="header-section-number">12.6</span> Reconstrucción</a></li>
+  <li><a href="#complejidad-3" id="toc-complejidad-3" class="nav-link" data-scroll-target="#complejidad-3"><span class="header-section-number">12.7</span> Complejidad</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-guiado-4-partición-en-dos-subconjuntos" id="toc-ejemplo-guiado-4-partición-en-dos-subconjuntos" class="nav-link" data-scroll-target="#ejemplo-guiado-4-partición-en-dos-subconjuntos"><span class="header-section-number">13</span> Ejemplo guiado 4: partición en dos subconjuntos</a>
+  <ul class="collapse">
+  <li><a href="#problema-3" id="toc-problema-3" class="nav-link" data-scroll-target="#problema-3"><span class="header-section-number">13.1</span> Problema</a></li>
+  <li><a href="#subproblema-3" id="toc-subproblema-3" class="nav-link" data-scroll-target="#subproblema-3"><span class="header-section-number">13.2</span> Subproblema</a></li>
+  <li><a href="#casos-base" id="toc-casos-base" class="nav-link" data-scroll-target="#casos-base"><span class="header-section-number">13.3</span> Casos base</a></li>
+  <li><a href="#recurrencia-4" id="toc-recurrencia-4" class="nav-link" data-scroll-target="#recurrencia-4"><span class="header-section-number">13.4</span> Recurrencia</a></li>
+  <li><a href="#pseudocódigo-con-memoización" id="toc-pseudocódigo-con-memoización" class="nav-link" data-scroll-target="#pseudocódigo-con-memoización"><span class="header-section-number">13.5</span> Pseudocódigo con memoización</a></li>
+  <li><a href="#complejidad-4" id="toc-complejidad-4" class="nav-link" data-scroll-target="#complejidad-4"><span class="header-section-number">13.6</span> Complejidad</a></li>
+  </ul></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">14</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">15</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">16</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">17</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">17.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">17.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">17.3</span> Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4"><span class="header-section-number">17.4</span> Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5" id="toc-ejercicio-5" class="nav-link" data-scroll-target="#ejercicio-5"><span class="header-section-number">17.5</span> Ejercicio 5</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">18</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -287,56 +380,1331 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Comprender programación dinámica como una técnica para resolver problemas donde conviene comparar opciones y guardar resultados de subproblemas. Al estudiar esta página deberías poder:</p>
+<ul>
+<li>reconocer señales de programación dinámica en un enunciado;</li>
+<li>distinguir DP de greedy, backtracking y dividir para conquistar;</li>
+<li>definir subproblemas, estados, casos base y recurrencias;</li>
+<li>elegir entre memoización y bottom-up;</li>
+<li>calcular complejidad como número de estados por costo de transición;</li>
+<li>reconstruir una solución cuando el enunciado no pide solo el valor óptimo;</li>
+<li>resolver patrones clásicos como charlas con ganancia, mochila 0/1, dar vuelto y partición en dos subconjuntos.</li>
+</ul>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>La programación dinámica, o DP, se usa cuando un problema tiene dos propiedades:</p>
+<ul>
+<li><strong>Subproblemas solapados:</strong> al resolver el problema de forma recursiva, aparecen varias veces los mismos subproblemas.</li>
+<li><strong>Subestructura óptima:</strong> una solución óptima del problema completo se puede construir a partir de soluciones óptimas de subproblemas más pequeños.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Idea central
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La tabla no es el punto de partida. Primero se define qué significa cada subproblema, luego se escribe la recurrencia y recién después se decide cómo guardar los valores.</p>
+</div>
+</div>
+<p>La idea práctica es resolver cada subproblema una sola vez. Si se usa recursión, se guarda el resultado en una estructura de memoria; eso se llama <strong>memoización</strong>. Si se llena una tabla desde casos pequeños hacia casos grandes, se usa un enfoque <strong>bottom-up</strong>.</p>
+<p>Un flujo razonable para formular una DP es:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Enunciado"] --&gt; B["Definir subproblema"]
+    B --&gt; C["Casos base"]
+    C --&gt; D["Recurrencia"]
+    D --&gt; E["Orden de llenado"]
+    E --&gt; F["Complejidad"]
+    F --&gt; G["Reconstrucción"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>DP no adivina una decisión local. DP compara opciones, guarda el mejor resultado de cada estado y reutiliza esos resultados cuando vuelven a aparecer.</p>
+</div>
+</div>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Qué significa</th>
+<th>Pregunta guía</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Problema de optimización</td>
+<td>Problema donde se busca maximizar o minimizar una cantidad</td>
+<td>Qué significa “mejor”</td>
+</tr>
+<tr class="even">
+<td>Subproblema</td>
+<td>Versión más pequeña o parcial del problema original</td>
+<td>Qué parte del problema puedo resolver por separado</td>
+</tr>
+<tr class="odd">
+<td>Estado</td>
+<td>Parámetros que identifican completamente un subproblema</td>
+<td>Qué datos necesito para saber dónde estoy</td>
+</tr>
+<tr class="even">
+<td>Caso base</td>
+<td>Estado cuyo valor se conoce directamente</td>
+<td>Dónde termina la recurrencia</td>
+</tr>
+<tr class="odd">
+<td>Recurrencia</td>
+<td>Fórmula que expresa un estado usando estados más simples</td>
+<td>Cómo combino respuestas previas</td>
+</tr>
+<tr class="even">
+<td>Transición</td>
+<td>Opción evaluada para pasar de un estado a otro</td>
+<td>Qué decisiones comparo</td>
+</tr>
+<tr class="odd">
+<td>Memoización</td>
+<td>Recursión con almacenamiento de resultados ya calculados</td>
+<td>Cómo evito repetir llamadas</td>
+</tr>
+<tr class="even">
+<td>Bottom-up</td>
+<td>Llenado iterativo desde estados base hacia estados mayores</td>
+<td>En qué orden lleno la tabla</td>
+</tr>
+<tr class="odd">
+<td>Reconstrucción</td>
+<td>Proceso para recuperar las decisiones tomadas</td>
+<td>Qué elementos forman la solución</td>
+</tr>
+</tbody>
+</table>
+<p>Una definición de estado debe ser precisa. No basta escribir <code>DP[i]</code> sin explicar qué representa <code>i</code>. Una buena respuesta empieza con una frase del tipo:</p>
+<pre class="text"><code>DP[i][w] = mejor valor usando los primeros i objetos con capacidad w</code></pre>
+<p>Esa frase determina qué significa cada celda y qué dependencias puede tener.</p>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cuándo-usar-programación-dinámica" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-usar-programación-dinámica"><span class="header-section-number">4</span> Cuándo usar programación dinámica</h2>
+<p>Conviene pensar en DP cuando el problema tiene muchas combinaciones posibles, pero esas combinaciones comparten subproblemas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Señal en el enunciado</th>
+<th>Lectura posible</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“máxima ganancia”, “mínimo costo”, “menor cantidad”</td>
+<td>Hay una función objetivo</td>
+</tr>
+<tr class="even">
+<td>“tomar o no tomar”</td>
+<td>Puede haber una recurrencia con dos opciones</td>
+</tr>
+<tr class="odd">
+<td>“capacidad restante”, “monto restante”, “índice actual”</td>
+<td>Esos valores pueden formar el estado</td>
+</tr>
+<tr class="even">
+<td>“subsecuencia”, “subconjunto”, “partición”</td>
+<td>Puede haber subproblemas solapados</td>
+</tr>
+<tr class="odd">
+<td>“una estrategia greedy plausible falla”</td>
+<td>Puede ser necesario comparar opciones</td>
+</tr>
+<tr class="even">
+<td>“se pide recurrencia”</td>
+<td>Se espera definir subproblema, caso base y transición</td>
+</tr>
+<tr class="odd">
+<td>“se pide la solución concreta”</td>
+<td>Hay que considerar reconstrucción</td>
+</tr>
+</tbody>
+</table>
+<p>No todo problema con máximo o mínimo es DP. Para justificar DP deben aparecer subproblemas solapados y subestructura óptima. Si los subproblemas son independientes y no se repiten, puede bastar dividir para conquistar. Si una decisión local segura está demostrada, puede bastar greedy.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Consejo de estudio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Antes de escribir código, intenta responder: qué significa el estado, qué opciones compara, cuáles son los casos base y en qué orden se calculan los estados.</p>
+</div>
+</div>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="diferencia-con-otras-técnicas" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="diferencia-con-otras-técnicas"><span class="header-section-number">5</span> Diferencia con otras técnicas</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Técnica</th>
+<th>Qué hace</th>
+<th>Diferencia clave con DP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Greedy</td>
+<td>Toma decisiones locales definitivas</td>
+<td>DP compara opciones y guarda resultados antes de decidir</td>
+</tr>
+<tr class="even">
+<td>Backtracking</td>
+<td>Explora asignaciones, valida y puede retroceder</td>
+<td>DP evita recomputar subproblemas equivalentes</td>
+</tr>
+<tr class="odd">
+<td>Dividir para conquistar</td>
+<td>Divide en subproblemas disjuntos</td>
+<td>DP aparece cuando los subproblemas se solapan</td>
+</tr>
+<tr class="even">
+<td>Fuerza bruta</td>
+<td>Prueba combinaciones sin reutilizar estructura</td>
+<td>DP guarda respuestas parciales y las reutiliza</td>
+</tr>
+</tbody>
+</table>
+<p>Greedy y DP suelen confundirse en problemas de optimización. La diferencia central es que greedy toma una decisión local y no vuelve atrás; DP evalúa alternativas como “tomar/no tomar”, “usar/no usar” o “cortar/no cortar” y guarda el mejor resultado de cada estado.</p>
+<p>Backtracking también explora decisiones, pero puede visitar el mismo subproblema muchas veces desde ramas distintas. DP reconoce que esos subproblemas son equivalentes y los calcula una sola vez.</p>
+<p>Dividir para conquistar, como mergesort, divide el problema en partes disjuntas. DP se vuelve útil cuando las partes se superponen y el mismo cálculo reaparece.</p>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="conceptos-mínimos" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">6</span> Conceptos mínimos</h2>
+<section id="subproblemas-solapados" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="subproblemas-solapados"><span class="header-section-number">6.1</span> Subproblemas solapados</h3>
+<p>Hay subproblemas solapados cuando la recursión natural repite estados. Por ejemplo, en dar vuelto para un monto <code>S</code>, el monto restante <code>4</code> puede aparecer después de varias decisiones distintas. Sin memoria, se calcula muchas veces; con DP, se calcula una vez.</p>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="subestructura-óptima" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="subestructura-óptima"><span class="header-section-number">6.2</span> Subestructura óptima</h3>
+<p>Un problema tiene subestructura óptima cuando una solución óptima se puede construir usando soluciones óptimas de subproblemas. En mochila 0/1, si el objeto <code>i</code> se toma, el resto debe ser la mejor solución posible con los objetos anteriores y la capacidad restante.</p>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="estado-suficiente" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="estado-suficiente"><span class="header-section-number">6.3</span> Estado suficiente</h3>
+<p>El estado debe contener toda la información necesaria para decidir el futuro. Si falta una variable, la recurrencia mezcla situaciones distintas. Si sobra una variable, la tabla se vuelve más grande de lo necesario.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Estado</th>
+<th>Qué guarda</th>
+<th>Riesgo si está mal definido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DP[i]</code></td>
+<td>Mejor valor hasta el índice <code>i</code></td>
+<td>Puede faltar capacidad, monto o compatibilidad</td>
+</tr>
+<tr class="even">
+<td><code>DP[i][w]</code></td>
+<td>Mejor valor hasta <code>i</code> con capacidad <code>w</code></td>
+<td>Sirve para mochila, pero no para intervalos sin ordenar</td>
+</tr>
+<tr class="odd">
+<td><code>DP[T][k]</code></td>
+<td>Mejor respuesta para monto <code>T</code> con primeras <code>k</code> monedas</td>
+<td>Sirve para limitar denominaciones</td>
+</tr>
+<tr class="even">
+<td><code>P(k, S)</code></td>
+<td>Si se puede formar suma <code>S</code> desde el índice <code>k</code></td>
+<td>Sirve para partición o subset sum</td>
+</tr>
+</tbody>
+</table>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+<section id="recurrencia" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="recurrencia"><span class="header-section-number">6.4</span> Recurrencia</h3>
+<p>La recurrencia expresa cómo calcular un estado desde estados más simples. Debe incluir todas las opciones relevantes y elegir con el operador adecuado:</p>
+<ul>
+<li><code>max</code> si se maximiza ganancia o valor;</li>
+<li><code>min</code> si se minimiza costo, cantidad o distancia;</li>
+<li><code>or</code> si se pregunta si existe una solución;</li>
+<li>suma si se cuenta cantidad de formas.</li>
+</ul>
+</section>
+<section id="reconstrucción" class="level3" data-number="6.5">
+<h3 data-number="6.5" class="anchored" data-anchor-id="reconstrucción"><span class="header-section-number">6.5</span> Reconstrucción</h3>
+<p>El valor óptimo no siempre basta. Si el enunciado pide qué charlas tomar, qué objetos seleccionar o qué monedas usar, se debe reconstruir la solución comparando decisiones o guardando un arreglo auxiliar.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si el enunciado pide la solución concreta y no solo el valor óptimo, responder únicamente <code>DP[n][W]</code> queda incompleto. Hay que recuperar las decisiones que produjeron ese valor.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="receta-para-formular-una-dp" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="receta-para-formular-una-dp"><span class="header-section-number">7</span> Receta para formular una DP</h2>
+<p>Una respuesta ordenada puede seguir esta receta:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Paso</th>
+<th>Qué escribir</th>
+<th>Pregunta que responde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Definir el subproblema</td>
+<td>Qué significa <code>DP[...]</code></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Identificar casos base</td>
+<td>Qué estados se conocen directamente</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Escribir la recurrencia</td>
+<td>Qué opciones se comparan</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Elegir memoización o bottom-up</td>
+<td>Cómo se guardan los resultados</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>Definir orden de llenado</td>
+<td>Qué estados deben estar listos antes</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>Calcular complejidad</td>
+<td>Cuántos estados hay y cuánto cuesta cada uno</td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Reconstruir si corresponde</td>
+<td>Cómo se recuperan decisiones concretas</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Modelo antes que tabla
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>No empieces dibujando una matriz. Primero escribe una frase precisa: <code>DP[...] = ...</code>. Esa frase determina dimensiones, casos base, recurrencia y orden de llenado.</p>
+</div>
+</div>
+</section>
+<section id="pseudocódigo-claro" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">8</span> Pseudocódigo claro</h2>
+<section id="memoización-genérica" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="memoización-genérica"><span class="header-section-number">8.1</span> Memoización genérica</h3>
+<p>La memoización mantiene el estilo recursivo, pero evita repetir subproblemas ya resueltos.</p>
+<p><strong>Input:</strong> estado inicial del problema y estructura <code>M</code> para guardar resultados.</p>
+<p><strong>Output:</strong> valor óptimo asociado al estado inicial.</p>
+<pre class="text"><code>DP_Memo(estado):
+    if estado es caso base:
+        return valor_base
+
+    if M[estado] != NIL:
+        return M[estado]
+
+    mejor &lt;- peor_valor_posible
+
+    for decision in decisiones_validas(estado):
+        nuevo_estado &lt;- aplicar(decision, estado)
+        candidato &lt;- valor(decision) + DP_Memo(nuevo_estado)
+        mejor &lt;- mejor_entre(mejor, candidato)
+
+    M[estado] &lt;- mejor
+    return mejor</code></pre>
+<p>La línea <code>M[estado] &lt;- mejor</code> es lo que evita recomputar. Sin esa línea, el algoritmo vuelve a ser una recursión exponencial en muchos problemas.</p>
+</section>
+<section id="bottom-up-genérico" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="bottom-up-genérico"><span class="header-section-number">8.2</span> Bottom-up genérico</h3>
+<p>Bottom-up llena una tabla en un orden donde cada estado consulta solo estados ya calculados.</p>
+<p><strong>Input:</strong> datos del problema, dimensiones de la tabla y casos base.</p>
+<p><strong>Output:</strong> valor óptimo del problema completo.</p>
+<pre class="text"><code>DP_BottomUp(datos):
+    inicializar tabla DP con casos base
+
+    for estado in orden_valido:
+        DP[estado] &lt;- combinar estados anteriores segun recurrencia
+
+    return DP[estado_final]</code></pre>
+<p>El punto delicado es <code>orden_valido</code>. Si la recurrencia usa <code>DP[i - 1][w]</code>, entonces la fila <code>i - 1</code> debe estar calculada antes de la fila <code>i</code>. Si usa montos menores, se llenan montos de menor a mayor.</p>
+</section>
+<section id="reconstrucción-genérica" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="reconstrucción-genérica"><span class="header-section-number">8.3</span> Reconstrucción genérica</h3>
+<p>Cuando se necesita la solución concreta, se camina hacia atrás desde el estado final.</p>
+<p><strong>Input:</strong> tabla <code>DP</code>, estado final y datos del problema.</p>
+<p><strong>Output:</strong> decisiones que forman una solución óptima.</p>
+<pre class="text"><code>Reconstruir(estado):
+    if estado es caso base:
+        return empty
+
+    decision &lt;- identificar decision que explica DP[estado]
+    estado_anterior &lt;- retroceder(estado, decision)
+
+    return Reconstruir(estado_anterior) union {decision}</code></pre>
+<p>En algunas implementaciones se guarda explícitamente una tabla <code>decision</code>. En otras se compara el valor de celdas vecinas para deducir si se tomó o no una opción.</p>
+</section>
+</section>
+<section id="complejidad" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">9</span> Complejidad</h2>
+<p>La complejidad de una DP se calcula con esta regla:</p>
+<p><span class="math display">\[
+T = \#\text{estados} \cdot \text{costo de transición}
+\]</span></p>
+<p>Donde <code>#estados</code> es la cantidad de celdas o llamadas distintas posibles, y el costo de transición es cuánto se demora calcular cada estado una vez que sus dependencias están listas.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 26%">
+<col style="width: 26%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Patrón</th>
+<th style="text-align: right;">Cantidad de estados</th>
+<th style="text-align: right;">Costo por estado</th>
+<th style="text-align: right;">Tiempo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>DP[i]</code> con <code>i = 0..n</code></td>
+<td style="text-align: right;"><code>O(n)</code></td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td style="text-align: right;"><code>O(n)</code></td>
+</tr>
+<tr class="even">
+<td><code>DP[i][w]</code> con <code>i = 0..n</code>, <code>w = 0..W</code></td>
+<td style="text-align: right;"><code>O(nW)</code></td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td style="text-align: right;"><code>O(nW)</code></td>
+</tr>
+<tr class="odd">
+<td><code>DP[T][k]</code> con <code>T = 0..S</code>, <code>k = 0..n</code></td>
+<td style="text-align: right;"><code>O(Sn)</code></td>
+<td style="text-align: right;"><code>O(1)</code></td>
+<td style="text-align: right;"><code>O(Sn)</code></td>
+</tr>
+<tr class="even">
+<td>Estado con <code>m</code> transiciones posibles</td>
+<td style="text-align: right;">depende del estado</td>
+<td style="text-align: right;"><code>O(m)</code></td>
+<td style="text-align: right;">estados por <code>m</code></td>
+</tr>
+</tbody>
+</table>
+<p>La memoria suele ser el número de estados guardados. A veces puede reducirse si una fila depende solo de la fila anterior, pero esa optimización no debe ocultar la recurrencia original.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Cómo justificar complejidad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una respuesta completa dice cuántos estados existen, cuánto cuesta calcular cada estado y cuánto espacio ocupa la tabla o memo.</p>
+</div>
+</div>
+</section>
+<section id="ejemplo-guiado-1-charlas-con-ganancia" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="ejemplo-guiado-1-charlas-con-ganancia"><span class="header-section-number">10</span> Ejemplo guiado 1: charlas con ganancia</h2>
+<section id="problema" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="problema"><span class="header-section-number">10.1</span> Problema</h3>
+<p>Se tienen <code>n</code> charlas. Cada charla <code>j</code> tiene inicio <code>s[j]</code>, término <code>f[j]</code> y ganancia <code>v[j]</code>. Se quiere elegir un subconjunto de charlas compatibles que maximice la ganancia total.</p>
+<p>Este problema se parece a selección de charlas greedy, pero la ganancia cambia el objetivo. Una charla larga con alta ganancia puede ser mejor que varias charlas cortas de baja ganancia.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Relación con greedy
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Charlas sin ganancia se resuelve con greedy ordenando por término temprano. Charlas con ganancia requiere comparar tomar o no tomar cada charla; por eso aparece programación dinámica.</p>
+</div>
+</div>
+</section>
+<section id="subproblema" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="subproblema"><span class="header-section-number">10.2</span> Subproblema</h3>
+<p>Primero se ordenan las charlas por hora de término creciente. Definimos:</p>
+<ul>
+<li><code>v[j]</code>: ganancia de la charla <code>j</code>;</li>
+<li><code>b(j)</code>: índice de la última charla compatible con <code>j</code> que termina antes de que empiece <code>j</code>;</li>
+<li><code>OPT(j)</code>: máxima ganancia usando solo las primeras <code>j</code> charlas.</li>
+</ul>
+</section>
+<section id="recurrencia-1" class="level3" data-number="10.3">
+<h3 data-number="10.3" class="anchored" data-anchor-id="recurrencia-1"><span class="header-section-number">10.3</span> Recurrencia</h3>
+<p>Para la charla <code>j</code> hay dos opciones:</p>
+<ol type="1">
+<li>Tomar <code>j</code>: se gana <code>v_j</code> y se suma lo mejor compatible antes de ella, <code>OPT(b(j))</code>.</li>
+<li>No tomar <code>j</code>: se conserva lo mejor usando las primeras <code>j - 1</code> charlas.</li>
+</ol>
+<p><span class="math display">\[
+OPT(j) = \max\{v_j + OPT(b(j)),\ OPT(j - 1)\}
+\]</span></p>
+<p>El caso base es:</p>
+<p><span class="math display">\[
+OPT(0) = 0
+\]</span></p>
+<p>Aquí <code>OPT(0)</code> significa que no hay charlas disponibles, por lo que la ganancia máxima es cero.</p>
+</section>
+<section id="ejemplo-pequeño" class="level3" data-number="10.4">
+<h3 data-number="10.4" class="anchored" data-anchor-id="ejemplo-pequeño"><span class="header-section-number">10.4</span> Ejemplo pequeño</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Charla</th>
+<th style="text-align: right;">Inicio</th>
+<th style="text-align: right;">Fin</th>
+<th style="text-align: right;">Ganancia</th>
+<th style="text-align: right;"><code>b(j)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;"><code>j</code></th>
+<th style="text-align: right;">Tomar <code>j</code></th>
+<th style="text-align: right;">Saltar <code>j</code></th>
+<th style="text-align: right;"><code>OPT(j)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">no aplica</td>
+<td style="text-align: right;">no aplica</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><code>5 + OPT(0) = 5</code></td>
+<td style="text-align: right;"><code>OPT(0) = 0</code></td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"><code>6 + OPT(0) = 6</code></td>
+<td style="text-align: right;"><code>OPT(1) = 5</code></td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"><code>5 + OPT(1) = 10</code></td>
+<td style="text-align: right;"><code>OPT(2) = 6</code></td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td style="text-align: right;"><code>4 + OPT(3) = 14</code></td>
+<td style="text-align: right;"><code>OPT(3) = 10</code></td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td style="text-align: right;"><code>11 + OPT(2) = 17</code></td>
+<td style="text-align: right;"><code>OPT(4) = 14</code></td>
+<td style="text-align: right;">17</td>
+</tr>
+</tbody>
+</table>
+<p>La mejor ganancia es <code>17</code>, tomando las charlas <code>2</code> y <code>5</code>.</p>
+</section>
+<section id="pseudocódigo-bottom-up" class="level3" data-number="10.5">
+<h3 data-number="10.5" class="anchored" data-anchor-id="pseudocódigo-bottom-up"><span class="header-section-number">10.5</span> Pseudocódigo bottom-up</h3>
+<p><strong>Input:</strong> <code>n</code> charlas ordenadas por término, ganancias <code>v[1..n]</code> y compatibilidades <code>b[1..n]</code>.</p>
+<p><strong>Output:</strong> máxima ganancia total.</p>
+<pre class="text"><code>CharlasConGanancia(n, v, b):
+    M[0] &lt;- 0
+
+    for j = 1 to n:
+        tomar &lt;- v[j] + M[b[j]]
+        saltar &lt;- M[j - 1]
+        M[j] &lt;- max(tomar, saltar)
+
+    return M[n]</code></pre>
+</section>
+<section id="reconstrucción-1" class="level3" data-number="10.6">
+<h3 data-number="10.6" class="anchored" data-anchor-id="reconstrucción-1"><span class="header-section-number">10.6</span> Reconstrucción</h3>
+<p>Si se pide qué charlas tomar, se compara si el valor de <code>M[j]</code> viene de tomar o saltar la charla <code>j</code>.</p>
+<p><strong>Input:</strong> tabla <code>M</code>, ganancias <code>v</code>, compatibilidades <code>b</code> e índice <code>j</code>.</p>
+<p><strong>Output:</strong> conjunto de charlas seleccionadas.</p>
+<pre class="text"><code>ReconstruirCharlas(j, M, v, b):
+    if j = 0:
+        return empty
+
+    tomar &lt;- v[j] + M[b[j]]
+    saltar &lt;- M[j - 1]
+
+    if tomar &gt;= saltar:
+        return ReconstruirCharlas(b[j], M, v, b) union {j}
+    else:
+        return ReconstruirCharlas(j - 1, M, v, b)</code></pre>
+</section>
+<section id="complejidad-1" class="level3" data-number="10.7">
+<h3 data-number="10.7" class="anchored" data-anchor-id="complejidad-1"><span class="header-section-number">10.7</span> Complejidad</h3>
+<p>Si <code>b(j)</code> ya está calculado, llenar la tabla cuesta <code>O(n)</code>. Si se debe ordenar y calcular <code>b(j)</code> con búsqueda binaria, el costo típico total es <code>O(n log n)</code>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th style="text-align: right;">Complejidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ordenar charlas</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+</tr>
+<tr class="even">
+<td>Calcular <code>b(j)</code> con búsqueda binaria</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+</tr>
+<tr class="odd">
+<td>Llenar tabla</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+</tr>
+<tr class="even">
+<td>Reconstruir solución</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+</tr>
+<tr class="odd">
+<td>Memoria</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="ejemplo-guiado-2-mochila-01" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="ejemplo-guiado-2-mochila-01"><span class="header-section-number">11</span> Ejemplo guiado 2: mochila 0/1</h2>
+<section id="problema-1" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="problema-1"><span class="header-section-number">11.1</span> Problema</h3>
+<p>Hay <code>n</code> objetos. Cada objeto <code>i</code> tiene peso <code>peso[i]</code> y valor <code>valor[i]</code>. La mochila tiene capacidad máxima <code>W</code>. Cada objeto se puede tomar completo o no tomar. No se puede partir.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Mochila fraccionable no es mochila 0/1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Mochila fraccionable permite tomar una parte de un objeto y admite una estrategia greedy por razón valor/peso. En mochila 0/1 cada objeto se toma o se descarta; esa misma regla greedy simple puede fallar.</p>
+</div>
+</div>
+</section>
+<section id="subproblema-1" class="level3" data-number="11.2">
+<h3 data-number="11.2" class="anchored" data-anchor-id="subproblema-1"><span class="header-section-number">11.2</span> Subproblema</h3>
+<p>Definimos:</p>
+<p><span class="math display">\[
+DP[i][w] = \text{máximo valor usando los primeros } i \text{ objetos con capacidad } w
+\]</span></p>
+<p>Donde <code>i</code> indica cuántos objetos se consideran y <code>w</code> indica la capacidad disponible.</p>
+</section>
+<section id="recurrencia-2" class="level3" data-number="11.3">
+<h3 data-number="11.3" class="anchored" data-anchor-id="recurrencia-2"><span class="header-section-number">11.3</span> Recurrencia</h3>
+<p>Para el objeto <code>i</code> hay dos opciones:</p>
+<ol type="1">
+<li>No tomarlo: queda <code>DP[i - 1][w]</code>.</li>
+<li>Tomarlo, si cabe: queda <code>DP[i - 1][w - peso_i] + valor_i</code>.</li>
+</ol>
+<p><span class="math display">\[
+DP[i][w] =
+\begin{cases}
+DP[i - 1][w], &amp; \text{si } peso_i &gt; w \\
+\max\{DP[i - 1][w],\ DP[i - 1][w - peso_i] + valor_i\}, &amp; \text{si } peso_i \le w
+\end{cases}
+\]</span></p>
+<p>Casos base:</p>
+<p><span class="math display">\[
+DP[0][w] = 0
+\]</span></p>
+<p><span class="math display">\[
+DP[i][0] = 0
+\]</span></p>
+<p>El primer caso dice que con cero objetos no se obtiene valor. El segundo dice que con capacidad cero no se puede cargar nada.</p>
+</section>
+<section id="pseudocódigo-bottom-up-1" class="level3" data-number="11.4">
+<h3 data-number="11.4" class="anchored" data-anchor-id="pseudocódigo-bottom-up-1"><span class="header-section-number">11.4</span> Pseudocódigo bottom-up</h3>
+<p><strong>Input:</strong> cantidad de objetos <code>n</code>, capacidad <code>W</code>, arreglos <code>peso</code> y <code>valor</code>.</p>
+<p><strong>Output:</strong> máximo valor alcanzable con capacidad <code>W</code>.</p>
+<pre class="text"><code>Mochila01(n, W, peso, valor):
+    for w = 0 to W:
+        DP[0][w] &lt;- 0
+
+    for i = 1 to n:
+        DP[i][0] &lt;- 0
+
+    for i = 1 to n:
+        for w = 1 to W:
+            DP[i][w] &lt;- DP[i - 1][w]
+
+            if peso[i] &lt;= w:
+                candidato &lt;- DP[i - 1][w - peso[i]] + valor[i]
+                DP[i][w] &lt;- max(DP[i][w], candidato)
+
+    return DP[n][W]</code></pre>
+</section>
+<section id="reconstrucción-2" class="level3" data-number="11.5">
+<h3 data-number="11.5" class="anchored" data-anchor-id="reconstrucción-2"><span class="header-section-number">11.5</span> Reconstrucción</h3>
+<p><strong>Input:</strong> tabla <code>DP</code>, arreglos <code>peso</code> y <code>valor</code>, índice <code>i</code> y capacidad <code>w</code>.</p>
+<p><strong>Output:</strong> conjunto de objetos seleccionados.</p>
+<pre class="text"><code>ReconstruirMochila(i, w, DP, peso):
+    if i = 0 or w = 0:
+        return empty
+
+    if DP[i][w] = DP[i - 1][w]:
+        return ReconstruirMochila(i - 1, w, DP, peso)
+    else:
+        return ReconstruirMochila(i - 1, w - peso[i], DP, peso) union {i}</code></pre>
+</section>
+<section id="complejidad-2" class="level3" data-number="11.6">
+<h3 data-number="11.6" class="anchored" data-anchor-id="complejidad-2"><span class="header-section-number">11.6</span> Complejidad</h3>
+<p>La tabla tiene <code>(n + 1)(W + 1)</code> estados y cada estado se calcula en tiempo constante.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Recurso</th>
+<th style="text-align: right;">Complejidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estados</td>
+<td style="text-align: right;"><code>O(nW)</code></td>
+</tr>
+<tr class="even">
+<td>Costo por transición</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+</tr>
+<tr class="odd">
+<td>Tiempo</td>
+<td style="text-align: right;"><code>O(nW)</code></td>
+</tr>
+<tr class="even">
+<td>Memoria</td>
+<td style="text-align: right;"><code>O(nW)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="ejemplo-guiado-3-dar-vuelto" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="ejemplo-guiado-3-dar-vuelto"><span class="header-section-number">12</span> Ejemplo guiado 3: dar vuelto</h2>
+<section id="problema-2" class="level3" data-number="12.1">
+<h3 data-number="12.1" class="anchored" data-anchor-id="problema-2"><span class="header-section-number">12.1</span> Problema</h3>
+<p>Se quiere formar un monto <code>S</code> usando la menor cantidad de monedas. Hay monedas de valores <code>v[1..n]</code> y se asume cantidad ilimitada de cada denominación.</p>
+</section>
+<section id="contraejemplo-greedy" class="level3" data-number="12.2">
+<h3 data-number="12.2" class="anchored" data-anchor-id="contraejemplo-greedy"><span class="header-section-number">12.2</span> Contraejemplo greedy</h3>
+<p>La estrategia greedy de tomar siempre la moneda más grande posible puede fallar. Con monedas <code>{6, 4, 1}</code> y monto <code>S = 8</code>, greedy toma:</p>
+<pre class="text"><code>8 = 6 + 1 + 1</code></pre>
+<p>Eso usa 3 monedas. Pero el óptimo es:</p>
+<pre class="text"><code>8 = 4 + 4</code></pre>
+<p>Eso usa 2 monedas. Por lo tanto, en sistemas de monedas no canónicos, dar vuelto puede necesitar DP.</p>
+</section>
+<section id="subproblema-2" class="level3" data-number="12.3">
+<h3 data-number="12.3" class="anchored" data-anchor-id="subproblema-2"><span class="header-section-number">12.3</span> Subproblema</h3>
+<p>Definimos:</p>
+<p><span class="math display">\[
+Z[T][k] = \text{mínimo número de monedas para formar } T \text{ usando las primeras } k \text{ denominaciones}
+\]</span></p>
+<p>Donde <code>T</code> es el monto objetivo parcial y <code>k</code> indica cuántas denominaciones se pueden usar.</p>
+</section>
+<section id="recurrencia-3" class="level3" data-number="12.4">
+<h3 data-number="12.4" class="anchored" data-anchor-id="recurrencia-3"><span class="header-section-number">12.4</span> Recurrencia</h3>
+<p>Para la moneda <code>v_k</code>, hay dos opciones:</p>
+<ol type="1">
+<li>No usar la denominación <code>k</code>: queda <code>Z[T][k - 1]</code>.</li>
+<li>Usar una moneda de valor <code>v_k</code>: queda <code>Z[T - v_k][k] + 1</code>, porque se puede volver a usar la misma moneda.</li>
+</ol>
+<p><span class="math display">\[
+Z[T][k] = \min\{Z[T][k - 1],\ Z[T - v_k][k] + 1\}
+\]</span></p>
+<p>La segunda opción solo existe si <code>T - v_k &gt;= 0</code>.</p>
+<p>Casos base:</p>
+<p><span class="math display">\[
+Z[0][k] = 0
+\]</span></p>
+<p><span class="math display">\[
+Z[T][0] = +\infty \quad \text{si } T &gt; 0
+\]</span></p>
+</section>
+<section id="pseudocódigo-bottom-up-2" class="level3" data-number="12.5">
+<h3 data-number="12.5" class="anchored" data-anchor-id="pseudocódigo-bottom-up-2"><span class="header-section-number">12.5</span> Pseudocódigo bottom-up</h3>
+<p><strong>Input:</strong> monto <code>S</code>, cantidad de denominaciones <code>n</code> y valores <code>v[1..n]</code>.</p>
+<p><strong>Output:</strong> mínimo número de monedas para formar <code>S</code>, o <code>+infinito</code> si no se puede.</p>
+<pre class="text"><code>DarVuelto(S, n, v):
+    for T = 1 to S:
+        Z[T][0] &lt;- +infinito
+
+    for k = 0 to n:
+        Z[0][k] &lt;- 0
+
+    for k = 1 to n:
+        for T = 1 to S:
+            no_usar &lt;- Z[T][k - 1]
+            usar &lt;- +infinito
+
+            if T &gt;= v[k]:
+                usar &lt;- Z[T - v[k]][k] + 1
+
+            Z[T][k] &lt;- min(no_usar, usar)
+
+    return Z[S][n]</code></pre>
+</section>
+<section id="reconstrucción-3" class="level3" data-number="12.6">
+<h3 data-number="12.6" class="anchored" data-anchor-id="reconstrucción-3"><span class="header-section-number">12.6</span> Reconstrucción</h3>
+<p><strong>Input:</strong> tabla <code>Z</code>, monto <code>T</code>, índice <code>k</code> y valores <code>v</code>.</p>
+<p><strong>Output:</strong> multiconjunto de monedas usadas.</p>
+<pre class="text"><code>ReconstruirVuelto(T, k, Z, v):
+    if T = 0:
+        return empty
+
+    if k = 0:
+        return FAIL
+
+    if Z[T][k] = Z[T][k - 1]:
+        return ReconstruirVuelto(T, k - 1, Z, v)
+    else:
+        return ReconstruirVuelto(T - v[k], k, Z, v) union {v[k]}</code></pre>
+</section>
+<section id="complejidad-3" class="level3" data-number="12.7">
+<h3 data-number="12.7" class="anchored" data-anchor-id="complejidad-3"><span class="header-section-number">12.7</span> Complejidad</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Recurso</th>
+<th style="text-align: right;">Complejidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estados</td>
+<td style="text-align: right;"><code>O(Sn)</code></td>
+</tr>
+<tr class="even">
+<td>Costo por transición</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+</tr>
+<tr class="odd">
+<td>Tiempo</td>
+<td style="text-align: right;"><code>O(Sn)</code></td>
+</tr>
+<tr class="even">
+<td>Memoria</td>
+<td style="text-align: right;"><code>O(Sn)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="ejemplo-guiado-4-partición-en-dos-subconjuntos" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="ejemplo-guiado-4-partición-en-dos-subconjuntos"><span class="header-section-number">13</span> Ejemplo guiado 4: partición en dos subconjuntos</h2>
+<section id="problema-3" class="level3" data-number="13.1">
+<h3 data-number="13.1" class="anchored" data-anchor-id="problema-3"><span class="header-section-number">13.1</span> Problema</h3>
+<p>Dado un arreglo de números positivos <code>A[1..n]</code>, se quiere saber si puede dividirse en dos subconjuntos con igual suma.</p>
+<p>Si la suma total es impar, la respuesta es <code>false</code>. Si es par, basta preguntar si existe un subconjunto que sume la mitad:</p>
+<p><span class="math display">\[
+S = \frac{\sum_{i=1}^{n} A[i]}{2}
+\]</span></p>
+</section>
+<section id="subproblema-3" class="level3" data-number="13.2">
+<h3 data-number="13.2" class="anchored" data-anchor-id="subproblema-3"><span class="header-section-number">13.2</span> Subproblema</h3>
+<p>Definimos:</p>
+<p><span class="math display">\[
+P(k, S) = \text{true si se puede formar suma } S \text{ usando elementos desde } k \text{ hasta } n
+\]</span></p>
+<p>Donde <code>k</code> es el índice actual y <code>S</code> es la suma restante que se quiere formar.</p>
+</section>
+<section id="casos-base" class="level3" data-number="13.3">
+<h3 data-number="13.3" class="anchored" data-anchor-id="casos-base"><span class="header-section-number">13.3</span> Casos base</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Caso</th>
+<th>Respuesta</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>S = 0</code></td>
+<td><code>true</code></td>
+<td>Ya se formó la suma buscada</td>
+</tr>
+<tr class="even">
+<td><code>S &lt; 0</code></td>
+<td><code>false</code></td>
+<td>La suma se pasó</td>
+</tr>
+<tr class="odd">
+<td><code>k &gt; n</code> y <code>S &gt; 0</code></td>
+<td><code>false</code></td>
+<td>No quedan elementos</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="recurrencia-4" class="level3" data-number="13.4">
+<h3 data-number="13.4" class="anchored" data-anchor-id="recurrencia-4"><span class="header-section-number">13.4</span> Recurrencia</h3>
+<p>Para el elemento <code>A[k]</code>, se compara tomarlo o no tomarlo:</p>
+<p><span class="math display">\[
+P(k, S) = P(k + 1, S - A[k]) \lor P(k + 1, S)
+\]</span></p>
+<p>El operador <code>\lor</code> significa “o lógico”: basta que una de las dos opciones sea posible.</p>
+</section>
+<section id="pseudocódigo-con-memoización" class="level3" data-number="13.5">
+<h3 data-number="13.5" class="anchored" data-anchor-id="pseudocódigo-con-memoización"><span class="header-section-number">13.5</span> Pseudocódigo con memoización</h3>
+<p><strong>Input:</strong> arreglo <code>A[1..n]</code>.</p>
+<p><strong>Output:</strong> <code>true</code> si puede dividirse en dos subconjuntos de igual suma; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>ParticionIgual(A, n):
+    total &lt;- suma(A)
+
+    if total mod 2 != 0:
+        return false
+
+    objetivo &lt;- total / 2
+    inicializar M con NIL
+    return PuedeFormar(1, objetivo, A, n, M)
+
+PuedeFormar(k, S, A, n, M):
+    if S = 0:
+        return true
+
+    if S &lt; 0:
+        return false
+
+    if k &gt; n:
+        return false
+
+    if M[k][S] != NIL:
+        return M[k][S]
+
+    tomar &lt;- PuedeFormar(k + 1, S - A[k], A, n, M)
+    no_tomar &lt;- PuedeFormar(k + 1, S, A, n, M)
+    M[k][S] &lt;- tomar or no_tomar
+    return M[k][S]</code></pre>
+</section>
+<section id="complejidad-4" class="level3" data-number="13.6">
+<h3 data-number="13.6" class="anchored" data-anchor-id="complejidad-4"><span class="header-section-number">13.6</span> Complejidad</h3>
+<p>Si <code>S</code> es la mitad de la suma total, hay <code>O(nS)</code> estados y cada estado compara dos opciones en tiempo constante.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Recurso</th>
+<th style="text-align: right;">Complejidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Estados</td>
+<td style="text-align: right;"><code>O(nS)</code></td>
+</tr>
+<tr class="even">
+<td>Costo por transición</td>
+<td style="text-align: right;"><code>O(1)</code></td>
+</tr>
+<tr class="odd">
+<td>Tiempo</td>
+<td style="text-align: right;"><code>O(nS)</code></td>
+</tr>
+<tr class="even">
+<td>Memoria</td>
+<td style="text-align: right;"><code>O(nS)</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="errores-típicos" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">14</span> Errores típicos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Por qué está mal</th>
+<th>Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Empezar por la tabla sin definir el subproblema</td>
+<td>No se sabe qué significa cada celda</td>
+<td>Escribir primero <code>DP[...] = ...</code></td>
+</tr>
+<tr class="even">
+<td>Confundir greedy con DP</td>
+<td>Greedy decide localmente; DP compara opciones</td>
+<td>Identificar las alternativas de la recurrencia</td>
+</tr>
+<tr class="odd">
+<td>Olvidar casos base</td>
+<td>La recurrencia no termina o consulta valores inválidos</td>
+<td>Definir índices, monto o capacidad cero</td>
+</tr>
+<tr class="even">
+<td>Usar un estado insuficiente</td>
+<td>Mezcla situaciones distintas en la misma celda</td>
+<td>Agregar los parámetros que afectan el futuro</td>
+</tr>
+<tr class="odd">
+<td>Usar un estado excesivo</td>
+<td>Aumenta tiempo y memoria sin necesidad</td>
+<td>Eliminar información que no cambia decisiones futuras</td>
+</tr>
+<tr class="even">
+<td>Llenar en orden inválido</td>
+<td>Se consultan celdas no calculadas</td>
+<td>Revisar dependencias de la recurrencia</td>
+</tr>
+<tr class="odd">
+<td>Dar solo el valor cuando piden la solución</td>
+<td>Falta reconstruir decisiones</td>
+<td>Guardar decisiones o comparar celdas hacia atrás</td>
+</tr>
+<tr class="even">
+<td>Aplicar mochila fraccionable a mochila 0/1</td>
+<td>En 0/1 no se pueden tomar fracciones</td>
+<td>Usar la recurrencia tomar/no tomar</td>
+</tr>
+<tr class="odd">
+<td>Decir que todo óptimo es DP</td>
+<td>No siempre hay solapamiento útil</td>
+<td>Justificar subproblemas solapados y subestructura óptima</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Una recurrencia sin definición de estado es ambigua. La frase que define <code>DP[...]</code> debe permitir entender exactamente qué representa cada parámetro.</p>
+</div>
+</div>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">15</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Una productora organiza <code>n</code> charlas. Cada charla <code>j</code> tiene:</p>
+<ul>
+<li>hora de inicio <code>s[j]</code>;</li>
+<li>hora de término <code>f[j]</code>;</li>
+<li>ganancia <code>v[j]</code>.</li>
+</ul>
+<p>No se pueden seleccionar dos charlas que se traslapen. Se pide obtener la máxima ganancia posible y, además, indicar qué charlas se seleccionan.</p>
+<ol type="1">
+<li>Define el subproblema.</li>
+<li>Escribe la recurrencia y el caso base.</li>
+<li>Da pseudocódigo bottom-up.</li>
+<li>Explica la complejidad.</li>
+<li>Explica cómo reconstruir las charlas escogidas.</li>
+<li>Explica por qué no basta el algoritmo greedy de charlas sin ganancia.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Primero se ordenan las charlas por hora de término creciente. Luego se calcula <code>b(j)</code>, que corresponde a la última charla compatible con <code>j</code>: la de mayor índice menor que <code>j</code> que termina antes o justo cuando empieza <code>j</code>.</p>
+<p>Definimos el subproblema:</p>
+<p><span class="math display">\[
+OPT(j) = \text{máxima ganancia usando solo las primeras } j \text{ charlas}
+\]</span></p>
+<p>Para cada charla <code>j</code> hay dos opciones: tomarla o no tomarla. Si se toma, se suma su ganancia <code>v_j</code> y se continúa con la mejor solución compatible anterior <code>OPT(b(j))</code>. Si no se toma, queda <code>OPT(j - 1)</code>.</p>
+<p><span class="math display">\[
+OPT(j) = \max\{v_j + OPT(b(j)),\ OPT(j - 1)\}
+\]</span></p>
+<p>Caso base:</p>
+<p><span class="math display">\[
+OPT(0) = 0
+\]</span></p>
+<p><strong>Input:</strong> <code>n</code> charlas ordenadas por término, ganancias <code>v</code> y arreglo de compatibilidades <code>b</code>.</p>
+<p><strong>Output:</strong> máxima ganancia total.</p>
+<pre class="text"><code>CharlasConGanancia(n, v, b):
+    M[0] &lt;- 0
+
+    for j = 1 to n:
+        tomar &lt;- v[j] + M[b[j]]
+        saltar &lt;- M[j - 1]
+        M[j] &lt;- max(tomar, saltar)
+
+    return M[n]</code></pre>
+<p>Para reconstruir, se vuelve desde <code>j = n</code>. Si tomar <code>j</code> explica el valor de <code>M[j]</code>, se agrega <code>j</code> y se salta a <code>b[j]</code>. Si no, se retrocede a <code>j - 1</code>.</p>
+<p><strong>Input:</strong> tabla <code>M</code>, ganancias <code>v</code>, compatibilidades <code>b</code> e índice <code>j</code>.</p>
+<p><strong>Output:</strong> conjunto de charlas seleccionadas.</p>
+<pre class="text"><code>ReconstruirCharlas(j, M, v, b):
+    if j = 0:
+        return empty
+
+    if v[j] + M[b[j]] &gt;= M[j - 1]:
+        return ReconstruirCharlas(b[j], M, v, b) union {j}
+    else:
+        return ReconstruirCharlas(j - 1, M, v, b)</code></pre>
+<p>Complejidad:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Parte</th>
+<th style="text-align: right;">Complejidad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ordenar charlas</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+</tr>
+<tr class="even">
+<td>Calcular <code>b(j)</code> con búsqueda binaria</td>
+<td style="text-align: right;"><code>O(n log n)</code></td>
+</tr>
+<tr class="odd">
+<td>Llenar <code>M</code></td>
+<td style="text-align: right;"><code>O(n)</code></td>
+</tr>
+<tr class="even">
+<td>Reconstruir solución</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+</tr>
+<tr class="odd">
+<td>Memoria</td>
+<td style="text-align: right;"><code>O(n)</code></td>
+</tr>
+</tbody>
+</table>
+<p>Si <code>b(j)</code> ya viene dado, la DP cuesta <code>O(n)</code> tiempo y <code>O(n)</code> memoria. Si hay que ordenar y calcular compatibilidades, domina <code>O(n log n)</code>.</p>
+<p>No basta el greedy de charlas sin ganancia porque ese algoritmo maximiza cantidad de charlas, no ganancia total. Con ganancias, una charla compatible que termina temprano puede aportar poco valor, mientras una charla más larga puede aportar mucho más. Por eso se debe comparar tomar y no tomar cada charla.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">16</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>Qué son subproblemas solapados.</li>
+<li>Qué significa subestructura óptima.</li>
+<li>Por qué la tabla no debe ser el punto de partida.</li>
+<li>Qué debe contener una definición de estado.</li>
+<li>Qué diferencia hay entre memoización y bottom-up.</li>
+<li>Por qué greedy y DP no son lo mismo.</li>
+<li>Por qué DP evita recomputar subproblemas que backtracking podría repetir.</li>
+<li>Qué diferencia hay entre dividir para conquistar y DP.</li>
+<li>Cómo se calcula la complejidad de una DP.</li>
+<li>Cuándo se necesita reconstrucción.</li>
+<li>Por qué mochila 0/1 no se resuelve igual que mochila fraccionable.</li>
+<li>Por qué greedy falla para <code>{6, 4, 1}</code> y <code>S = 8</code>.</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">17</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="17.1">
+<h3 data-number="17.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">17.1</span> Ejercicio 1</h3>
+<p>Para monedas <code>{6, 4, 1}</code> y <code>S = 8</code>:</p>
+<ol type="1">
+<li>Aplica la estrategia greedy de tomar la moneda más grande posible.</li>
+<li>Escribe una combinación óptima.</li>
+<li>Explica por qué este ejemplo justifica usar DP.</li>
+</ol>
+</section>
+<section id="ejercicio-2" class="level3" data-number="17.2">
+<h3 data-number="17.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">17.2</span> Ejercicio 2</h3>
+<p>Para una mochila con capacidad <code>W = 6</code>, pesos <code>[2, 2, 3]</code> y valores <code>[1, 2, 5]</code>:</p>
+<ol type="1">
+<li>Define <code>DP[i][w]</code>.</li>
+<li>Calcula el valor de <code>DP[3][6]</code>.</li>
+<li>Indica qué objetos se seleccionan.</li>
+</ol>
+</section>
+<section id="ejercicio-3" class="level3" data-number="17.3">
+<h3 data-number="17.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">17.3</span> Ejercicio 3</h3>
+<p>Da un ejemplo de charlas con ganancia donde elegir la charla que termina primero no maximiza la ganancia total.</p>
+</section>
+<section id="ejercicio-4" class="level3" data-number="17.4">
+<h3 data-number="17.4" class="anchored" data-anchor-id="ejercicio-4"><span class="header-section-number">17.4</span> Ejercicio 4</h3>
+<p>Para <code>A = [3, 1, 1, 2, 2, 1]</code>, responde si se puede particionar en dos subconjuntos de igual suma. Define el objetivo <code>S</code> y explica qué pregunta responde <code>P(k, S)</code>.</p>
+</section>
+<section id="ejercicio-5" class="level3" data-number="17.5">
+<h3 data-number="17.5" class="anchored" data-anchor-id="ejercicio-5"><span class="header-section-number">17.5</span> Ejercicio 5</h3>
+<p>Indica si cada frase sugiere greedy, backtracking, dividir para conquistar o DP:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Frase</th>
+<th>Técnica probable</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“Elijo la mejor opción local y no vuelvo atrás”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Pruebo asignaciones y deshago cuando violan restricciones”</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>“Divido en mitades independientes y combino”</td>
+<td></td>
+</tr>
+<tr class="even">
+<td>“Comparo opciones y guardo estados repetidos”</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">18</span> Checklist de estudio</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Puedo explicar qué son subproblemas solapados.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué es subestructura óptima.</label></li>
+<li><label><input type="checkbox">Puedo definir un estado <code>DP[...]</code> con parámetros suficientes.</label></li>
+<li><label><input type="checkbox">Puedo escribir casos base antes de la recurrencia.</label></li>
+<li><label><input type="checkbox">Puedo escribir recurrencias con <code>min</code>, <code>max</code> u <code>or</code>.</label></li>
+<li><label><input type="checkbox">Puedo pasar de una recurrencia a memoización.</label></li>
+<li><label><input type="checkbox">Puedo pasar de una recurrencia a bottom-up.</label></li>
+<li><label><input type="checkbox">Puedo definir un orden de llenado válido.</label></li>
+<li><label><input type="checkbox">Puedo calcular complejidad como estados por transición.</label></li>
+<li><label><input type="checkbox">Puedo distinguir DP de greedy.</label></li>
+<li><label><input type="checkbox">Puedo distinguir DP de backtracking.</label></li>
+<li><label><input type="checkbox">Puedo distinguir DP de dividir para conquistar.</label></li>
+<li><label><input type="checkbox">Puedo resolver charlas con ganancia.</label></li>
+<li><label><input type="checkbox">Puedo resolver mochila 0/1.</label></li>
+<li><label><input type="checkbox">Puedo resolver dar vuelto con DP y explicar el contraejemplo greedy.</label></li>
+<li><label><input type="checkbox">Puedo resolver partición en dos subconjuntos.</label></li>
+<li><label><input type="checkbox">Puedo reconstruir la solución cuando el enunciado lo pide.</label></li>
+</ul>
 
 
 </section>

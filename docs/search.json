@@ -4,7 +4,19 @@
     "href": "contenidos/programacion-dinamica.html",
     "title": "Programación dinámica",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Comprender programación dinámica como una técnica para resolver problemas donde conviene comparar opciones y guardar resultados de subproblemas. Al estudiar esta página deberías poder:\n\nreconocer señales de programación dinámica en un enunciado;\ndistinguir DP de greedy, backtracking y dividir para conquistar;\ndefinir subproblemas, estados, casos base y recurrencias;\nelegir entre memoización y bottom-up;\ncalcular complejidad como número de estados por costo de transición;\nreconstruir una solución cuando el enunciado no pide solo el valor óptimo;\nresolver patrones clásicos como charlas con ganancia, mochila 0/1, dar vuelto y partición en dos subconjuntos.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#objetivo-de-aprendizaje",
+    "href": "contenidos/programacion-dinamica.html#objetivo-de-aprendizaje",
+    "title": "Programación dinámica",
+    "section": "",
+    "text": "Comprender programación dinámica como una técnica para resolver problemas donde conviene comparar opciones y guardar resultados de subproblemas. Al estudiar esta página deberías poder:\n\nreconocer señales de programación dinámica en un enunciado;\ndistinguir DP de greedy, backtracking y dividir para conquistar;\ndefinir subproblemas, estados, casos base y recurrencias;\nelegir entre memoización y bottom-up;\ncalcular complejidad como número de estados por costo de transición;\nreconstruir una solución cuando el enunciado no pide solo el valor óptimo;\nresolver patrones clásicos como charlas con ganancia, mochila 0/1, dar vuelto y partición en dos subconjuntos.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -15,8 +27,8 @@
     "objectID": "contenidos/programacion-dinamica.html#idea-central-del-tema",
     "href": "contenidos/programacion-dinamica.html#idea-central-del-tema",
     "title": "Programación dinámica",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nLa programación dinámica, o DP, se usa cuando un problema tiene dos propiedades:\n\nSubproblemas solapados: al resolver el problema de forma recursiva, aparecen varias veces los mismos subproblemas.\nSubestructura óptima: una solución óptima del problema completo se puede construir a partir de soluciones óptimas de subproblemas más pequeños.\n\n\n\n\n\n\n\nImportanteIdea central\n\n\n\nLa tabla no es el punto de partida. Primero se define qué significa cada subproblema, luego se escribe la recurrencia y recién después se decide cómo guardar los valores.\n\n\nLa idea práctica es resolver cada subproblema una sola vez. Si se usa recursión, se guarda el resultado en una estructura de memoria; eso se llama memoización. Si se llena una tabla desde casos pequeños hacia casos grandes, se usa un enfoque bottom-up.\nUn flujo razonable para formular una DP es:\n\n\n\n\n\nflowchart LR\n    A[\"Enunciado\"] --&gt; B[\"Definir subproblema\"]\n    B --&gt; C[\"Casos base\"]\n    C --&gt; D[\"Recurrencia\"]\n    D --&gt; E[\"Orden de llenado\"]\n    E --&gt; F[\"Complejidad\"]\n    F --&gt; G[\"Reconstrucción\"]\n\n\n\n\n\n\n\n\n\n\n\n\nNotaIntuición\n\n\n\nDP no adivina una decisión local. DP compara opciones, guarda el mejor resultado de cada estado y reutiliza esos resultados cuando vuelven a aparecer.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -24,11 +36,35 @@
     ]
   },
   {
-    "objectID": "contenidos/programacion-dinamica.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/programacion-dinamica.html#cuándo-usar-esta-técnica-o-estructura",
+    "objectID": "contenidos/programacion-dinamica.html#antes-de-partir-vocabulario-mínimo",
+    "href": "contenidos/programacion-dinamica.html#antes-de-partir-vocabulario-mínimo",
     "title": "Programación dinámica",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "section": "3 Antes de partir: vocabulario mínimo",
+    "text": "3 Antes de partir: vocabulario mínimo\n\n\n\n\n\n\n\n\nConcepto\nQué significa\nPregunta guía\n\n\n\n\nProblema de optimización\nProblema donde se busca maximizar o minimizar una cantidad\nQué significa “mejor”\n\n\nSubproblema\nVersión más pequeña o parcial del problema original\nQué parte del problema puedo resolver por separado\n\n\nEstado\nParámetros que identifican completamente un subproblema\nQué datos necesito para saber dónde estoy\n\n\nCaso base\nEstado cuyo valor se conoce directamente\nDónde termina la recurrencia\n\n\nRecurrencia\nFórmula que expresa un estado usando estados más simples\nCómo combino respuestas previas\n\n\nTransición\nOpción evaluada para pasar de un estado a otro\nQué decisiones comparo\n\n\nMemoización\nRecursión con almacenamiento de resultados ya calculados\nCómo evito repetir llamadas\n\n\nBottom-up\nLlenado iterativo desde estados base hacia estados mayores\nEn qué orden lleno la tabla\n\n\nReconstrucción\nProceso para recuperar las decisiones tomadas\nQué elementos forman la solución\n\n\n\nUna definición de estado debe ser precisa. No basta escribir DP[i] sin explicar qué representa i. Una buena respuesta empieza con una frase del tipo:\nDP[i][w] = mejor valor usando los primeros i objetos con capacidad w\nEsa frase determina qué significa cada celda y qué dependencias puede tener.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#cuándo-usar-programación-dinámica",
+    "href": "contenidos/programacion-dinamica.html#cuándo-usar-programación-dinámica",
+    "title": "Programación dinámica",
+    "section": "4 Cuándo usar programación dinámica",
+    "text": "4 Cuándo usar programación dinámica\nConviene pensar en DP cuando el problema tiene muchas combinaciones posibles, pero esas combinaciones comparten subproblemas.\n\n\n\n\n\n\n\nSeñal en el enunciado\nLectura posible\n\n\n\n\n“máxima ganancia”, “mínimo costo”, “menor cantidad”\nHay una función objetivo\n\n\n“tomar o no tomar”\nPuede haber una recurrencia con dos opciones\n\n\n“capacidad restante”, “monto restante”, “índice actual”\nEsos valores pueden formar el estado\n\n\n“subsecuencia”, “subconjunto”, “partición”\nPuede haber subproblemas solapados\n\n\n“una estrategia greedy plausible falla”\nPuede ser necesario comparar opciones\n\n\n“se pide recurrencia”\nSe espera definir subproblema, caso base y transición\n\n\n“se pide la solución concreta”\nHay que considerar reconstrucción\n\n\n\nNo todo problema con máximo o mínimo es DP. Para justificar DP deben aparecer subproblemas solapados y subestructura óptima. Si los subproblemas son independientes y no se repiten, puede bastar dividir para conquistar. Si una decisión local segura está demostrada, puede bastar greedy.\n\n\n\n\n\n\nTipConsejo de estudio\n\n\n\nAntes de escribir código, intenta responder: qué significa el estado, qué opciones compara, cuáles son los casos base y en qué orden se calculan los estados.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#diferencia-con-otras-técnicas",
+    "href": "contenidos/programacion-dinamica.html#diferencia-con-otras-técnicas",
+    "title": "Programación dinámica",
+    "section": "5 Diferencia con otras técnicas",
+    "text": "5 Diferencia con otras técnicas\n\n\n\n\n\n\n\n\nTécnica\nQué hace\nDiferencia clave con DP\n\n\n\n\nGreedy\nToma decisiones locales definitivas\nDP compara opciones y guarda resultados antes de decidir\n\n\nBacktracking\nExplora asignaciones, valida y puede retroceder\nDP evita recomputar subproblemas equivalentes\n\n\nDividir para conquistar\nDivide en subproblemas disjuntos\nDP aparece cuando los subproblemas se solapan\n\n\nFuerza bruta\nPrueba combinaciones sin reutilizar estructura\nDP guarda respuestas parciales y las reutiliza\n\n\n\nGreedy y DP suelen confundirse en problemas de optimización. La diferencia central es que greedy toma una decisión local y no vuelve atrás; DP evalúa alternativas como “tomar/no tomar”, “usar/no usar” o “cortar/no cortar” y guarda el mejor resultado de cada estado.\nBacktracking también explora decisiones, pero puede visitar el mismo subproblema muchas veces desde ramas distintas. DP reconoce que esos subproblemas son equivalentes y los calcula una sola vez.\nDividir para conquistar, como mergesort, divide el problema en partes disjuntas. DP se vuelve útil cuando las partes se superponen y el mismo cálculo reaparece.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -39,8 +75,8 @@
     "objectID": "contenidos/programacion-dinamica.html#conceptos-mínimos",
     "href": "contenidos/programacion-dinamica.html#conceptos-mínimos",
     "title": "Programación dinámica",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "section": "6 Conceptos mínimos",
+    "text": "6 Conceptos mínimos\n\n6.1 Subproblemas solapados\nHay subproblemas solapados cuando la recursión natural repite estados. Por ejemplo, en dar vuelto para un monto S, el monto restante 4 puede aparecer después de varias decisiones distintas. Sin memoria, se calcula muchas veces; con DP, se calcula una vez.\n\n\n6.2 Subestructura óptima\nUn problema tiene subestructura óptima cuando una solución óptima se puede construir usando soluciones óptimas de subproblemas. En mochila 0/1, si el objeto i se toma, el resto debe ser la mejor solución posible con los objetos anteriores y la capacidad restante.\n\n\n6.3 Estado suficiente\nEl estado debe contener toda la información necesaria para decidir el futuro. Si falta una variable, la recurrencia mezcla situaciones distintas. Si sobra una variable, la tabla se vuelve más grande de lo necesario.\n\n\n\n\n\n\n\n\nEstado\nQué guarda\nRiesgo si está mal definido\n\n\n\n\nDP[i]\nMejor valor hasta el índice i\nPuede faltar capacidad, monto o compatibilidad\n\n\nDP[i][w]\nMejor valor hasta i con capacidad w\nSirve para mochila, pero no para intervalos sin ordenar\n\n\nDP[T][k]\nMejor respuesta para monto T con primeras k monedas\nSirve para limitar denominaciones\n\n\nP(k, S)\nSi se puede formar suma S desde el índice k\nSirve para partición o subset sum\n\n\n\n\n\n6.4 Recurrencia\nLa recurrencia expresa cómo calcular un estado desde estados más simples. Debe incluir todas las opciones relevantes y elegir con el operador adecuado:\n\nmax si se maximiza ganancia o valor;\nmin si se minimiza costo, cantidad o distancia;\nor si se pregunta si existe una solución;\nsuma si se cuenta cantidad de formas.\n\n\n\n6.5 Reconstrucción\nEl valor óptimo no siempre basta. Si el enunciado pide qué charlas tomar, qué objetos seleccionar o qué monedas usar, se debe reconstruir la solución comparando decisiones o guardando un arreglo auxiliar.\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nSi el enunciado pide la solución concreta y no solo el valor óptimo, responder únicamente DP[n][W] queda incompleto. Hay que recuperar las decisiones que produjeron ese valor.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -48,11 +84,11 @@
     ]
   },
   {
-    "objectID": "contenidos/programacion-dinamica.html#operaciones-o-algoritmo-principal",
-    "href": "contenidos/programacion-dinamica.html#operaciones-o-algoritmo-principal",
+    "objectID": "contenidos/programacion-dinamica.html#receta-para-formular-una-dp",
+    "href": "contenidos/programacion-dinamica.html#receta-para-formular-una-dp",
     "title": "Programación dinámica",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "section": "7 Receta para formular una DP",
+    "text": "7 Receta para formular una DP\nUna respuesta ordenada puede seguir esta receta:\n\n\n\n\n\n\n\n\nPaso\nQué escribir\nPregunta que responde\n\n\n\n\n1\nDefinir el subproblema\nQué significa DP[...]\n\n\n2\nIdentificar casos base\nQué estados se conocen directamente\n\n\n3\nEscribir la recurrencia\nQué opciones se comparan\n\n\n4\nElegir memoización o bottom-up\nCómo se guardan los resultados\n\n\n5\nDefinir orden de llenado\nQué estados deben estar listos antes\n\n\n6\nCalcular complejidad\nCuántos estados hay y cuánto cuesta cada uno\n\n\n7\nReconstruir si corresponde\nCómo se recuperan decisiones concretas\n\n\n\n\n\n\n\n\n\nImportanteModelo antes que tabla\n\n\n\nNo empieces dibujando una matriz. Primero escribe una frase precisa: DP[...] = .... Esa frase determina dimensiones, casos base, recurrencia y orden de llenado.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -63,8 +99,8 @@
     "objectID": "contenidos/programacion-dinamica.html#pseudocódigo-claro",
     "href": "contenidos/programacion-dinamica.html#pseudocódigo-claro",
     "title": "Programación dinámica",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "section": "8 Pseudocódigo claro",
+    "text": "8 Pseudocódigo claro\n\n8.1 Memoización genérica\nLa memoización mantiene el estilo recursivo, pero evita repetir subproblemas ya resueltos.\nInput: estado inicial del problema y estructura M para guardar resultados.\nOutput: valor óptimo asociado al estado inicial.\nDP_Memo(estado):\n    if estado es caso base:\n        return valor_base\n\n    if M[estado] != NIL:\n        return M[estado]\n\n    mejor &lt;- peor_valor_posible\n\n    for decision in decisiones_validas(estado):\n        nuevo_estado &lt;- aplicar(decision, estado)\n        candidato &lt;- valor(decision) + DP_Memo(nuevo_estado)\n        mejor &lt;- mejor_entre(mejor, candidato)\n\n    M[estado] &lt;- mejor\n    return mejor\nLa línea M[estado] &lt;- mejor es lo que evita recomputar. Sin esa línea, el algoritmo vuelve a ser una recursión exponencial en muchos problemas.\n\n\n8.2 Bottom-up genérico\nBottom-up llena una tabla en un orden donde cada estado consulta solo estados ya calculados.\nInput: datos del problema, dimensiones de la tabla y casos base.\nOutput: valor óptimo del problema completo.\nDP_BottomUp(datos):\n    inicializar tabla DP con casos base\n\n    for estado in orden_valido:\n        DP[estado] &lt;- combinar estados anteriores segun recurrencia\n\n    return DP[estado_final]\nEl punto delicado es orden_valido. Si la recurrencia usa DP[i - 1][w], entonces la fila i - 1 debe estar calculada antes de la fila i. Si usa montos menores, se llenan montos de menor a mayor.\n\n\n8.3 Reconstrucción genérica\nCuando se necesita la solución concreta, se camina hacia atrás desde el estado final.\nInput: tabla DP, estado final y datos del problema.\nOutput: decisiones que forman una solución óptima.\nReconstruir(estado):\n    if estado es caso base:\n        return empty\n\n    decision &lt;- identificar decision que explica DP[estado]\n    estado_anterior &lt;- retroceder(estado, decision)\n\n    return Reconstruir(estado_anterior) union {decision}\nEn algunas implementaciones se guarda explícitamente una tabla decision. En otras se compara el valor de celdas vecinas para deducir si se tomó o no una opción.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -75,8 +111,56 @@
     "objectID": "contenidos/programacion-dinamica.html#complejidad",
     "href": "contenidos/programacion-dinamica.html#complejidad",
     "title": "Programación dinámica",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
+    "section": "9 Complejidad",
+    "text": "9 Complejidad\nLa complejidad de una DP se calcula con esta regla:\n\\[\nT = \\#\\text{estados} \\cdot \\text{costo de transición}\n\\]\nDonde #estados es la cantidad de celdas o llamadas distintas posibles, y el costo de transición es cuánto se demora calcular cada estado una vez que sus dependencias están listas.\n\n\n\n\n\n\n\n\n\nPatrón\nCantidad de estados\nCosto por estado\nTiempo\n\n\n\n\nDP[i] con i = 0..n\nO(n)\nO(1)\nO(n)\n\n\nDP[i][w] con i = 0..n, w = 0..W\nO(nW)\nO(1)\nO(nW)\n\n\nDP[T][k] con T = 0..S, k = 0..n\nO(Sn)\nO(1)\nO(Sn)\n\n\nEstado con m transiciones posibles\ndepende del estado\nO(m)\nestados por m\n\n\n\nLa memoria suele ser el número de estados guardados. A veces puede reducirse si una fila depende solo de la fila anterior, pero esa optimización no debe ocultar la recurrencia original.\n\n\n\n\n\n\nNotaCómo justificar complejidad\n\n\n\nUna respuesta completa dice cuántos estados existen, cuánto cuesta calcular cada estado y cuánto espacio ocupa la tabla o memo.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#ejemplo-guiado-1-charlas-con-ganancia",
+    "href": "contenidos/programacion-dinamica.html#ejemplo-guiado-1-charlas-con-ganancia",
+    "title": "Programación dinámica",
+    "section": "10 Ejemplo guiado 1: charlas con ganancia",
+    "text": "10 Ejemplo guiado 1: charlas con ganancia\n\n10.1 Problema\nSe tienen n charlas. Cada charla j tiene inicio s[j], término f[j] y ganancia v[j]. Se quiere elegir un subconjunto de charlas compatibles que maximice la ganancia total.\nEste problema se parece a selección de charlas greedy, pero la ganancia cambia el objetivo. Una charla larga con alta ganancia puede ser mejor que varias charlas cortas de baja ganancia.\n\n\n\n\n\n\nAdvertenciaRelación con greedy\n\n\n\nCharlas sin ganancia se resuelve con greedy ordenando por término temprano. Charlas con ganancia requiere comparar tomar o no tomar cada charla; por eso aparece programación dinámica.\n\n\n\n\n10.2 Subproblema\nPrimero se ordenan las charlas por hora de término creciente. Definimos:\n\nv[j]: ganancia de la charla j;\nb(j): índice de la última charla compatible con j que termina antes de que empiece j;\nOPT(j): máxima ganancia usando solo las primeras j charlas.\n\n\n\n10.3 Recurrencia\nPara la charla j hay dos opciones:\n\nTomar j: se gana v_j y se suma lo mejor compatible antes de ella, OPT(b(j)).\nNo tomar j: se conserva lo mejor usando las primeras j - 1 charlas.\n\n\\[\nOPT(j) = \\max\\{v_j + OPT(b(j)),\\ OPT(j - 1)\\}\n\\]\nEl caso base es:\n\\[\nOPT(0) = 0\n\\]\nAquí OPT(0) significa que no hay charlas disponibles, por lo que la ganancia máxima es cero.\n\n\n10.4 Ejemplo pequeño\n\n\n\nCharla\nInicio\nFin\nGanancia\nb(j)\n\n\n\n\n1\n1\n3\n5\n0\n\n\n2\n2\n5\n6\n0\n\n\n3\n4\n6\n5\n1\n\n\n4\n6\n7\n4\n3\n\n\n5\n5\n8\n11\n2\n\n\n\n\n\n\nj\nTomar j\nSaltar j\nOPT(j)\n\n\n\n\n0\nno aplica\nno aplica\n0\n\n\n1\n5 + OPT(0) = 5\nOPT(0) = 0\n5\n\n\n2\n6 + OPT(0) = 6\nOPT(1) = 5\n6\n\n\n3\n5 + OPT(1) = 10\nOPT(2) = 6\n10\n\n\n4\n4 + OPT(3) = 14\nOPT(3) = 10\n14\n\n\n5\n11 + OPT(2) = 17\nOPT(4) = 14\n17\n\n\n\nLa mejor ganancia es 17, tomando las charlas 2 y 5.\n\n\n10.5 Pseudocódigo bottom-up\nInput: n charlas ordenadas por término, ganancias v[1..n] y compatibilidades b[1..n].\nOutput: máxima ganancia total.\nCharlasConGanancia(n, v, b):\n    M[0] &lt;- 0\n\n    for j = 1 to n:\n        tomar &lt;- v[j] + M[b[j]]\n        saltar &lt;- M[j - 1]\n        M[j] &lt;- max(tomar, saltar)\n\n    return M[n]\n\n\n10.6 Reconstrucción\nSi se pide qué charlas tomar, se compara si el valor de M[j] viene de tomar o saltar la charla j.\nInput: tabla M, ganancias v, compatibilidades b e índice j.\nOutput: conjunto de charlas seleccionadas.\nReconstruirCharlas(j, M, v, b):\n    if j = 0:\n        return empty\n\n    tomar &lt;- v[j] + M[b[j]]\n    saltar &lt;- M[j - 1]\n\n    if tomar &gt;= saltar:\n        return ReconstruirCharlas(b[j], M, v, b) union {j}\n    else:\n        return ReconstruirCharlas(j - 1, M, v, b)\n\n\n10.7 Complejidad\nSi b(j) ya está calculado, llenar la tabla cuesta O(n). Si se debe ordenar y calcular b(j) con búsqueda binaria, el costo típico total es O(n log n).\n\n\n\nParte\nComplejidad\n\n\n\n\nOrdenar charlas\nO(n log n)\n\n\nCalcular b(j) con búsqueda binaria\nO(n log n)\n\n\nLlenar tabla\nO(n)\n\n\nReconstruir solución\nO(n)\n\n\nMemoria\nO(n)",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#ejemplo-guiado-2-mochila-01",
+    "href": "contenidos/programacion-dinamica.html#ejemplo-guiado-2-mochila-01",
+    "title": "Programación dinámica",
+    "section": "11 Ejemplo guiado 2: mochila 0/1",
+    "text": "11 Ejemplo guiado 2: mochila 0/1\n\n11.1 Problema\nHay n objetos. Cada objeto i tiene peso peso[i] y valor valor[i]. La mochila tiene capacidad máxima W. Cada objeto se puede tomar completo o no tomar. No se puede partir.\n\n\n\n\n\n\nAdvertenciaMochila fraccionable no es mochila 0/1\n\n\n\nMochila fraccionable permite tomar una parte de un objeto y admite una estrategia greedy por razón valor/peso. En mochila 0/1 cada objeto se toma o se descarta; esa misma regla greedy simple puede fallar.\n\n\n\n\n11.2 Subproblema\nDefinimos:\n\\[\nDP[i][w] = \\text{máximo valor usando los primeros } i \\text{ objetos con capacidad } w\n\\]\nDonde i indica cuántos objetos se consideran y w indica la capacidad disponible.\n\n\n11.3 Recurrencia\nPara el objeto i hay dos opciones:\n\nNo tomarlo: queda DP[i - 1][w].\nTomarlo, si cabe: queda DP[i - 1][w - peso_i] + valor_i.\n\n\\[\nDP[i][w] =\n\\begin{cases}\nDP[i - 1][w], & \\text{si } peso_i &gt; w \\\\\n\\max\\{DP[i - 1][w],\\ DP[i - 1][w - peso_i] + valor_i\\}, & \\text{si } peso_i \\le w\n\\end{cases}\n\\]\nCasos base:\n\\[\nDP[0][w] = 0\n\\]\n\\[\nDP[i][0] = 0\n\\]\nEl primer caso dice que con cero objetos no se obtiene valor. El segundo dice que con capacidad cero no se puede cargar nada.\n\n\n11.4 Pseudocódigo bottom-up\nInput: cantidad de objetos n, capacidad W, arreglos peso y valor.\nOutput: máximo valor alcanzable con capacidad W.\nMochila01(n, W, peso, valor):\n    for w = 0 to W:\n        DP[0][w] &lt;- 0\n\n    for i = 1 to n:\n        DP[i][0] &lt;- 0\n\n    for i = 1 to n:\n        for w = 1 to W:\n            DP[i][w] &lt;- DP[i - 1][w]\n\n            if peso[i] &lt;= w:\n                candidato &lt;- DP[i - 1][w - peso[i]] + valor[i]\n                DP[i][w] &lt;- max(DP[i][w], candidato)\n\n    return DP[n][W]\n\n\n11.5 Reconstrucción\nInput: tabla DP, arreglos peso y valor, índice i y capacidad w.\nOutput: conjunto de objetos seleccionados.\nReconstruirMochila(i, w, DP, peso):\n    if i = 0 or w = 0:\n        return empty\n\n    if DP[i][w] = DP[i - 1][w]:\n        return ReconstruirMochila(i - 1, w, DP, peso)\n    else:\n        return ReconstruirMochila(i - 1, w - peso[i], DP, peso) union {i}\n\n\n11.6 Complejidad\nLa tabla tiene (n + 1)(W + 1) estados y cada estado se calcula en tiempo constante.\n\n\n\nRecurso\nComplejidad\n\n\n\n\nEstados\nO(nW)\n\n\nCosto por transición\nO(1)\n\n\nTiempo\nO(nW)\n\n\nMemoria\nO(nW)",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#ejemplo-guiado-3-dar-vuelto",
+    "href": "contenidos/programacion-dinamica.html#ejemplo-guiado-3-dar-vuelto",
+    "title": "Programación dinámica",
+    "section": "12 Ejemplo guiado 3: dar vuelto",
+    "text": "12 Ejemplo guiado 3: dar vuelto\n\n12.1 Problema\nSe quiere formar un monto S usando la menor cantidad de monedas. Hay monedas de valores v[1..n] y se asume cantidad ilimitada de cada denominación.\n\n\n12.2 Contraejemplo greedy\nLa estrategia greedy de tomar siempre la moneda más grande posible puede fallar. Con monedas {6, 4, 1} y monto S = 8, greedy toma:\n8 = 6 + 1 + 1\nEso usa 3 monedas. Pero el óptimo es:\n8 = 4 + 4\nEso usa 2 monedas. Por lo tanto, en sistemas de monedas no canónicos, dar vuelto puede necesitar DP.\n\n\n12.3 Subproblema\nDefinimos:\n\\[\nZ[T][k] = \\text{mínimo número de monedas para formar } T \\text{ usando las primeras } k \\text{ denominaciones}\n\\]\nDonde T es el monto objetivo parcial y k indica cuántas denominaciones se pueden usar.\n\n\n12.4 Recurrencia\nPara la moneda v_k, hay dos opciones:\n\nNo usar la denominación k: queda Z[T][k - 1].\nUsar una moneda de valor v_k: queda Z[T - v_k][k] + 1, porque se puede volver a usar la misma moneda.\n\n\\[\nZ[T][k] = \\min\\{Z[T][k - 1],\\ Z[T - v_k][k] + 1\\}\n\\]\nLa segunda opción solo existe si T - v_k &gt;= 0.\nCasos base:\n\\[\nZ[0][k] = 0\n\\]\n\\[\nZ[T][0] = +\\infty \\quad \\text{si } T &gt; 0\n\\]\n\n\n12.5 Pseudocódigo bottom-up\nInput: monto S, cantidad de denominaciones n y valores v[1..n].\nOutput: mínimo número de monedas para formar S, o +infinito si no se puede.\nDarVuelto(S, n, v):\n    for T = 1 to S:\n        Z[T][0] &lt;- +infinito\n\n    for k = 0 to n:\n        Z[0][k] &lt;- 0\n\n    for k = 1 to n:\n        for T = 1 to S:\n            no_usar &lt;- Z[T][k - 1]\n            usar &lt;- +infinito\n\n            if T &gt;= v[k]:\n                usar &lt;- Z[T - v[k]][k] + 1\n\n            Z[T][k] &lt;- min(no_usar, usar)\n\n    return Z[S][n]\n\n\n12.6 Reconstrucción\nInput: tabla Z, monto T, índice k y valores v.\nOutput: multiconjunto de monedas usadas.\nReconstruirVuelto(T, k, Z, v):\n    if T = 0:\n        return empty\n\n    if k = 0:\n        return FAIL\n\n    if Z[T][k] = Z[T][k - 1]:\n        return ReconstruirVuelto(T, k - 1, Z, v)\n    else:\n        return ReconstruirVuelto(T - v[k], k, Z, v) union {v[k]}\n\n\n12.7 Complejidad\n\n\n\nRecurso\nComplejidad\n\n\n\n\nEstados\nO(Sn)\n\n\nCosto por transición\nO(1)\n\n\nTiempo\nO(Sn)\n\n\nMemoria\nO(Sn)",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#ejemplo-guiado-4-partición-en-dos-subconjuntos",
+    "href": "contenidos/programacion-dinamica.html#ejemplo-guiado-4-partición-en-dos-subconjuntos",
+    "title": "Programación dinámica",
+    "section": "13 Ejemplo guiado 4: partición en dos subconjuntos",
+    "text": "13 Ejemplo guiado 4: partición en dos subconjuntos\n\n13.1 Problema\nDado un arreglo de números positivos A[1..n], se quiere saber si puede dividirse en dos subconjuntos con igual suma.\nSi la suma total es impar, la respuesta es false. Si es par, basta preguntar si existe un subconjunto que sume la mitad:\n\\[\nS = \\frac{\\sum_{i=1}^{n} A[i]}{2}\n\\]\n\n\n13.2 Subproblema\nDefinimos:\n\\[\nP(k, S) = \\text{true si se puede formar suma } S \\text{ usando elementos desde } k \\text{ hasta } n\n\\]\nDonde k es el índice actual y S es la suma restante que se quiere formar.\n\n\n13.3 Casos base\n\n\n\nCaso\nRespuesta\nMotivo\n\n\n\n\nS = 0\ntrue\nYa se formó la suma buscada\n\n\nS &lt; 0\nfalse\nLa suma se pasó\n\n\nk &gt; n y S &gt; 0\nfalse\nNo quedan elementos\n\n\n\n\n\n13.4 Recurrencia\nPara el elemento A[k], se compara tomarlo o no tomarlo:\n\\[\nP(k, S) = P(k + 1, S - A[k]) \\lor P(k + 1, S)\n\\]\nEl operador \\lor significa “o lógico”: basta que una de las dos opciones sea posible.\n\n\n13.5 Pseudocódigo con memoización\nInput: arreglo A[1..n].\nOutput: true si puede dividirse en dos subconjuntos de igual suma; false en caso contrario.\nParticionIgual(A, n):\n    total &lt;- suma(A)\n\n    if total mod 2 != 0:\n        return false\n\n    objetivo &lt;- total / 2\n    inicializar M con NIL\n    return PuedeFormar(1, objetivo, A, n, M)\n\nPuedeFormar(k, S, A, n, M):\n    if S = 0:\n        return true\n\n    if S &lt; 0:\n        return false\n\n    if k &gt; n:\n        return false\n\n    if M[k][S] != NIL:\n        return M[k][S]\n\n    tomar &lt;- PuedeFormar(k + 1, S - A[k], A, n, M)\n    no_tomar &lt;- PuedeFormar(k + 1, S, A, n, M)\n    M[k][S] &lt;- tomar or no_tomar\n    return M[k][S]\n\n\n13.6 Complejidad\nSi S es la mitad de la suma total, hay O(nS) estados y cada estado compara dos opciones en tiempo constante.\n\n\n\nRecurso\nComplejidad\n\n\n\n\nEstados\nO(nS)\n\n\nCosto por transición\nO(1)\n\n\nTiempo\nO(nS)\n\n\nMemoria\nO(nS)",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -87,20 +171,8 @@
     "objectID": "contenidos/programacion-dinamica.html#errores-típicos",
     "href": "contenidos/programacion-dinamica.html#errores-típicos",
     "title": "Programación dinámica",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
-    "crumbs": [
-      "Inicio",
-      "Contenidos",
-      "Programación dinámica"
-    ]
-  },
-  {
-    "objectID": "contenidos/programacion-dinamica.html#ejemplo-guiado",
-    "href": "contenidos/programacion-dinamica.html#ejemplo-guiado",
-    "title": "Programación dinámica",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "section": "14 Errores típicos",
+    "text": "14 Errores típicos\n\n\n\n\n\n\n\n\nError\nPor qué está mal\nCorrección\n\n\n\n\nEmpezar por la tabla sin definir el subproblema\nNo se sabe qué significa cada celda\nEscribir primero DP[...] = ...\n\n\nConfundir greedy con DP\nGreedy decide localmente; DP compara opciones\nIdentificar las alternativas de la recurrencia\n\n\nOlvidar casos base\nLa recurrencia no termina o consulta valores inválidos\nDefinir índices, monto o capacidad cero\n\n\nUsar un estado insuficiente\nMezcla situaciones distintas en la misma celda\nAgregar los parámetros que afectan el futuro\n\n\nUsar un estado excesivo\nAumenta tiempo y memoria sin necesidad\nEliminar información que no cambia decisiones futuras\n\n\nLlenar en orden inválido\nSe consultan celdas no calculadas\nRevisar dependencias de la recurrencia\n\n\nDar solo el valor cuando piden la solución\nFalta reconstruir decisiones\nGuardar decisiones o comparar celdas hacia atrás\n\n\nAplicar mochila fraccionable a mochila 0/1\nEn 0/1 no se pueden tomar fracciones\nUsar la recurrencia tomar/no tomar\n\n\nDecir que todo óptimo es DP\nNo siempre hay solapamiento útil\nJustificar subproblemas solapados y subestructura óptima\n\n\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nUna recurrencia sin definición de estado es ambigua. La frase que define DP[...] debe permitir entender exactamente qué representa cada parámetro.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -111,8 +183,32 @@
     "objectID": "contenidos/programacion-dinamica.html#problema-representativo-de-interrogación",
     "href": "contenidos/programacion-dinamica.html#problema-representativo-de-interrogación",
     "title": "Programación dinámica",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "section": "15 Problema representativo de interrogación",
+    "text": "15 Problema representativo de interrogación\n\n\nVer enunciado\n\nUna productora organiza n charlas. Cada charla j tiene:\n\nhora de inicio s[j];\nhora de término f[j];\nganancia v[j].\n\nNo se pueden seleccionar dos charlas que se traslapen. Se pide obtener la máxima ganancia posible y, además, indicar qué charlas se seleccionan.\n\nDefine el subproblema.\nEscribe la recurrencia y el caso base.\nDa pseudocódigo bottom-up.\nExplica la complejidad.\nExplica cómo reconstruir las charlas escogidas.\nExplica por qué no basta el algoritmo greedy de charlas sin ganancia.\n\n\n\n\nVer solución\n\nPrimero se ordenan las charlas por hora de término creciente. Luego se calcula b(j), que corresponde a la última charla compatible con j: la de mayor índice menor que j que termina antes o justo cuando empieza j.\nDefinimos el subproblema:\n\\[\nOPT(j) = \\text{máxima ganancia usando solo las primeras } j \\text{ charlas}\n\\]\nPara cada charla j hay dos opciones: tomarla o no tomarla. Si se toma, se suma su ganancia v_j y se continúa con la mejor solución compatible anterior OPT(b(j)). Si no se toma, queda OPT(j - 1).\n\\[\nOPT(j) = \\max\\{v_j + OPT(b(j)),\\ OPT(j - 1)\\}\n\\]\nCaso base:\n\\[\nOPT(0) = 0\n\\]\nInput: n charlas ordenadas por término, ganancias v y arreglo de compatibilidades b.\nOutput: máxima ganancia total.\nCharlasConGanancia(n, v, b):\n    M[0] &lt;- 0\n\n    for j = 1 to n:\n        tomar &lt;- v[j] + M[b[j]]\n        saltar &lt;- M[j - 1]\n        M[j] &lt;- max(tomar, saltar)\n\n    return M[n]\nPara reconstruir, se vuelve desde j = n. Si tomar j explica el valor de M[j], se agrega j y se salta a b[j]. Si no, se retrocede a j - 1.\nInput: tabla M, ganancias v, compatibilidades b e índice j.\nOutput: conjunto de charlas seleccionadas.\nReconstruirCharlas(j, M, v, b):\n    if j = 0:\n        return empty\n\n    if v[j] + M[b[j]] &gt;= M[j - 1]:\n        return ReconstruirCharlas(b[j], M, v, b) union {j}\n    else:\n        return ReconstruirCharlas(j - 1, M, v, b)\nComplejidad:\n\n\n\nParte\nComplejidad\n\n\n\n\nOrdenar charlas\nO(n log n)\n\n\nCalcular b(j) con búsqueda binaria\nO(n log n)\n\n\nLlenar M\nO(n)\n\n\nReconstruir solución\nO(n)\n\n\nMemoria\nO(n)\n\n\n\nSi b(j) ya viene dado, la DP cuesta O(n) tiempo y O(n) memoria. Si hay que ordenar y calcular compatibilidades, domina O(n log n).\nNo basta el greedy de charlas sin ganancia porque ese algoritmo maximiza cantidad de charlas, no ganancia total. Con ganancias, una charla compatible que termina temprano puede aportar poco valor, mientras una charla más larga puede aportar mucho más. Por eso se debe comparar tomar y no tomar cada charla.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#preguntas-de-repaso",
+    "href": "contenidos/programacion-dinamica.html#preguntas-de-repaso",
+    "title": "Programación dinámica",
+    "section": "16 Preguntas de repaso",
+    "text": "16 Preguntas de repaso\n\nQué son subproblemas solapados.\nQué significa subestructura óptima.\nPor qué la tabla no debe ser el punto de partida.\nQué debe contener una definición de estado.\nQué diferencia hay entre memoización y bottom-up.\nPor qué greedy y DP no son lo mismo.\nPor qué DP evita recomputar subproblemas que backtracking podría repetir.\nQué diferencia hay entre dividir para conquistar y DP.\nCómo se calcula la complejidad de una DP.\nCuándo se necesita reconstrucción.\nPor qué mochila 0/1 no se resuelve igual que mochila fraccionable.\nPor qué greedy falla para {6, 4, 1} y S = 8.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "Programación dinámica"
+    ]
+  },
+  {
+    "objectID": "contenidos/programacion-dinamica.html#ejercicios-breves",
+    "href": "contenidos/programacion-dinamica.html#ejercicios-breves",
+    "title": "Programación dinámica",
+    "section": "17 Ejercicios breves",
+    "text": "17 Ejercicios breves\n\n17.1 Ejercicio 1\nPara monedas {6, 4, 1} y S = 8:\n\nAplica la estrategia greedy de tomar la moneda más grande posible.\nEscribe una combinación óptima.\nExplica por qué este ejemplo justifica usar DP.\n\n\n\n17.2 Ejercicio 2\nPara una mochila con capacidad W = 6, pesos [2, 2, 3] y valores [1, 2, 5]:\n\nDefine DP[i][w].\nCalcula el valor de DP[3][6].\nIndica qué objetos se seleccionan.\n\n\n\n17.3 Ejercicio 3\nDa un ejemplo de charlas con ganancia donde elegir la charla que termina primero no maximiza la ganancia total.\n\n\n17.4 Ejercicio 4\nPara A = [3, 1, 1, 2, 2, 1], responde si se puede particionar en dos subconjuntos de igual suma. Define el objetivo S y explica qué pregunta responde P(k, S).\n\n\n17.5 Ejercicio 5\nIndica si cada frase sugiere greedy, backtracking, dividir para conquistar o DP:\n\n\n\nFrase\nTécnica probable\n\n\n\n\n“Elijo la mejor opción local y no vuelvo atrás”\n\n\n\n“Pruebo asignaciones y deshago cuando violan restricciones”\n\n\n\n“Divido en mitades independientes y combino”\n\n\n\n“Comparo opciones y guardo estados repetidos”",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -123,8 +219,8 @@
     "objectID": "contenidos/programacion-dinamica.html#checklist-de-estudio",
     "href": "contenidos/programacion-dinamica.html#checklist-de-estudio",
     "title": "Programación dinámica",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "section": "18 Checklist de estudio",
+    "text": "18 Checklist de estudio\n\nPuedo explicar qué son subproblemas solapados.\nPuedo explicar qué es subestructura óptima.\nPuedo definir un estado DP[...] con parámetros suficientes.\nPuedo escribir casos base antes de la recurrencia.\nPuedo escribir recurrencias con min, max u or.\nPuedo pasar de una recurrencia a memoización.\nPuedo pasar de una recurrencia a bottom-up.\nPuedo definir un orden de llenado válido.\nPuedo calcular complejidad como estados por transición.\nPuedo distinguir DP de greedy.\nPuedo distinguir DP de backtracking.\nPuedo distinguir DP de dividir para conquistar.\nPuedo resolver charlas con ganancia.\nPuedo resolver mochila 0/1.\nPuedo resolver dar vuelto con DP y explicar el contraejemplo greedy.\nPuedo resolver partición en dos subconjuntos.\nPuedo reconstruir la solución cuando el enunciado lo pide.",
     "crumbs": [
       "Inicio",
       "Contenidos",

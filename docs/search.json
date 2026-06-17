@@ -650,9 +650,21 @@
   {
     "objectID": "contenidos/dfs-bfs.html",
     "href": "contenidos/dfs-bfs.html",
-    "title": "DFS y BFS",
+    "title": "DFS, BFS y aplicaciones",
     "section": "",
-    "text": "Pendiente de desarrollo.",
+    "text": "Comprender cuándo usar DFS y cuándo usar BFS en problemas de grafos, cómo implementar sus variantes principales y qué información auxiliar se necesita para resolver aplicaciones frecuentes.\nAl terminar esta página deberías poder:\n\nexplicar la diferencia entre profundizar con DFS y explorar por niveles con BFS;\nusar colores blanco, gris y negro para controlar el estado de cada vértice;\ndetectar ciclos dirigidos con DFS;\nconstruir un orden topológico cuando el grafo es un DAG;\ndescribir Kosaraju para componentes fuertemente conectadas;\ncalcular distancias mínimas en número de aristas con BFS;\nreconstruir caminos usando parent;\ndetectar puentes en grafos no dirigidos usando disc y low;\njustificar complejidades con lista y matriz de adyacencia.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#objetivo-de-aprendizaje",
+    "href": "contenidos/dfs-bfs.html#objetivo-de-aprendizaje",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "",
+    "text": "Comprender cuándo usar DFS y cuándo usar BFS en problemas de grafos, cómo implementar sus variantes principales y qué información auxiliar se necesita para resolver aplicaciones frecuentes.\nAl terminar esta página deberías poder:\n\nexplicar la diferencia entre profundizar con DFS y explorar por niveles con BFS;\nusar colores blanco, gris y negro para controlar el estado de cada vértice;\ndetectar ciclos dirigidos con DFS;\nconstruir un orden topológico cuando el grafo es un DAG;\ndescribir Kosaraju para componentes fuertemente conectadas;\ncalcular distancias mínimas en número de aristas con BFS;\nreconstruir caminos usando parent;\ndetectar puentes en grafos no dirigidos usando disc y low;\njustificar complejidades con lista y matriz de adyacencia.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -662,9 +674,9 @@
   {
     "objectID": "contenidos/dfs-bfs.html#idea-central-del-tema",
     "href": "contenidos/dfs-bfs.html#idea-central-del-tema",
-    "title": "DFS y BFS",
-    "section": "",
-    "text": "Pendiente de desarrollo.",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "2 Idea central del tema",
+    "text": "2 Idea central del tema\nDFS y BFS son recorridos de grafos. Ambos visitan vértices y aristas, pero exploran con estrategias distintas.\nDFS profundiza por una rama hasta no poder avanzar. Luego retrocede y prueba otras ramas. BFS explora por niveles desde un origen: primero distancia 1, luego distancia 2, luego distancia 3, y así sucesivamente.\n\n\n\n\n\n\n\n\n\nTécnica\nIdea central\nEstructura auxiliar típica\nPreguntas que responde bien\n\n\n\n\nDFS\nProfundizar y luego retroceder\nRecursión o pila\nCiclos, tiempos, orden topológico, componentes, CFC, puentes\n\n\nBFS\nExplorar por niveles\nCola FIFO\nDistancia mínima en número de aristas, niveles, camino más corto no ponderado\n\n\n\n\n\n\n\n\n\nImportanteIdea central\n\n\n\nDFS mira estructura profunda del grafo. BFS mira cercanía desde un origen. Si el enunciado pide “menor cantidad de aristas” en un grafo no ponderado, normalmente corresponde BFS.\n\n\n\n\n\n\n\nflowchart LR\n    A[\"Pregunta del enunciado\"] --&gt; B[\"Estructura del grafo: DFS\"]\n    A --&gt; C[\"Distancia no ponderada: BFS\"]\n    B --&gt; D[\"Ciclos, TopSort, CFC, puentes\"]\n    C --&gt; E[\"Niveles, distancias, padres\"]",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -672,11 +684,23 @@
     ]
   },
   {
-    "objectID": "contenidos/dfs-bfs.html#cuándo-usar-esta-técnica-o-estructura",
-    "href": "contenidos/dfs-bfs.html#cuándo-usar-esta-técnica-o-estructura",
-    "title": "DFS y BFS",
-    "section": "2 Cuándo usar esta técnica o estructura",
-    "text": "2 Cuándo usar esta técnica o estructura\nPendiente de desarrollo.",
+    "objectID": "contenidos/dfs-bfs.html#antes-de-partir-vocabulario-mínimo",
+    "href": "contenidos/dfs-bfs.html#antes-de-partir-vocabulario-mínimo",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "3 Antes de partir: vocabulario mínimo",
+    "text": "3 Antes de partir: vocabulario mínimo\nAntes de escribir pseudocódigo conviene fijar el vocabulario. En grafos, una palabra mal usada suele llevar a elegir el algoritmo equivocado.\n\n\n\n\n\n\n\nConcepto\nSignificado\n\n\n\n\nGrafo G = (V, E)\nConjunto de vértices V y aristas E\n\n\nVértice o nodo\nElemento del grafo\n\n\nArista\nRelación entre dos vértices; puede ser dirigida o no dirigida\n\n\nVecino de u\nVértice alcanzable directamente desde u\n\n\nLista de adyacencia\nPara cada vértice, guarda sus vecinos reales\n\n\nMatriz de adyacencia\nTabla donde una celda indica si existe una arista\n\n\nPadre parent[v]\nVértice desde el cual se descubrió v\n\n\nCola FIFO\nEstructura donde sale primero quien entró primero\n\n\nPila o recursión\nEstructura que permite volver al estado anterior\n\n\nGrafo transpuesto G^T\nGrafo dirigido con todas las aristas invertidas\n\n\nDAG\nGrafo dirigido acíclico\n\n\nCFC\nComponente fuertemente conectada: todos llegan a todos dentro del grupo\n\n\nPuente\nArista no dirigida cuya eliminación aumenta la cantidad de componentes\n\n\n\nLos colores son una forma estándar de registrar el estado de cada vértice durante DFS o BFS.\n\n\n\n\n\n\n\n\nColor\nEstado\nInterpretación\n\n\n\n\nBlanco\nNo descubierto\nEl algoritmo todavía no ha llegado a ese vértice\n\n\nGris\nDescubierto y en proceso\nEl vértice está activo; en DFS pertenece a la ruta recursiva actual\n\n\nNegro\nTerminado\nSus vecinos ya fueron revisados\n\n\n\n\n\n\n\n\n\nNotaIntuición\n\n\n\nEn DFS, gris significa “estoy dentro de esta rama ahora”. Por eso, en un grafo dirigido, una arista hacia un vértice gris revela un ciclo dirigido.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#cuándo-usar-dfs-o-bfs",
+    "href": "contenidos/dfs-bfs.html#cuándo-usar-dfs-o-bfs",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "4 Cuándo usar DFS o BFS",
+    "text": "4 Cuándo usar DFS o BFS\nLa elección depende de la pregunta del enunciado, no solo de que aparezca un grafo.\n\n\n\n\n\n\n\n\nEnunciado pide…\nTécnica recomendada\nMotivo\n\n\n\n\nRecorrer todo el grafo\nDFS o BFS\nAmbos visitan vértices y aristas\n\n\nSaber si hay ciclo dirigido\nDFS con colores\nUna arista hacia un vértice gris revela ciclo\n\n\nOrdenar tareas con dependencias\nTopSort con DFS\nSolo existe si el grafo dirigido es acíclico\n\n\nComponentes conectadas en no dirigido\nDFS o BFS\nCada recorrido desde un blanco descubre una componente\n\n\nComponentes fuertemente conectadas\nKosaraju\nUsa orden decreciente de término y grafo transpuesto\n\n\nDistancia mínima en número de aristas\nBFS\nProcesa niveles en orden creciente\n\n\nReconstruir camino no ponderado desde s\nBFS con parent\nEl padre guarda cómo se descubrió cada vértice\n\n\nDetectar puentes\nDFS con disc y low\nRevisa si un subárbol puede volver a un ancestro\n\n\n\n\n\n\n\n\n\nAdvertenciaError típico\n\n\n\nBFS no reemplaza a Dijkstra en grafos ponderados. BFS minimiza cantidad de aristas cuando todas las aristas cuentan lo mismo. Si hay costos distintos, la primera llegada por niveles no garantiza costo mínimo.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -686,9 +710,9 @@
   {
     "objectID": "contenidos/dfs-bfs.html#conceptos-mínimos",
     "href": "contenidos/dfs-bfs.html#conceptos-mínimos",
-    "title": "DFS y BFS",
-    "section": "3 Conceptos mínimos",
-    "text": "3 Conceptos mínimos\nPendiente de desarrollo.",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "5 Conceptos mínimos",
+    "text": "5 Conceptos mínimos\n\n5.1 Representación del grafo\nLa mayoría de los recorridos se explica con listas de adyacencia. Si Adj[u] contiene los vecinos de u, recorrer todos los vecinos reales de u cuesta proporcional a la cantidad de vecinos de u.\nCon listas de adyacencia, DFS y BFS recorren cada vértice y cada arista una cantidad constante de veces:\n\\[\nO(|V| + |E|)\n\\]\nAquí |V| es la cantidad de vértices y |E| es la cantidad de aristas.\nCon matriz de adyacencia, revisar los vecinos de un vértice puede exigir recorrer una fila completa de tamaño |V|. Un recorrido completo puede subir a:\n\\[\nO(|V|^2)\n\\]\n\n\n5.2 Estados, padres y tiempos\nEl arreglo parent guarda el árbol de descubrimiento. Si parent[v] = u, entonces el algoritmo descubrió v desde u.\nDFS con tiempos agrega dos marcas por vértice:\n\n\n\n\n\n\n\n\nMarca\nCuándo se asigna\nPara qué sirve\n\n\n\n\nstart[u]\nCuando DFS descubre u\nSaber cuándo entra a la recursión\n\n\nend[u]\nCuando DFS termina todos los vecinos de u\nOrdenar por término y razonar sobre ancestros\n\n\n\nLos intervalos [start[u], end[u]] ayudan a entender la relación entre vértices: dos intervalos pueden ser disjuntos o uno puede contener al otro.\n\n\n5.3 disc y low en puentes\nPara puentes se usan nombres habituales distintos:\n\n\n\n\n\n\n\nMarca\nSignificado\n\n\n\n\ndisc[u]\nTiempo de descubrimiento de u en DFS\n\n\nlow[u]\nMenor disc alcanzable desde u usando aristas del árbol DFS y a lo más una arista de retroceso\n\n\n\nSi v es hijo DFS de u y low[v] &gt; disc[u], entonces el subárbol de v no puede volver a u ni a un ancestro de u. Por eso la arista (u, v) es puente.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -696,11 +720,11 @@
     ]
   },
   {
-    "objectID": "contenidos/dfs-bfs.html#operaciones-o-algoritmo-principal",
-    "href": "contenidos/dfs-bfs.html#operaciones-o-algoritmo-principal",
-    "title": "DFS y BFS",
-    "section": "4 Operaciones o algoritmo principal",
-    "text": "4 Operaciones o algoritmo principal\nPendiente de desarrollo.",
+    "objectID": "contenidos/dfs-bfs.html#dfs-básico",
+    "href": "contenidos/dfs-bfs.html#dfs-básico",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "6 DFS básico",
+    "text": "6 DFS básico\nDFS, o búsqueda en profundidad, avanza desde un vértice a un vecino no visitado, luego desde ese vecino a otro, y así sucesivamente. Cuando no quedan vecinos blancos, el algoritmo retrocede.\nUna versión básica usa tres arreglos:\n\n\n\nArreglo\nRol\n\n\n\n\ncolor[u]\nEstado de visita de u\n\n\nparent[u]\nVértice que descubrió a u\n\n\nAdj[u]\nVecinos de u\n\n\n\n\n\n\n\n\n\nNotaIntuición\n\n\n\nDFS se parece a entrar por un pasillo hasta el fondo. Cuando no hay una puerta nueva, vuelves al cruce anterior y pruebas otra.\n\n\nInput: grafo G = (V, E) representado con listas de adyacencia.\nOutput: todos los vértices visitados mediante DFS y arreglo parent.\nDFSBasico(G):\n    for u in V(G):\n        color[u] &lt;- blanco\n        parent[u] &lt;- NIL\n\n    for u in V(G):\n        if color[u] = blanco:\n            DFSVisit(G, u)\nInput: grafo G y vértice u recién descubierto.\nOutput: visita recursiva de todo lo alcanzable desde u.\nDFSVisit(G, u):\n    color[u] &lt;- gris\n\n    for v in Adj[u]:\n        if color[v] = blanco:\n            parent[v] &lt;- u\n            DFSVisit(G, v)\n\n    color[u] &lt;- negro\nEl ciclo externo for u in V(G) es necesario porque el grafo podría no ser conexo. Si solo se llama DFS desde un origen, podrían quedar componentes sin visitar.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -708,11 +732,71 @@
     ]
   },
   {
-    "objectID": "contenidos/dfs-bfs.html#pseudocódigo-claro",
-    "href": "contenidos/dfs-bfs.html#pseudocódigo-claro",
-    "title": "DFS y BFS",
-    "section": "5 Pseudocódigo claro",
-    "text": "5 Pseudocódigo claro\nPendiente de desarrollo.",
+    "objectID": "contenidos/dfs-bfs.html#dfs-con-tiempos",
+    "href": "contenidos/dfs-bfs.html#dfs-con-tiempos",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "7 DFS con tiempos",
+    "text": "7 DFS con tiempos\nDFS con tiempos marca cuándo se descubre y cuándo se termina cada vértice. Esto permite ordenar vértices por finalización y razonar sobre dependencias.\n\n\n\nEvento\nAcción\n\n\n\n\nEntrar a u\nstart[u] &lt;- tiempo\n\n\nSalir de u\nend[u] &lt;- tiempo\n\n\n\nInput: grafo G = (V, E).\nOutput: arreglos start, end y parent.\nDFSConTiempos(G):\n    tiempo &lt;- 0\n\n    for u in V(G):\n        color[u] &lt;- blanco\n        parent[u] &lt;- NIL\n        start[u] &lt;- 0\n        end[u] &lt;- 0\n\n    for u in V(G):\n        if color[u] = blanco:\n            DFSVisitTiempo(G, u)\nInput: grafo G, vértice u y contador global tiempo.\nOutput: tiempos de entrada y salida para el subárbol DFS de u.\nDFSVisitTiempo(G, u):\n    color[u] &lt;- gris\n    tiempo &lt;- tiempo + 1\n    start[u] &lt;- tiempo\n\n    for v in Adj[u]:\n        if color[v] = blanco:\n            parent[v] &lt;- u\n            DFSVisitTiempo(G, v)\n\n    color[u] &lt;- negro\n    tiempo &lt;- tiempo + 1\n    end[u] &lt;- tiempo\n\n\n\n\n\n\nTipConsejo de estudio\n\n\n\nstart se asigna al descubrir el vértice. end se asigna solo después de terminar todos sus vecinos. Para orden topológico y Kosaraju, el valor importante suele ser end.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#detección-de-ciclos",
+    "href": "contenidos/dfs-bfs.html#detección-de-ciclos",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "8 Detección de ciclos",
+    "text": "8 Detección de ciclos\nEn un grafo dirigido, DFS con colores detecta ciclos usando la ruta activa de recursión.\nLa regla clave es:\n\n\n\nArista encontrada durante DFS\nQué significa\n\n\n\n\nHacia blanco\nSe descubre un nuevo vértice\n\n\nHacia gris\nHay ciclo dirigido\n\n\nHacia negro\nEl vértice ya terminó; no basta para concluir ciclo\n\n\n\n\n\n\n\n\n\nImportanteCiclos dirigidos\n\n\n\nEn grafos dirigidos, una arista hacia gris revela ciclo porque vuelve a un vértice que sigue activo en la pila recursiva. Una arista hacia negro no basta: ese vértice ya terminó y no necesariamente pertenece a la ruta actual.\n\n\nInput: grafo dirigido G = (V, E).\nOutput: true si existe un ciclo dirigido; false en caso contrario.\nTieneCicloDirigido(G):\n    for u in V(G):\n        color[u] &lt;- blanco\n\n    for u in V(G):\n        if color[u] = blanco:\n            if CicloDesde(G, u):\n                return true\n\n    return false\nInput: grafo dirigido G y vértice u.\nOutput: true si desde u se encuentra una arista hacia gris.\nCicloDesde(G, u):\n    color[u] &lt;- gris\n\n    for v in Adj[u]:\n        if color[v] = gris:\n            return true\n\n        if color[v] = blanco:\n            if CicloDesde(G, v):\n                return true\n\n    color[u] &lt;- negro\n    return false\nEn grafos no dirigidos se debe tener cuidado adicional: la arista que vuelve al padre inmediato no cuenta como ciclo por sí sola.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#orden-topológico",
+    "href": "contenidos/dfs-bfs.html#orden-topológico",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "9 Orden topológico",
+    "text": "9 Orden topológico\nUn orden topológico de un grafo dirigido es una secuencia de vértices donde toda arista u -&gt; v deja a u antes que v.\nEsto modela dependencias: si u debe ocurrir antes que v, entonces u aparece antes en la lista.\n\n\n\n\n\n\nAdvertenciaCondición obligatoria\n\n\n\nTopSort solo existe en grafos dirigidos acíclicos, es decir, en DAG. Si el grafo tiene un ciclo dirigido, no hay forma de ordenar las tareas respetando todas las dependencias.\n\n\nLa idea con DFS es insertar cada vértice al inicio de una lista cuando termina. Equivale a ordenar por end decreciente.\nInput: grafo dirigido G.\nOutput: orden topológico si G es DAG; error si se detecta ciclo.\nTopSort(G):\n    L &lt;- lista vacia\n\n    for u in V(G):\n        color[u] &lt;- blanco\n\n    for u in V(G):\n        if color[u] = blanco:\n            if TopSortVisit(G, u, L) = CICLO:\n                return NO_EXISTE_TOPSORT\n\n    return L\nInput: grafo dirigido G, vértice u y lista L.\nOutput: actualiza L con vértices terminados o reporta ciclo.\nTopSortVisit(G, u, L):\n    color[u] &lt;- gris\n\n    for v in Adj[u]:\n        if color[v] = gris:\n            return CICLO\n\n        if color[v] = blanco:\n            if TopSortVisit(G, v, L) = CICLO:\n                return CICLO\n\n    color[u] &lt;- negro\n    insertar u al inicio de L\n    return OK\nNo necesariamente existe un único orden topológico. Si dos tareas no dependen entre sí, pueden aparecer en distinto orden y seguir siendo válidas.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#kosaraju-y-componentes-fuertemente-conectadas",
+    "href": "contenidos/dfs-bfs.html#kosaraju-y-componentes-fuertemente-conectadas",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "10 Kosaraju y componentes fuertemente conectadas",
+    "text": "10 Kosaraju y componentes fuertemente conectadas\nUna componente fuertemente conectada, o CFC, es un grupo maximal de vértices de un grafo dirigido donde cada vértice puede llegar a todos los demás del grupo.\nKosaraju encuentra CFC usando dos recorridos DFS y el grafo transpuesto.\nLos tres pasos son:\n\n\n\n\n\n\n\n\nPaso\nAcción\nPropósito\n\n\n\n\n1\nEjecutar DFS en G\nObtener vértices por end decreciente\n\n\n2\nConstruir G^T\nInvertir todas las aristas\n\n\n3\nEjecutar DFS en G^T siguiendo ese orden\nCada DFS descubre una CFC\n\n\n\n\n\n\n\n\n\nNotaIntuición\n\n\n\nEl primer DFS define desde qué vértices conviene partir. El segundo DFS, sobre el grafo transpuesto, separa las zonas donde la alcanzabilidad de ida y vuelta queda encerrada.\n\n\nInput: grafo dirigido G = (V, E).\nOutput: arreglo rep, donde rep[u] identifica la CFC de u.\nKosaraju(G):\n    ejecutar DFSConTiempos(G)\n    L &lt;- vertices de G ordenados por end decreciente\n    GT &lt;- Transpuesto(G)\n\n    for u in V(G):\n        rep[u] &lt;- NIL\n\n    for u in L:\n        if rep[u] = NIL:\n            Assign(GT, u, u, rep)\n\n    return rep\nInput: grafo transpuesto GT, vértice u, representante r y arreglo rep.\nOutput: asigna el representante r a todos los vértices alcanzables no asignados.\nAssign(GT, u, r, rep):\n    rep[u] &lt;- r\n\n    for v in AdjT[u]:\n        if rep[v] = NIL:\n            Assign(GT, v, r, rep)\nKosaraju no usa un TopSort real si el grafo tiene ciclos. Usa orden decreciente de término obtenido por DFS.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#bfs-y-caminos-mínimos-no-ponderados",
+    "href": "contenidos/dfs-bfs.html#bfs-y-caminos-mínimos-no-ponderados",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "11 BFS y caminos mínimos no ponderados",
+    "text": "11 BFS y caminos mínimos no ponderados\nBFS, o búsqueda en anchura, explora desde un origen s por niveles.\n\n\n\nNivel\nSignificado\n\n\n\n\n0\nEl origen s\n\n\n1\nVecinos directos de s\n\n\n2\nVértices alcanzables con dos aristas\n\n\nd\nVértices a distancia d en número de aristas\n\n\n\nBFS usa una cola FIFO. Cuando se descubre un vértice, se encola. La cola asegura que los vértices descubiertos antes se procesen antes, por lo que todos los vértices a distancia d se procesan antes que los de distancia d + 1.\nInput: grafo G = (V, E) no ponderado y vértice origen s.\nOutput: arreglos dist y parent desde s.\nBFS(G, s):\n    for u in V(G):\n        color[u] &lt;- blanco\n        dist[u] &lt;- infinito\n        parent[u] &lt;- NIL\n\n    color[s] &lt;- gris\n    dist[s] &lt;- 0\n\n    Q &lt;- cola vacia\n    Enqueue(Q, s)\n\n    while Q no esta vacia:\n        u &lt;- Dequeue(Q)\n\n        for v in Adj[u]:\n            if color[v] = blanco:\n                color[v] &lt;- gris\n                dist[v] &lt;- dist[u] + 1\n                parent[v] &lt;- u\n                Enqueue(Q, v)\n\n        color[u] &lt;- negro\nLa primera vez que BFS descubre un vértice v, ya encontró una ruta con la menor cantidad posible de aristas desde s hasta v.\n\n11.1 Reconstrucción de camino BFS\nEl arreglo parent permite recuperar el camino desde el origen hasta un destino. Se camina desde t hacia atrás: t, parent[t], parent[parent[t]], hasta llegar a s.\nInput: arreglo parent, origen s y destino t.\nOutput: camino desde s hasta t, o NO_HAY_CAMINO.\nReconstruirCaminoBFS(parent, s, t):\n    if t = s:\n        return [s]\n\n    if parent[t] = NIL:\n        return NO_HAY_CAMINO\n\n    camino &lt;- ReconstruirCaminoBFS(parent, s, parent[t])\n    agregar t al final de camino\n    return camino\n\n\n\n\n\n\nAdvertenciaPesos distintos\n\n\n\nSi una arista cuesta 1 y otra cuesta 100, BFS las trata igual. Para pesos no negativos se estudia Dijkstra; para grafos no ponderados, BFS es suficiente.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#puentes-con-dfs",
+    "href": "contenidos/dfs-bfs.html#puentes-con-dfs",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "12 Puentes con DFS",
+    "text": "12 Puentes con DFS\nEn un grafo no dirigido, una arista es puente si al eliminarla aumenta la cantidad de componentes conectadas. Intuitivamente, es una arista que no pertenece a ningún ciclo.\nDFS detecta puentes guardando dos valores:\n\n\n\nValor\nPregunta que responde\n\n\n\n\ndisc[u]\nCuándo fue descubierto u\n\n\nlow[u]\nQué tan arriba puede volver el subárbol de u\n\n\n\nLa condición central es:\n\\[\nlow[v] &gt; disc[u]\n\\]\nSi v es hijo DFS de u y se cumple esa desigualdad, entonces (u, v) es puente. El subárbol de v no tiene una arista de retroceso hacia u ni hacia un ancestro de u.\nInput: grafo no dirigido G = (V, E).\nOutput: lista de aristas que son puentes.\nPuentes(G):\n    tiempo &lt;- 0\n    puentes &lt;- lista vacia\n\n    for u in V(G):\n        visited[u] &lt;- false\n        parent[u] &lt;- NIL\n        disc[u] &lt;- 0\n        low[u] &lt;- 0\n\n    for u in V(G):\n        if not visited[u]:\n            BridgeVisit(G, u)\n\n    return puentes\nInput: grafo no dirigido G y vértice u; usa tiempo, disc, low, parent y puentes.\nOutput: actualiza low y agrega puentes encontrados.\nBridgeVisit(G, u):\n    visited[u] &lt;- true\n    tiempo &lt;- tiempo + 1\n    disc[u] &lt;- tiempo\n    low[u] &lt;- disc[u]\n\n    for v in Adj[u]:\n        if not visited[v]:\n            parent[v] &lt;- u\n            BridgeVisit(G, v)\n\n            low[u] &lt;- min(low[u], low[v])\n\n            if low[v] &gt; disc[u]:\n                agregar (u, v) a puentes\n\n        else if v != parent[u]:\n            low[u] &lt;- min(low[u], disc[v])\n\n\n\n\n\n\nNotaAlcance\n\n\n\nEste algoritmo estándar de puentes corresponde a grafos no dirigidos. No debe aplicarse directamente a grafos dirigidos como si la condición fuera equivalente.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -722,21 +806,9 @@
   {
     "objectID": "contenidos/dfs-bfs.html#complejidad",
     "href": "contenidos/dfs-bfs.html#complejidad",
-    "title": "DFS y BFS",
-    "section": "6 Complejidad",
-    "text": "6 Complejidad\nPendiente de desarrollo.",
-    "crumbs": [
-      "Inicio",
-      "Contenidos",
-      "DFS y BFS"
-    ]
-  },
-  {
-    "objectID": "contenidos/dfs-bfs.html#errores-típicos",
-    "href": "contenidos/dfs-bfs.html#errores-típicos",
-    "title": "DFS y BFS",
-    "section": "7 Errores típicos",
-    "text": "7 Errores típicos\nPendiente de desarrollo.",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "13 Complejidad",
+    "text": "13 Complejidad\nCon listas de adyacencia, los recorridos procesan cada vértice y cada arista una cantidad constante de veces.\n\\[\nO(|V| + |E|)\n\\]\nCon matriz de adyacencia, revisar vecinos puede exigir escanear una fila completa por cada vértice.\n\\[\nO(|V|^2)\n\\]\n\n\n\n\n\n\n\n\n\nAlgoritmo\nTiempo con lista de adyacencia\nMemoria auxiliar\nComentario\n\n\n\n\nDFS básico\nO(|V| + |E|)\nO(|V|)\nVisita vértices y aristas\n\n\nDFS con tiempos\nO(|V| + |E|)\nO(|V|)\nAgrega start y end\n\n\nCiclo dirigido\nO(|V| + |E|)\nO(|V|)\nUsa colores\n\n\nTopSort\nO(|V| + |E|)\nO(|V|)\nRequiere DAG\n\n\nKosaraju\nO(|V| + |E|)\nO(|V| + |E|)\nConstruye o recorre G^T\n\n\nBFS\nO(|V| + |E|)\nO(|V|)\nUsa cola FIFO\n\n\nPuentes\nO(|V| + |E|)\nO(|V|)\nPara grafos no dirigidos\n\n\n\nSi se usa matriz de adyacencia, el costo típico de un recorrido completo pasa a O(|V|^2) porque para cada vértice se revisan todas las posibles columnas.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -746,9 +818,21 @@
   {
     "objectID": "contenidos/dfs-bfs.html#ejemplo-guiado",
     "href": "contenidos/dfs-bfs.html#ejemplo-guiado",
-    "title": "DFS y BFS",
-    "section": "8 Ejemplo guiado",
-    "text": "8 Ejemplo guiado\nPendiente de desarrollo.",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "14 Ejemplo guiado",
+    "text": "14 Ejemplo guiado\nUsaremos este grafo dirigido no ponderado:\nA: B, C\nB: D\nC: D, E\nD: F\nE: F\nF: []\n\n14.1 Parte 1: BFS desde A\nAplicamos BFS(G, A) para obtener distancias mínimas en número de aristas.\n\n\n\nPaso\nCola antes de extraer\nExtraído\nDescubrimientos nuevos\n\n\n\n\nInicio\n[A]\nninguno\ndist[A] = 0\n\n\n1\n[A]\nA\nB, C con distancia 1\n\n\n2\n[B, C]\nB\nD con distancia 2\n\n\n3\n[C, D]\nC\nE con distancia 2; D ya estaba descubierto\n\n\n4\n[D, E]\nD\nF con distancia 3\n\n\n5\n[E, F]\nE\nF ya estaba descubierto\n\n\n6\n[F]\nF\nninguno\n\n\n\nResultado:\n\n\n\nVértice\ndist desde A\nparent\n\n\n\n\nA\n0\nNIL\n\n\nB\n1\nA\n\n\nC\n1\nA\n\n\nD\n2\nB\n\n\nE\n2\nC\n\n\nF\n3\nD\n\n\n\nUn camino mínimo desde A hasta F se reconstruye con parent:\nF &lt;- D &lt;- B &lt;- A\nAl invertirlo:\nA -&gt; B -&gt; D -&gt; F\nTiene 3 aristas. También existe A -&gt; C -&gt; E -&gt; F, que tiene 3 aristas; BFS puede devolver uno u otro según el orden de vecinos.\n\n\n14.2 Parte 2: ciclo dirigido con DFS\nAhora agregamos la arista:\nF -&gt; C\nDurante DFS puede ocurrir esta ruta activa:\nA -&gt; C -&gt; E -&gt; F\nEn ese momento C, E y F están grises. Al revisar F -&gt; C, el algoritmo encuentra una arista hacia gris. Por lo tanto hay ciclo:\nC -&gt; E -&gt; F -&gt; C\nEl punto clave es el color gris. Si C ya estuviera negro, la arista F -&gt; C no bastaría por sí sola para concluir ciclo dirigido.\n\n\n14.3 Parte 3: TopSort si quitamos el ciclo\nSin la arista F -&gt; C, el grafo es un DAG. Un orden topológico válido es:\nA, C, E, B, D, F\nTambién puede ser válido:\nA, B, C, D, E, F\nLo importante es que cada arista respete el orden: el origen aparece antes que el destino.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#errores-típicos",
+    "href": "contenidos/dfs-bfs.html#errores-típicos",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "15 Errores típicos",
+    "text": "15 Errores típicos\n\n\n\n\n\n\n\nError\nCorrección\n\n\n\n\nCreer que DFS y BFS son intercambiables siempre\nElegir según la pregunta: estructura profunda o distancia por niveles\n\n\nDecir que cualquier vértice visitado implica ciclo\nEn grafo dirigido, ciclo aparece con arista hacia gris\n\n\nConcluir ciclo por una arista hacia negro\nNegro significa terminado; no basta para afirmar ciclo\n\n\nAplicar TopSort sin revisar ciclos\nTopSort solo existe en DAG\n\n\nLlamar TopSort al orden de Kosaraju en grafos cíclicos\nKosaraju usa end decreciente, no un TopSort válido si hay ciclos\n\n\nUsar BFS en grafos ponderados con costos distintos\nUsar Dijkstra si los pesos son no negativos\n\n\nOlvidar parent al pedir camino concreto\ndist da longitud; parent permite reconstruir el camino\n\n\nEjecutar DFS solo desde un origen en grafo no conexo\nUsar el ciclo externo sobre todos los vértices\n\n\nConfundir start con end\nstart es descubrimiento; end es término\n\n\nAplicar puentes con low a un grafo dirigido sin adaptar el problema\nEl algoritmo estándar de puentes es para no dirigidos\n\n\nEscribir O(|V| + |E|) usando matriz de adyacencia\nCon matriz puede ser O(|V|^2)\n\n\n\n\n\n\n\n\n\nAdvertenciaError de interpretación\n\n\n\nUn orden topológico no es “un recorrido cualquiera”. Debe cumplir que toda arista u -&gt; v deja a u antes que v. Si existe un ciclo, esa condición se vuelve imposible.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -758,9 +842,33 @@
   {
     "objectID": "contenidos/dfs-bfs.html#problema-representativo-de-interrogación",
     "href": "contenidos/dfs-bfs.html#problema-representativo-de-interrogación",
-    "title": "DFS y BFS",
-    "section": "9 Problema representativo de interrogación",
-    "text": "9 Problema representativo de interrogación\n\n\nVer enunciado\n\nPendiente de desarrollo.\n\n\n\nVer solución\n\nPendiente de desarrollo.",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "16 Problema representativo de interrogación",
+    "text": "16 Problema representativo de interrogación\n\n\nVer enunciado\n\nUna plataforma organiza contenidos de estudio. Cada par (u, v) significa que el contenido u debe estudiarse antes que el contenido v.\nSe entrega el siguiente grafo dirigido:\nA -&gt; B\nA -&gt; C\nB -&gt; D\nC -&gt; D\nD -&gt; E\nF -&gt; C\nResponde:\n\n¿Qué algoritmo usarías para decidir si existe un orden válido de estudio?\nSi existe, entrega un orden válido.\n¿Qué cambia si se agrega la arista E -&gt; B?\nExplica la complejidad con lista de adyacencia.\nExplica por qué BFS no es la técnica principal para este problema.\n\n\n\n\nVer solución\n\nEl problema se modela como un grafo dirigido de dependencias. Para que exista un orden válido, el grafo debe ser acíclico. Por eso corresponde usar DFS con colores para detectar ciclos y, si no hay ciclo, construir un orden topológico con DFS.\nUna forma de resolverlo es:\n1. Ejecutar TieneCicloDirigido(G).\n2. Si hay ciclo, reportar que no existe orden válido.\n3. Si no hay ciclo, ejecutar TopSort(G).\nPara el grafo original, un orden válido es:\nF, A, C, B, D, E\nTambién es válido:\nA, F, B, C, D, E\nNo se exige que el orden sea único. Lo importante es respetar todas las aristas: A antes que B y C, F antes que C, B y C antes que D, y D antes que E.\nSi se agrega E -&gt; B, aparece el ciclo:\nB -&gt; D -&gt; E -&gt; B\nEntonces no existe orden topológico. Durante DFS, este ciclo se detecta al encontrar una arista hacia un vértice gris en la ruta recursiva actual.\nCon lista de adyacencia, la detección de ciclo y TopSort cuestan:\n\\[\nO(|V| + |E|)\n\\]\nLa notación |V| representa la cantidad de contenidos y |E| representa la cantidad de dependencias. Cada vértice y cada arista se procesan una cantidad constante de veces.\nBFS no es la técnica principal porque el problema no pide distancia mínima desde un origen. Pide decidir si las dependencias admiten un orden global, y esa pregunta depende de detectar ciclos dirigidos y ordenar por término.",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#preguntas-de-repaso",
+    "href": "contenidos/dfs-bfs.html#preguntas-de-repaso",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "17 Preguntas de repaso",
+    "text": "17 Preguntas de repaso\n\n¿Qué significa que DFS profundiza y luego retrocede?\n¿Por qué BFS necesita una cola FIFO?\n¿Qué representa un vértice blanco?\n¿Qué representa un vértice gris en DFS?\n¿Por qué una arista hacia gris revela ciclo en un grafo dirigido?\n¿Por qué una arista hacia negro no basta para concluir ciclo?\n¿Qué diferencia hay entre start[u] y end[u]?\n¿Qué condición debe cumplir un grafo para tener TopSort?\n¿Por qué Kosaraju usa el grafo transpuesto?\n¿Por qué BFS entrega distancia mínima en número de aristas?\n¿Qué arreglo permite reconstruir un camino BFS?\n¿Por qué BFS no reemplaza a Dijkstra en grafos ponderados?\n¿Qué representa low[u] en el algoritmo de puentes?\n¿Cuándo una arista (u, v) es puente según disc y low?\n¿Qué cambia en complejidad al pasar de lista a matriz de adyacencia?",
+    "crumbs": [
+      "Inicio",
+      "Contenidos",
+      "DFS y BFS"
+    ]
+  },
+  {
+    "objectID": "contenidos/dfs-bfs.html#ejercicios-breves",
+    "href": "contenidos/dfs-bfs.html#ejercicios-breves",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "18 Ejercicios breves",
+    "text": "18 Ejercicios breves\n\n18.1 Ejercicio 1\nPara el grafo dirigido:\nA -&gt; B\nB -&gt; C\nC -&gt; A\nEjecuta mentalmente DFS con colores e indica en qué arista se detecta el ciclo.\n\n\n18.2 Ejercicio 2\nPara el grafo no ponderado:\n1: 2, 3\n2: 4\n3: 4\n4: 5\n5: []\nEjecuta BFS desde 1 y entrega los arreglos dist y parent.\n\n\n18.3 Ejercicio 3\nPropón un orden topológico para:\nA -&gt; C\nB -&gt; C\nC -&gt; D\nB -&gt; E\nLuego explica por qué tu orden respeta todas las aristas.\n\n\n18.4 Ejercicio 4\nDa un ejemplo de grafo dirigido donde tres vértices formen una misma componente fuertemente conectada.\n\n\n18.5 Ejercicio 5\nEn un grafo no dirigido, explica por qué una arista que pertenece a un ciclo no puede ser puente.\n\n\n18.6 Ejercicio 6\nPara el grafo no dirigido:\n0 - 1\n1 - 2\n2 - 0\n1 - 3\nIndica qué arista es puente y justifica usando la idea de low.\n\n\n18.7 Ejercicio 7\nExplica por qué el ciclo externo for u in V(G) es necesario en DFS cuando el grafo tiene más de una componente.\n\n\n18.8 Ejercicio 8\nConstruye un ejemplo pequeño donde BFS minimice cantidad de aristas, pero no costo total si las aristas tienen pesos distintos.",
     "crumbs": [
       "Inicio",
       "Contenidos",
@@ -770,9 +878,9 @@
   {
     "objectID": "contenidos/dfs-bfs.html#checklist-de-estudio",
     "href": "contenidos/dfs-bfs.html#checklist-de-estudio",
-    "title": "DFS y BFS",
-    "section": "10 Checklist de estudio",
-    "text": "10 Checklist de estudio\nPendiente de desarrollo.",
+    "title": "DFS, BFS y aplicaciones",
+    "section": "19 Checklist de estudio",
+    "text": "19 Checklist de estudio\nAntes de cerrar esta página, verifica que puedes responder:\n\nPuedo explicar DFS sin leer pseudocódigo.\nPuedo explicar BFS sin leer pseudocódigo.\nPuedo distinguir blanco, gris y negro.\nPuedo decir por qué gris representa la ruta activa en DFS.\nPuedo detectar ciclos dirigidos con colores.\nPuedo explicar por qué una arista hacia negro no basta para detectar ciclo.\nPuedo definir start[u] y end[u].\nPuedo construir un TopSort si el grafo es DAG.\nPuedo explicar por qué no hay TopSort si existe un ciclo dirigido.\nPuedo describir los tres pasos de Kosaraju.\nPuedo explicar qué es un grafo transpuesto.\nPuedo ejecutar BFS y calcular dist.\nPuedo usar parent para reconstruir un camino BFS.\nPuedo explicar por qué BFS no sirve para pesos distintos.\nPuedo definir disc[u] y low[u].\nPuedo justificar cuándo una arista es puente.\nPuedo calcular complejidad O(|V| + |E|) con listas de adyacencia.\nPuedo explicar por qué con matriz de adyacencia el recorrido puede costar O(|V|^2).",
     "crumbs": [
       "Inicio",
       "Contenidos",

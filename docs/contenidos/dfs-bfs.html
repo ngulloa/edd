@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>DFS y BFS – Estudio I2 EDD</title>
+<title>DFS, BFS y aplicaciones – Estudio I2 EDD</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,7 +71,39 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="../styles.css">
 </head>
@@ -252,16 +284,48 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link active" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</a></li>
-  <li><a href="#cuándo-usar-esta-técnica-o-estructura" id="toc-cuándo-usar-esta-técnica-o-estructura" class="nav-link" data-scroll-target="#cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</a></li>
-  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</a></li>
-  <li><a href="#operaciones-o-algoritmo-principal" id="toc-operaciones-o-algoritmo-principal" class="nav-link" data-scroll-target="#operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</a></li>
-  <li><a href="#pseudocódigo-claro" id="toc-pseudocódigo-claro" class="nav-link" data-scroll-target="#pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</a></li>
-  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">6</span> Complejidad</a></li>
-  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">7</span> Errores típicos</a></li>
-  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</a></li>
-  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</a></li>
-  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</a></li>
+  <li><a href="#objetivo-de-aprendizaje" id="toc-objetivo-de-aprendizaje" class="nav-link active" data-scroll-target="#objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</a></li>
+  <li><a href="#idea-central-del-tema" id="toc-idea-central-del-tema" class="nav-link" data-scroll-target="#idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</a></li>
+  <li><a href="#antes-de-partir-vocabulario-mínimo" id="toc-antes-de-partir-vocabulario-mínimo" class="nav-link" data-scroll-target="#antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</a></li>
+  <li><a href="#cuándo-usar-dfs-o-bfs" id="toc-cuándo-usar-dfs-o-bfs" class="nav-link" data-scroll-target="#cuándo-usar-dfs-o-bfs"><span class="header-section-number">4</span> Cuándo usar DFS o BFS</a></li>
+  <li><a href="#conceptos-mínimos" id="toc-conceptos-mínimos" class="nav-link" data-scroll-target="#conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</a>
+  <ul class="collapse">
+  <li><a href="#representación-del-grafo" id="toc-representación-del-grafo" class="nav-link" data-scroll-target="#representación-del-grafo"><span class="header-section-number">5.1</span> Representación del grafo</a></li>
+  <li><a href="#estados-padres-y-tiempos" id="toc-estados-padres-y-tiempos" class="nav-link" data-scroll-target="#estados-padres-y-tiempos"><span class="header-section-number">5.2</span> Estados, padres y tiempos</a></li>
+  <li><a href="#disc-y-low-en-puentes" id="toc-disc-y-low-en-puentes" class="nav-link" data-scroll-target="#disc-y-low-en-puentes"><span class="header-section-number">5.3</span> <code>disc</code> y <code>low</code> en puentes</a></li>
+  </ul></li>
+  <li><a href="#dfs-básico" id="toc-dfs-básico" class="nav-link" data-scroll-target="#dfs-básico"><span class="header-section-number">6</span> DFS básico</a></li>
+  <li><a href="#dfs-con-tiempos" id="toc-dfs-con-tiempos" class="nav-link" data-scroll-target="#dfs-con-tiempos"><span class="header-section-number">7</span> DFS con tiempos</a></li>
+  <li><a href="#detección-de-ciclos" id="toc-detección-de-ciclos" class="nav-link" data-scroll-target="#detección-de-ciclos"><span class="header-section-number">8</span> Detección de ciclos</a></li>
+  <li><a href="#orden-topológico" id="toc-orden-topológico" class="nav-link" data-scroll-target="#orden-topológico"><span class="header-section-number">9</span> Orden topológico</a></li>
+  <li><a href="#kosaraju-y-componentes-fuertemente-conectadas" id="toc-kosaraju-y-componentes-fuertemente-conectadas" class="nav-link" data-scroll-target="#kosaraju-y-componentes-fuertemente-conectadas"><span class="header-section-number">10</span> Kosaraju y componentes fuertemente conectadas</a></li>
+  <li><a href="#bfs-y-caminos-mínimos-no-ponderados" id="toc-bfs-y-caminos-mínimos-no-ponderados" class="nav-link" data-scroll-target="#bfs-y-caminos-mínimos-no-ponderados"><span class="header-section-number">11</span> BFS y caminos mínimos no ponderados</a>
+  <ul class="collapse">
+  <li><a href="#reconstrucción-de-camino-bfs" id="toc-reconstrucción-de-camino-bfs" class="nav-link" data-scroll-target="#reconstrucción-de-camino-bfs"><span class="header-section-number">11.1</span> Reconstrucción de camino BFS</a></li>
+  </ul></li>
+  <li><a href="#puentes-con-dfs" id="toc-puentes-con-dfs" class="nav-link" data-scroll-target="#puentes-con-dfs"><span class="header-section-number">12</span> Puentes con DFS</a></li>
+  <li><a href="#complejidad" id="toc-complejidad" class="nav-link" data-scroll-target="#complejidad"><span class="header-section-number">13</span> Complejidad</a></li>
+  <li><a href="#ejemplo-guiado" id="toc-ejemplo-guiado" class="nav-link" data-scroll-target="#ejemplo-guiado"><span class="header-section-number">14</span> Ejemplo guiado</a>
+  <ul class="collapse">
+  <li><a href="#parte-1-bfs-desde-a" id="toc-parte-1-bfs-desde-a" class="nav-link" data-scroll-target="#parte-1-bfs-desde-a"><span class="header-section-number">14.1</span> Parte 1: BFS desde <code>A</code></a></li>
+  <li><a href="#parte-2-ciclo-dirigido-con-dfs" id="toc-parte-2-ciclo-dirigido-con-dfs" class="nav-link" data-scroll-target="#parte-2-ciclo-dirigido-con-dfs"><span class="header-section-number">14.2</span> Parte 2: ciclo dirigido con DFS</a></li>
+  <li><a href="#parte-3-topsort-si-quitamos-el-ciclo" id="toc-parte-3-topsort-si-quitamos-el-ciclo" class="nav-link" data-scroll-target="#parte-3-topsort-si-quitamos-el-ciclo"><span class="header-section-number">14.3</span> Parte 3: TopSort si quitamos el ciclo</a></li>
+  </ul></li>
+  <li><a href="#errores-típicos" id="toc-errores-típicos" class="nav-link" data-scroll-target="#errores-típicos"><span class="header-section-number">15</span> Errores típicos</a></li>
+  <li><a href="#problema-representativo-de-interrogación" id="toc-problema-representativo-de-interrogación" class="nav-link" data-scroll-target="#problema-representativo-de-interrogación"><span class="header-section-number">16</span> Problema representativo de interrogación</a></li>
+  <li><a href="#preguntas-de-repaso" id="toc-preguntas-de-repaso" class="nav-link" data-scroll-target="#preguntas-de-repaso"><span class="header-section-number">17</span> Preguntas de repaso</a></li>
+  <li><a href="#ejercicios-breves" id="toc-ejercicios-breves" class="nav-link" data-scroll-target="#ejercicios-breves"><span class="header-section-number">18</span> Ejercicios breves</a>
+  <ul class="collapse">
+  <li><a href="#ejercicio-1" id="toc-ejercicio-1" class="nav-link" data-scroll-target="#ejercicio-1"><span class="header-section-number">18.1</span> Ejercicio 1</a></li>
+  <li><a href="#ejercicio-2" id="toc-ejercicio-2" class="nav-link" data-scroll-target="#ejercicio-2"><span class="header-section-number">18.2</span> Ejercicio 2</a></li>
+  <li><a href="#ejercicio-3" id="toc-ejercicio-3" class="nav-link" data-scroll-target="#ejercicio-3"><span class="header-section-number">18.3</span> Ejercicio 3</a></li>
+  <li><a href="#ejercicio-4" id="toc-ejercicio-4" class="nav-link" data-scroll-target="#ejercicio-4"><span class="header-section-number">18.4</span> Ejercicio 4</a></li>
+  <li><a href="#ejercicio-5" id="toc-ejercicio-5" class="nav-link" data-scroll-target="#ejercicio-5"><span class="header-section-number">18.5</span> Ejercicio 5</a></li>
+  <li><a href="#ejercicio-6" id="toc-ejercicio-6" class="nav-link" data-scroll-target="#ejercicio-6"><span class="header-section-number">18.6</span> Ejercicio 6</a></li>
+  <li><a href="#ejercicio-7" id="toc-ejercicio-7" class="nav-link" data-scroll-target="#ejercicio-7"><span class="header-section-number">18.7</span> Ejercicio 7</a></li>
+  <li><a href="#ejercicio-8" id="toc-ejercicio-8" class="nav-link" data-scroll-target="#ejercicio-8"><span class="header-section-number">18.8</span> Ejercicio 8</a></li>
+  </ul></li>
+  <li><a href="#checklist-de-estudio" id="toc-checklist-de-estudio" class="nav-link" data-scroll-target="#checklist-de-estudio"><span class="header-section-number">19</span> Checklist de estudio</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +334,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../contenidos/hash.html">Contenidos</a></li><li class="breadcrumb-item"><a href="../contenidos/dfs-bfs.html">DFS y BFS</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">DFS y BFS</h1>
+<h1 class="title">DFS, BFS y aplicaciones</h1>
 </div>
 
 
@@ -287,56 +351,1256 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="idea-central-del-tema" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">1</span> Idea central del tema</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="objetivo-de-aprendizaje" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="objetivo-de-aprendizaje"><span class="header-section-number">1</span> Objetivo de aprendizaje</h2>
+<p>Comprender cuándo usar DFS y cuándo usar BFS en problemas de grafos, cómo implementar sus variantes principales y qué información auxiliar se necesita para resolver aplicaciones frecuentes.</p>
+<p>Al terminar esta página deberías poder:</p>
+<ul>
+<li>explicar la diferencia entre profundizar con DFS y explorar por niveles con BFS;</li>
+<li>usar colores blanco, gris y negro para controlar el estado de cada vértice;</li>
+<li>detectar ciclos dirigidos con DFS;</li>
+<li>construir un orden topológico cuando el grafo es un DAG;</li>
+<li>describir Kosaraju para componentes fuertemente conectadas;</li>
+<li>calcular distancias mínimas en número de aristas con BFS;</li>
+<li>reconstruir caminos usando <code>parent</code>;</li>
+<li>detectar puentes en grafos no dirigidos usando <code>disc</code> y <code>low</code>;</li>
+<li>justificar complejidades con lista y matriz de adyacencia.</li>
+</ul>
 </section>
-<section id="cuándo-usar-esta-técnica-o-estructura" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="cuándo-usar-esta-técnica-o-estructura"><span class="header-section-number">2</span> Cuándo usar esta técnica o estructura</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="idea-central-del-tema" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="idea-central-del-tema"><span class="header-section-number">2</span> Idea central del tema</h2>
+<p>DFS y BFS son recorridos de grafos. Ambos visitan vértices y aristas, pero exploran con estrategias distintas.</p>
+<p>DFS profundiza por una rama hasta no poder avanzar. Luego retrocede y prueba otras ramas. BFS explora por niveles desde un origen: primero distancia 1, luego distancia 2, luego distancia 3, y así sucesivamente.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Técnica</th>
+<th>Idea central</th>
+<th>Estructura auxiliar típica</th>
+<th>Preguntas que responde bien</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DFS</td>
+<td>Profundizar y luego retroceder</td>
+<td>Recursión o pila</td>
+<td>Ciclos, tiempos, orden topológico, componentes, CFC, puentes</td>
+</tr>
+<tr class="even">
+<td>BFS</td>
+<td>Explorar por niveles</td>
+<td>Cola FIFO</td>
+<td>Distancia mínima en número de aristas, niveles, camino más corto no ponderado</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Idea central
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>DFS mira estructura profunda del grafo. BFS mira cercanía desde un origen. Si el enunciado pide “menor cantidad de aristas” en un grafo no ponderado, normalmente corresponde BFS.</p>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A["Pregunta del enunciado"] --&gt; B["Estructura del grafo: DFS"]
+    A --&gt; C["Distancia no ponderada: BFS"]
+    B --&gt; D["Ciclos, TopSort, CFC, puentes"]
+    C --&gt; E["Niveles, distancias, padres"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
-<section id="conceptos-mínimos" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">3</span> Conceptos mínimos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="antes-de-partir-vocabulario-mínimo" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="antes-de-partir-vocabulario-mínimo"><span class="header-section-number">3</span> Antes de partir: vocabulario mínimo</h2>
+<p>Antes de escribir pseudocódigo conviene fijar el vocabulario. En grafos, una palabra mal usada suele llevar a elegir el algoritmo equivocado.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Grafo <code>G = (V, E)</code></td>
+<td>Conjunto de vértices <code>V</code> y aristas <code>E</code></td>
+</tr>
+<tr class="even">
+<td>Vértice o nodo</td>
+<td>Elemento del grafo</td>
+</tr>
+<tr class="odd">
+<td>Arista</td>
+<td>Relación entre dos vértices; puede ser dirigida o no dirigida</td>
+</tr>
+<tr class="even">
+<td>Vecino de <code>u</code></td>
+<td>Vértice alcanzable directamente desde <code>u</code></td>
+</tr>
+<tr class="odd">
+<td>Lista de adyacencia</td>
+<td>Para cada vértice, guarda sus vecinos reales</td>
+</tr>
+<tr class="even">
+<td>Matriz de adyacencia</td>
+<td>Tabla donde una celda indica si existe una arista</td>
+</tr>
+<tr class="odd">
+<td>Padre <code>parent[v]</code></td>
+<td>Vértice desde el cual se descubrió <code>v</code></td>
+</tr>
+<tr class="even">
+<td>Cola FIFO</td>
+<td>Estructura donde sale primero quien entró primero</td>
+</tr>
+<tr class="odd">
+<td>Pila o recursión</td>
+<td>Estructura que permite volver al estado anterior</td>
+</tr>
+<tr class="even">
+<td>Grafo transpuesto <code>G^T</code></td>
+<td>Grafo dirigido con todas las aristas invertidas</td>
+</tr>
+<tr class="odd">
+<td>DAG</td>
+<td>Grafo dirigido acíclico</td>
+</tr>
+<tr class="even">
+<td>CFC</td>
+<td>Componente fuertemente conectada: todos llegan a todos dentro del grupo</td>
+</tr>
+<tr class="odd">
+<td>Puente</td>
+<td>Arista no dirigida cuya eliminación aumenta la cantidad de componentes</td>
+</tr>
+</tbody>
+</table>
+<p>Los colores son una forma estándar de registrar el estado de cada vértice durante DFS o BFS.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Color</th>
+<th>Estado</th>
+<th>Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blanco</td>
+<td>No descubierto</td>
+<td>El algoritmo todavía no ha llegado a ese vértice</td>
+</tr>
+<tr class="even">
+<td>Gris</td>
+<td>Descubierto y en proceso</td>
+<td>El vértice está activo; en DFS pertenece a la ruta recursiva actual</td>
+</tr>
+<tr class="odd">
+<td>Negro</td>
+<td>Terminado</td>
+<td>Sus vecinos ya fueron revisados</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En DFS, gris significa “estoy dentro de esta rama ahora”. Por eso, en un grafo dirigido, una arista hacia un vértice gris revela un ciclo dirigido.</p>
+</div>
+</div>
 </section>
-<section id="operaciones-o-algoritmo-principal" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="operaciones-o-algoritmo-principal"><span class="header-section-number">4</span> Operaciones o algoritmo principal</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="cuándo-usar-dfs-o-bfs" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="cuándo-usar-dfs-o-bfs"><span class="header-section-number">4</span> Cuándo usar DFS o BFS</h2>
+<p>La elección depende de la pregunta del enunciado, no solo de que aparezca un grafo.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Enunciado pide…</th>
+<th>Técnica recomendada</th>
+<th>Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Recorrer todo el grafo</td>
+<td>DFS o BFS</td>
+<td>Ambos visitan vértices y aristas</td>
+</tr>
+<tr class="even">
+<td>Saber si hay ciclo dirigido</td>
+<td>DFS con colores</td>
+<td>Una arista hacia un vértice gris revela ciclo</td>
+</tr>
+<tr class="odd">
+<td>Ordenar tareas con dependencias</td>
+<td>TopSort con DFS</td>
+<td>Solo existe si el grafo dirigido es acíclico</td>
+</tr>
+<tr class="even">
+<td>Componentes conectadas en no dirigido</td>
+<td>DFS o BFS</td>
+<td>Cada recorrido desde un blanco descubre una componente</td>
+</tr>
+<tr class="odd">
+<td>Componentes fuertemente conectadas</td>
+<td>Kosaraju</td>
+<td>Usa orden decreciente de término y grafo transpuesto</td>
+</tr>
+<tr class="even">
+<td>Distancia mínima en número de aristas</td>
+<td>BFS</td>
+<td>Procesa niveles en orden creciente</td>
+</tr>
+<tr class="odd">
+<td>Reconstruir camino no ponderado desde <code>s</code></td>
+<td>BFS con <code>parent</code></td>
+<td>El padre guarda cómo se descubrió cada vértice</td>
+</tr>
+<tr class="even">
+<td>Detectar puentes</td>
+<td>DFS con <code>disc</code> y <code>low</code></td>
+<td>Revisa si un subárbol puede volver a un ancestro</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error típico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>BFS no reemplaza a Dijkstra en grafos ponderados. BFS minimiza cantidad de aristas cuando todas las aristas cuentan lo mismo. Si hay costos distintos, la primera llegada por niveles no garantiza costo mínimo.</p>
+</div>
+</div>
 </section>
-<section id="pseudocódigo-claro" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="pseudocódigo-claro"><span class="header-section-number">5</span> Pseudocódigo claro</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="conceptos-mínimos" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="conceptos-mínimos"><span class="header-section-number">5</span> Conceptos mínimos</h2>
+<section id="representación-del-grafo" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="representación-del-grafo"><span class="header-section-number">5.1</span> Representación del grafo</h3>
+<p>La mayoría de los recorridos se explica con listas de adyacencia. Si <code>Adj[u]</code> contiene los vecinos de <code>u</code>, recorrer todos los vecinos reales de <code>u</code> cuesta proporcional a la cantidad de vecinos de <code>u</code>.</p>
+<p>Con listas de adyacencia, DFS y BFS recorren cada vértice y cada arista una cantidad constante de veces:</p>
+<p><span class="math display">\[
+O(|V| + |E|)
+\]</span></p>
+<p>Aquí <code>|V|</code> es la cantidad de vértices y <code>|E|</code> es la cantidad de aristas.</p>
+<p>Con matriz de adyacencia, revisar los vecinos de un vértice puede exigir recorrer una fila completa de tamaño <code>|V|</code>. Un recorrido completo puede subir a:</p>
+<p><span class="math display">\[
+O(|V|^2)
+\]</span></p>
 </section>
-<section id="complejidad" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">6</span> Complejidad</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="estados-padres-y-tiempos" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="estados-padres-y-tiempos"><span class="header-section-number">5.2</span> Estados, padres y tiempos</h3>
+<p>El arreglo <code>parent</code> guarda el árbol de descubrimiento. Si <code>parent[v] = u</code>, entonces el algoritmo descubrió <code>v</code> desde <code>u</code>.</p>
+<p>DFS con tiempos agrega dos marcas por vértice:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Marca</th>
+<th>Cuándo se asigna</th>
+<th>Para qué sirve</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>start[u]</code></td>
+<td>Cuando DFS descubre <code>u</code></td>
+<td>Saber cuándo entra a la recursión</td>
+</tr>
+<tr class="even">
+<td><code>end[u]</code></td>
+<td>Cuando DFS termina todos los vecinos de <code>u</code></td>
+<td>Ordenar por término y razonar sobre ancestros</td>
+</tr>
+</tbody>
+</table>
+<p>Los intervalos <code>[start[u], end[u]]</code> ayudan a entender la relación entre vértices: dos intervalos pueden ser disjuntos o uno puede contener al otro.</p>
 </section>
-<section id="errores-típicos" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">7</span> Errores típicos</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="disc-y-low-en-puentes" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="disc-y-low-en-puentes"><span class="header-section-number">5.3</span> <code>disc</code> y <code>low</code> en puentes</h3>
+<p>Para puentes se usan nombres habituales distintos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Marca</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>disc[u]</code></td>
+<td>Tiempo de descubrimiento de <code>u</code> en DFS</td>
+</tr>
+<tr class="even">
+<td><code>low[u]</code></td>
+<td>Menor <code>disc</code> alcanzable desde <code>u</code> usando aristas del árbol DFS y a lo más una arista de retroceso</td>
+</tr>
+</tbody>
+</table>
+<p>Si <code>v</code> es hijo DFS de <code>u</code> y <code>low[v] &gt; disc[u]</code>, entonces el subárbol de <code>v</code> no puede volver a <code>u</code> ni a un ancestro de <code>u</code>. Por eso la arista <code>(u, v)</code> es puente.</p>
 </section>
-<section id="ejemplo-guiado" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">8</span> Ejemplo guiado</h2>
-<p>Pendiente de desarrollo.</p>
 </section>
-<section id="problema-representativo-de-interrogación" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">9</span> Problema representativo de interrogación</h2>
+<section id="dfs-básico" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="dfs-básico"><span class="header-section-number">6</span> DFS básico</h2>
+<p>DFS, o búsqueda en profundidad, avanza desde un vértice a un vecino no visitado, luego desde ese vecino a otro, y así sucesivamente. Cuando no quedan vecinos blancos, el algoritmo retrocede.</p>
+<p>Una versión básica usa tres arreglos:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Arreglo</th>
+<th>Rol</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>color[u]</code></td>
+<td>Estado de visita de <code>u</code></td>
+</tr>
+<tr class="even">
+<td><code>parent[u]</code></td>
+<td>Vértice que descubrió a <code>u</code></td>
+</tr>
+<tr class="odd">
+<td><code>Adj[u]</code></td>
+<td>Vecinos de <code>u</code></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>DFS se parece a entrar por un pasillo hasta el fondo. Cuando no hay una puerta nueva, vuelves al cruce anterior y pruebas otra.</p>
+</div>
+</div>
+<p><strong>Input:</strong> grafo <code>G = (V, E)</code> representado con listas de adyacencia.<br>
+<strong>Output:</strong> todos los vértices visitados mediante DFS y arreglo <code>parent</code>.</p>
+<pre class="text"><code>DFSBasico(G):
+    for u in V(G):
+        color[u] &lt;- blanco
+        parent[u] &lt;- NIL
+
+    for u in V(G):
+        if color[u] = blanco:
+            DFSVisit(G, u)</code></pre>
+<p><strong>Input:</strong> grafo <code>G</code> y vértice <code>u</code> recién descubierto.<br>
+<strong>Output:</strong> visita recursiva de todo lo alcanzable desde <code>u</code>.</p>
+<pre class="text"><code>DFSVisit(G, u):
+    color[u] &lt;- gris
+
+    for v in Adj[u]:
+        if color[v] = blanco:
+            parent[v] &lt;- u
+            DFSVisit(G, v)
+
+    color[u] &lt;- negro</code></pre>
+<p>El ciclo externo <code>for u in V(G)</code> es necesario porque el grafo podría no ser conexo. Si solo se llama DFS desde un origen, podrían quedar componentes sin visitar.</p>
+</section>
+<section id="dfs-con-tiempos" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="dfs-con-tiempos"><span class="header-section-number">7</span> DFS con tiempos</h2>
+<p>DFS con tiempos marca cuándo se descubre y cuándo se termina cada vértice. Esto permite ordenar vértices por finalización y razonar sobre dependencias.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Evento</th>
+<th>Acción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Entrar a <code>u</code></td>
+<td><code>start[u] &lt;- tiempo</code></td>
+</tr>
+<tr class="even">
+<td>Salir de <code>u</code></td>
+<td><code>end[u] &lt;- tiempo</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Input:</strong> grafo <code>G = (V, E)</code>.<br>
+<strong>Output:</strong> arreglos <code>start</code>, <code>end</code> y <code>parent</code>.</p>
+<pre class="text"><code>DFSConTiempos(G):
+    tiempo &lt;- 0
+
+    for u in V(G):
+        color[u] &lt;- blanco
+        parent[u] &lt;- NIL
+        start[u] &lt;- 0
+        end[u] &lt;- 0
+
+    for u in V(G):
+        if color[u] = blanco:
+            DFSVisitTiempo(G, u)</code></pre>
+<p><strong>Input:</strong> grafo <code>G</code>, vértice <code>u</code> y contador global <code>tiempo</code>.<br>
+<strong>Output:</strong> tiempos de entrada y salida para el subárbol DFS de <code>u</code>.</p>
+<pre class="text"><code>DFSVisitTiempo(G, u):
+    color[u] &lt;- gris
+    tiempo &lt;- tiempo + 1
+    start[u] &lt;- tiempo
+
+    for v in Adj[u]:
+        if color[v] = blanco:
+            parent[v] &lt;- u
+            DFSVisitTiempo(G, v)
+
+    color[u] &lt;- negro
+    tiempo &lt;- tiempo + 1
+    end[u] &lt;- tiempo</code></pre>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Consejo de estudio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>start</code> se asigna al descubrir el vértice. <code>end</code> se asigna solo después de terminar todos sus vecinos. Para orden topológico y Kosaraju, el valor importante suele ser <code>end</code>.</p>
+</div>
+</div>
+</section>
+<section id="detección-de-ciclos" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="detección-de-ciclos"><span class="header-section-number">8</span> Detección de ciclos</h2>
+<p>En un grafo dirigido, DFS con colores detecta ciclos usando la ruta activa de recursión.</p>
+<p>La regla clave es:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Arista encontrada durante DFS</th>
+<th>Qué significa</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hacia blanco</td>
+<td>Se descubre un nuevo vértice</td>
+</tr>
+<tr class="even">
+<td>Hacia gris</td>
+<td>Hay ciclo dirigido</td>
+</tr>
+<tr class="odd">
+<td>Hacia negro</td>
+<td>El vértice ya terminó; no basta para concluir ciclo</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Ciclos dirigidos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En grafos dirigidos, una arista hacia gris revela ciclo porque vuelve a un vértice que sigue activo en la pila recursiva. Una arista hacia negro no basta: ese vértice ya terminó y no necesariamente pertenece a la ruta actual.</p>
+</div>
+</div>
+<p><strong>Input:</strong> grafo dirigido <code>G = (V, E)</code>.<br>
+<strong>Output:</strong> <code>true</code> si existe un ciclo dirigido; <code>false</code> en caso contrario.</p>
+<pre class="text"><code>TieneCicloDirigido(G):
+    for u in V(G):
+        color[u] &lt;- blanco
+
+    for u in V(G):
+        if color[u] = blanco:
+            if CicloDesde(G, u):
+                return true
+
+    return false</code></pre>
+<p><strong>Input:</strong> grafo dirigido <code>G</code> y vértice <code>u</code>.<br>
+<strong>Output:</strong> <code>true</code> si desde <code>u</code> se encuentra una arista hacia gris.</p>
+<pre class="text"><code>CicloDesde(G, u):
+    color[u] &lt;- gris
+
+    for v in Adj[u]:
+        if color[v] = gris:
+            return true
+
+        if color[v] = blanco:
+            if CicloDesde(G, v):
+                return true
+
+    color[u] &lt;- negro
+    return false</code></pre>
+<p>En grafos no dirigidos se debe tener cuidado adicional: la arista que vuelve al padre inmediato no cuenta como ciclo por sí sola.</p>
+</section>
+<section id="orden-topológico" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="orden-topológico"><span class="header-section-number">9</span> Orden topológico</h2>
+<p>Un orden topológico de un grafo dirigido es una secuencia de vértices donde toda arista <code>u -&gt; v</code> deja a <code>u</code> antes que <code>v</code>.</p>
+<p>Esto modela dependencias: si <code>u</code> debe ocurrir antes que <code>v</code>, entonces <code>u</code> aparece antes en la lista.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Condición obligatoria
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>TopSort solo existe en grafos dirigidos acíclicos, es decir, en DAG. Si el grafo tiene un ciclo dirigido, no hay forma de ordenar las tareas respetando todas las dependencias.</p>
+</div>
+</div>
+<p>La idea con DFS es insertar cada vértice al inicio de una lista cuando termina. Equivale a ordenar por <code>end</code> decreciente.</p>
+<p><strong>Input:</strong> grafo dirigido <code>G</code>.<br>
+<strong>Output:</strong> orden topológico si <code>G</code> es DAG; error si se detecta ciclo.</p>
+<pre class="text"><code>TopSort(G):
+    L &lt;- lista vacia
+
+    for u in V(G):
+        color[u] &lt;- blanco
+
+    for u in V(G):
+        if color[u] = blanco:
+            if TopSortVisit(G, u, L) = CICLO:
+                return NO_EXISTE_TOPSORT
+
+    return L</code></pre>
+<p><strong>Input:</strong> grafo dirigido <code>G</code>, vértice <code>u</code> y lista <code>L</code>.<br>
+<strong>Output:</strong> actualiza <code>L</code> con vértices terminados o reporta ciclo.</p>
+<pre class="text"><code>TopSortVisit(G, u, L):
+    color[u] &lt;- gris
+
+    for v in Adj[u]:
+        if color[v] = gris:
+            return CICLO
+
+        if color[v] = blanco:
+            if TopSortVisit(G, v, L) = CICLO:
+                return CICLO
+
+    color[u] &lt;- negro
+    insertar u al inicio de L
+    return OK</code></pre>
+<p>No necesariamente existe un único orden topológico. Si dos tareas no dependen entre sí, pueden aparecer en distinto orden y seguir siendo válidas.</p>
+</section>
+<section id="kosaraju-y-componentes-fuertemente-conectadas" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="kosaraju-y-componentes-fuertemente-conectadas"><span class="header-section-number">10</span> Kosaraju y componentes fuertemente conectadas</h2>
+<p>Una componente fuertemente conectada, o CFC, es un grupo maximal de vértices de un grafo dirigido donde cada vértice puede llegar a todos los demás del grupo.</p>
+<p>Kosaraju encuentra CFC usando dos recorridos DFS y el grafo transpuesto.</p>
+<p>Los tres pasos son:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Paso</th>
+<th>Acción</th>
+<th>Propósito</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Ejecutar DFS en <code>G</code></td>
+<td>Obtener vértices por <code>end</code> decreciente</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Construir <code>G^T</code></td>
+<td>Invertir todas las aristas</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>Ejecutar DFS en <code>G^T</code> siguiendo ese orden</td>
+<td>Cada DFS descubre una CFC</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Intuición
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El primer DFS define desde qué vértices conviene partir. El segundo DFS, sobre el grafo transpuesto, separa las zonas donde la alcanzabilidad de ida y vuelta queda encerrada.</p>
+</div>
+</div>
+<p><strong>Input:</strong> grafo dirigido <code>G = (V, E)</code>.<br>
+<strong>Output:</strong> arreglo <code>rep</code>, donde <code>rep[u]</code> identifica la CFC de <code>u</code>.</p>
+<pre class="text"><code>Kosaraju(G):
+    ejecutar DFSConTiempos(G)
+    L &lt;- vertices de G ordenados por end decreciente
+    GT &lt;- Transpuesto(G)
+
+    for u in V(G):
+        rep[u] &lt;- NIL
+
+    for u in L:
+        if rep[u] = NIL:
+            Assign(GT, u, u, rep)
+
+    return rep</code></pre>
+<p><strong>Input:</strong> grafo transpuesto <code>GT</code>, vértice <code>u</code>, representante <code>r</code> y arreglo <code>rep</code>.<br>
+<strong>Output:</strong> asigna el representante <code>r</code> a todos los vértices alcanzables no asignados.</p>
+<pre class="text"><code>Assign(GT, u, r, rep):
+    rep[u] &lt;- r
+
+    for v in AdjT[u]:
+        if rep[v] = NIL:
+            Assign(GT, v, r, rep)</code></pre>
+<p>Kosaraju no usa un TopSort real si el grafo tiene ciclos. Usa orden decreciente de término obtenido por DFS.</p>
+</section>
+<section id="bfs-y-caminos-mínimos-no-ponderados" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="bfs-y-caminos-mínimos-no-ponderados"><span class="header-section-number">11</span> BFS y caminos mínimos no ponderados</h2>
+<p>BFS, o búsqueda en anchura, explora desde un origen <code>s</code> por niveles.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Nivel</th>
+<th>Significado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>0</td>
+<td>El origen <code>s</code></td>
+</tr>
+<tr class="even">
+<td>1</td>
+<td>Vecinos directos de <code>s</code></td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Vértices alcanzables con dos aristas</td>
+</tr>
+<tr class="even">
+<td><code>d</code></td>
+<td>Vértices a distancia <code>d</code> en número de aristas</td>
+</tr>
+</tbody>
+</table>
+<p>BFS usa una cola FIFO. Cuando se descubre un vértice, se encola. La cola asegura que los vértices descubiertos antes se procesen antes, por lo que todos los vértices a distancia <code>d</code> se procesan antes que los de distancia <code>d + 1</code>.</p>
+<p><strong>Input:</strong> grafo <code>G = (V, E)</code> no ponderado y vértice origen <code>s</code>.<br>
+<strong>Output:</strong> arreglos <code>dist</code> y <code>parent</code> desde <code>s</code>.</p>
+<pre class="text"><code>BFS(G, s):
+    for u in V(G):
+        color[u] &lt;- blanco
+        dist[u] &lt;- infinito
+        parent[u] &lt;- NIL
+
+    color[s] &lt;- gris
+    dist[s] &lt;- 0
+
+    Q &lt;- cola vacia
+    Enqueue(Q, s)
+
+    while Q no esta vacia:
+        u &lt;- Dequeue(Q)
+
+        for v in Adj[u]:
+            if color[v] = blanco:
+                color[v] &lt;- gris
+                dist[v] &lt;- dist[u] + 1
+                parent[v] &lt;- u
+                Enqueue(Q, v)
+
+        color[u] &lt;- negro</code></pre>
+<p>La primera vez que BFS descubre un vértice <code>v</code>, ya encontró una ruta con la menor cantidad posible de aristas desde <code>s</code> hasta <code>v</code>.</p>
+<section id="reconstrucción-de-camino-bfs" class="level3" data-number="11.1">
+<h3 data-number="11.1" class="anchored" data-anchor-id="reconstrucción-de-camino-bfs"><span class="header-section-number">11.1</span> Reconstrucción de camino BFS</h3>
+<p>El arreglo <code>parent</code> permite recuperar el camino desde el origen hasta un destino. Se camina desde <code>t</code> hacia atrás: <code>t</code>, <code>parent[t]</code>, <code>parent[parent[t]]</code>, hasta llegar a <code>s</code>.</p>
+<p><strong>Input:</strong> arreglo <code>parent</code>, origen <code>s</code> y destino <code>t</code>.<br>
+<strong>Output:</strong> camino desde <code>s</code> hasta <code>t</code>, o <code>NO_HAY_CAMINO</code>.</p>
+<pre class="text"><code>ReconstruirCaminoBFS(parent, s, t):
+    if t = s:
+        return [s]
+
+    if parent[t] = NIL:
+        return NO_HAY_CAMINO
+
+    camino &lt;- ReconstruirCaminoBFS(parent, s, parent[t])
+    agregar t al final de camino
+    return camino</code></pre>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Pesos distintos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Si una arista cuesta 1 y otra cuesta 100, BFS las trata igual. Para pesos no negativos se estudia Dijkstra; para grafos no ponderados, BFS es suficiente.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="puentes-con-dfs" class="level2" data-number="12">
+<h2 data-number="12" class="anchored" data-anchor-id="puentes-con-dfs"><span class="header-section-number">12</span> Puentes con DFS</h2>
+<p>En un grafo no dirigido, una arista es puente si al eliminarla aumenta la cantidad de componentes conectadas. Intuitivamente, es una arista que no pertenece a ningún ciclo.</p>
+<p>DFS detecta puentes guardando dos valores:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Valor</th>
+<th>Pregunta que responde</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>disc[u]</code></td>
+<td>Cuándo fue descubierto <code>u</code></td>
+</tr>
+<tr class="even">
+<td><code>low[u]</code></td>
+<td>Qué tan arriba puede volver el subárbol de <code>u</code></td>
+</tr>
+</tbody>
+</table>
+<p>La condición central es:</p>
+<p><span class="math display">\[
+low[v] &gt; disc[u]
+\]</span></p>
+<p>Si <code>v</code> es hijo DFS de <code>u</code> y se cumple esa desigualdad, entonces <code>(u, v)</code> es puente. El subárbol de <code>v</code> no tiene una arista de retroceso hacia <code>u</code> ni hacia un ancestro de <code>u</code>.</p>
+<p><strong>Input:</strong> grafo no dirigido <code>G = (V, E)</code>.<br>
+<strong>Output:</strong> lista de aristas que son puentes.</p>
+<pre class="text"><code>Puentes(G):
+    tiempo &lt;- 0
+    puentes &lt;- lista vacia
+
+    for u in V(G):
+        visited[u] &lt;- false
+        parent[u] &lt;- NIL
+        disc[u] &lt;- 0
+        low[u] &lt;- 0
+
+    for u in V(G):
+        if not visited[u]:
+            BridgeVisit(G, u)
+
+    return puentes</code></pre>
+<p><strong>Input:</strong> grafo no dirigido <code>G</code> y vértice <code>u</code>; usa <code>tiempo</code>, <code>disc</code>, <code>low</code>, <code>parent</code> y <code>puentes</code>.<br>
+<strong>Output:</strong> actualiza <code>low</code> y agrega puentes encontrados.</p>
+<pre class="text"><code>BridgeVisit(G, u):
+    visited[u] &lt;- true
+    tiempo &lt;- tiempo + 1
+    disc[u] &lt;- tiempo
+    low[u] &lt;- disc[u]
+
+    for v in Adj[u]:
+        if not visited[v]:
+            parent[v] &lt;- u
+            BridgeVisit(G, v)
+
+            low[u] &lt;- min(low[u], low[v])
+
+            if low[v] &gt; disc[u]:
+                agregar (u, v) a puentes
+
+        else if v != parent[u]:
+            low[u] &lt;- min(low[u], disc[v])</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Alcance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Este algoritmo estándar de puentes corresponde a grafos no dirigidos. No debe aplicarse directamente a grafos dirigidos como si la condición fuera equivalente.</p>
+</div>
+</div>
+</section>
+<section id="complejidad" class="level2" data-number="13">
+<h2 data-number="13" class="anchored" data-anchor-id="complejidad"><span class="header-section-number">13</span> Complejidad</h2>
+<p>Con listas de adyacencia, los recorridos procesan cada vértice y cada arista una cantidad constante de veces.</p>
+<p><span class="math display">\[
+O(|V| + |E|)
+\]</span></p>
+<p>Con matriz de adyacencia, revisar vecinos puede exigir escanear una fila completa por cada vértice.</p>
+<p><span class="math display">\[
+O(|V|^2)
+\]</span></p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 28%">
+<col style="width: 28%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Algoritmo</th>
+<th style="text-align: right;">Tiempo con lista de adyacencia</th>
+<th style="text-align: right;">Memoria auxiliar</th>
+<th>Comentario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>DFS básico</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+<td>Visita vértices y aristas</td>
+</tr>
+<tr class="even">
+<td>DFS con tiempos</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+<td>Agrega <code>start</code> y <code>end</code></td>
+</tr>
+<tr class="odd">
+<td>Ciclo dirigido</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+<td>Usa colores</td>
+</tr>
+<tr class="even">
+<td>TopSort</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+<td>Requiere DAG</td>
+</tr>
+<tr class="odd">
+<td>Kosaraju</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td>Construye o recorre <code>G^T</code></td>
+</tr>
+<tr class="even">
+<td>BFS</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+<td>Usa cola FIFO</td>
+</tr>
+<tr class="odd">
+<td>Puentes</td>
+<td style="text-align: right;"><code>O(|V| + |E|)</code></td>
+<td style="text-align: right;"><code>O(|V|)</code></td>
+<td>Para grafos no dirigidos</td>
+</tr>
+</tbody>
+</table>
+<p>Si se usa matriz de adyacencia, el costo típico de un recorrido completo pasa a <code>O(|V|^2)</code> porque para cada vértice se revisan todas las posibles columnas.</p>
+</section>
+<section id="ejemplo-guiado" class="level2" data-number="14">
+<h2 data-number="14" class="anchored" data-anchor-id="ejemplo-guiado"><span class="header-section-number">14</span> Ejemplo guiado</h2>
+<p>Usaremos este grafo dirigido no ponderado:</p>
+<pre class="text"><code>A: B, C
+B: D
+C: D, E
+D: F
+E: F
+F: []</code></pre>
+<section id="parte-1-bfs-desde-a" class="level3" data-number="14.1">
+<h3 data-number="14.1" class="anchored" data-anchor-id="parte-1-bfs-desde-a"><span class="header-section-number">14.1</span> Parte 1: BFS desde <code>A</code></h3>
+<p>Aplicamos <code>BFS(G, A)</code> para obtener distancias mínimas en número de aristas.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Paso</th>
+<th>Cola antes de extraer</th>
+<th>Extraído</th>
+<th>Descubrimientos nuevos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">Inicio</td>
+<td><code>[A]</code></td>
+<td>ninguno</td>
+<td><code>dist[A] = 0</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1</td>
+<td><code>[A]</code></td>
+<td><code>A</code></td>
+<td><code>B</code>, <code>C</code> con distancia 1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td><code>[B, C]</code></td>
+<td><code>B</code></td>
+<td><code>D</code> con distancia 2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3</td>
+<td><code>[C, D]</code></td>
+<td><code>C</code></td>
+<td><code>E</code> con distancia 2; <code>D</code> ya estaba descubierto</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">4</td>
+<td><code>[D, E]</code></td>
+<td><code>D</code></td>
+<td><code>F</code> con distancia 3</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5</td>
+<td><code>[E, F]</code></td>
+<td><code>E</code></td>
+<td><code>F</code> ya estaba descubierto</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">6</td>
+<td><code>[F]</code></td>
+<td><code>F</code></td>
+<td>ninguno</td>
+</tr>
+</tbody>
+</table>
+<p>Resultado:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Vértice</th>
+<th style="text-align: right;"><code>dist</code> desde <code>A</code></th>
+<th><code>parent</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>A</code></td>
+<td style="text-align: right;">0</td>
+<td><code>NIL</code></td>
+</tr>
+<tr class="even">
+<td><code>B</code></td>
+<td style="text-align: right;">1</td>
+<td><code>A</code></td>
+</tr>
+<tr class="odd">
+<td><code>C</code></td>
+<td style="text-align: right;">1</td>
+<td><code>A</code></td>
+</tr>
+<tr class="even">
+<td><code>D</code></td>
+<td style="text-align: right;">2</td>
+<td><code>B</code></td>
+</tr>
+<tr class="odd">
+<td><code>E</code></td>
+<td style="text-align: right;">2</td>
+<td><code>C</code></td>
+</tr>
+<tr class="even">
+<td><code>F</code></td>
+<td style="text-align: right;">3</td>
+<td><code>D</code></td>
+</tr>
+</tbody>
+</table>
+<p>Un camino mínimo desde <code>A</code> hasta <code>F</code> se reconstruye con <code>parent</code>:</p>
+<pre class="text"><code>F &lt;- D &lt;- B &lt;- A</code></pre>
+<p>Al invertirlo:</p>
+<pre class="text"><code>A -&gt; B -&gt; D -&gt; F</code></pre>
+<p>Tiene 3 aristas. También existe <code>A -&gt; C -&gt; E -&gt; F</code>, que tiene 3 aristas; BFS puede devolver uno u otro según el orden de vecinos.</p>
+</section>
+<section id="parte-2-ciclo-dirigido-con-dfs" class="level3" data-number="14.2">
+<h3 data-number="14.2" class="anchored" data-anchor-id="parte-2-ciclo-dirigido-con-dfs"><span class="header-section-number">14.2</span> Parte 2: ciclo dirigido con DFS</h3>
+<p>Ahora agregamos la arista:</p>
+<pre class="text"><code>F -&gt; C</code></pre>
+<p>Durante DFS puede ocurrir esta ruta activa:</p>
+<pre class="text"><code>A -&gt; C -&gt; E -&gt; F</code></pre>
+<p>En ese momento <code>C</code>, <code>E</code> y <code>F</code> están grises. Al revisar <code>F -&gt; C</code>, el algoritmo encuentra una arista hacia gris. Por lo tanto hay ciclo:</p>
+<pre class="text"><code>C -&gt; E -&gt; F -&gt; C</code></pre>
+<p>El punto clave es el color gris. Si <code>C</code> ya estuviera negro, la arista <code>F -&gt; C</code> no bastaría por sí sola para concluir ciclo dirigido.</p>
+</section>
+<section id="parte-3-topsort-si-quitamos-el-ciclo" class="level3" data-number="14.3">
+<h3 data-number="14.3" class="anchored" data-anchor-id="parte-3-topsort-si-quitamos-el-ciclo"><span class="header-section-number">14.3</span> Parte 3: TopSort si quitamos el ciclo</h3>
+<p>Sin la arista <code>F -&gt; C</code>, el grafo es un DAG. Un orden topológico válido es:</p>
+<pre class="text"><code>A, C, E, B, D, F</code></pre>
+<p>También puede ser válido:</p>
+<pre class="text"><code>A, B, C, D, E, F</code></pre>
+<p>Lo importante es que cada arista respete el orden: el origen aparece antes que el destino.</p>
+</section>
+</section>
+<section id="errores-típicos" class="level2" data-number="15">
+<h2 data-number="15" class="anchored" data-anchor-id="errores-típicos"><span class="header-section-number">15</span> Errores típicos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Error</th>
+<th>Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Creer que DFS y BFS son intercambiables siempre</td>
+<td>Elegir según la pregunta: estructura profunda o distancia por niveles</td>
+</tr>
+<tr class="even">
+<td>Decir que cualquier vértice visitado implica ciclo</td>
+<td>En grafo dirigido, ciclo aparece con arista hacia gris</td>
+</tr>
+<tr class="odd">
+<td>Concluir ciclo por una arista hacia negro</td>
+<td>Negro significa terminado; no basta para afirmar ciclo</td>
+</tr>
+<tr class="even">
+<td>Aplicar TopSort sin revisar ciclos</td>
+<td>TopSort solo existe en DAG</td>
+</tr>
+<tr class="odd">
+<td>Llamar TopSort al orden de Kosaraju en grafos cíclicos</td>
+<td>Kosaraju usa <code>end</code> decreciente, no un TopSort válido si hay ciclos</td>
+</tr>
+<tr class="even">
+<td>Usar BFS en grafos ponderados con costos distintos</td>
+<td>Usar Dijkstra si los pesos son no negativos</td>
+</tr>
+<tr class="odd">
+<td>Olvidar <code>parent</code> al pedir camino concreto</td>
+<td><code>dist</code> da longitud; <code>parent</code> permite reconstruir el camino</td>
+</tr>
+<tr class="even">
+<td>Ejecutar DFS solo desde un origen en grafo no conexo</td>
+<td>Usar el ciclo externo sobre todos los vértices</td>
+</tr>
+<tr class="odd">
+<td>Confundir <code>start</code> con <code>end</code></td>
+<td><code>start</code> es descubrimiento; <code>end</code> es término</td>
+</tr>
+<tr class="even">
+<td>Aplicar puentes con <code>low</code> a un grafo dirigido sin adaptar el problema</td>
+<td>El algoritmo estándar de puentes es para no dirigidos</td>
+</tr>
+<tr class="odd">
+<td>Escribir <code>O(|V| + |E|)</code> usando matriz de adyacencia</td>
+<td>Con matriz puede ser <code>O(|V|^2)</code></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Error de interpretación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un orden topológico no es “un recorrido cualquiera”. Debe cumplir que toda arista <code>u -&gt; v</code> deja a <code>u</code> antes que <code>v</code>. Si existe un ciclo, esa condición se vuelve imposible.</p>
+</div>
+</div>
+</section>
+<section id="problema-representativo-de-interrogación" class="level2" data-number="16">
+<h2 data-number="16" class="anchored" data-anchor-id="problema-representativo-de-interrogación"><span class="header-section-number">16</span> Problema representativo de interrogación</h2>
 <details>
 <summary>
 Ver enunciado
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>Una plataforma organiza contenidos de estudio. Cada par <code>(u, v)</code> significa que el contenido <code>u</code> debe estudiarse antes que el contenido <code>v</code>.</p>
+<p>Se entrega el siguiente grafo dirigido:</p>
+<pre class="text"><code>A -&gt; B
+A -&gt; C
+B -&gt; D
+C -&gt; D
+D -&gt; E
+F -&gt; C</code></pre>
+<p>Responde:</p>
+<ol type="1">
+<li>¿Qué algoritmo usarías para decidir si existe un orden válido de estudio?</li>
+<li>Si existe, entrega un orden válido.</li>
+<li>¿Qué cambia si se agrega la arista <code>E -&gt; B</code>?</li>
+<li>Explica la complejidad con lista de adyacencia.</li>
+<li>Explica por qué BFS no es la técnica principal para este problema.</li>
+</ol>
 </details>
 <details>
 <summary>
 Ver solución
 </summary>
-<p>Pendiente de desarrollo.</p>
+<p>El problema se modela como un grafo dirigido de dependencias. Para que exista un orden válido, el grafo debe ser acíclico. Por eso corresponde usar DFS con colores para detectar ciclos y, si no hay ciclo, construir un orden topológico con DFS.</p>
+<p>Una forma de resolverlo es:</p>
+<pre class="text"><code>1. Ejecutar TieneCicloDirigido(G).
+2. Si hay ciclo, reportar que no existe orden válido.
+3. Si no hay ciclo, ejecutar TopSort(G).</code></pre>
+<p>Para el grafo original, un orden válido es:</p>
+<pre class="text"><code>F, A, C, B, D, E</code></pre>
+<p>También es válido:</p>
+<pre class="text"><code>A, F, B, C, D, E</code></pre>
+<p>No se exige que el orden sea único. Lo importante es respetar todas las aristas: <code>A</code> antes que <code>B</code> y <code>C</code>, <code>F</code> antes que <code>C</code>, <code>B</code> y <code>C</code> antes que <code>D</code>, y <code>D</code> antes que <code>E</code>.</p>
+<p>Si se agrega <code>E -&gt; B</code>, aparece el ciclo:</p>
+<pre class="text"><code>B -&gt; D -&gt; E -&gt; B</code></pre>
+<p>Entonces no existe orden topológico. Durante DFS, este ciclo se detecta al encontrar una arista hacia un vértice gris en la ruta recursiva actual.</p>
+<p>Con lista de adyacencia, la detección de ciclo y TopSort cuestan:</p>
+<p><span class="math display">\[
+O(|V| + |E|)
+\]</span></p>
+<p>La notación <code>|V|</code> representa la cantidad de contenidos y <code>|E|</code> representa la cantidad de dependencias. Cada vértice y cada arista se procesan una cantidad constante de veces.</p>
+<p>BFS no es la técnica principal porque el problema no pide distancia mínima desde un origen. Pide decidir si las dependencias admiten un orden global, y esa pregunta depende de detectar ciclos dirigidos y ordenar por término.</p>
 </details>
 </section>
-<section id="checklist-de-estudio" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">10</span> Checklist de estudio</h2>
-<p>Pendiente de desarrollo.</p>
+<section id="preguntas-de-repaso" class="level2" data-number="17">
+<h2 data-number="17" class="anchored" data-anchor-id="preguntas-de-repaso"><span class="header-section-number">17</span> Preguntas de repaso</h2>
+<ol type="1">
+<li>¿Qué significa que DFS profundiza y luego retrocede?</li>
+<li>¿Por qué BFS necesita una cola FIFO?</li>
+<li>¿Qué representa un vértice blanco?</li>
+<li>¿Qué representa un vértice gris en DFS?</li>
+<li>¿Por qué una arista hacia gris revela ciclo en un grafo dirigido?</li>
+<li>¿Por qué una arista hacia negro no basta para concluir ciclo?</li>
+<li>¿Qué diferencia hay entre <code>start[u]</code> y <code>end[u]</code>?</li>
+<li>¿Qué condición debe cumplir un grafo para tener TopSort?</li>
+<li>¿Por qué Kosaraju usa el grafo transpuesto?</li>
+<li>¿Por qué BFS entrega distancia mínima en número de aristas?</li>
+<li>¿Qué arreglo permite reconstruir un camino BFS?</li>
+<li>¿Por qué BFS no reemplaza a Dijkstra en grafos ponderados?</li>
+<li>¿Qué representa <code>low[u]</code> en el algoritmo de puentes?</li>
+<li>¿Cuándo una arista <code>(u, v)</code> es puente según <code>disc</code> y <code>low</code>?</li>
+<li>¿Qué cambia en complejidad al pasar de lista a matriz de adyacencia?</li>
+</ol>
+</section>
+<section id="ejercicios-breves" class="level2" data-number="18">
+<h2 data-number="18" class="anchored" data-anchor-id="ejercicios-breves"><span class="header-section-number">18</span> Ejercicios breves</h2>
+<section id="ejercicio-1" class="level3" data-number="18.1">
+<h3 data-number="18.1" class="anchored" data-anchor-id="ejercicio-1"><span class="header-section-number">18.1</span> Ejercicio 1</h3>
+<p>Para el grafo dirigido:</p>
+<pre class="text"><code>A -&gt; B
+B -&gt; C
+C -&gt; A</code></pre>
+<p>Ejecuta mentalmente DFS con colores e indica en qué arista se detecta el ciclo.</p>
+</section>
+<section id="ejercicio-2" class="level3" data-number="18.2">
+<h3 data-number="18.2" class="anchored" data-anchor-id="ejercicio-2"><span class="header-section-number">18.2</span> Ejercicio 2</h3>
+<p>Para el grafo no ponderado:</p>
+<pre class="text"><code>1: 2, 3
+2: 4
+3: 4
+4: 5
+5: []</code></pre>
+<p>Ejecuta BFS desde <code>1</code> y entrega los arreglos <code>dist</code> y <code>parent</code>.</p>
+</section>
+<section id="ejercicio-3" class="level3" data-number="18.3">
+<h3 data-number="18.3" class="anchored" data-anchor-id="ejercicio-3"><span class="header-section-number">18.3</span> Ejercicio 3</h3>
+<p>Propón un orden topológico para:</p>
+<pre class="text"><code>A -&gt; C
+B -&gt; C
+C -&gt; D
+B -&gt; E</code></pre>
+<p>Luego explica por qué tu orden respeta todas las aristas.</p>
+</section>
+<section id="ejercicio-4" class="level3" data-number="18.4">
+<h3 data-number="18.4" class="anchored" data-anchor-id="ejercicio-4"><span class="header-section-number">18.4</span> Ejercicio 4</h3>
+<p>Da un ejemplo de grafo dirigido donde tres vértices formen una misma componente fuertemente conectada.</p>
+</section>
+<section id="ejercicio-5" class="level3" data-number="18.5">
+<h3 data-number="18.5" class="anchored" data-anchor-id="ejercicio-5"><span class="header-section-number">18.5</span> Ejercicio 5</h3>
+<p>En un grafo no dirigido, explica por qué una arista que pertenece a un ciclo no puede ser puente.</p>
+</section>
+<section id="ejercicio-6" class="level3" data-number="18.6">
+<h3 data-number="18.6" class="anchored" data-anchor-id="ejercicio-6"><span class="header-section-number">18.6</span> Ejercicio 6</h3>
+<p>Para el grafo no dirigido:</p>
+<pre class="text"><code>0 - 1
+1 - 2
+2 - 0
+1 - 3</code></pre>
+<p>Indica qué arista es puente y justifica usando la idea de <code>low</code>.</p>
+</section>
+<section id="ejercicio-7" class="level3" data-number="18.7">
+<h3 data-number="18.7" class="anchored" data-anchor-id="ejercicio-7"><span class="header-section-number">18.7</span> Ejercicio 7</h3>
+<p>Explica por qué el ciclo externo <code>for u in V(G)</code> es necesario en DFS cuando el grafo tiene más de una componente.</p>
+</section>
+<section id="ejercicio-8" class="level3" data-number="18.8">
+<h3 data-number="18.8" class="anchored" data-anchor-id="ejercicio-8"><span class="header-section-number">18.8</span> Ejercicio 8</h3>
+<p>Construye un ejemplo pequeño donde BFS minimice cantidad de aristas, pero no costo total si las aristas tienen pesos distintos.</p>
+</section>
+</section>
+<section id="checklist-de-estudio" class="level2" data-number="19">
+<h2 data-number="19" class="anchored" data-anchor-id="checklist-de-estudio"><span class="header-section-number">19</span> Checklist de estudio</h2>
+<p>Antes de cerrar esta página, verifica que puedes responder:</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Puedo explicar DFS sin leer pseudocódigo.</label></li>
+<li><label><input type="checkbox">Puedo explicar BFS sin leer pseudocódigo.</label></li>
+<li><label><input type="checkbox">Puedo distinguir blanco, gris y negro.</label></li>
+<li><label><input type="checkbox">Puedo decir por qué gris representa la ruta activa en DFS.</label></li>
+<li><label><input type="checkbox">Puedo detectar ciclos dirigidos con colores.</label></li>
+<li><label><input type="checkbox">Puedo explicar por qué una arista hacia negro no basta para detectar ciclo.</label></li>
+<li><label><input type="checkbox">Puedo definir <code>start[u]</code> y <code>end[u]</code>.</label></li>
+<li><label><input type="checkbox">Puedo construir un TopSort si el grafo es DAG.</label></li>
+<li><label><input type="checkbox">Puedo explicar por qué no hay TopSort si existe un ciclo dirigido.</label></li>
+<li><label><input type="checkbox">Puedo describir los tres pasos de Kosaraju.</label></li>
+<li><label><input type="checkbox">Puedo explicar qué es un grafo transpuesto.</label></li>
+<li><label><input type="checkbox">Puedo ejecutar BFS y calcular <code>dist</code>.</label></li>
+<li><label><input type="checkbox">Puedo usar <code>parent</code> para reconstruir un camino BFS.</label></li>
+<li><label><input type="checkbox">Puedo explicar por qué BFS no sirve para pesos distintos.</label></li>
+<li><label><input type="checkbox">Puedo definir <code>disc[u]</code> y <code>low[u]</code>.</label></li>
+<li><label><input type="checkbox">Puedo justificar cuándo una arista es puente.</label></li>
+<li><label><input type="checkbox">Puedo calcular complejidad <code>O(|V| + |E|)</code> con listas de adyacencia.</label></li>
+<li><label><input type="checkbox">Puedo explicar por qué con matriz de adyacencia el recorrido puede costar <code>O(|V|^2)</code>.</label></li>
+</ul>
 
 
 </section>
